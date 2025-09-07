@@ -1,0 +1,9 @@
+<nav>
+    <ul>
+        <li><a href="">Acheter</a></li>
+        <li><a href="">Vendre</a></li>
+        <li><a href="">Client</a></li>
+    </ul>
+    <img src="" alt="logo">
+    <a href="connexion.php">Connexion</a>
+</nav>
