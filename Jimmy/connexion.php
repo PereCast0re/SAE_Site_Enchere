@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>connexion</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="" defer></script>
+    <style>
+        footer {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,7 +24,7 @@
         <div>
             <hr>
             <h1>Connectez-vous à votre compte.</h1>
-            <section id="connexion">
+            <form action="client.php" method="post" id="connexion">
                 <div>
                     <h2>Email</h2>
                     <input type="text" name="email" placeholder="Email">
@@ -30,7 +36,7 @@
 
                 <br>
                 <input type="submit" value="Connexion">
-            </section>
+            </form>
             <p>Vous n'avez pas encore de compte, inscrivez-vous dès maintenant en cliquant <a href="inscription.php">ici</a></p>
             <hr>
         </div>

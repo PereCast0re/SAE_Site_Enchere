@@ -5,5 +5,5 @@
         <li><a href="">Client</a></li>
     </ul>
     <img src="" alt="logo">
-    <a href="connexion.php">Connexion</a>
+    <a id="btn_connexion" href="connexion.php">Connexion</a>
 </nav>

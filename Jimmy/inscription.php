@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>inscription</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="" defer></script>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
         <div>
             <hr>
             <h1>Inscrivez-vous.</h1>
-            <section id="connexion">
+            <form action="client.php" method="post" id="connexion">
                 <div>
                     <h2>Nom</h2>
                     <input type="text" name="nom" placeholder="Nom">
@@ -54,7 +54,7 @@
 
                 <br>
                 <input type="submit" value="Connexion">
-            </section>
+            </form>
             <hr>
         </div>
     </main>
