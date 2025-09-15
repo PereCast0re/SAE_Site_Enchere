@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Base de données : `site_enchere`
 --
 
+DROP DATABASE IF EXISTS site_enchere;
+CREATE DATABASE site_enchere;
+USE site_enchere;
+
 -- --------------------------------------------------------
 
 --
