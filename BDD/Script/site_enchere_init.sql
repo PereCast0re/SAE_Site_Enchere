@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Base de données : `site_enchere`
 --
 
+DROP DATABASE IF EXISTS site_enchere;
+CREATE DATABASE site_enchere;
+USE site_enchere;
+
 -- --------------------------------------------------------
 
 --
@@ -43,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `afficher` (
 
 DROP TABLE IF EXISTS `annonces`;
 CREATE TABLE IF NOT EXISTS `annonces` (
-  `id_annonce` int NOT NULL,
+  `id_annonce` int NOT NULL AUTO_INCREMENT,
   `titre` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `description` varchar(250) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `date_de_debut` datetime DEFAULT NULL,
@@ -103,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 
 DROP TABLE IF EXISTS `client`;
 CREATE TABLE IF NOT EXISTS `client` (
-  `id_client` int NOT NULL,
+  `id_client` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `prenom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `date_de_naissance` date DEFAULT NULL,
