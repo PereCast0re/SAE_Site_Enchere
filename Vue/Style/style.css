@@ -108,3 +108,28 @@ main p {
 #menu_deroulant {
     background-color: red;
 }
+
+main #accueil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.4em;
+}
+
+main #accueil div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10px;
+}
+
+.btn {
+    font-size: 1em;
+    background-color: black;
+    color: white;
+    border-radius: 10px; 
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+
+}

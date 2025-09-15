@@ -4,6 +4,8 @@
         <li><a href="">Vendre</a></li>
         <li><a href="">Client</a></li>
     </ul>
-    <img src="" alt="logo">
+    <a href="accueil.php">
+        <img src=""  alt="logo">
+    </a>
     <a id="btn_connexion" href="connexion.php">Connexion</a>
 </nav>
