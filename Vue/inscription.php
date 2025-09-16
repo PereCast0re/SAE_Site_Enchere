@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>inscription</title>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="Style/style.css">
     <script src="" defer></script>
 </head>
 
@@ -18,7 +18,7 @@
         <div>
             <hr>
             <h1>Inscrivez-vous.</h1>
-            <form action="client.php" method="post" id="connexion">
+            <form action="../Controlleur/C_inscription.php" method="post" id="connexion">
                 <div>
                     <h2>Nom</h2>
                     <input type="text" name="nom" placeholder="Nom">

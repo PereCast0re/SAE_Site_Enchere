@@ -24,7 +24,7 @@
         <div>
             <hr>
             <h1>Connectez-vous à votre compte.</h1>
-            <form action="client.php" method="post" id="connexion">
+            <form action="../Controlleur/C_connexion.php" method="post" id="connexion">
                 <div>
                     <h2>Email</h2>
                     <input type="text" name="email" placeholder="Email">

@@ -2,7 +2,7 @@
     <ul>
         <li><a href="">Acheter</a></li>
         <li><a href="">Vendre</a></li>
-        <li><a href="">Client</a></li>
+        <li><a href="/Vue/client.php">Client</a></li>
     </ul>
     <a href="accueil.php">
         <img src=""  alt="logo">
