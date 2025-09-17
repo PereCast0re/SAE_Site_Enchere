@@ -15,7 +15,7 @@ $client = $_SESSION['client'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>client</title>
+    <title>Espace client</title>
     <link rel="stylesheet" href="Style/style.css">
     <script src="script.js" defer></script>
     <style>
@@ -68,7 +68,12 @@ $client = $_SESSION['client'];
         <div id="popup">
         </div>
 
-            <script src="../JS/OuverturePopUp.js"></script>
+        <div class="section_annonce_publier">
+            <input type="hidden" name="action" >
+        </div>
+
+        <script src="../JS/OuverturePopUp.js"></script>
+        <script src="../JS/Annonce_publie_client.js"></script>
 
             <footer>
                 <?php include('footer.php'); ?>

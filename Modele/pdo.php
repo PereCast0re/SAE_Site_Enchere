@@ -133,3 +133,15 @@ function selectAdresse_client($idClient){
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
+function getCategorie(){
+    $pdo = connexion();
+    $requete = "SELECT * FROM categorie";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des catégories" .$e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}

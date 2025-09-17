@@ -1,7 +1,7 @@
 <nav>
     <ul>
         <li><a href="">Acheter</a></li>
-        <li><a href="">Vendre</a></li>
+        <li><a id="btn_vente" href="venteProduit.php">Vendre</a></li>
         <li><a id="btn_client" href="client.php">Client</a></li>
     </ul>
     <a href="accueil.php">
