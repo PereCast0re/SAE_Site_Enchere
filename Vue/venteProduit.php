@@ -33,9 +33,28 @@ $client = $_SESSION['client'];
 
     <form>
         <div class="containeur_top">
+            <div class="nom_annonce_vente">
+                <h4>Nom de vôtre annonce</h4>
+                <input type="text" name="nom_annonce_vente" placeholder="Nom de vôtre annonce">
+            </div>
+
             <div class="img_selector">
+                <h4>Ajouter des images</h4>
+                <p>Vous avez la possiblité de mettre maximum 4 images</p>
+
+                <div class="img_annonces">
+                    <div class="input_selector_image">
+                        <input type="file" name="img_select" onchange="affichageImage()">
+                    </div>
+                    <img src="" id="img_annonce_1">
+                    <img src="" id="img_annonce_2">
+                    <img src="" id="img_annonce_3">
+                    <img src="" id="img_annonce_4">
+                </div>
+
 
             </div>
+
             <div class="information_produit">
                 <div class="produit_categorie">
                     <h4>Catégorie :</h4>
@@ -50,11 +69,8 @@ $client = $_SESSION['client'];
                 </div>
                 <div class="prix_reserve">
                     <h4>Réserve</h4>
-                    <input type="checkbox" id="prix_reserve_checkbox">
+                    <input type="checkbox" id="prix_reserve_checkbox" onclick="afficherInputPrixReserve()">
                     <div id="input_prix_reserve"></div>
-                    <script>
-                        afficherInputPrixReserve()
-                    </script>
                 </div>
             </div>
             <div class="date_debut">
@@ -66,9 +82,21 @@ $client = $_SESSION['client'];
                 <input type="date" value="date_fin" name="date_fin">
             </div>
         </div>
+
+        <div class="certificat_authenticite_vente">
+            <h4>Certificat d'authenticité</h4>
+            <input type="file" value="certificat_autenticite" name="certificat_autenticite">
+        </div>
+
+        <div class="description_produit_vente">
+            <h4>Faite nous une description de votre produit</h4>
+            <textarea placeholder="Votre description ici" name="description_produit" id="description_produit"></textarea>
+        </div>
+
+        <button type="submit" name="action" value="submit_new_produitenvente">Publier</button>
     </form>
     
-
+    <script src="../JS/vente_produit.js"></script>
     <footer>
         <?php include('footer.php'); ?>
     </footer>
