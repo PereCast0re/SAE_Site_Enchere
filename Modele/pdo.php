@@ -145,3 +145,18 @@ function getCategorie(){
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function get_annonces_with_images(){
+    $pdo = connexion();
+    $requete = "SELECT * FROM annonces 
+                JOIN images on annonces.id = images.id_annonce
+                WHERE fini = false";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des annonces" .$e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
