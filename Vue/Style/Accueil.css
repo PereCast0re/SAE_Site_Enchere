@@ -58,39 +58,9 @@ main h1 {
     font-size: 3em;
 }
 
-main div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-main #connexion {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.4em;
-}
-
-main #connexion div {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 10px;
-}
-
-main #connexion input:not(input[type="submit"]) {
-    width: 400px;
-    height: 30px;
-    font-size: 1em;
-    border: 1px solid black;
-    border-radius: 10px; 
-}
-
-main #connexion input[type="submit"] {
-    font-size: 1em;
-    width: 50%;
-    background-color: black;
-    color: white;
+main h1 {
+    padding: 60px;
+    font-size: 3em;
 }
 
 main hr {
@@ -116,12 +86,6 @@ main #accueil {
     font-size: 1.4em;
 }
 
-main #accueil div {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 10px;
-}
 
 .btn {
     font-size: 1em;
@@ -134,25 +98,10 @@ main #accueil div {
 
 }
 
- .swiper.mySwiper {
-      width: 100%;
-      max-width: 900px;
-      margin: 30px auto;
-    }
+.content {
+    text-align: center;
+}
 
-    .swiper-slide img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .swiper-slide {
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: black;
-    }   
+hr {
+    text-align: center;
+}
