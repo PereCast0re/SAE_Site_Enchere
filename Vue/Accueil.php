@@ -87,7 +87,7 @@
 
         <h1>Nos catégories en vedette</h1>
         <p>------------TEXTE------------</p>
-        <a class="btn">BTN</a><br><br><br>
+        <a class="btn">S'abonner</a><br><br><br>
     </div>
   </main>
 

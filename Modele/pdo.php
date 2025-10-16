@@ -175,3 +175,18 @@ function get_images_for_annonce($id_annonce){
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// function get_termined_annonces_by_client($id_client){
+//     $pdo = connexion();
+//     $requete = // Requete a faire 
+//     try{
+//         $tmp = $pdo->prepare($requete);
+//         $tmp->execute([
+//             ':id_client' => $id_client
+//         ]);
+//     }
+//     catch (PDOException $e){
+//         die("Erreur lors de la récupération des annonces terminées pour le client" .$e->getMessage());
+//     }
+//     return $tmp->fetchAll(PDO::FETCH_ASSOC);
+// }
