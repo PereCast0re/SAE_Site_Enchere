@@ -31,7 +31,6 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
     $id_annonce = $LastIdAnnonce['last_id'] + 1;
     try{
         ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, $prix_actuelle, $prix_reserve, $rate, $fini, $id_client);
-        
         // Ajout des images avec création dossier
         try{
             //Verification de la présence d'images
@@ -65,8 +64,11 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
         } catch (Exception $e){
             die("Erreur lors de l'ajout des images : " .$e->getMessage());
         }
-        var_dump($_FILES['image_produit']['tmp_name']);
-        //header("Location: ../Vue/client.php");
+        
+        //Pour verifié les images passé
+        //var_dump($_FILES['image_produit']['tmp_name']);
+        header("Location: ../Vue/client.php");
+
     } catch (Exception $e){
         die("Erreur lors de l'ajout de l'annonce : " .$e->getMessage());
     }

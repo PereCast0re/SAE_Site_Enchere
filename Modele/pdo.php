@@ -159,7 +159,7 @@ function getCategorie(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-<<<<<<< Updated upstream
+
 function get_annonces_with_images(){
     $pdo = connexion();
     $requete = "SELECT * FROM annonces
@@ -204,14 +204,16 @@ function get_images_for_annonce($id_annonce){
 //     }
 //     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 // }
-=======
+
 function ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, $prix_actuelle, $prix_reserve, $rate, $fini, $id_client){
     $pdo = connexion();
-    $requete = "INSERT INTO annonces (id_annonce, titre, description, date_de_debut, date_de_fin, prix_en_cours, prix_de_reserve, rate, fini)
-                value (:id, :nom, :description, :date_debut, :date_fin, :prix_actuelle, :prix_reserve, :rate, :fini)
-    ";  
+    $requete1 = "INSERT INTO annonces (id_annonce, titre, description, date_de_debut, date_de_fin, prix_en_cours, prix_de_reserve, rate, fini)
+                values (:id, :nom, :description, :date_debut, :date_fin, :prix_actuelle, :prix_reserve, :rate, :fini);
+    ";
+    
+    $requete2 = "INSERT INTO vendre (id_annonce, id_client) values (:id, :id_client);";
     try{
-        $tmp = $pdo->prepare($requete);
+        $tmp = $pdo->prepare($requete1);
         $tmp->execute([
             ":id"=> $id_annonce,
             ":nom"=> $nom,
@@ -223,6 +225,12 @@ function ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, 
             ":rate"=> $rate,
             ":fini"=> $fini
         ]);
+
+        $tmp2 = $pdo->prepare($requete2);
+        $tmp2->execute([
+            ":id"=> $id_annonce,
+            ":id_client"=> $id_client
+        ]);
     }
     catch (PDOException $e){
         die("Erreur lors de l'insertion dans la base de votre annonce" .$e->getMessage());
@@ -230,4 +238,3 @@ function ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, 
 
     
 }
->>>>>>> Stashed changes

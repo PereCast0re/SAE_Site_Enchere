@@ -24,8 +24,10 @@
                     <h3><?= htmlspecialchars($a['titre']) ?></h3>
                     <p>Prix actuel : <?= htmlspecialchars($a['prix_en_cours']) ?> €</p>
                 </div>
+            <? endforeach; ?>
         </div>
     </div>
 
     
 </body>
+</html>
