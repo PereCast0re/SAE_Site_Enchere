@@ -133,6 +133,19 @@ function selectAdresse_client($idClient){
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
+function getLastIdAnnonce(){
+    $pdo = connexion();
+    $requete = "SELECT MAX(id_annonce) as last_id FROM annonces";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération du dernier id d'annonce" .$e->getMessage());
+    }
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}
+
 function getCategorie(){
     $pdo = connexion();
     $requete = "SELECT * FROM categorie";
@@ -146,6 +159,7 @@ function getCategorie(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
+<<<<<<< Updated upstream
 function get_annonces_with_images(){
     $pdo = connexion();
     $requete = "SELECT * FROM annonces
@@ -190,3 +204,30 @@ function get_images_for_annonce($id_annonce){
 //     }
 //     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 // }
+=======
+function ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, $prix_actuelle, $prix_reserve, $rate, $fini, $id_client){
+    $pdo = connexion();
+    $requete = "INSERT INTO annonces (id_annonce, titre, description, date_de_debut, date_de_fin, prix_en_cours, prix_de_reserve, rate, fini)
+                value (:id, :nom, :description, :date_debut, :date_fin, :prix_actuelle, :prix_reserve, :rate, :fini)
+    ";  
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ":id"=> $id_annonce,
+            ":nom"=> $nom,
+            ":description"=> $description,
+            ":date_debut"=> $date_debut,
+            ":date_fin"=> $date_fin,
+            ":prix_actuelle"=> $prix_actuelle,
+            ":prix_reserve"=> $prix_reserve,
+            ":rate"=> $rate,
+            ":fini"=> $fini
+        ]);
+    }
+    catch (PDOException $e){
+        die("Erreur lors de l'insertion dans la base de votre annonce" .$e->getMessage());
+    }
+
+    
+}
+>>>>>>> Stashed changes

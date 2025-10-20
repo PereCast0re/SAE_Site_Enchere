@@ -9,23 +9,3 @@ async function afficherInputPrixReserve(){
         div.innerHTML = ""
     }
 }
-
-async function affichageImage() {
-    const fileInput = document.querySelector('input[type=file]')
-    const file = fileInput.files[0]
-
-    if (file){
-        const reader = new FileReader
-        reader.onload = function(e){
-            // on remplie les différents img en fonction de leur dispo
-            for (let i = 1; i <= 4; i++){
-                const img = document.getElementById('img_annonce_' + i)
-                if (!img.getAttribute("src")){
-                    img.src = e.target.result;
-                    break;
-                }
-            }
-        }
-        reader.readAsDataURL(file);
-    }
-}
