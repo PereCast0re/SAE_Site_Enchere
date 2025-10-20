@@ -101,7 +101,7 @@ $client = $_SESSION['client'];
         </div>
 
         <div class="certificat_authenticite_vente">
-            <h4>Certificat d'authenticité</h4>
+            <h4>Certificat d'authenticité format PDF</h4>
             <input type="file" name="certificat_autenticite" accept="application/pdf,image/*">
         </div>
 

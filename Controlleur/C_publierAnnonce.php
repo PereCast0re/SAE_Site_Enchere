@@ -61,6 +61,10 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
                 }
             }
 
+            if (isset($_FILES['certificat_autenticite'])) {
+                certificat($nom, $DirAnnonce);
+            }
+
         } catch (Exception $e){
             die("Erreur lors de l'ajout des images : " .$e->getMessage());
         }
@@ -75,4 +79,13 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
 }
 else{
     echo('Erreur dans la publication de votre annonce.');
+}
+
+function certificat($nom, $DirAnnonce){
+    $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
+    if ($tmpFilePath != ""){
+        $newFilePath = $DirAnnonce . "/" . $nom . "_Certificate" . ".pdf";
+        // Fonction native de php pour déplacer les fichier
+        move_uploaded_file($tmpFilePath, $newFilePath);
+    }
 }
