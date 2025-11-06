@@ -28,9 +28,4 @@ function startCountdown(endDate, element) {
         }
       }, 1000);
 
-      // Lancer tous les timers de la page
-      document.querySelectorAll('.timer').forEach(el => {
-        const endDate = el.getAttribute('data-end');
-        startCountdown(endDate, el); // ✅ Fonction importée depuis timer.js
-      });
     }
