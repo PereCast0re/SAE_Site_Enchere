@@ -7,6 +7,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
+include_once("../Controlleur/C_pageUser.php");
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +25,7 @@ $user = $_SESSION['user'];
             bottom: 0;
         }
     </style>
+    <script src="../JS/timer.js"></script>
 </head>
 
 <body>
@@ -66,13 +68,16 @@ $user = $_SESSION['user'];
 
         <div id="popup">
         </div>
-
         <div class="section_annonce_publier">
-            <input type="hidden" name="action">
+            <?php $annoncements = get_all_annoncement($user["id_user"]) ?>
+            <input type="hidden" id="number_annoncement" name="action" >
+
+            <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
+            <input type="hidden" id="values_annoncements" value='<?php echo json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>'>
         </div>
 
         <script src="../JS/OuverturePopUp.js"></script>
-        <script src="../JS/Annonce_publie_client.js"></script>
+        <script src="../JS/Annonce_publie_client.js" defer></script>
 
         <footer>
             <?php include('footer.php'); ?>

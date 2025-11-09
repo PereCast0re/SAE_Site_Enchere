@@ -233,3 +233,53 @@ function addProduct($title, $description, $start_date, $end_date, $reserve_price
         die("Error inserting your product into the database, try again !\n Error : " .$e->getMessage());
     }
 }
+
+function get_Annonce_User($id_client){
+    $pdo = connection();
+    $request = "SELECT * 
+                from product as p 
+                join published as pb on pb.id_product = p.id_product
+                where pb.id_user = :id_client
+                ";
+    try{
+        $temp = $pdo->prepare($request);
+        $temp->execute([
+                "id_client" => $id_client
+            ]);
+    }
+    catch(PDOException $e){
+        die("Error on extraction of your announcement" .$e->getMessage());
+    }
+
+    return $temp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_price_annoncement($id_annoncement){
+    $pdo = connection();
+    $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
+    try{
+        $tmp = $pdo->prepare($request);
+        $tmp->execute([
+            ":id_product" => $id_annoncement
+        ]);
+    } catch(PDOException $e){
+        die("Error on extraction of current bid on your annoncement" .$e->getMessage());
+    }
+
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getAnnonce($id_annoncement){
+    $pdo = connection();
+    $request = "SELECT * from product where id_product = :id";
+    try{
+        $tmp = $pdo->prepare($request);
+        $tmp->execute([
+            ":id" => $id_annoncement
+        ]);
+        } catch (PDOException $e){
+            die("Error on the extraction of this product " .$e->getMessage());
+        }
+    // Retourner une seule annonce (row) plutôt qu'un tableau de lignes
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}

@@ -33,7 +33,7 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
             }
             
             // Crée le dossier avec le nom de l'annonce
-            $DirAnnonce = "../Annonce/" . $nom;
+            $DirAnnonce = "../../Annonce/" . $title;
 
             // Vérifie si le dossier existe déjà
             if (!is_dir($DirAnnonce)) {
@@ -45,18 +45,17 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
 
             // Ajoute les images dans le dossier
             $nbImage = count($_FILES['image_produit']['name']);
-            
-            for ($i = 0; $i < $nbImage; $i++) {
+            for ($i = 0; $i < $nbImage +1; $i++) {
                 $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
                 if ($tmpFilePath != ""){
-                    $newFilePath = $DirAnnonce . "/" . $nom . "_" . $i . ".jpg";
+                    $newFilePath = $DirAnnonce . "/" . $title . "_" . $i . ".jpg";
                     // Fonction native de php pour déplacer les fichier
                     move_uploaded_file($tmpFilePath, $newFilePath);
                 }
             }
 
             if (isset($_FILES['certificat_autenticite'])) {
-                certificat($nom, $DirAnnonce);
+                certificat($title, $DirAnnonce);
             }
 
         } catch (Exception $e){
@@ -65,7 +64,7 @@ if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) &
         
         //Pour verifié les images passé
         //var_dump($_FILES['image_produit']['tmp_name']);
-        header("Location: ../Vue/client.php");
+        header("Location: ../Vue/user.php");
 
     } catch (Exception $e){
         die("Erreur lors de l'ajout de l'annonce : " .$e->getMessage());
@@ -75,10 +74,10 @@ else{
     echo('Erreur dans la publication de votre annonce.');
 }
 
-function certificat($nom, $DirAnnonce){
+function certificat($title, $DirAnnonce){
     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
     if ($tmpFilePath != ""){
-        $newFilePath = $DirAnnonce . "/" . $nom . "_Certificate" . ".pdf";
+        $newFilePath = $DirAnnonce . "/" . $title . "_Certificate" . ".pdf";
         // Fonction native de php pour déplacer les fichier
         move_uploaded_file($tmpFilePath, $newFilePath);
     }
