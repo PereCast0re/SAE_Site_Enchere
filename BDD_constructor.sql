@@ -61,7 +61,7 @@ CREATE TABLE BelongsTo (
 CREATE TABLE Published (
    id_user INT NOT NULL,
    id_product INT NOT NULL,
-   FOREIGN KEY(id_user) REFERENCES User(id_user),
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE Interest (
    id_user INT,
    PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES User(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
 
 CREATE TABLE Bid (
@@ -92,7 +92,7 @@ CREATE TABLE Bid (
    bid_date DATETIME,
    PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES User(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
 
 CREATE TABLE Comment (
@@ -102,7 +102,7 @@ CREATE TABLE Comment (
    comment_date DATETIME,
    PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES User(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
 
 CREATE TABLE ProductView (
@@ -112,7 +112,7 @@ CREATE TABLE ProductView (
    view_date DATETIME,
    PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES User(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
 
 -- =======================
@@ -132,8 +132,8 @@ CREATE TABLE Rating (
    id_seller INT,
    rating INT CHECK (rating BETWEEN 0 AND 5),
    PRIMARY KEY(id_buyer, id_seller),
-   FOREIGN KEY(id_buyer) REFERENCES User(id_user),
-   FOREIGN KEY(id_seller) REFERENCES User(id_user)
+   FOREIGN KEY(id_buyer) REFERENCES Users(id_user),
+   FOREIGN KEY(id_seller) REFERENCES Users(id_user)
 );
 
 -- =======================
