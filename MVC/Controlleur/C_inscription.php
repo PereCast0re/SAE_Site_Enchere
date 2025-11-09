@@ -3,23 +3,23 @@ require_once('../Modele/pdo.php');
 
 // Vérifier que le formulaire a bien été soumis
 if (
-    isset($_POST['nom'], $_POST['prenom'], $_POST['naissance'], $_POST['adresse'],
-        $_POST['ville'], $_POST['code_postal'], $_POST['email'], $_POST['mdp'])
+    isset($_POST['name'], $_POST['firstname'], $_POST['birth_date'], $_POST['address'],
+        $_POST['city'], $_POST['postal_code'], $_POST['email'], $_POST['password'])
 ) {
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $naissance = $_POST['naissance'];
-    $adresse = $_POST['adresse'];
-    $ville = $_POST['ville'];
-    $code_postal = $_POST['code_postal'];
+    $name = $_POST['name'];
+    $firstname = $_POST['firstname'];
+    $birth_date = $_POST['birth_date'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $postal_code = $_POST['postal_code'];
     $email = $_POST['email'];
-    $mdp = $_POST['mdp'];
+    $password = $_POST['password'];
 
     // Appel de la fonction d'incription
-    inscription($nom, $prenom, $naissance, $adresse, $ville, $code_postal, $email, $mdp, NULL);
+    inscription($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password);
 
     // Redirection ou message de succès
-    header('Location: ../Vue/client.php');
+    header('Location: ../Vue/user.php');
     exit();
 } else {
     echo "Données du formulaire manquantes.";

@@ -21,27 +21,27 @@
             <form action="../Controlleur/C_inscription.php" method="post" id="connexion">
                 <div>
                     <h2>Nom</h2>
-                    <input type="text" name="nom" placeholder="Nom">
+                    <input type="text" name="name" placeholder="Nom">
                 </div>
                 <div>
                     <h2>Prenom</h2>
-                    <input type="text" name="prenom" placeholder="Prenom">
+                    <input type="text" name="firstname" placeholder="Prenom">
                 </div>
                 <div>
                     <h2>Date de naissance</h2>
-                    <input type="date" name="naissance">
+                    <input type="date" name="birth_date">
                 </div>
                 <div>
                     <h2>Adresse</h2>
-                    <input type="text" name="adresse" placeholder="Adresse">
+                    <input type="text" name="address" placeholder="Adresse">
                 </div>
                 <div>
                     <h2>Ville</h2>
-                    <input type="text" name="ville" placeholder="Ville">
+                    <input type="text" name="city" placeholder="Ville">
                 </div>
                 <div>
                     <h2>Code postal</h2>
-                    <input type="number" name="code_postal" placeholder="Code postal">
+                    <input type="number" name="postal_code" placeholder="Code postal">
                 </div>
                 <div>
                     <h2>Email</h2>
@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <h2>Mot de passe</h2>
-                    <input type="password" name="mdp" placeholder="Mot de passe">
+                    <input type="password" name="password" placeholder="Mot de passe">
                 </div>
 
                 <br>

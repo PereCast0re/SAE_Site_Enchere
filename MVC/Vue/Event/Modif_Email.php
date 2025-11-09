@@ -5,7 +5,7 @@
         
         <h1>Modifier votre email</h1>
         
-        <form action="../Controlleur/C_update_client.php" class="form_modif_mail" method="POST">
+        <form action="../Controlleur/C_updateUser.php" class="form_modif_mail" method="POST">
             <p>Taper votre mail</p>
             <input type="email" name="new_email" placeholder="Votre nouvel email">
             <button type="submit" name="action" value="update_email">Valider</button>

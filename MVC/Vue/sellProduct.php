@@ -3,12 +3,12 @@ require_once("../Modele/pdo.php");
 
 session_start();
 
-if (!isset($_SESSION['client'])) {
+if (!isset($_SESSION['user'])) {
     header('location: connexion.php');
     exit();
 }
 
-$client = $_SESSION['client'];
+$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ $client = $_SESSION['client'];
 
     <h1>Mise en enchère de votre produit</h1>
 
-    <form class="form_vente_produit" action="../Controlleur/C_publierAnnonce.php" method="POST" enctype="multipart/form-data">
+    <form class="form_vente_produit" action="../Controlleur/C_addProduct.php" method="POST" enctype="multipart/form-data">
         <div class="containeur_top">
             <div class="nom_annonce_vente">
                 <h4>Nom de votre annonce</h4>
@@ -77,9 +77,9 @@ $client = $_SESSION['client'];
                     <h4>Catégorie :</h4>
                     <select name="lst_categorie_vente" id="lst_categorie_vente" required>
                         <?php
-                            $categorie = getCategorie();
-                            foreach($categorie as $cate) {
-                                echo('<option>'.$cate['nom'].'</option>');
+                            $categories = getCategory();
+                            foreach($categories as $category) {
+                                echo('<option>'.$category['name'].'</option>');
                             }
                         ?>
                     </select>

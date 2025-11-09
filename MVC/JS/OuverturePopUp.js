@@ -1,7 +1,7 @@
 function ouvrirPopup(page){
     switch (page){
         case "Adresse":
-            fetch('../Vue/Event/Modif_Adresse.php')
+            fetch('../Vue/Event/Modif_Address.php')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('popup').innerHTML = html;
@@ -52,7 +52,7 @@ async function checkupNewPWD(event) {
     const pwd2 = document.querySelector('.new_password_2').value;
 
     if (pwd1 != pwd2){
-        document.querySelector('.div_erreur').innerHTML = '<p style="color: red;"> Erreur de mdp ENCULE! </p>';
+        document.querySelector('.div_erreur').innerHTML = '<p style="color: red;"> Password error ! </p>';
     }
     else{
         document.querySelector('.div_erreur').innerHTML = '<p> </p>';

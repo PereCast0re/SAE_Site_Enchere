@@ -1,11 +1,11 @@
 <nav>
     <ul>
         <li><a href="">Acheter</a></li>
-        <li><a id="btn_vente" href="venteProduit.php">Vendre</a></li>
-        <li><a id="btn_client" href="client.php">Client</a></li>
+        <li><a id="btn_vente" href="sellProduct.php">Vendre</a></li>
+        <li><a id="btn_client" href="user.php">Client</a></li>
     </ul>
-    <a href="accueil.php">
+    <a href="index.php">
         <img src=""  alt="logo">
     </a>
-    <a id="btn_connexion" href="connexion.php">Connexion</a>
+    <a id="btn_connexion" href="connection.php">Connexion</a>
 </nav>

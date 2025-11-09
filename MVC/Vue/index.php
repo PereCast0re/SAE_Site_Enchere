@@ -19,7 +19,7 @@
   <main>
     <?php
       include_once('../Modele/pdo.php');
-      $annonces = get_annonces_with_images();
+      $products = getAllProduct();
     ?>
 
     <?php if (empty($annonces)): ?>
@@ -27,22 +27,22 @@
     <?php else: ?>
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-          <?php foreach ($annonces as $a): ?>
+          <?php foreach ($products as $p): ?>
             <div class="swiper-slide">
               <?php
-                $images = get_images_for_annonce($a['id_annonce']);
+                $images = getImage($p['id_product']);
                 if (!empty($images)) {
                   echo '<img src="'.htmlspecialchars($images[0]['url_image']).'" alt="Image annonce">';
                 } else {
                   echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
                 }
               ?>
-              <h3><?= htmlspecialchars($a['titre']) ?></h3>
-              <p><?= htmlspecialchars($a['description']) ?></p>
-              <p>Prix actuel : <?= htmlspecialchars($a['prix_en_cours']) ?> €</p>
-              <p>Date de fin : <?= htmlspecialchars($a['date_de_fin']) ?></p>
+              <h3><?= htmlspecialchars($p['title']) ?></h3>
+              <p><?= htmlspecialchars($p['description']) ?></p>
+              <p>Prix actuel : <?= htmlspecialchars($p['current_price']) ?> €</p>
+              <p>Date de fin : <?= htmlspecialchars($p['end_date']) ?></p>
               <!-- Timer -->
-              <p class="timer" data-end="<?= htmlspecialchars($a['date_de_fin']) ?>"></p>
+              <p class="timer" data-end="<?= htmlspecialchars($p['date_de_fin']) ?>"></p>
             </div>
           <?php endforeach; ?>
         </div>
@@ -57,23 +57,23 @@
     <div class="content">
       <h1>Nos dernières annonces</h1>
       <div class="annonces">
-        <?php if (empty($annonces)): ?>
+        <?php if (empty($products)): ?>
           <p>Aucune annonce disponible pour le moment.</p>
         <?php else: ?>
-          <?php for ($i = 0; $i < min(7, count($annonces)); $i++): ?>
-            <?php $a = $annonces[$i]; ?>
+          <?php for ($i = 0; $i < min(7, count($products)); $i++): ?>
+            <?php $p = $products[$i]; ?>
             <div class="announce-card">
               <?php
-                $images = get_images_for_annonce($a['id_annonce']);
+                $images = getImage($p['id_product']);
                 if (!empty($images)) {
                   echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                 } else {
                   echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
                 }
               ?>
-              <h3><?= htmlspecialchars($a['titre']) ?></h3>
+              <h3><?= htmlspecialchars($p['title']) ?></h3>
               <!-- Timer -->
-              <p class="timer" data-end="<?= htmlspecialchars($a['date_de_fin']) ?>"></p>
+              <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
               <a class="btn">Voir</a>
             </div>
           <?php endfor; ?>
@@ -82,7 +82,7 @@
 
       <a id="Voir_annonces_btn" class="btn">Voir les annonces</a>
       <br><br><br>
-      <a id="Connexion_button" class="btn" href="connexion.php">Connexion</a><br><br><br>
+      <a id="Connexion_button" class="btn" href="connection.php">Connexion</a><br><br><br>
       <a id="inscription_button" class="btn" href="inscription.php">S'inscrire</a>
 
       <h1>Nos catégories en vedette</h1>

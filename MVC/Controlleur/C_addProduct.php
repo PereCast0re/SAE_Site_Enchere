@@ -2,35 +2,29 @@
 
 session_start();
 
-$client = $_SESSION["client"];
+$user = $_SESSION["user"];
 
 require_once("../Modele/pdo.php");
 
 
 if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) && isset($_POST['date_debut']) && isset($_POST['date_fin']) && isset($_POST['description_produit'])) {
-    $nom = $_POST['nom_annonce_vente'];
-    $categorie = $_POST['lst_categorie_vente'];
-    $date_debut = $_POST['date_debut'];
-    $date_fin = $_POST['date_fin'];
+    $title = $_POST['nom_annonce_vente'];
+    $category = $_POST['lst_categorie_vente'];
+    $start_date = $_POST['date_debut'];
+    $end_date = $_POST['date_fin'];
     $description = $_POST['description_produit'];
     if (isset($_POST['valeur_reserve'])){
-        $prix_reserve = $_POST['valeur_reserve'];
+        $reserve_price = $_POST['valeur_reserve'];
     }
     else{
-        $prix_reserve = null;
+        $reserve_price = null;
     }
 
-    $prix_actuelle = 0;
-    $rate = 0;
-    $fini = false;
+    /// info user
+    $id_user = $user['id_user'];
 
-    /// info client
-    $id_client = $client['id_client'];
-
-    $LastIdAnnonce = getLastIdAnnonce();
-    $id_annonce = $LastIdAnnonce['last_id'] + 1;
     try{
-        ajout_annonce($id_annonce, $nom, $description, $date_debut, $date_fin, $prix_actuelle, $prix_reserve, $rate, $fini, $id_client);
+        AddProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
         // Ajout des images avec création dossier
         try{
             //Verification de la présence d'images

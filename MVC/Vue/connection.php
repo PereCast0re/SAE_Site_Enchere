@@ -24,14 +24,14 @@
         <div>
             <hr>
             <h1>Connectez-vous à votre compte.</h1>
-            <form action="../Controlleur/C_connexion.php" method="post" id="connexion">
+            <form action="../Controlleur/C_connection.php" method="post" id="connexion">
                 <div>
                     <h2>Email</h2>
                     <input type="text" name="email" placeholder="Email">
                 </div>
                 <div>
                     <h2>Mot de passe</h2>
-                    <input type="password" name="mdp" placeholder="Mot de passe">
+                    <input type="password" name="password" placeholder="Mot de passe">
                 </div>
 
                 <br>

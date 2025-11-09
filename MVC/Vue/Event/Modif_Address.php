@@ -9,17 +9,17 @@
 
         </div>
         
-        <form action="../Controlleur/C_update_client.php" class="form_modif_Adresse" method="POST">
+        <form action="../Controlleur/C_updateUser.php" class="form_modif_Adresse" method="POST">
             <p>Taper votre nouvelle adresse </p>
-            <input type="text" name="new_adresse" placeholder="adresse">
+            <input type="text" name="address" placeholder="adresse">
 
             <p>Taper votre nouveau code postal</p>
-            <input type="text" name="new_cp" placeholder="Code postal">
+            <input type="text" name="postal_code" placeholder="Code postal">
 
             <p>Taper votre nouvelle ville</p>
-            <input type="text" name="new_ville" placeholder="Ville">
+            <input type="text" name="city" placeholder="Ville">
 
-            <button type="submit" name="action" value="update_Adresse">Valider</button>
+            <button type="submit" name="action" value="update_address">Valider</button>
         </form>
 
     </div>

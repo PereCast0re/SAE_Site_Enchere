@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['client'])) {
-    header('location: connexion.php');
+if (!isset($_SESSION['user'])) {
+    header('location: connection.php');
     exit();
 }
 
-$client = $_SESSION['client'];
+$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -33,51 +33,50 @@ $client = $_SESSION['client'];
 
     <main>
         <?php
-        echo "<p class='PsuedoClient'>" . $client['nom'] . " " . $client['prenom'] . "</p>";
+        echo "<p class='PsuedoClient'>" . $user['firstname'] . " " . $user['name'] . "</p>";
         ?>
     </main>
 
     <div class="section_info">
         <div class="nom_client">
             <p>Nom :</p>
-            <input type="text" name="nom" placeholder="<?php echo ($client['nom']) ?>" disabled>
+            <input type="text" name="name" placeholder="<?php echo ($user['name']) ?>" disabled>
         </div>
         <div class="prenom_client">
             <p>Prenom :</p>
-            <input type="text" name="prenom" placeholder="<?php echo ($client['prenom']) ?>" disabled>
+            <input type="text" name="firstname" placeholder="<?php echo ($user['firstname']) ?>" disabled>
         </div>
         <div class="email_client">
             <p>Email :</p>
-            <input type="mail" name="email" placeholder="<?php echo ($client['email']) ?>" disabled>
+            <input type="mail" name="email" placeholder="<?php echo ($user['email']) ?>" disabled>
             <button type="button" onclick="ouvrirPopup('Email')">Modifier</button>
         </div>
         <div class="adresse_client">
             <p>Adresse :</p>
-            <input type="text" name="adresse"
-                placeholder="<?php echo ($client['adresse'] . " " . $client['code_postale'] . " " . $client['ville']) ?>"
+            <input type="text" name="address"
+                placeholder="<?php echo ($user['address'] . " " . $user['postal_code'] . " " . $user['city']) ?>"
                 disabled>
             <button type="button" onclick="ouvrirPopup('Adresse')">Modifier</button>
         </div>
         <div class="mdp_client">
             <p>Mot de passe :</p>
-            <input type="password" name="password" placeholder="<?php echo ($client['mdp']) ?>" disabled>
+            <input type="password" name="password" placeholder="<?php echo ($user['password']) ?>" disabled>
             <button type="button" onclick="ouvrirPopup('Password')">Modifier</button>
         </div>
-        <div>
 
         <div id="popup">
         </div>
 
         <div class="section_annonce_publier">
-            <input type="hidden" name="action" >
+            <input type="hidden" name="action">
         </div>
 
         <script src="../JS/OuverturePopUp.js"></script>
         <script src="../JS/Annonce_publie_client.js"></script>
 
-            <footer>
-                <?php include('footer.php'); ?>
-            </footer>
+        <footer>
+            <?php include('footer.php'); ?>
+        </footer>
 </body>
 
 </html>
