@@ -239,7 +239,7 @@ function get_Annonce_User($id_client){
     $request = "SELECT * 
                 from product as p 
                 join published as pb on pb.id_product = p.id_product
-                where pb.id_user = :id_client
+                where pb.id_user = :id_client and p.end_date > date(now())
                 ";
     try{
         $temp = $pdo->prepare($request);
@@ -283,3 +283,7 @@ function getAnnonce($id_annoncement){
     // Retourner une seule annonce (row) plutôt qu'un tableau de lignes
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                        //Favorite Section//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
