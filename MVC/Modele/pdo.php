@@ -284,6 +284,23 @@ function getAnnonce($id_annoncement){
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
+function getLastPrice($id_product){
+    $pdo = connection();
+    $requete1 = "SELECT MAX(new_price) as last_price
+                from bid
+                where id_product = :id_product";
+    try{
+        $tmp = $pdo->prepare($requete1);
+        $tmp->execute([
+            ':id_product' => $id_product
+        ]);
+    }
+    catch (PDOException $e){
+        die("Error retrieving the last price for the product, try again !\nError : " .$e->getMessage());
+    }
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         //Favorite Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

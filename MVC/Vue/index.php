@@ -22,7 +22,7 @@
       $products = getAllProduct();
     ?>
 
-    <?php if (empty($annonces)): ?>
+    <?php if (empty($products)): ?>
       <p>Aucune annonce disponible pour le moment.</p>
     <?php else: ?>
       <div class="swiper mySwiper">
@@ -39,10 +39,14 @@
               ?>
               <h3><?= htmlspecialchars($p['title']) ?></h3>
               <p><?= htmlspecialchars($p['description']) ?></p>
-              <p>Prix actuel : <?= htmlspecialchars($p['current_price']) ?> €</p>
-              <p>Date de fin : <?= htmlspecialchars($p['end_date']) ?></p>
+              <?php $current_price = getLastPrice($p['id_product'])['last_price']; 
+                if ($current_price === null) {
+                    $current_price = $p['start_price'];
+                }
+              ?>
+              <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
               <!-- Timer -->
-              <p class="timer" data-end="<?= htmlspecialchars($p['date_de_fin']) ?>"></p>
+              <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
             </div>
           <?php endforeach; ?>
         </div>
@@ -120,7 +124,7 @@
       // Lancer tous les timers de la page
       document.querySelectorAll('.timer').forEach(el => {
         const endDate = el.getAttribute('data-end');
-        startCountdown(endDate, el); // ✅ Fonction importée depuis timer.js
+        startCountdown(endDate, el); // Fonction importée depuis timer.js
       });
     });
   </script>
