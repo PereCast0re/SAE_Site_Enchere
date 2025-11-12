@@ -90,6 +90,22 @@
       <a id="inscription_button" class="btn" href="inscription.php">S'inscrire</a>
 
       <h1>Nos catégories en vedette</h1>
+      <div class="category">
+        <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
+          <?php $cat = getCategory()[$i]; ?>
+          <div class="category-card">
+            <?php $images = getImage($p['id_product']);
+                if (!empty($images)) {
+                  echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                } else {
+                  echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                }
+            ?>
+            <h3><?= htmlspecialchars($cat['name']) ?></h3>
+            <a class="btn">Voir</a>
+          </div>
+        <?php endfor; ?>
+      </div>
       <p>------------TEXTE------------</p>
       <a class="btn">S'abonner</a><br><br><br>
     </div>
