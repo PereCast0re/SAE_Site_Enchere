@@ -7,7 +7,7 @@
         
         <div class="div_erreur"></div>
         
-        <form class="form_modif_password" id="form_modif_password" action="../Controlleur/C_updateUser.php" method="POST" onsubmit="checkupNewPWD(event)">
+        <form class="form_modif_password" id="form_modif_password" action="index.php?action=update_password" method="POST" onsubmit="checkupNewPWD(event)">
             <input type="hidden" name="action" value="update_password">
             
             <p>Taper nouveau mot de passe </p>
@@ -23,4 +23,4 @@
     </div>
 </div>
 
-<script src="../JS/OuverturePopUp.js"></script>
+<script src="templates/JS/OuverturePopUp.js"></script>

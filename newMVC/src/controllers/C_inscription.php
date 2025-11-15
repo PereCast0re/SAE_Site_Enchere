@@ -35,6 +35,6 @@ function inscription(array $input)
         throw new Exception("Impossible de s'inscrire pour le moment !");
     } else {
         // Redirection ou message de succès
-        header('Location: ../Vue/user.php');
+        header('Location: index.php?action=user');
     }
 }

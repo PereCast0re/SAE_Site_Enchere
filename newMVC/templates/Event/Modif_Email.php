@@ -5,9 +5,9 @@
         
         <h1>Modifier votre email</h1>
         
-        <form action="../Controlleur/C_updateUser.php" class="form_modif_mail" method="POST">
+        <form action="index.php?action=update_email" class="form_modif_mail" method="POST">
             <p>Taper votre mail</p>
-            <input type="email" name="new_email" placeholder="Votre nouvel email">
+            <input type="email" name="email" placeholder="Votre nouvel email">
             <button type="submit" name="action" value="update_email">Valider</button>
         
         </form>
@@ -15,4 +15,4 @@
     </div>
 
 </div>
-<script src="../JS/OuverturePopUp.js"></script>
+<script src="templates/JS/OuverturePopUp.js"></script>

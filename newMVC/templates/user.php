@@ -1,32 +1,11 @@
 <?php
-
-if (!isset($_SESSION['user'])) {
-    header('location: connection.php');
-    exit();
-}
+$title = "Page d'utilisateur";
+$style = "templates/style/style.css";
 
 $user = $_SESSION['user'];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace client</title>
-    <link rel="stylesheet" href="templates/style/style.css">
-    <script src="" defer></script>
-    <style>
-        footer {
-            position: absolute;
-            bottom: 0;
-        }
-    </style>
-    <script src="templates/JS/timer.js" defer></script>
-</head>
-
-<body>
+<?php ob_start(); ?>
     <header>
         <?php include('preset/header.php'); ?>
     </header>
@@ -80,6 +59,6 @@ $user = $_SESSION['user'];
         <footer>
             <?php include('preset/footer.php'); ?>
         </footer>
-</body>
+<?php $content = ob_get_clean(); ?>
 
-</html>
+<?php require('preset/layout.php'); ?>

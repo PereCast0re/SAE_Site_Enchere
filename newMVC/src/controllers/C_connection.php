@@ -12,16 +12,16 @@ function userConnection(array $input)
 
             if ($info_user) {
                 $_SESSION['user'] = $info_user;
-                header('Location: templates/user.php');
+                header('Location: index.php?action=user');
                 exit();
             } else {
                 $_SESSION['error'] = "Mot de passe ou email faux";
-                header('Location: templates/connection.php');
+                header('Location: index.php?action=connection');
                 exit();
             }
     } else {
         $_SESSION['error'] = "Mot de passe ou email faux";
-        header('Location: templates/connection.php');
+        header('Location: index.php?action=connection');
         exit();
     }
 }

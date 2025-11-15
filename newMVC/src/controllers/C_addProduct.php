@@ -4,7 +4,7 @@ require_once('src/model/pdo.php');
 
 function addProduct(int $id_user, array $input)
 {
-    if (isset($input["nom_annonce_vente"]) && isset($input["lst_categorie_vente"]) && isset($_POST['date_debut']) && isset($_POST['date_fin']) && isset($_POST['description_produit'])) {
+    if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
         $title = $input['nom_annonce_vente'];
         $category = $input['lst_categorie_vente'];
         $start_date = $input['date_debut'];
@@ -23,7 +23,7 @@ function addProduct(int $id_user, array $input)
     if (!$success) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
-        header("Location: ../Vue/user.php");
+        header("Location: index.php?action=user");
     }
 
     // VOIR pour les images 

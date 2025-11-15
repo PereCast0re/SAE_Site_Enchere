@@ -9,7 +9,7 @@
 
         </div>
         
-        <form action="../Controlleur/C_updateUser.php" class="form_modif_Adresse" method="POST">
+        <form action="index.php?action=update_address" class="form_modif_Adresse" method="POST">
             <p>Taper votre nouvelle adresse </p>
             <input type="text" name="address" placeholder="adresse">
 
@@ -24,4 +24,4 @@
 
     </div>
 </div>
-<script src="../JS/OuverturePopUp.js"></script>
+<script src="templates/JS/OuverturePopUp.js"></script>

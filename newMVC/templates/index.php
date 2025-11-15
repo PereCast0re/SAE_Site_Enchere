@@ -78,8 +78,8 @@ $style = "templates/style/accueil.css";
 
     <a id="Voir_annonces_btn" class="btn">Voir les annonces</a>
     <br><br><br>
-    <a id="Connexion_button" class="btn" href="connection.php">Connexion</a><br><br><br>
-    <a id="inscription_button" class="btn" href="inscription.php">S'inscrire</a>
+    <a id="Connexion_button" class="btn" href="index.php?action=connection">Connexion</a><br><br><br>
+    <a id="inscription_button" class="btn" href="index.php?action=inscription">S'inscrire</a>
 
     <h1>Nos catégories en vedette</h1>
     <div class="category">
@@ -111,7 +111,7 @@ $style = "templates/style/accueil.css";
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <!-- Ton script du timer -->
-<script src="JS/timer.js"></script>
+<script src="templates/JS/timer.js"></script>
 
 <script>
   // Initialisation de Swiper

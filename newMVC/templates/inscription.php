@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$title = "Page d'inscription'";
+$style = "templates/style/style.css";
+?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inscription</title>
-    <link rel="stylesheet" href="Style/style.css">
-    <script src="" defer></script>
-</head>
-
-<body>
+<?php ob_start(); ?>
     <header>
         <?php include('preset/header.php'); ?>
     </header>
@@ -18,7 +12,7 @@
         <div>
             <hr>
             <h1>Inscrivez-vous.</h1>
-            <form action="../Controlleur/C_inscription.php" method="post" id="connexion">
+            <form action="index.php?action=userInscription" method="post" id="connexion">
                 <div>
                     <h2>Nom</h2>
                     <input type="text" name="name" placeholder="Nom">
@@ -62,6 +56,6 @@
     <footer>
         <?php include('preset/footer.php'); ?>
     </footer>
-</body>
+<?php $content = ob_get_clean(); ?>
 
-</html>
+<?php require('preset/layout.php');

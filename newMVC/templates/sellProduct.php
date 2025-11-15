@@ -6,28 +6,20 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user = $_SESSION['user'];
+
+$title = "Page de vente";
+$style = "templates/style/style.css";
+$optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vente</title>
-    <link rel="stylesheet" href="templates/style/style.css">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-</head>
-
-<body>
+<?php ob_start(); ?>
     <header>
         <?php include('preset/header.php'); ?>
     </header>
 
     <h1>Mise en enchère de votre produit</h1>
 
-    <form class="form_vente_produit" action="../Controlleur/C_addProduct.php" method="POST" enctype="multipart/form-data">
+    <form class="form_vente_produit" action="index.php?action=addProduct" method="POST" enctype="multipart/form-data">
         <div class="containeur_top">
             <div class="nom_annonce_vente">
                 <h4>Nom de votre annonce</h4>
@@ -114,7 +106,7 @@ $user = $_SESSION['user'];
         <?php include('preset/footer.php'); ?>
     </footer>
     
-    <script src="JS/vente_produit.js"></script>
-</body>
+    <script src="templates/JS/vente_produit.js"></script>
+<?php $content = ob_get_clean(); ?>
 
-</html>
+<?php require('preset/layout.php'); ?>

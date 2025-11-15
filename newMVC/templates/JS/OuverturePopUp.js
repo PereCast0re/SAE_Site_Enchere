@@ -1,7 +1,7 @@
 function ouvrirPopup(page) {
     switch (page) {
         case "Adresse":
-            fetch('../Event/Modif_Address.php')
+            fetch('templates/Event/Modif_Address.php')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
@@ -9,7 +9,7 @@ function ouvrirPopup(page) {
                 })
             break
         case "Email":
-            fetch('../Event/Modif_Email.php')
+            fetch('templates/Event/Modif_Email.php')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
@@ -17,7 +17,7 @@ function ouvrirPopup(page) {
                 })
             break
         case "Password":
-            fetch('../Event/Modif_Password.php')
+            fetch('templates/Event/Modif_Password.php')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
