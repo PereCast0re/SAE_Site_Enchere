@@ -1,7 +1,12 @@
 <?php
 $title = "Page de connexion";
 $style = "templates/style/accueil.css";
+
 ?>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
 
 <?php ob_start(); ?>
 <header>
@@ -31,9 +36,14 @@ $style = "templates/style/accueil.css";
             ?>
             <h3><?= htmlspecialchars($p['title']) ?></h3>
             <p><?= htmlspecialchars($p['description']) ?></p>
-            <?php $current_price = getLastPrice($p['id_product'])['last_price'];
-            if ($current_price === null) {
-              $current_price = $p['start_price'];
+            <?php
+            $priceRow = get_price_annoncement($p['id_product']);
+            // $priceRow est un tableau de lignes; la valeur est dans $priceRow[0]['MAX(new_price)']
+            $current_price = null;
+            if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+                $current_price = $priceRow[0]['MAX(new_price)'];
+            } else {
+                $current_price = $p['start_price'];
             }
             ?>
             <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
