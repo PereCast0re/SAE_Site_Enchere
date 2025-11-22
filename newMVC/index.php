@@ -38,8 +38,30 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
             addProduct($id_user, $_POST);
+        } elseif ($_GET['action'] === 'favorite') {
+            if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                if (!isset($_SESSION['user'])) {
+                    // Utilisateur non connecté
+                    http_response_code(401); // optionnel, HTTP Unauthorized
+                    echo "not_logged";
+                    exit;
+                } else {
+                    throw new Exception("This product doesn't exist !");
+                }
+            }
 
 
+
+        } elseif ($_GET['action'] === 'product') {
+            if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                $p = getProduct($_GET['id']);
+
+                if ($p === false) {
+                    throw new Exception("This product doesn't exist !");
+                }
+                $current_price = getLastPrice($p['id_product'])['last_price'];
+                require("templates/product.php");
+            }
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }

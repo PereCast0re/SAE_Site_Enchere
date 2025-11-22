@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['user'])) {
-    header('location: connexion.php');
+    header('location: index.php?action=connection');
     exit();
 }
 
@@ -13,6 +13,13 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 ?>
 
 <?php ob_start(); ?>
+    <style>
+        footer {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+    
     <header>
         <?php include('preset/header.php'); ?>
     </header>

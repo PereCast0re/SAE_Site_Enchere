@@ -2,6 +2,11 @@
 $title = "Page d'utilisateur";
 $style = "templates/style/style.css";
 
+if (!isset($_SESSION['user'])) {
+    header('location: index.php?action=connection');
+    exit();
+}
+
 $user = $_SESSION['user'];
 ?>
 

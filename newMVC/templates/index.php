@@ -70,7 +70,7 @@ $style = "templates/style/accueil.css";
             <h3><?= htmlspecialchars($p['title']) ?></h3>
             <!-- Timer -->
             <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-            <a class="btn">Voir</a>
+            <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
           </div>
         <?php endfor; ?>
       <?php endif; ?>

@@ -172,6 +172,19 @@ function getAllProduct(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getProduct($id_product){
+    $pdo = connection();
+    $requete = "SELECT * FROM Product WHERE id_product = ?";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([$id_product]);
+    }
+    catch (PDOException $e){
+        die("Error retrieving product, try again !\nError : " .$e->getMessage());
+    }
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}
+
 function getImage($id_product){
     $pdo = connection();
     $requete = "SELECT * FROM image
@@ -269,20 +282,20 @@ function get_price_annoncement($id_annoncement){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getAnnonce($id_annoncement){
-    $pdo = connection();
-    $request = "SELECT * from product where id_product = :id";
-    try{
-        $tmp = $pdo->prepare($request);
-        $tmp->execute([
-            ":id" => $id_annoncement
-        ]);
-        } catch (PDOException $e){
-            die("Error on the extraction of this product " .$e->getMessage());
-        }
-    // Retourner une seule annonce (row) plutôt qu'un tableau de lignes
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
+// function getAnnonce($id_annoncement){
+//     $pdo = connection();
+//     $request = "SELECT * from product where id_product = :id";
+//     try{
+//         $tmp = $pdo->prepare($request);
+//         $tmp->execute([
+//             ":id" => $id_annoncement
+//         ]);
+//         } catch (PDOException $e){
+//             die("Error on the extraction of this product " .$e->getMessage());
+//         }
+//     // Retourner une seule annonce (row) plutôt qu'un tableau de lignes
+//     return $tmp->fetch(PDO::FETCH_ASSOC);
+// }
 
 function getLastPrice($id_product){
     $pdo = connection();
