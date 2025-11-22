@@ -127,13 +127,7 @@ h3 {
 /* ====================== */
 /* SECTION ANNONCES */
 /* ====================== */
-.annonces {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding: 40px 0;
-}
+
 
 /* --- CARTE D’ANNONCE --- */
 .announce-card {
