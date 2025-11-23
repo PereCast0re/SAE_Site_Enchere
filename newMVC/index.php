@@ -8,6 +8,8 @@ require_once('src/controllers/C_inscription.php');
 require_once('src/controllers/C_pageProduct.php');
 require_once('src/controllers/C_pageUser.php');
 require_once('src/controllers/C_updateUser.php');
+require_once('src/controllers/C_favorite.php');
+require_once('src/controllers/C_unfavorite.php');
 require_once("src/model/pdo.php");
 
 try {
@@ -53,10 +55,7 @@ try {
                 $id_product = $_GET['id'];
                 $id_user = $_SESSION['user']['id_user'];
 
-                if (isProductFavorite($id_product, $id_user)) exit;
-
-                $success = setProductFavorite($id_product, $id_user);
-                if (!$success) throw new Exception("You can't favorite this product !");
+                favorite($id_product, $id_user);
             } else {
                 throw new Exception("Les informations pour mettre en favoris l'annonce a échoué !");
             }
@@ -72,26 +71,16 @@ try {
                 $id_product = $_GET['id'];
                 $id_user = $_SESSION['user']['id_user'];
 
-                if (!isProductFavorite($id_product, $id_user)) exit;
-
-                $success = unsetProductFavorite($id_product, $id_user);
-                if (!$success) throw new Exception("You can't unfavorite this product !");
-
+                unfavorite($id_product, $id_user);
             } else {
                 throw new Exception("Les informations pour enlever en favoris l'annonce a échoué !");
             }
 
 ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                $p = getProduct($_GET['id']);
-                if ($p === false) throw new Exception("This product doesn't exist !");
+            Product($_GET['id']);
 
-                $current_price = getLastPrice($p['id_product'])['last_price'];
-                isset($_SESSION['user']) ? $isFav = isProductFavorite($_GET['id'], $_SESSION['user']['id_user']) : $isFav = false;
-
-                require("templates/product.php");
-            }
+////////////////////////////// Cas de base //////////////////////////////        
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
