@@ -12,6 +12,7 @@ require_once("src/model/pdo.php");
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
+////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
             require("templates/connection.php");
         } elseif ($_GET['action'] === 'inscription') {
@@ -21,7 +22,7 @@ try {
         } elseif ($_GET['action'] === 'sell') {
             require("templates/sellProduct.php");
 
-
+////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
         } elseif ($_GET['action'] === 'userConnection') {
             userConnection($_POST);
         } elseif ($_GET['action'] === 'userInscription') {
@@ -38,28 +39,57 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
             addProduct($id_user, $_POST);
-        } elseif ($_GET['action'] === 'favorite') {
+
+////////////////////////////// Favoris //////////////////////////////
+        } elseif ($_GET['action'] === 'favorite') { // favorite
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
                 if (!isset($_SESSION['user'])) {
                     // Utilisateur non connecté
                     http_response_code(401); // optionnel, HTTP Unauthorized
                     echo "not_logged";
                     exit;
-                } else {
-                    throw new Exception("This product doesn't exist !");
                 }
+
+                $id_product = $_GET['id'];
+                $id_user = $_SESSION['user']['id_user'];
+
+                if (isProductFavorite($id_product, $id_user)) exit;
+
+                $success = setProductFavorite($id_product, $id_user);
+                if (!$success) throw new Exception("You can't favorite this product !");
+            } else {
+                throw new Exception("Les informations pour mettre en favoris l'annonce a échoué !");
+            }
+        } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
+            if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                if (!isset($_SESSION['user'])) {
+                    // Utilisateur non connecté
+                    http_response_code(401); // optionnel, HTTP Unauthorized
+                    echo "not_logged";
+                    exit;
+                }
+
+                $id_product = $_GET['id'];
+                $id_user = $_SESSION['user']['id_user'];
+
+                if (!isProductFavorite($id_product, $id_user)) exit;
+
+                $success = unsetProductFavorite($id_product, $id_user);
+                if (!$success) throw new Exception("You can't unfavorite this product !");
+
+            } else {
+                throw new Exception("Les informations pour enlever en favoris l'annonce a échoué !");
             }
 
-
-
+////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
                 $p = getProduct($_GET['id']);
+                if ($p === false) throw new Exception("This product doesn't exist !");
 
-                if ($p === false) {
-                    throw new Exception("This product doesn't exist !");
-                }
                 $current_price = getLastPrice($p['id_product'])['last_price'];
+                isset($_SESSION['user']) ? $isFav = isProductFavorite($_GET['id'], $_SESSION['user']['id_user']) : $isFav = false;
+
                 require("templates/product.php");
             }
         } else {

@@ -9,7 +9,7 @@ $title = "Page du produit";
 $style = "templates/style/style.css";
 $script = "templates/JS/favorite.js";
 
-$isFav = true;
+// $isFav = true;
 ?>
 
 <?php ob_start(); ?>

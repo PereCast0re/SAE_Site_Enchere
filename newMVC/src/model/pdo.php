@@ -1,28 +1,29 @@
 <?php
 
-function connection(){
+function connection()
+{
     $host = "localhost";
     $dbname = "auction_site";
     $root = "root";
     $password = "";
 
-    try{
-        $pdo = new PDO("mysql:host=" .$host. ";dbname=" .$dbname. ";charset=utf8mb4", $root, $password);
+    try {
+        $pdo = new PDO("mysql:host=" . $host . ";dbname=" . $dbname . ";charset=utf8mb4", $root, $password);
         /// gpt
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         ///
         return $pdo;
-    }
-    catch (PDOException $e){
-        die("Connexion error !\nError : ".$e->getMessage());
+    } catch (PDOException $e) {
+        die("Connexion error !\nError : " . $e->getMessage());
     }
 }
 
 // Encryptage via code cesar depuis une méthode faite avant insertion
-function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password){
+function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
+{
     $pdo = connection();
     $requete = "INSERT INTO Users (name, firstname, birth_date, address, city, postal_code, email, password) VALUES (:name, :firstname, :birth_date, :address, :city, :postal_code, :email, :password)";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         return $tmp->execute([
             ':name' => $name,
@@ -34,98 +35,97 @@ function createUser($name, $firstname, $birth_date, $address, $city, $postal_cod
             ':email' => $email,
             ':password' => $password,
         ]);
-    }
-    catch (PDOException $e){
-        die("Inscription error, try again later !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Inscription error, try again later !\nError : " . $e->getMessage());
     }
 }
 
 // On part du principe de l'email et le password sont déja décripté
-function authentication($email, $password){
+function authentication($email, $password)
+{
     $pdo = connection();
     $requete = "SELECT * from Users where email = :email and password = :password";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
             ':email' => $email,
             ':password' => $password
         ]);
-    }
-    catch (PDOException $e){
-        die("Authentication error, try again ! /nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Authentication error, try again ! /nError : " . $e->getMessage());
     }
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
-function updateEmailUser($email, $id_user){
+function updateEmailUser($email, $id_user)
+{
     $pdo = connection();
     $requete = "UPDATE Users
                 SET email = :email
                 where id_user = :id_user";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ":email"=> $email,
-            ":id_user"=> $id_user
+            ":email" => $email,
+            ":id_user" => $id_user
         ]);
-    }
-    catch (PDOException $e){
-        die("Modification error, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Modification error, try again !\nError : " . $e->getMessage());
     }
 }
 
-function updatePasswordUser($id_user, $password){
+function updatePasswordUser($id_user, $password)
+{
     $pdo = connection();
     $requete = "UPDATE Users
                 SET password = :password
                 Where id_user = :id_user";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ":password"=> $password,
-            "id_user"=> $id_user
+            ":password" => $password,
+            "id_user" => $id_user
         ]);
-    }
-    catch (PDOException $e){
-        die("Error during the modification of the password, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error during the modification of the password, try again !\nError : " . $e->getMessage());
     }
 }
 
-function updateFullAddress($address, $city , $postal_code, $id_user){
+function updateFullAddress($address, $city, $postal_code, $id_user)
+{
     $pdo = connection();
     $requete = "UPDATE Users
                 set address = :address,
                     city = :city,
                     postal_code = :postal_code
                 where id_user = :id_user";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ":address"=> $address,
-            ":city"=> $city,
-            ":postal_code"=> $postal_code,
-            ":id_user"=> $id_user
+            ":address" => $address,
+            ":city" => $city,
+            ":postal_code" => $postal_code,
+            ":id_user" => $id_user
         ]);
-    }
-    catch (PDOException $e){
-        die("Error during the modification of the adress, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error during the modification of the adress, try again !\nError : " . $e->getMessage());
     }
 }
 
-function getAddress($id_user){
+function getAddress($id_user)
+{
     $pdo = connection();
     $requete = "SELECT address, postal_code, city
                 from Users
                 where id_user = :id_user
     ";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ":id_user"=> $id_user
+            ":id_user" => $id_user
         ]);
-    }
-    catch (PDOException $e){
-        die("Error when selecting the address, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error when selecting the address, try again !\nError : " . $e->getMessage());
     }
 
     // auto_completion 
@@ -145,58 +145,58 @@ function getAddress($id_user){
 //     return $tmp->fetch(PDO::FETCH_ASSOC);
 // }
 
-function getCategory(){
+function getCategory()
+{
     $pdo = connection();
     $requete = "SELECT * FROM category";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute();
-    }
-    catch (PDOException $e){
-        die("Error retrieving categories, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error retrieving categories, try again !\nError : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
-function getAllProduct(){
+function getAllProduct()
+{
     $pdo = connection();
     $requete = "SELECT * FROM Product";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute();
-    }
-    catch (PDOException $e){
-        die("Error retrieving products, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error retrieving products, try again !\nError : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getProduct($id_product){
+function getProduct($id_product)
+{
     $pdo = connection();
     $requete = "SELECT * FROM Product WHERE id_product = ?";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([$id_product]);
-    }
-    catch (PDOException $e){
-        die("Error retrieving product, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error retrieving product, try again !\nError : " . $e->getMessage());
     }
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
-function getImage($id_product){
+function getImage($id_product)
+{
     $pdo = connection();
     $requete = "SELECT * FROM image
                 WHERE id_product = :id_product";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
             ':id_product' => $id_product
         ]);
-    }
-    catch (PDOException $e){
-        die("Error retrieving images for the product, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error retrieving images for the product, try again !\nError : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -216,67 +216,68 @@ function getImage($id_product){
 //     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 // }
 
-function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user){
+function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user)
+{
     $pdo = connection();
     $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price)
                 values (:title, :description, :start_date, :end_date, :reserve_price);
     ";
-    
+
     $requete2 = "INSERT INTO Published (id_product, id_user) values (:id_product, :id_user);";
 
-    try{
+    try {
         $temp = $pdo->prepare($requete1);
         $temp->execute([
-            ":title"=> $title,
-            ":description"=> $description,
-            ":start_date"=> $start_date,
-            ":end_date"=> $end_date,
-            ":reserve_price"=> $reserve_price,
+            ":title" => $title,
+            ":description" => $description,
+            ":start_date" => $start_date,
+            ":end_date" => $end_date,
+            ":reserve_price" => $reserve_price,
         ]);
 
         $id_product = $pdo->lastInsertId();
 
         $temp = $pdo->prepare($requete2);
         return $temp->execute([
-            ":id_product"=> $id_product,
-            ":id_user"=> $id_user
+            ":id_product" => $id_product,
+            ":id_user" => $id_user
         ]);
-    }
-    catch (PDOException $e){
-        die("Error inserting your product into the database, try again !\n Error : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error inserting your product into the database, try again !\n Error : " . $e->getMessage());
     }
 }
 
-function get_Annonce_User($id_client){
+function get_Annonce_User($id_client)
+{
     $pdo = connection();
     $request = "SELECT * 
                 from product as p 
                 join published as pb on pb.id_product = p.id_product
                 where pb.id_user = :id_client and p.end_date > date(now())
                 ";
-    try{
+    try {
         $temp = $pdo->prepare($request);
         $temp->execute([
-                "id_client" => $id_client
-            ]);
-    }
-    catch(PDOException $e){
-        die("Error on extraction of your announcement" .$e->getMessage());
+            "id_client" => $id_client
+        ]);
+    } catch (PDOException $e) {
+        die("Error on extraction of your announcement" . $e->getMessage());
     }
 
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_price_annoncement($id_annoncement){
+function get_price_annoncement($id_annoncement)
+{
     $pdo = connection();
     $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
-    try{
+    try {
         $tmp = $pdo->prepare($request);
         $tmp->execute([
             ":id_product" => $id_annoncement
         ]);
-    } catch(PDOException $e){
-        die("Error on extraction of current bid on your annoncement" .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error on extraction of current bid on your annoncement" . $e->getMessage());
     }
 
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
@@ -297,23 +298,63 @@ function get_price_annoncement($id_annoncement){
 //     return $tmp->fetch(PDO::FETCH_ASSOC);
 // }
 
-function getLastPrice($id_product){
+function getLastPrice($id_product)
+{
     $pdo = connection();
     $requete1 = "SELECT MAX(new_price) as last_price
                 from bid
                 where id_product = :id_product";
-    try{
+    try {
         $tmp = $pdo->prepare($requete1);
         $tmp->execute([
             ':id_product' => $id_product
         ]);
-    }
-    catch (PDOException $e){
-        die("Error retrieving the last price for the product, try again !\nError : " .$e->getMessage());
+    } catch (PDOException $e) {
+        die("Error retrieving the last price for the product, try again !\nError : " . $e->getMessage());
     }
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                        //Favorite Section//
+//Favorite Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function setProductFavorite($id_product, $id_user)
+{
+    $pdo = connection();
+    $request = "INSERT INTO Interest(id_product, id_user) VALUES (:id_product, :id_user)";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([
+        ':id_product' => $id_product,
+        ':id_user' => $id_user
+    ]);
+
+    return $success;
+}
+
+function isProductFavorite($id_product, $id_user)
+{
+    $pdo = connection();
+    $request = "SELECT COUNT(*) FROM interest WHERE id_product = :id_product AND id_user = :id_user";
+    $temp = $pdo->prepare($request);
+    $temp->execute([
+        ':id_product' => $id_product,
+        ':id_user' => $id_user
+    ]);
+    $success = $temp->fetchColumn();
+
+    return $success > 0;
+}
+
+function unsetProductFavorite($id_product, $id_user)
+{
+    $pdo = connection();
+    $request = "DELETE FROM Interest WHERE id_product = :id_product AND id_user = :id_user";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([
+        ':id_product' => $id_product,
+        ':id_user' => $id_user
+    ]);
+
+    return $success;
+}
