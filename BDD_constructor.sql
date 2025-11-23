@@ -89,7 +89,6 @@ CREATE TABLE Bid (
    current_price DECIMAL(15,2),
    new_price DECIMAL(15,2),
    bid_date DATETIME,
-   PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );

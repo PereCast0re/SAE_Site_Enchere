@@ -31,6 +31,12 @@ $script = "templates/JS/favorite.js";
 }
 ?>
 <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
+<form id="bid-form" method="POST">
+    <input type="hidden" name="currentPrice" value=<?= $current_price ?>>
+    <label id="bid-label" for="montant">Donnez votre montant : </label>
+    <input name="newPrice" id="montant" type="number" min=<?= $current_price + 1 ?> required>
+    <button id="bid-button" data-id-product=<?= $p['id_product'] ?> type="submit">Enchérir</button>
+</form>
 <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
 <p><?= $p['description']; ?></p>
 
@@ -38,11 +44,12 @@ $script = "templates/JS/favorite.js";
     <?php include('preset/footer.php'); ?>
 </footer>
 
+<script src="templates/JS/bid.js"></script>
+
 <!-- Ton script du timer -->
 <script src="templates/JS/timer.js"></script>
 
 <script>
-    // Initialisation de Swiper
     document.addEventListener('DOMContentLoaded', function () {
         // Lancer tous les timers de la page
         document.querySelectorAll('.timer').forEach(el => {

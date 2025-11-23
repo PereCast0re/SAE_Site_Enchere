@@ -37,7 +37,7 @@ $style = "templates/style/accueil.css";
             <h3><?= htmlspecialchars($p['title']) ?></h3>
             <p><?= htmlspecialchars($p['description']) ?></p>
             <?php
-            $priceRow = get_price_annoncement($p['id_product']);
+            $priceRow = getLastPrice($p['id_product']);
             // $priceRow est un tableau de lignes; la valeur est dans $priceRow[0]['MAX(new_price)']
             $current_price = null;
             if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {

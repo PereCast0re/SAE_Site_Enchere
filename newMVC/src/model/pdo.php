@@ -267,21 +267,21 @@ function get_Annonce_User($id_client)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_price_annoncement($id_annoncement)
-{
-    $pdo = connection();
-    $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
-    try {
-        $tmp = $pdo->prepare($request);
-        $tmp->execute([
-            ":id_product" => $id_annoncement
-        ]);
-    } catch (PDOException $e) {
-        die("Error on extraction of current bid on your annoncement" . $e->getMessage());
-    }
+// function get_price_annoncement($id_annoncement)
+// {
+//     $pdo = connection();
+//     $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
+//     try {
+//         $tmp = $pdo->prepare($request);
+//         $tmp->execute([
+//             ":id_product" => $id_annoncement
+//         ]);
+//     } catch (PDOException $e) {
+//         die("Error on extraction of current bid on your annoncement" . $e->getMessage());
+//     }
 
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
+//     return $tmp->fetchAll(PDO::FETCH_ASSOC);
+// }
 
 // function getAnnonce($id_annoncement){
 //     $pdo = connection();
@@ -354,6 +354,24 @@ function unsetProductFavorite($id_product, $id_user)
     $success = $temp->execute([
         ':id_product' => $id_product,
         ':id_user' => $id_user
+    ]);
+
+    return $success;
+}
+
+function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
+{
+    if ($currentPrice === null) {
+        $currentPrice = getLastPrice($id_product);
+    }
+    $pdo = connection();
+    $request = "INSERT INTO Bid(id_product, id_user, current_price, new_price, bid_date) VALUES (:id_product, :id_user, :current_price, :new_price, NOW())";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([
+        ':id_product' => $id_product,
+        ':id_user' => $id_user,
+        ':current_price' => $currentPrice,
+        ':new_price' => $newPrice
     ]);
 
     return $success;
