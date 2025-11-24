@@ -24,7 +24,8 @@ $script = "templates/JS/favorite.js";
     <?php include('preset/header.php'); ?>
 </header>
 
-<button data-id-product=<?= $p['id_product'] ?> data-is-fav=<?= $isFav ? 'true' : 'false'?> id="fav" style="background-color: light-grey; width: 150px; font-size: 2em;"><?= $isFav ? "★" : "☆"; ?></button>
+<button data-id-product=<?= $p['id_product'] ?> data-is-fav=<?= $isFav ? 'true' : 'false' ?> id="fav"
+    style="background-color: light-grey; width: 150px; font-size: 2em;"><?= $isFav ? "★" : "☆"; ?></button>
 <h1><?= $p['title']; ?></h1>
 <?php if ($current_price === null) {
     $current_price = $p['start_price'];
@@ -39,6 +40,19 @@ $script = "templates/JS/favorite.js";
 </form>
 <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
 <p><?= $p['description']; ?></p>
+<h1>Commentaires</h1>
+<?php foreach ($comments as $comment) { ?>
+    <h2><?= $comment['full_name'] . " " . $comment["comment_date"] ?></h2>
+    <p><?= $comment['comment'] ?></p>
+<?php } ?>
+<form method="POST" action="index.php?action=addComment">
+    <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
+    <label for="comment-comment">Commentaire</label>
+    <br>
+    <textarea id="comment-comment" name="comment" type="text" required></textarea>
+    <br>
+    <button type="submit">Publier</button>
+</form>
 
 <footer>
     <?php include('preset/footer.php'); ?>
