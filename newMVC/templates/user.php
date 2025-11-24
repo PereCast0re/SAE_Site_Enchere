@@ -52,6 +52,7 @@ $user = $_SESSION['user'];
             <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
             <input type="hidden" id="values_annoncements" value='<?php echo json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>'>
         </div>
+        <button onclick="window.location.href='index.php?action=historique_annonces_publiees'">Historique</button>
 
         <script src="templates/JS/OuverturePopUp.js"></script>
         <script src="templates/JS/Annonce_publie_client.js" defer></script>

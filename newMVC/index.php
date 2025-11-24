@@ -38,6 +38,9 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
             addProduct($id_user, $_POST);
+        } elseif ($_GET['action'] === 'historique_annonces_publiees') {
+            require("templates/historique_annonces_publiees.php");
+            
 
 
         } else {
