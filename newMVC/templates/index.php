@@ -1,6 +1,6 @@
 <?php
 $title = "Page de connexion";
-$style = "templates/style/accueil.css";
+$style = "templates/style/Accueil.css";
 
 ?>
 

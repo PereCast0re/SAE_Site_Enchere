@@ -188,20 +188,65 @@ function getImage($id_product){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// function get_termined_annonces_by_client($id_client){
-//     $pdo = connexion();
-//     $requete = // Requete a faire 
-//     try{
-//         $tmp = $pdo->prepare($requete);
-//         $tmp->execute([
-//             ':id_client' => $id_client
-//         ]);
-//     }
-//     catch (PDOException $e){
-//         die("Erreur lors de la récupération des annonces terminées pour le client" .$e->getMessage());
-//     }
-//     return $tmp->fetchAll(PDO::FETCH_ASSOC);
-// }
+function get_termined_annonces_by_client($id_client){
+    $pdo = connection();
+    $requete = "
+        SELECT
+            p.id_product,
+            p.title AS titre,
+            p.description,
+            p.end_date,
+            p.reserve_price,
+            COALESCE(MAX(b.new_price), p.reserve_price) AS prix_en_cours
+        FROM product p
+        JOIN published pb ON pb.id_product = p.id_product
+        LEFT JOIN bid b ON b.id_product = p.id_product
+        WHERE pb.id_user = :id_client
+          AND p.end_date < NOW()
+        GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
+        ORDER BY p.end_date DESC
+    ";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ':id_client' => $id_client
+        ]);
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des annonces terminées pour le client : " . $e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_actual_annonces_by_client($id_client){
+    $pdo = connection();
+    $requete = "
+        SELECT
+            p.id_product,
+            p.title AS titre,
+            p.description,
+            p.end_date,
+            p.reserve_price,
+            COALESCE(MAX(b.new_price), p.reserve_price) AS prix_en_cours
+        FROM product p
+        JOIN published pb ON pb.id_product = p.id_product
+        LEFT JOIN bid b ON b.id_product = p.id_product
+        WHERE pb.id_user = :id_client
+          AND p.end_date >= NOW()
+        GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
+        ORDER BY p.end_date ASC
+    ";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ':id_client' => $id_client
+        ]);
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des annonces en cours pour le client : " . $e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
 
 function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user){
     $pdo = connection();

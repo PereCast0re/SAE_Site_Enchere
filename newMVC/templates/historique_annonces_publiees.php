@@ -27,6 +27,9 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
 ?>
 <div class="Annonces_en_cours">
     <h2>Mes enchères en cours</h2>
+    <?php if (empty($annonces_en_cours)): ?>
+        <p>Vous n'avez aucune annonce en cours.</p>
+    <?php endif; ?>
     <div class="Annonces-list-cards">
         <?php foreach ($annonces_en_cours as $a): ?>
             <div class="card">
@@ -36,8 +39,20 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
             </h3>
             <!--- Timer --->
             <p>Prix actuel :
-                <?= htmlspecialchars($a['prix_en_cours']) ?> €
+                <?php
+                // get_price_annoncement retourne un array (fetchAll). On convertit en valeur string.
+                $priceRow = get_price_annoncement($a['id_product']);
+                $current_price = null;
+                if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+                    $current_price = $priceRow[0]['MAX(new_price)'];
+                } else {
+                    // fallback si pas d'enchère : utiliser reserve_price si présent ou "0"
+                    $current_price = isset($a['reserve_price']) ? $a['reserve_price'] : '0';
+                }
+                echo htmlspecialchars($current_price);
+                ?> €
             </p>
+            <button id="voir">Voir</button>
         </div>
         <?php endforeach; ?>
     </div>
@@ -52,7 +67,17 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 <?= htmlspecialchars($a['titre']) ?>
             </h3>
             <p>Prix actuel :
-                <?= htmlspecialchars($a['prix_en_cours']) ?> €
+                <?php
+                // Même logique que pour les annonces en cours : convertir le résultat de get_price_annoncement en valeur
+                $priceRow = get_price_annoncement($a['id_product']);
+                $current_price = null;
+                if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+                    $current_price = $priceRow[0]['MAX(new_price)'];
+                } else {
+                    $current_price = isset($a['reserve_price']) ? $a['reserve_price'] : '0';
+                }
+                echo htmlspecialchars($current_price);
+                ?> €
             </p>
             <button id="valider">Valider</button>
             <button>voir</button>
