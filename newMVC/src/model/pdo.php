@@ -238,12 +238,33 @@ function createProduct($title, $description, $start_date, $end_date, $reserve_pr
         $id_product = $pdo->lastInsertId();
 
         $temp = $pdo->prepare($requete2);
-        return $temp->execute([
+        $temp->execute([
             ":id_product" => $id_product,
             ":id_user" => $id_user
         ]);
+
+        return $id_product;
     } catch (PDOException $e) {
         die("Error inserting your product into the database, try again !\n Error : " . $e->getMessage());
+    }
+}
+
+function addImage($id_product, $path_image, $name_image){
+    $pdo = connection();
+    try{
+        $requete2 = "INSERT INTO image (id_product, path_image, alt) VALUES (:id_product, :path_image, :name_image)";
+        
+        $temp = $pdo->prepare($requete2);
+        $temp->execute([
+            ":id_product" => $id_product,
+            ":path_image" => $path_image,
+            ":name_image" => $name_image
+        ]);
+        
+        return true;
+        
+    } catch (PDOException $e){
+        die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
     }
 }
 

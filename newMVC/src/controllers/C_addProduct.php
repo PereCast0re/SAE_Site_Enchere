@@ -1,9 +1,10 @@
 <?php
 
-require_once('src/model/pdo.php');
+require_once("src/model/pdo.php");
 
-function addProduct(int $id_user, array $input)
+function addNewProduct(int $id_user, array $input)
 {
+    var_dump($input);
     if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
         $title = $input['nom_annonce_vente'];
         $category = $input['lst_categorie_vente'];
@@ -19,95 +20,60 @@ function addProduct(int $id_user, array $input)
         throw new Exception("Les données du formulaire sont invalides !");
     }
 
-    $success = createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
-    if (!$success) {
+    $id_product = createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
+    if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
+        checkImage($title, $id_product);
+
         header("Location: index.php?action=user");
     }
 
-    // VOIR pour les images 
 }
 
-// session_start();
+function checkImage(string $title, $id_product){
+    try{
+        //Verification de la présence d'images
+        if (!isset($_FILES['image_produit'])) {
+            die("Erreur : Aucune image sélectionnée.");
+        }
+        // Crée le dossier avec le nom de l'annonce
+        $DirAnnonce = __DIR__ . "../../../Annonce/" . $title;
+        
+        // Vérifie si le dossier existe déjà
+        if (!is_dir($DirAnnonce)) {
+            //creation du dossier
+            mkdir($DirAnnonce, 0777, true);
+        } else {
+            die("Erreur : Le dossier existe déjà.");
+        }
+        
+        // Ajoute les images dans le dossier
+        for ($i = 0; $i < count($_FILES["image_produit"]['name']); $i++) {
+            $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
+            if ($tmpFilePath != ""){
+                $newFilePath = $DirAnnonce . "/" . $title . "_" . $i . ".jpg";
+                if(move_uploaded_file($tmpFilePath, $newFilePath)){
+                    //Ajouter dans un tableau qui sera inséré en base de données
+                    $name_image = $title . "_" . $i. ".jpg";
+                    addImage($id_product,$newFilePath, $name_image);
+                }
+            }
+        }
+    } catch (Exception $e){
+        die("Erreur lors de l'ajout des images : " .$e->getMessage());
+    }
 
-// $user = $_SESSION["user"];
+    if (isset($_FILES['certificat_autenticite'])) {
+        certificat($title, $DirAnnonce);
+    }
+}
 
-// require_once("../Modele/pdo.php");
-
-
-// if (isset($_POST["nom_annonce_vente"]) && isset($_POST["lst_categorie_vente"]) && isset($_POST['date_debut']) && isset($_POST['date_fin']) && isset($_POST['description_produit'])) {
-//     $title = $_POST['nom_annonce_vente'];
-//     $category = $_POST['lst_categorie_vente'];
-//     $start_date = $_POST['date_debut'];
-//     $end_date = $_POST['date_fin'];
-//     $description = $_POST['description_produit'];
-//     if (isset($_POST['valeur_reserve'])){
-//         $reserve_price = $_POST['valeur_reserve'];
-//     }
-//     else{
-//         $reserve_price = null;
-//     }
-
-//     /// info user
-//     $id_user = $user['id_user'];
-
-//     try{
-//         AddProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
-//         // Ajout des images avec création dossier
-//         try{
-//             //Verification de la présence d'images
-//             if (!isset($_FILES['image_produit'])) {
-//                 die("Erreur : Aucune image sélectionnée.");
-//             }
-
-//             // Crée le dossier avec le nom de l'annonce
-//             $DirAnnonce = "../../Annonce/" . $title;
-
-//             // Vérifie si le dossier existe déjà
-//             if (!is_dir($DirAnnonce)) {
-//                 //creation du dossier
-//                 mkdir($DirAnnonce, 0777, true);
-//             } else {
-//                 die("Erreur : Le dossier existe déjà.");
-//             }
-
-//             // Ajoute les images dans le dossier
-//             $nbImage = count($_FILES['image_produit']['name']);
-//             for ($i = 0; $i < $nbImage +1; $i++) {
-//                 $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
-//                 if ($tmpFilePath != ""){
-//                     $newFilePath = $DirAnnonce . "/" . $title . "_" . $i . ".jpg";
-//                     // Fonction native de php pour déplacer les fichier
-//                     move_uploaded_file($tmpFilePath, $newFilePath);
-//                 }
-//             }
-
-//             if (isset($_FILES['certificat_autenticite'])) {
-//                 certificat($title, $DirAnnonce);
-//             }
-
-//         } catch (Exception $e){
-//             die("Erreur lors de l'ajout des images : " .$e->getMessage());
-//         }
-
-//         //Pour verifié les images passé
-//         //var_dump($_FILES['image_produit']['tmp_name']);
-//         header("Location: ../Vue/user.php");
-
-//     } catch (Exception $e){
-//         die("Erreur lors de l'ajout de l'annonce : " .$e->getMessage());
-//     }
-// }
-// else{
-//     echo('Erreur dans la publication de votre annonce.');
-// }
-
-// function certificat($title, $DirAnnonce){
-//     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
-//     if ($tmpFilePath != ""){
-//         $newFilePath = $DirAnnonce . "/" . $title . "_Certificate" . ".pdf";
-//         // Fonction native de php pour déplacer les fichier
-//         move_uploaded_file($tmpFilePath, $newFilePath);
-//     }
-// }
+function certificat($title, $DirAnnonce){
+    $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
+    if ($tmpFilePath != ""){
+        $newFilePath = $DirAnnonce . "/" . $title . "_Certificate" . ".pdf";
+        // Fonction native de php pour déplacer les fichier
+        move_uploaded_file($tmpFilePath, $newFilePath);
+    }
+}

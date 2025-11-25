@@ -41,7 +41,7 @@ try {
 
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
-            addProduct($id_user, $_POST);
+            addNewProduct($id_user, $_POST);
 
         ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite

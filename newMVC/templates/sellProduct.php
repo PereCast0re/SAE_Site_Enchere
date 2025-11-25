@@ -56,7 +56,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                     <div class="input_selector_image">
                         <label>Image 3 :</label>
                         <input type="file" name="image_produit[]" id="3" >
-                        <img src="" id="img_annonce_3" style="width: 150px; height: 150px; display: block; margin-top: 10px;">
+                        <img src="" id="img_annonce_3" style="width: 150px; height: 150px; display: none; margin-top: 10px;">
                     </div>
 
                     <!-- Image 4 -->
