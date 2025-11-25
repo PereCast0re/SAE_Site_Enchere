@@ -22,7 +22,12 @@ try {
         } elseif ($_GET['action'] === 'inscription') {
             require("templates/inscription.php");
         } elseif ($_GET['action'] === 'user') {
-            require("templates/user.php");
+            if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                $u = getUser($_GET['id']);
+                require("templates/userProfil.php");
+            } else {
+                require("templates/user.php");
+            }
         } elseif ($_GET['action'] === 'sell') {
             require("templates/sellProduct.php");
 
@@ -63,7 +68,7 @@ try {
         } elseif ($_GET['action'] === 'product') {
             Product($_GET['id']);
 
-            
+
             ////////////////////////////// Cas de base //////////////////////////////        
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");

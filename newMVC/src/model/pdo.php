@@ -388,7 +388,7 @@ function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
 function getCommentsFromProduct($id_product)
 {
     $pdo = connection();
-    $request = "SELECT CONCAT(u.firstname, ' ', u.name) AS full_name, c.comment, c.comment_date FROM Comment c JOIN Users u ON u.id_user = c.id_user WHERE id_product = :id_product ORDER BY comment_date DESC";
+    $request = "SELECT CONCAT(u.firstname, ' ', u.name) AS full_name, c.comment, c.comment_date, c.id_user FROM Comment c JOIN Users u ON u.id_user = c.id_user WHERE id_product = :id_product ORDER BY comment_date DESC";
     $temp = $pdo->prepare($request);
     $temp->execute([
         "id_product" => $id_product
@@ -409,4 +409,20 @@ function addCommentToProduct($id_product, $id_user, $comment)
     ]);
 
     return $success;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//User Section//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getUser($id_user)
+{
+    $pdo = connection();
+    $request = "SELECT * FROM Users WHERE id_user = :id_user";
+    $temp = $pdo->prepare($request);
+    $temp->execute([
+        "id_user" => $id_user
+    ]);
+
+    return $temp->fetch(PDO::FETCH_ASSOC);
 }

@@ -42,7 +42,7 @@ $script = "templates/JS/favorite.js";
 <p><?= $p['description']; ?></p>
 <h1>Commentaires</h1>
 <?php foreach ($comments as $comment) { ?>
-    <h2><?= $comment['full_name'] . " " . $comment["comment_date"] ?></h2>
+    <h2><a href="index.php?action=user&id=<?= $comment['id_user'] ?>"><?= $comment['full_name'] ?></a><?= " " . $comment["comment_date"] ?></h2>
     <p><?= $comment['comment'] ?></p>
 <?php } ?>
 <form method="POST" action="index.php?action=addComment">
