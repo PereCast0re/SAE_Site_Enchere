@@ -2,12 +2,26 @@
 
 require_once("src/model/pdo.php");
 
-function unfavorite($id_product, $id_user)
+function unfavorite()
 {
-    if (!isProductFavorite($id_product, $id_user))
-        exit;
+    if (isset($_GET['id']) && $_GET['id'] >= 0) {
+        if (!isset($_SESSION['user'])) {
+            // Utilisateur non connecté
+            http_response_code(401); // optionnel, HTTP Unauthorized
+            echo "not_logged";
+            exit;
+        }
 
-    $success = unsetProductFavorite($id_product, $id_user);
-    if (!$success)
-        throw new Exception("You can't unfavorite this product !");
+        $id_product = $_GET['id'];
+        $id_user = $_SESSION['user']['id_user'];
+
+        if (!isProductFavorite($id_product, $id_user))
+            exit;
+
+        $success = unsetProductFavorite($id_product, $id_user);
+        if (!$success)
+            throw new Exception("You can't unfavorite this product !");
+    } else {
+        throw new Exception("Les informations pour enlever en favoris l'annonce a échoué !");
+    }
 }

@@ -11,6 +11,7 @@ require_once('src/controllers/C_updateUser.php');
 require_once('src/controllers/C_favorite.php');
 require_once('src/controllers/C_unfavorite.php');
 require_once('src/controllers/C_bid.php');
+require_once('src/controllers/C_addComment.php');
 require_once("src/model/pdo.php");
 
 try {
@@ -21,11 +22,16 @@ try {
         } elseif ($_GET['action'] === 'inscription') {
             require("templates/inscription.php");
         } elseif ($_GET['action'] === 'user') {
-            require("templates/user.php");
+            if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                $u = getUser($_GET['id']);
+                require("templates/userProfil.php");
+            } else {
+                require("templates/user.php");
+            }
         } elseif ($_GET['action'] === 'sell') {
             require("templates/sellProduct.php");
 
-        ////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
+            ////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
         } elseif ($_GET['action'] === 'userConnection') {
             userConnection($_POST);
         } elseif ($_GET['action'] === 'userInscription') {
@@ -42,63 +48,28 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
             addNewProduct($id_user, $_POST);
+        } elseif ($_GET['action'] === 'addComment') {
+            addComment();
 
-        ////////////////////////////// Favoris //////////////////////////////
+
+            ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
-
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
-
-                favorite($id_product, $id_user);
-            } else {
-                throw new Exception("Les informations pour mettre en favoris l'annonce a échoué !");
-            }
+            favorite();
         } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
+            unfavorite();
 
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
 
-                unfavorite($id_product, $id_user);
-            } else {
-                throw new Exception("Les informations pour enlever en favoris l'annonce a échoué !");
-            }
-        ////////////////////////////// Bid //////////////////////////////
+            ////////////////////////////// Bid //////////////////////////////
         } elseif ($_GET['action'] === 'bid') {
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
-
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
-                $newPrice = (int)$_POST['newPrice'];
-                
-                bid($id_product, $id_user, $newPrice);
-            }
+            bid();
 
 
-        ////////////////////////////// Page Produit //////////////////////////////
+            ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
             Product($_GET['id']);
 
-        ////////////////////////////// Cas de base //////////////////////////////        
+
+            ////////////////////////////// Cas de base //////////////////////////////        
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }

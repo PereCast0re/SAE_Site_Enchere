@@ -380,6 +380,10 @@ function unsetProductFavorite($id_product, $id_user)
     return $success;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Bid Section//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
 {
     if ($currentPrice === null) {
@@ -396,4 +400,50 @@ function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
     ]);
 
     return $success;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Comment Section//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getCommentsFromProduct($id_product)
+{
+    $pdo = connection();
+    $request = "SELECT CONCAT(u.firstname, ' ', u.name) AS full_name, c.comment, c.comment_date, c.id_user FROM Comment c JOIN Users u ON u.id_user = c.id_user WHERE id_product = :id_product ORDER BY comment_date DESC";
+    $temp = $pdo->prepare($request);
+    $temp->execute([
+        "id_product" => $id_product
+    ]);
+
+    return $temp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function addCommentToProduct($id_product, $id_user, $comment)
+{
+    $pdo = connection();
+    $request = "INSERT INTO Comment VALUES (:id_product, :id_user, :comment, NOW())";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([
+        "id_product" => $id_product,
+        "id_user" => $id_user,
+        "comment" => $comment
+    ]);
+
+    return $success;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//User Section//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getUser($id_user)
+{
+    $pdo = connection();
+    $request = "SELECT * FROM Users WHERE id_user = :id_user";
+    $temp = $pdo->prepare($request);
+    $temp->execute([
+        "id_user" => $id_user
+    ]);
+
+    return $temp->fetch(PDO::FETCH_ASSOC);
 }
