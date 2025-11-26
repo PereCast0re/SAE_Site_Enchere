@@ -7,8 +7,9 @@ function userConnection(array $input)
     if (!empty($input['email']) && !empty($input['password'])) {
             $email = $input['email'];
             $password = $input['password'];
-
+        if(authentication($email, $password)){
             $info_user = authentication($email, $password);
+            $info_user['DateConnexion'] = date("Y-m-d H:i:s");
 
             if ($info_user) {
                 $_SESSION['user'] = $info_user;
@@ -19,10 +20,38 @@ function userConnection(array $input)
                 header('Location: index.php?action=connection');
                 exit();
             }
+        }
+        else{
+            $_SESSION['error'] = "Mot de passe ou email faux";
+            header('Location: index.php?action=connection');
+            exit();
+        }
     } else {
         $_SESSION['error'] = "Mot de passe ou email faux";
         header('Location: index.php?action=connection');
         exit();
     }
+}
+
+function UserCheckConnexion($DateConnexion)
+{
+    $currentDate = date("Y-m-d H:i:s");
+    $currentDate = new DateTime($currentDate);
+    $DateConnexion = new DateTime($DateConnexion);
+    $interval = $currentDate->diff($DateConnexion);
+
+    $TotalHours = ($interval->days * 24) + $interval->h;
+
+    // Check if the unterval is upper or lower than 12 hours
+    if($TotalHours >= 12){
+        userDisconnection();
+    }
+}
+
+function userDisconnection()
+{
+    session_destroy();
+    header('Location: index.php?action=connection');
+    exit();
 }
 
