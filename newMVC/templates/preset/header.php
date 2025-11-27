@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li><a href="">Acheter</a></li>
+        <li><a id="btn_achat" href="index.php?action=buy">Acheter</a></li>
         <li><a id="btn_vente" href="index.php?action=sell">Vendre</a></li>
         <li><a id="btn_client" href="index.php?action=user">Client</a></li>
     </ul>

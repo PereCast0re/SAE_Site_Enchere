@@ -1,3 +1,11 @@
+<?php
+
+if (isset($_SESSION['user'])){
+    UserCheckConnexion($_SESSION['user']['DateConnexion']);
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
