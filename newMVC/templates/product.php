@@ -10,15 +10,13 @@ $style = "templates/style/style.css";
 $script = "templates/JS/favorite.js";
 
 // $isFav = true;
+$linkImage3 = "./Annonce/eee/eee_1.jpg";
+$linkImage2 = "./Annonce/eee/eee_0.jpg";
+$linkImage1 = "./Annonce/test/test_1.jpg";
+$linkImage0 = "./Annonce/test/test_0.jpg";
 ?>
 
 <?php ob_start(); ?>
-<style>
-    footer {
-        position: absolute;
-        bottom: 0;
-    }
-</style>
 
 <header>
     <?php include('preset/header.php'); ?>
@@ -38,6 +36,21 @@ $script = "templates/JS/favorite.js";
     <input name="newPrice" id="montant" type="number" min=<?= $current_price + 1 ?> required>
     <button id="bid-button" data-id-product=<?= $p['id_product'] ?> type="submit">Enchérir</button>
 </form>
+
+<section>
+
+<!-- <img id="imgProduct1" data-link-image1=<?= $linkImage1 ?> src=<?= $linkImage1 ?>>
+<img id="imgProduct0" data-link-image0=<?= $linkImage0 ?> src=<?= $linkImage0 ?>>
+<br>
+<button id="changeImage" >Changer l'image</button> -->
+
+<img id="mainImg" src=<?= $linkImage3 ?>>
+<img class="imgProduct" src=<?= $linkImage2 ?>>
+<img class="imgProduct" src=<?= $linkImage1 ?>>
+<img class="imgProduct" src=<?= $linkImage0 ?>>
+
+</section>
+
 <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
 <p><?= $p['description']; ?></p>
 <h1>Commentaires</h1>
@@ -57,6 +70,8 @@ $script = "templates/JS/favorite.js";
 <footer>
     <?php include('preset/footer.php'); ?>
 </footer>
+
+<script src="templates/JS/manageImagesProduct.js"></script>
 
 <script src="templates/JS/bid.js"></script>
 
