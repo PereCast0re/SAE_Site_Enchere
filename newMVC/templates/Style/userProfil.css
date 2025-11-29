@@ -1,0 +1,48 @@
+#stars img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 3;
+}
+
+#stars {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#stars div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+/* #stars div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+} */
+
+#stars #c1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 2;
+    background-color: yellow;
+    width: 60%;
+}
+
+#stars #c2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    z-index: 1;
+    background-color: blue;
+    width: 100%;
+}
