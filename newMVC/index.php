@@ -23,6 +23,8 @@ try {
             require("templates/inscription.php");
         } elseif ($_GET['action'] === 'user') {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
+                $score = getRatingUser($_GET['id']);
+                $score == null ? $score = 0 : $score;
                 $u = getUser($_GET['id']);
                 require("templates/userProfil.php");
             } else {

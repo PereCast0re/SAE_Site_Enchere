@@ -1,14 +1,47 @@
-#stars img {
-    position: relative;
-    width: 100%;
-    height: auto;
-    z-index: 3;
+:root {
+    --color-blue: #002366;
+    --color-orange: #FFA347;
+    --color-background: #F0F0F0;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+}
+
+/* ########## Profil ########## */
+
+#profil {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#profil img {
+    width: 200px;
+    height: 200px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ########## Stars ########## */
 #stars {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    background-color: var(--color-blue);
+    width: 150px;
+    height: auto;
+}
+
+#stars img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    vertical-align: middle;
 }
 
 #stars div {
@@ -19,30 +52,19 @@
     z-index: 1;
 }
 
-/* #stars div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    z-index: 1;
-} */
-
 #stars #c1 {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    z-index: 2;
-    background-color: yellow;
-    width: 60%;
+    z-index: 1;
+    background-color: var(--color-orange);
 }
 
-#stars #c2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    z-index: 1;
-    background-color: blue;
-    width: 100%;
+.isNotShow {
+    display: none;
+}
+
+.isBackground {
+    background-color: var(--color-background);
 }

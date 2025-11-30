@@ -249,21 +249,22 @@ function createProduct($title, $description, $start_date, $end_date, $reserve_pr
     }
 }
 
-function addImage($id_product, $path_image, $name_image){
+function addImage($id_product, $path_image, $name_image)
+{
     $pdo = connection();
-    try{
+    try {
         $requete2 = "INSERT INTO image (id_product, path_image, alt) VALUES (:id_product, :path_image, :name_image)";
-        
+
         $temp = $pdo->prepare($requete2);
         $temp->execute([
             ":id_product" => $id_product,
             ":path_image" => $path_image,
             ":name_image" => $name_image
         ]);
-        
+
         return true;
-        
-    } catch (PDOException $e){
+
+    } catch (PDOException $e) {
         die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
     }
 }
@@ -446,4 +447,16 @@ function getUser($id_user)
     ]);
 
     return $temp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getRatingUser($id_user)
+{
+    $pdo = connection();
+    $request = "SELECT AVG(rating) as score FROM Rating WHERE id_seller = :id_user";
+    $temp = $pdo->prepare($request);
+    $temp->execute([
+        "id_user" => $id_user
+    ]);
+
+    return $temp->fetchColumn();
 }
