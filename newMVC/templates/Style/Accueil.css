@@ -2,126 +2,136 @@
 /* RESET GLOBAL & STRUCTURE */
 /* ====================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #F5F5DC; /* fond doux */
-    color: #000;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F0F0F0;
+  /* fond doux */
+  color: #000;
 }
 
 /* ====================== */
 /* HEADER */
 /* ====================== */
 header nav {
-    background-color: #8D4545;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
-    font-size: 20px;
-    color: #F5F5DC;
+  background: linear-gradient(to right, #002366, #0046CC);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  font-size: 20px;
+  color: #F5F5DC;
 }
 
 header ul {
-    list-style: none;
-    display: flex;
-    gap: 100px;
+  list-style: none;
+  display: flex;
+  gap: 100px;
 }
 
 header a {
-    text-decoration: none;
-    color: #F5F5DC;
+  text-decoration: none;
+  color: #f0f0f0;
 }
 
 header img {
-    position: absolute;
-    background-color: black;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    right: 50%;
-    top: 20px;
+  position: absolute;
+  background-color: black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  right: 50%;
+  top: 20px;
 }
 
 /* ====================== */
 /* FOOTER */
 /* ====================== */
 footer {
-    background-color: #8D4545;
-    padding: 30px;
-    width: 100%;
-    color: #F5F5DC;
+  background: linear-gradient(to top, #002366, #0046CC);
+  padding: 30px;
+  width: 100%;
+  color: #f0f0f0;
 }
 
 footer section {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 footer img {
-    background-color: black;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+  background-color: black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
 /* ====================== */
 /* MAIN */
 /* ====================== */
 main h1 {
-    padding: 60px;
-    font-size: 3em;
+  padding: 60px;
+  font-size: 3em;
 }
 
 main hr {
-    background-color: black;
-    height: 1px;
-    width: 40%;
-    margin: 50px auto;
+  background-color: black;
+  height: 1px;
+  width: 40%;
+  margin: 50px auto;
 }
 
 main p {
-    padding: 20px;
-    font-size: 1.2em;
-    text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 #menu_deroulant {
-    background-color: red;
+  background-color: red;
 }
 
 main #accueil {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.4em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.4em;
 }
 
 /* ====================== */
 /* BOUTON GLOBAL */
 /* ====================== */
 .btn {
-    font-size: 1em;
-    background-color: #8D4545;
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px;
-    display: inline-block;
+  display: inline-block;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 5px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
+  text-decoration: none;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #D4AF37;
 }
 
 .content {
-    text-align: center;
+  text-align: center;
 }
 
 h3 {
-    text-align: center;
+  text-align: center;
 }
 
 /* ====================== */
@@ -137,9 +147,10 @@ h3 {
 
 /* --- CARTE D’ANNONCE --- */
 .announce-card {
-  background-color: #f8f8e8;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  border: 2px solid #D4AF37;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 4, 20, 0.1);
   width: 220px;
   overflow: hidden;
   text-align: center;
@@ -148,7 +159,7 @@ h3 {
 
 .announce-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* --- IMAGE --- */
@@ -162,9 +173,11 @@ h3 {
 
 /* --- TEXTE --- */
 .announce-card h3 {
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 500;
-  color: #5a4b3b;
+  font-style: bold;
+  font-family: 'Cormorant Garamond', serif;
+  color: #002366;
   margin: 15px 0 8px 0;
 }
 
@@ -177,20 +190,23 @@ h3 {
 /* --- BOUTON VOIR --- */
 .announce-card a.btn {
   display: inline-block;
-  background-color: #8D4545;
-  color: white;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 13px;
-  padding: 8px 20px;
-  border-radius: 8px;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 2px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
   text-decoration: none;
   margin-bottom: 15px;
   transition: background-color 0.3s ease;
 }
 
 .announce-card a.btn:hover {
-  background-color: #a55f42;
+  background-color: #D4AF37;
 }
 
 /* --- Aucune image disponible --- */
@@ -204,7 +220,7 @@ h3 {
   justify-content: center;
 }
 
-  .annonces {
+.annonces {
   display: grid;
   grid-template-columns: repeat(3, 0.2fr);
   gap: 30px;
@@ -213,10 +229,11 @@ h3 {
 }
 
 
- .announce-card {
+.announce-card {
   width: 90%;
   max-width: 250px;
 }
+
 @media (max-width: 480px) {
   .announce-card {
     width: 90%;
@@ -236,17 +253,18 @@ h3 {
 
 .category {
   display: grid;
-  grid-template-columns: repeat(3, 0.2fr);
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 5px;
   justify-items: center;
-  padding: 40px 0;
+  padding: 40px 40px;
 }
 
 /* --- CARTE CATÉGORIE --- */
 .category-card {
-  background-color: #f8f8e8;
+  background-color: #ffffff;
+  border: 2px solid #D4AF37;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-align: center;
   width: 100%;
@@ -256,7 +274,7 @@ h3 {
 
 .category-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* --- IMAGE --- */
@@ -272,30 +290,32 @@ h3 {
 .category-card h3 {
   font-size: 16px;
   font-weight: 500;
-  color: #5a4b3b;
+  color: #002366;
   margin: 15px 0 8px 0;
 }
 
-/* --- BOUTON --- */
+/* --- BOUTON VOIR --- */
 .category-card a.btn {
   display: inline-block;
-  background-color: #8D4545;
-  color: white;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 13px;
-  padding: 8px 20px;
-  border-radius: 8px;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 2px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
   text-decoration: none;
   margin-bottom: 15px;
   transition: background-color 0.3s ease;
 }
 
 .category-card a.btn:hover {
-  background-color: #a55f42;
+  background-color: #D4AF37;
 }
 
-/* --- CAS : Aucune image --- */
 .category-card .no-image {
   background-color: #f0f0d8;
   color: #777;
@@ -329,5 +349,3 @@ h3 {
     max-width: none;
   }
 }
-
-

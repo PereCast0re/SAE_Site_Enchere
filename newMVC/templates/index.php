@@ -1,6 +1,6 @@
 <?php
 $title = "Page de connexion";
-$style = "templates/style/accueil.css";
+$style = "templates/style/Accueil.css";
 
 ?>
 
@@ -120,7 +120,6 @@ $style = "templates/style/accueil.css";
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Ton script du timer -->
 <script src="templates/JS/timer.js"></script>
 
 <script>

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <?php include_once('../Modele/pdo.php');
+    <?php require_once('src/model/pdo.php');;
       $id_client = $_SESSION['id_client'];
       $annonces = get_termined_annonces_by_client($id_client); ?>
     <div class="Historique_annonces">
