@@ -13,15 +13,13 @@ $style = "templates/style/userProfil.css";
     }
 </style>
 
-<header>
-    <?php include('preset/header.php'); ?>
-</header>
+<?php include('preset/header.php'); ?>
 
 <main>
 
     <section id="profil">
         <div>
-            <img src="./Annonce/eee/eee_1.jpg" alt="Logo du vendeur">
+            <img src="./templates/images/profil-icon.png" alt="Logo du vendeur">
         </div>
         <h2><?= $u['firstname'] . " " . $u['name'] ?></h2>
     </section>
@@ -33,9 +31,7 @@ $style = "templates/style/userProfil.css";
 
 </main>
 
-<footer>
-    <?php include('preset/footer.php'); ?>
-</footer>
+<?php include('preset/footer.php'); ?>
 
 <script>
 
