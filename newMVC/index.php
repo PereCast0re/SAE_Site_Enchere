@@ -34,8 +34,11 @@ try {
             require("templates/sellProduct.php");
         } elseif ($_GET['action'] === 'buy') {
             require("templates/buy.php");
+        } elseif ($_GET['action'] === 'historique_annonces_publiees') {
+            require("templates/historique_annonces_publiees.php");
 
-        ////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
+
+            ////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
         } elseif ($_GET['action'] === 'userConnection') {
             userConnection($_POST);
         } elseif ($_GET['action'] === 'userInscription') {
@@ -49,71 +52,33 @@ try {
         } elseif ($_GET['action'] === 'update_password') {
             updatePassword($_POST['new_password_2']);
 
+
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
-            addProduct($id_user, $_POST);
-        } elseif ($_GET['action'] === 'historique_annonces_publiees') {
-            require("templates/historique_annonces_publiees.php");
-            
-        //  addNewProduct($id_user, $_POST);
+            addNewProduct($id_user, $_POST);
+        } elseif ($_GET['action'] === 'addComment') {
+            addComment();
 
-        ////////////////////////////// Favoris //////////////////////////////
+
+            ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
-
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
-
-                favorite($id_product, $id_user);
-            } else {
-                throw new Exception("Les informations pour mettre en favoris l'annonce a échoué !");
-            }
+            favorite();
         } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
+            unfavorite();
 
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
 
-                unfavorite($id_product, $id_user);
-            } else {
-                throw new Exception("Les informations pour enlever en favoris l'annonce a échoué !");
-            }
-        ////////////////////////////// Bid //////////////////////////////
+            ////////////////////////////// Bid //////////////////////////////
         } elseif ($_GET['action'] === 'bid') {
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                if (!isset($_SESSION['user'])) {
-                    // Utilisateur non connecté
-                    http_response_code(401); // optionnel, HTTP Unauthorized
-                    echo "not_logged";
-                    exit;
-                }
-
-                $id_product = $_GET['id'];
-                $id_user = $_SESSION['user']['id_user'];
-                $newPrice = (int)$_POST['newPrice'];
-                
-                bid($id_product, $id_user, $newPrice);
-            }
+            bid();
 
 
-        ////////////////////////////// Page Produit //////////////////////////////
+            ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
             Product(id_product: $_GET['id']);
-        
-        ////////////////////////////// page user //////////////////////////////
-        // get price
+            
+
+            ////////////////////////////// page user //////////////////////////////
+            // get price
         } elseif ($_GET['action'] === 'getLastPrice') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
@@ -128,7 +93,7 @@ try {
             } else {
                 throw new Exception("ID de produit invalide pour récupérer le dernier prix.");
             }
-        // Daily views
+            // Daily views
         } elseif ($_GET['action'] === 'getDailyViews') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
@@ -144,7 +109,7 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer les vues journalières.");
             }
 
-        // Global views
+            // Global views
         } elseif ($_GET['action'] === 'getGlobalViews') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
@@ -160,7 +125,7 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer les vues globales.");
             }
 
-        // Likes
+            // Likes
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
@@ -176,11 +141,11 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer les likes.");
             }
 
-        // Image
+            // Image
         } elseif ($_GET['action'] === 'getImage') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0 && isset($_GET['title'])) {
                 $id_product = $_GET['id_product'];
-                $title = $_GET['title'] ."_0";
+                $title = $_GET['title'] . "_0";
                 $image = getImage($id_product, $title);
                 if ($image !== false) {
                     header('Content-Type: application/json');
@@ -193,12 +158,12 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer l'image.");
             }
 
-        // Annonce with a reserved price not reached and finished
-        } elseif ($_GET['action'] == 'reservedAnnoncement'){
-            if (isset($_GET['id_user']) && $_GET['id_user'] >= 0){
+            // Annonce with a reserved price not reached and finished
+        } elseif ($_GET['action'] == 'reservedAnnoncement') {
+            if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
                 $annoncements = getAnnoncementEndWithReservedPrice($id_user);
-                if($annoncements !== false){
+                if ($annoncements !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($annoncements);
                     exit();
@@ -209,12 +174,12 @@ try {
                 throw new Exception("Impossible de récupéré l'indice utilisateur");
             }
 
-        // List of finish annoncement
-        } elseif ($_GET['action'] == 'LisAnnoncementEnd'){
-            if (isset($_GET['id_user']) && $_GET['id_user'] >= 0){
+            // List of finish annoncement
+        } elseif ($_GET['action'] == 'LisAnnoncementEnd') {
+            if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
                 $annoncements = getListFinishedAnnoncements($id_user);
-                if($annoncements !== false){
+                if ($annoncements !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($annoncements);
                     exit();
@@ -225,15 +190,15 @@ try {
                 throw new Exception("Impossible de récupéré l'indice utilisateur");
             }
 
-        } elseif ($_GET['action'] == 'republish'){
-            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0){
+        } elseif ($_GET['action'] == 'republish') {
+            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
                 republishAnnoncement($id_product);
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
 
-        ////////////////////////////// Cas de base //////////////////////////////        
+            ////////////////////////////// Cas de base //////////////////////////////        
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
