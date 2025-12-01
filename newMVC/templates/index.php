@@ -107,7 +107,7 @@ $style = "templates/style/Accueil.css";
       <?php endfor; ?>
     </div>
     <p>------------TEXTE------------</p>
-    <a class="btn">S'abonner</a><br><br><br>
+    <a class="btn" href="https://www.youtube.com/watch?v=xvFZjo5PgG0">S'abonner</a><br><br><br>
   </div>
 </main>
 
