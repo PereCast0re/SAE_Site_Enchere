@@ -27,7 +27,7 @@ $style = "templates/style/Accueil.css";
         <?php foreach ($products as $p): ?>
           <div class="swiper-slide">
             <?php
-            $images = getImage($p['id_product']);
+            //$images = getImage($p['id_product']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -70,7 +70,7 @@ $style = "templates/style/Accueil.css";
           <?php $p = $products[$i]; ?>
           <div class="announce-card">
             <?php
-            $images = getImage($p['id_product']);
+            //$images = getImage($p['id_product']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -96,7 +96,7 @@ $style = "templates/style/Accueil.css";
       <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
         <?php $cat = getCategory()[$i]; ?>
         <div class="category-card">
-          <?php $images = getImage($p['id_product']);
+          <?php //$images = getImage($p['id_product']);
           if (!empty($images)) {
             echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
           } else {

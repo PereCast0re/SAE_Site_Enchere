@@ -70,7 +70,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
             <p>Prix actuel :
                 <?php
                 // Même logique que pour les annonces en cours : convertir le résultat de get_price_annoncement en valeur
-                $priceRow = get_price_annoncement($a['id_product']);
+                $priceRow = getLastPrice($a['id_product']);
                 $current_price = null;
                 if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
                     $current_price = $priceRow[0]['MAX(new_price)'];
