@@ -491,15 +491,6 @@ function getRatingUser($id_user)
 }
 
 
-
-
-
-
-
-
-
-
-
 /// Wee have to verif if the date is correctly compared
 function getDailyViews($id_product)
 {

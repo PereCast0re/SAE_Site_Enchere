@@ -8,7 +8,7 @@
             <?php } ?>
         </ul>
         <a href="index.php">
-            <img src=""  alt="logo">
+            <img>
         </a>
         <a id="btn_connexion" href="index.php?action=connection">Connexion</a>
     </nav>

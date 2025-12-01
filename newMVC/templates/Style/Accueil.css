@@ -2,6 +2,7 @@
   --linear-blue: linear-gradient(#002366, #0046CC);
   --color-blue: #002366;
   --color-orange: #FFA347;
+  --color-gold: #D4AF37;
   --color-background: #F0F0F0;
 }
 
@@ -19,6 +20,7 @@ body {
   background-color: #F0F0F0;
   /* fond doux */
   color: #000;
+  height: 100%;
 }
 
 /* ====================== */
@@ -47,11 +49,11 @@ header a {
 
 header img {
   position: absolute;
-  background-color: black;
+  background-color: var(--color-background);
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  right: 50%;
+  right: 48.8%;
   top: 20px;
 }
 
@@ -72,7 +74,7 @@ footer section {
 }
 
 footer img {
-  background-color: black;
+  background-color: var(--color-background);
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -86,8 +88,8 @@ main h1 {
   font-size: 3em;
 }
 
-main hr {
-  background-color: black;
+hr {
+  background-color: var(--color-blue);
   height: 1px;
   width: 40%;
   margin: 50px auto;
@@ -138,6 +140,10 @@ main #accueil {
   text-align: center;
 }
 
+.content hr {
+  margin-top: 100px;
+}
+
 h3 {
   text-align: center;
 }
@@ -145,11 +151,20 @@ h3 {
 /* ====================== */
 /* SECTION ANNONCES */
 /* ====================== */
+/* .annonces {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 30px;
+padding: 40px 0;
+} */
+
 .annonces {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 0.2fr);
   gap: 30px;
+  justify-content: center;
+  justify-items: center;
   padding: 40px 0;
 }
 
@@ -228,14 +243,6 @@ h3 {
   justify-content: center;
 }
 
-.annonces {
-  display: grid;
-  grid-template-columns: repeat(3, 0.2fr);
-  gap: 30px;
-  justify-items: center;
-  padding: 40px 0;
-}
-
 .announce-card {
   width: 90%;
   max-width: 250px;
@@ -252,7 +259,6 @@ h3 {
     align-items: center;
   }
 }
-
 
 /* ====================== */
 /* SECTION CATÉGORIES */
@@ -333,18 +339,14 @@ h3 {
   justify-content: center;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-background);
-}
-
 /* ########## Profil ########## */
 
 #profil {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin: 25px;
+  color: var(--color-blue);
 }
 
 #profil img {
@@ -353,6 +355,7 @@ body {
   padding: 5px;
   object-fit: cover;
   box-shadow: 0 0 5px var(--color-blue);
+  margin: 10px;
 }
 
 /* ########## Stars ########## */
@@ -397,6 +400,76 @@ body {
 .isBackground {
   background-color: var(--color-background);
 }
+
+/* ########## Connection ########## */
+
+hr {
+  background-color: var(--color-blue);
+}
+
+.connection, .inscription h1 {
+  text-align: center;
+  color: var(--color-blue);
+}
+
+main #connexion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.4em;
+  color: var(--color-blue);
+}
+
+main #connexion div {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 10px;
+}
+
+main #connexion input:not(input[type="submit"]) {
+  width: 400px;
+  height: 30px;
+  font-size: 1em;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 10px;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 60px;
+  text-align: center;
+}
+
+main #connexion input:not(input[type="submit"])::placeholder {
+  color: gray;
+  font-style: italic;
+  text-align: center;
+}
+
+main #connexion input[type="submit"] {
+  font-size: 1em;
+  width: 200px;
+  border-radius: 60px;
+  color: var(--color-blue);
+  background-color: #ffffff;
+  border: 2px solid var(--color-gold);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+main #connexion input[type="submit"]:hover {
+  background-color: #D4AF37;
+  cursor: pointer;
+}
+
+#connection a {
+  font-style: none;
+}
+
+#connection a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* ########## Inscription ########## */
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {

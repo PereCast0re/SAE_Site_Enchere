@@ -75,7 +75,6 @@ $linkImage0 = "./Annonce/test/test_0.jpg";
 
 <script src="templates/JS/bid.js"></script>
 
-<!-- Ton script du timer -->
 <script src="templates/JS/timer.js"></script>
 
 <script>

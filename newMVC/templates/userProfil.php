@@ -6,14 +6,16 @@ $style = "templates/style/Accueil.css";
 
 <?php ob_start(); ?>
 
-<style>
-    footer {
-        position: absolute;
-        bottom: 0;
-    }
-</style>
-
 <?php include('preset/header.php'); ?>
+
+<?php if (empty($products)) { ?>
+    <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+<?php } ?>
 
 <main>
 
@@ -31,12 +33,12 @@ $style = "templates/style/Accueil.css";
 
     <section>
         <div class="content">
-            <h1>Nos dernières annonces</h1>
-            <div class="annonces">
-                <?php if (empty($products)): ?>
-                    <p>Aucune annonce disponible pour le moment.</p>
-                <?php else: ?>
-                    <?php for ($i = 0; $i < min(7, count($products)); $i++): ?>
+            <hr>
+            <?php if (empty($products)): ?>
+                <p>Aucune annonce disponible pour le moment.</p>
+            <?php else: ?>
+                <div class="annonces">
+                    <?php for ($i = 0; $i < count($products); $i++): ?>
                         <?php $p = $products[$i]; ?>
                         <div class="announce-card">
                             <?php
@@ -61,6 +63,8 @@ $style = "templates/style/Accueil.css";
 
 <?php include('preset/footer.php'); ?>
 
+<script src="templates/JS/timer.js"></script>
+
 <script>
 
     const div = document.querySelector("#stars");
@@ -78,6 +82,11 @@ $style = "templates/style/Accueil.css";
         div.innerHTML = "<h3 style='text-align:center;'>" + score + "/5" + "</h3>"
     })
 
+    // Lancer tous les timers de la page
+    document.querySelectorAll('.timer').forEach(el => {
+        const endDate = el.getAttribute('data-end');
+        startCountdown(endDate, el); // Fonction importée depuis timer.js
+    });
 
 </script>
 <?php $content = ob_get_clean(); ?>
