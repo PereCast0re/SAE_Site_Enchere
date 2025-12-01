@@ -68,6 +68,7 @@ $user = $_SESSION['user'];
 
         <div id="div_historique_annoncement" style="display: none;">
         </div>
+        <a class="btn" href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
 
         <div>
             <?php echo(republishAnnoncement(1)); ?>

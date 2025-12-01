@@ -48,7 +48,7 @@ try {
         } elseif ($_GET['action'] === 'historique_annonces_publiees') {
             require("templates/historique_annonces_publiees.php");
             
-            addNewProduct($id_user, $_POST);
+        //  addNewProduct($id_user, $_POST);
 
         ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite
