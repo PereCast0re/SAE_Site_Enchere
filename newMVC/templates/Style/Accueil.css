@@ -19,6 +19,7 @@ body {
   background-color: #F0F0F0;
   /* fond doux */
   color: #000;
+  height: 100%;
 }
 
 /* ====================== */
@@ -47,7 +48,7 @@ header a {
 
 header img {
   position: absolute;
-  background-color: black;
+  background-color: var(--color-background);
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -72,7 +73,7 @@ footer section {
 }
 
 footer img {
-  background-color: black;
+  background-color: var(--color-background);
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -138,6 +139,12 @@ main #accueil {
   text-align: center;
 }
 
+.content hr {
+  margin-top: 100px;
+  padding: 0.5px;
+  background-color: var(--color-blue);
+}
+
 h3 {
   text-align: center;
 }
@@ -145,11 +152,20 @@ h3 {
 /* ====================== */
 /* SECTION ANNONCES */
 /* ====================== */
-.annonces {
+/* .annonces {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
+  padding: 40px 0;
+} */
+
+.annonces {
+  display: grid;
+  grid-template-columns: repeat(3, 0.2fr);
+  gap: 30px;
+  justify-content: center;
+  justify-items: center;
   padding: 40px 0;
 }
 
@@ -226,14 +242,6 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.annonces {
-  display: grid;
-  grid-template-columns: repeat(3, 0.2fr);
-  gap: 30px;
-  justify-items: center;
-  padding: 40px 0;
 }
 
 .announce-card {
@@ -333,18 +341,14 @@ h3 {
   justify-content: center;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-background);
-}
-
 /* ########## Profil ########## */
 
 #profil {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin: 25px;
+  color: var(--color-blue);
 }
 
 #profil img {
@@ -353,6 +357,7 @@ body {
   padding: 5px;
   object-fit: cover;
   box-shadow: 0 0 5px var(--color-blue);
+  margin: 10px;
 }
 
 /* ########## Stars ########## */

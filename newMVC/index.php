@@ -26,6 +26,7 @@ try {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
                 $score = getRatingUser($_GET['id']);
                 $score == null ? $score = 0 : $score;
+                $products = get_Annonce_User($_GET['id']);
                 $u = getUser($_GET['id']);
                 require("templates/userProfil.php");
             } else {
