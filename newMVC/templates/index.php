@@ -1,5 +1,5 @@
 <?php
-$title = "Page de connexion";
+$title = "Page d'accueil";
 $style = "templates/style/Accueil.css";
 
 ?>
@@ -54,8 +54,6 @@ $style = "templates/style/Accueil.css";
       </div>
 
       <!-- Navigation & pagination -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
       <div class="swiper-pagination"></div>
     </div>
   <?php endif; ?>
@@ -86,7 +84,7 @@ $style = "templates/style/Accueil.css";
       <?php endif; ?>
     </div>
 
-    <a id="Voir_annonces_btn" class="btn">Voir les annonces</a>
+    <a id="Voir_annonces_btn" class="btn" href="index.php?action=buy">Voir les annonces</a>
     <br><br><br>
     <a id="Connexion_button" class="btn" href="index.php?action=connection">Connexion</a><br><br><br>
     <a id="inscription_button" class="btn" href="index.php?action=inscription">S'inscrire</a>

@@ -421,3 +421,104 @@ body {
     max-width: none;
   }
 }
+
+/* ====================== */
+/* BARRE DE RECHERCHE */
+
+.search_bar {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#searchInput {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #D4AF37;
+  border-radius: 30px;
+  font-size: 16px;
+}
+
+#searchButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #002366;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+#searchButton:hover {
+  background-color: #0046CC;
+}
+
+/* Conteneur principal */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Wrapper qui contient les slides */
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+
+/* Chaque slide */
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+}
+
+/* Pagination (points) */
+.swiper-pagination {
+  position: absolute;
+  text-align: center;
+  transition: .3s opacity;
+  transform: translate3d(0,0,0);
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #000;
+  opacity: .2;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 4px;
+  transition: opacity .3s;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+
+/* Scrollbar */
+.swiper-scrollbar {
+  border-radius: 10px;
+  position: absolute;
+  left: 1%;
+  bottom: 3px;
+  z-index: 50;
+  height: 5px;
+  width: 98%;
+}
+
+.swiper-scrollbar-drag {
+  height: 100%;
+  background: #000;
+  border-radius: 10px;
+  left: 0;
+  top: 0;
+}
+
+
