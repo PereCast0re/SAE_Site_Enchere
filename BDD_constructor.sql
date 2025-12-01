@@ -128,7 +128,6 @@ CREATE TABLE Rating (
    id_buyer INT,
    id_seller INT,
    rating INT CHECK (rating BETWEEN 0 AND 5),
-   PRIMARY KEY(id_buyer, id_seller),
    FOREIGN KEY(id_buyer) REFERENCES Users(id_user),
    FOREIGN KEY(id_seller) REFERENCES Users(id_user)
 );

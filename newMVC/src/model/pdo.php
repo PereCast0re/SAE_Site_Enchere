@@ -452,7 +452,7 @@ function getUser($id_user)
 function getRatingUser($id_user)
 {
     $pdo = connection();
-    $request = "SELECT AVG(rating) as score FROM Rating WHERE id_seller = :id_user";
+    $request = "SELECT ROUND(AVG(rating), 1) as score FROM Rating WHERE id_seller = :id_user";
     $temp = $pdo->prepare($request);
     $temp->execute([
         "id_user" => $id_user
