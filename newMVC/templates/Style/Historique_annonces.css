@@ -1,0 +1,118 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F0F0F0;
+  /* fond doux */
+  color: #000;
+}
+
+/* ====================== */
+/* HEADER */
+/* ====================== */
+header nav {
+  background: linear-gradient(to right, #002366, #0046CC);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  font-size: 20px;
+  color: #F5F5DC;
+}
+
+header ul {
+  list-style: none;
+  display: flex;
+  gap: 100px;
+}
+
+header a {
+  text-decoration: none;
+  color: #f0f0f0;
+}
+
+header img {
+  position: absolute;
+  background-color: black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  right: 50%;
+  top: 20px;
+}
+
+/* ====================== */
+/* FOOTER */
+/* ====================== */
+footer {
+  background: linear-gradient(to top, #002366, #0046CC);
+  padding: 30px;
+  width: 100%;
+  color: #f0f0f0;
+}
+
+footer section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+footer img {
+  background-color: black;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+h2 {
+  text-align: center;
+  margin: 30px 0;
+  color: #002366;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-style: bold;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 5px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
+  text-decoration: none;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+  background-color: #D4AF37;
+  color: #ffffff;
+}
+
+button {
+     display: inline-block;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 5px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
+  text-decoration: none;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}

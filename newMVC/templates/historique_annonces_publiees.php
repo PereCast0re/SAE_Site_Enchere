@@ -1,6 +1,6 @@
 <?php
 $title = "Historique des annonces publiées";
-$style = "templates/style/style.css";
+$style = "templates/style/Historique_annonces.css";
 
 $user = $_SESSION['user'];
 ?>
@@ -38,6 +38,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 <?= htmlspecialchars($a['titre']) ?>
             </h3>
             <!--- Timer --->
+            <p class="timer" data-end="<?= htmlspecialchars($a['end_date']) ?>"></p>
             <p>Prix actuel :
                 <?php
                 // get_price_annoncement retourne un array (fetchAll). On convertit en valeur string.
@@ -91,4 +92,18 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
 </footer>
 <?php $content = ob_get_clean(); ?>
 
+<script src="templates/script/timer.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+
+    // Lancer tous les timers de la page
+    document.querySelectorAll('.timer').forEach(el => {
+      const endDate = el.getAttribute('data-end');
+      startCountdown(endDate, el); // Fonction importée depuis timer.js
+    });
+  });
+
+</script>
 <?php require('preset/layout.php');
