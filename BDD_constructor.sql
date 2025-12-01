@@ -79,7 +79,6 @@ CREATE TABLE Concerned (
 CREATE TABLE Interest (
    id_product INT,
    id_user INT,
-   PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
@@ -90,7 +89,6 @@ CREATE TABLE Bid (
    current_price DECIMAL(15,2),
    new_price DECIMAL(15,2),
    bid_date DATETIME,
-   PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
@@ -100,7 +98,6 @@ CREATE TABLE Comment (
    id_user INT,
    comment VARCHAR(550),
    comment_date DATETIME,
-   PRIMARY KEY(id_product, id_user),
    FOREIGN KEY(id_product) REFERENCES Product(id_product),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );

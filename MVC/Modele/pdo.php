@@ -279,6 +279,31 @@ function addProduct($title, $description, $start_date, $end_date, $reserve_price
     }
 }
 
+function addImage($path_image, $name_image, $title){
+    $pdo = connection();
+    
+    $requete1 = "SELECT id_product from product where title = :title";
+    try{
+        $tmp = $pdo->prepare($requete1);
+        $tmp->execute([
+            ":title" => $title
+        ]);
+        $result = $tmp->fetch(PDO::FETCH_ASSOC);
+        $id_product = $result['id_product'];
+
+        $requete2 = "INSERT INTO image (id_product, path_image, name_image) values (:id_product, :path_image, :name_image)";
+        $tmp = $pdo->prepare($requete2);
+        $tmp->execute([
+            ":id_product" => $id_product,
+            ":path_image" => $path_image,
+            ":name_image" => $name_image
+        ]);
+    } catch (PDOException $e){
+        die("Error on adding image to the database " .$e->getMessage());
+    }
+}
+
+
 function get_Annonce_User($id_client){
     $pdo = connection();
     $request = "SELECT * 
