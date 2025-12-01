@@ -185,36 +185,65 @@ function getProduct($id_product)
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
-function getImage($id_product)
-{
+function get_termined_annonces_by_client($id_client){
     $pdo = connection();
-    $requete = "SELECT * FROM image
-                WHERE id_product = :id_product";
-    try {
+    $requete = "
+        SELECT
+            p.id_product,
+            p.title AS titre,
+            p.description,
+            p.end_date,
+            p.reserve_price,
+            COALESCE(MAX(b.new_price), p.reserve_price) AS prix_en_cours
+        FROM product p
+        JOIN published pb ON pb.id_product = p.id_product
+        LEFT JOIN bid b ON b.id_product = p.id_product
+        WHERE pb.id_user = :id_client
+          AND p.end_date < NOW()
+        GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
+        ORDER BY p.end_date DESC
+    ";
+    try{
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ':id_product' => $id_product
+            ':id_client' => $id_client
         ]);
-    } catch (PDOException $e) {
-        die("Error retrieving images for the product, try again !\nError : " . $e->getMessage());
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des annonces terminées pour le client : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// function get_termined_annonces_by_client($id_client){
-//     $pdo = connexion();
-//     $requete = // Requete a faire 
-//     try{
-//         $tmp = $pdo->prepare($requete);
-//         $tmp->execute([
-//             ':id_client' => $id_client
-//         ]);
-//     }
-//     catch (PDOException $e){
-//         die("Erreur lors de la récupération des annonces terminées pour le client" .$e->getMessage());
-//     }
-//     return $tmp->fetchAll(PDO::FETCH_ASSOC);
-// }
+function get_actual_annonces_by_client($id_client){
+    $pdo = connection();
+    $requete = "
+        SELECT
+            p.id_product,
+            p.title AS titre,
+            p.description,
+            p.end_date,
+            p.reserve_price,
+            COALESCE(MAX(b.new_price), p.reserve_price) AS prix_en_cours
+        FROM product p
+        JOIN published pb ON pb.id_product = p.id_product
+        LEFT JOIN bid b ON b.id_product = p.id_product
+        WHERE pb.id_user = :id_client
+          AND p.end_date >= NOW()
+        GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
+        ORDER BY p.end_date ASC
+    ";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ':id_client' => $id_client
+        ]);
+    }
+    catch (PDOException $e){
+        die("Erreur lors de la récupération des annonces en cours pour le client : " . $e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
 
 function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user)
 {
@@ -381,10 +410,6 @@ function unsetProductFavorite($id_product, $id_user)
     return $success;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Bid Section//
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
 {
     if ($currentPrice === null) {
@@ -403,45 +428,85 @@ function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
     return $success;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Comment Section//
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function getCommentsFromProduct($id_product)
+/// Wee have to verif if the date is correctly compared
+function getDailyViews($id_product)
 {
     $pdo = connection();
-    $request = "SELECT CONCAT(u.firstname, ' ', u.name) AS full_name, c.comment, c.comment_date, c.id_user FROM Comment c JOIN Users u ON u.id_user = c.id_user WHERE id_product = :id_product ORDER BY comment_date DESC";
-    $temp = $pdo->prepare($request);
+    $requete = " SELECT COUNT(view_number) as nbDailyView from productview where id_product = :id and view_date = date(now()) ";
+    $temp = $pdo->prepare($requete);
     $temp->execute([
-        "id_product" => $id_product
+        ":id" => $id_product
+    ]);
+    return $temp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getGlobalViews($id_product)
+{
+    $pdo = connection();
+    $requete = " SELECT SUM(view_number) as nbGlobalView from productview where id_product = :id ";
+    $temp = $pdo->prepare($requete);
+    $temp->execute([
+        ":id" => $id_product
+    ]);
+    return $temp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getLikes($id_product)
+{
+    $pdo = connection();
+    $requete = " SELECT COUNT(*) as nbLike from interest where id_product = :id ";
+    $temp = $pdo->prepare($requete);
+    $temp->execute([
+        ":id" => $id_product
+    ]);
+    return $temp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getImage($id_product,  $title)
+{
+    $pdo = connection();
+    $requete = " SELECT path_image as url_image, alt from image where id_product = :id and alt = :title ";
+    $temp = $pdo->prepare($requete);
+    $temp->execute([
+        ":id" => $id_product,
+        ":title" => $title
+    ]);
+    return $temp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getAnnoncementEndWithReservedPrice($id_user){
+    $pdo = connection();
+    $requete = "SELECT *, MAX(bid.new_price)
+                FROM product as p
+                join published as publi on publi.id_product = p.id_product
+                join bid on bid.id_product = p.id_product
+                where publi.id_user = :id_user and p.end_date < CURRENT_DATE and p.reserve_price > 0
+                ";
+    $temp = $pdo->prepare($requete);
+    $temp->execute([
+        "id_user" => $id_user
     ]);
 
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function addCommentToProduct($id_product, $id_user, $comment)
-{
+function getListFinishedAnnoncements($id_user){
     $pdo = connection();
-    $request = "INSERT INTO Comment VALUES (:id_product, :id_user, :comment, NOW())";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([
-        "id_product" => $id_product,
-        "id_user" => $id_user,
-        "comment" => $comment
-    ]);
-
-    return $success;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//User Section//
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function getUser($id_user)
-{
-    $pdo = connection();
-    $request = "SELECT * FROM Users WHERE id_user = :id_user";
-    $temp = $pdo->prepare($request);
+    $requete = "SELECT 
+                p.*,
+                publi.*,
+                MAX(b.new_price) AS last_price 
+                FROM product p
+                JOIN published publi 
+                    ON publi.id_product = p.id_product
+                LEFT JOIN bid b 
+                    ON b.id_product = p.id_product
+                WHERE publi.id_user = :id_user
+                AND p.end_date < CURRENT_DATE
+                GROUP BY p.id_product
+                LIMIT 5;
+                ";
+    $temp = $pdo->prepare($requete);
     $temp->execute([
         "id_user" => $id_user
     ]);
@@ -459,4 +524,8 @@ function getRatingUser($id_user)
     ]);
 
     return $temp->fetchColumn();
+}
+
+function republishDatabase($id, $title, $description, $start, $finish, $reserve_price, $status, $old_start){
+
 }

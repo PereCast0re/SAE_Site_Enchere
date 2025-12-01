@@ -1,6 +1,6 @@
 <?php
 $title = "Page de connexion";
-$style = "templates/style/accueil.css";
+$style = "templates/style/Accueil.css";
 
 ?>
 
@@ -27,7 +27,7 @@ $style = "templates/style/accueil.css";
         <?php foreach ($products as $p): ?>
           <div class="swiper-slide">
             <?php
-            $images = getImage($p['id_product']);
+            //$images = getImage($p['id_product']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -70,7 +70,7 @@ $style = "templates/style/accueil.css";
           <?php $p = $products[$i]; ?>
           <div class="announce-card">
             <?php
-            $images = getImage($p['id_product']);
+            //$images = getImage($p['id_product']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -96,7 +96,7 @@ $style = "templates/style/accueil.css";
       <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
         <?php $cat = getCategory()[$i]; ?>
         <div class="category-card">
-          <?php $images = getImage($p['id_product']);
+          <?php //$images = getImage($p['id_product']);
           if (!empty($images)) {
             echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
           } else {
@@ -120,7 +120,6 @@ $style = "templates/style/accueil.css";
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Ton script du timer -->
 <script src="templates/JS/timer.js"></script>
 
 <script>

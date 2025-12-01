@@ -1,6 +1,7 @@
 <?php
 $title = "Page d'utilisateur";
 $style = "templates/style/style.css";
+$script = "";
 
 if (!isset($_SESSION['user'])) {
     header('location: index.php?action=connection');
@@ -13,6 +14,7 @@ $user = $_SESSION['user'];
 <?php ob_start(); ?>
     <header>
         <?php include('preset/header.php'); ?>
+        <link href="templates/style/stylePopup.css" rel="stylesheet"/>
     </header>
 
     <main>
@@ -57,10 +59,26 @@ $user = $_SESSION['user'];
             <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
             <input type="hidden" id="values_annoncements" value='<?php echo json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>'>
         </div>
+        <div class="stat_annonce">
+        </div>
+
+        <div id="div_end_annoncement_with_reserved" style="display: none;">
+            <input type="hidden" id="id_user" value="<?php echo ($user["id_user"]) ?>" >
+        </div>
+
+        <div id="div_historique_annoncement" style="display: none;">
+        </div>
+        <a class="btn" href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
+
+        <div>
+            <?php echo(republishAnnoncement(1)); ?>
+        </div>
 
         <script src="templates/JS/OuverturePopUp.js"></script>
+        <script src="templates/JS/timer.js"></script>
         <script src="templates/JS/Annonce_publie_client.js" defer></script>
 
+        
         <footer>
             <?php include('preset/footer.php'); ?>
         </footer>
