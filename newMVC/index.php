@@ -11,6 +11,7 @@ require_once('src/controllers/C_updateUser.php');
 require_once('src/controllers/C_favorite.php');
 require_once('src/controllers/C_unfavorite.php');
 require_once('src/controllers/C_bid.php');
+require_once('src/controllers/C_addComment.php');
 require_once('src/controllers/C_republishAnnoncement.php');
 require_once("src/model/pdo.php");
 
