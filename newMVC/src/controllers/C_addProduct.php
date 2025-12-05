@@ -56,6 +56,7 @@ function checkImage(string $title, $id_product){
                 if(move_uploaded_file($tmpFilePath, $newFilePath)){
                     //Ajouter dans un tableau qui sera inséré en base de données
                     $name_image = $title . "_" . $i. ".jpg";
+                    $newFilePath = "Annonce/". $title . "/" . $name_image;
                     addImage($id_product,$newFilePath, $name_image);
                 }
             }

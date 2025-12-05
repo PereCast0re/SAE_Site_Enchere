@@ -53,7 +53,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 echo htmlspecialchars($current_price);
                 ?> €
             </p>
-            <button id="voir">Voir</button>
+            <button id="voir" >Voir</button>
         </div>
         <?php endforeach; ?>
     </div>
@@ -61,6 +61,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
 <div class="Historique_annonces">
     <h2>Mes enchères terminées</h2>
     <div class="Annonces-list-cards">
+
         <?php foreach ($annonces as $a): ?>
         <div class="card">
             <!--- image --->

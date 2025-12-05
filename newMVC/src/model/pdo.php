@@ -18,7 +18,6 @@ function connection()
     }
 }
 
-// Encryptage via code cesar depuis une méthode faite avant insertion
 function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
 {
     $pdo = connection();
@@ -318,21 +317,21 @@ function get_Annonce_User($id_client)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// function get_price_annoncement($id_annoncement)
-// {
-//     $pdo = connection();
-//     $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
-//     try {
-//         $tmp = $pdo->prepare($request);
-//         $tmp->execute([
-//             ":id_product" => $id_annoncement
-//         ]);
-//     } catch (PDOException $e) {
-//         die("Error on extraction of current bid on your annoncement" . $e->getMessage());
-//     }
+function get_price_annoncement($id_annoncement)
+    {
+        $pdo = connection();
+        $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
+        try {
+            $tmp = $pdo->prepare($request);
+            $tmp->execute([
+                ":id_product" => $id_annoncement
+            ]);
+        } catch (PDOException $e) {
+            die("Error on extraction of current bid on your annoncement" . $e->getMessage());
+    }
 
-//     return $tmp->fetchAll(PDO::FETCH_ASSOC);
-// }
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 // function getAnnonce($id_annoncement){
 //     $pdo = connection();
@@ -490,16 +489,6 @@ function getRatingUser($id_user)
     return $temp->fetchColumn();
 }
 
-
-
-
-
-
-
-
-
-
-
 /// Wee have to verif if the date is correctly compared
 function getDailyViews($id_product)
 {
@@ -534,16 +523,15 @@ function getLikes($id_product)
     return $temp->fetch(PDO::FETCH_ASSOC);
 }
 
-function getImage($id_product,  $title)
+function getImage($id_product)
 {
     $pdo = connection();
-    $requete = " SELECT path_image as url_image, alt from image where id_product = :id and alt = :title ";
+    $requete = " SELECT path_image as url_image, alt from image where id_product = :id";
     $temp = $pdo->prepare($requete);
     $temp->execute([
-        ":id" => $id_product,
-        ":title" => $title
+        ":id" => $id_product    
     ]);
-    return $temp->fetch(PDO::FETCH_ASSOC);
+    return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function getAnnoncementEndWithReservedPrice($id_user){
@@ -583,5 +571,5 @@ function getListFinishedAnnoncements($id_user){
         "id_user" => $id_user
     ]);
 
-    return $temp->fetch(PDO::FETCH_ASSOC);
+    return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
