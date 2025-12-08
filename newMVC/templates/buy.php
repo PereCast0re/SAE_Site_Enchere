@@ -158,7 +158,7 @@ document.getElementById('searchInput').addEventListener('keyup', async function 
         div.innerHTML = item.titre;
 
         div.onclick = () => {
-            window.location.href = "enchere.php?id=" + item.id;
+            window.location.href = "index.php?action=product&id=" + item.id;
         };
 
         box.appendChild(div);
