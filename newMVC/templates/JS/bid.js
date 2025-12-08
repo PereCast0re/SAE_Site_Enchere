@@ -35,6 +35,24 @@ bidForm.addEventListener("submit", async (event) => {
                 window.location.href = "index.php?action=connection";
                 return;
             }
+            if (data === "finished") {
+                window.alert("L'annonce est terminé !");
+                return;
+            }
+            if (data === "user_not_accepted") {
+                window.alert("Vous êtes déjà le dernier à avoir enchéri !");
+                return;
+            }
+            if (data === "price_not_accepted") {
+                window.alert("Vous devez enchérir au dessus de la valeur actuelle !");
+                return;
+            }
+            if (data === "price_not_available") {
+                window.alert("Vous ne pouvez pas enchérir pour le moment !");
+                return;
+            }
+
+            // window.alert(data);
         } else {
             // L’utilisateur a cliqué sur NON
             console.log("Annulé !");
