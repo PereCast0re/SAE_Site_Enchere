@@ -606,4 +606,8 @@ main #connexion input[type="submit"]:hover {
   top: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 
