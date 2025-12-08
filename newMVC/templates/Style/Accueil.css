@@ -525,6 +525,18 @@ main #connexion input[type="submit"]:hover {
   background-color: #0046CC;
 }
 
+#suggestions {
+  margin: 0 auto;
+  background:white;
+  border:1px solid #ccc;
+  width:300px;
+  display: none;
+  text-align:center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        
+}
+
 /* Conteneur principal */
 .swiper {
   width: 100%;
