@@ -12,10 +12,8 @@ $user = $_SESSION['user'];
 ?>
 
 <?php ob_start(); ?>
-    <header>
-        <?php include('preset/header.php'); ?>
-        <link href="templates/style/stylePopup.css" rel="stylesheet"/>
-    </header>
+    <?php include('preset/header.php'); ?>
+    <link href="templates/style/stylePopup.css" rel="stylesheet"/>
 
     <main>
         <?php
@@ -83,9 +81,8 @@ $user = $_SESSION['user'];
         <!-- Appel script api pour les graphes -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
-        <footer>
-            <?php include('preset/footer.php'); ?>
-        </footer>
+        <?php include('preset/footer.php'); ?>
+
 <?php $content = ob_get_clean(); ?>
 
 <?php require('preset/layout.php'); ?>

@@ -20,9 +20,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
         }
     </style>
     
-    <header>
-        <?php include('preset/header.php'); ?>
-    </header>
+    <?php include('preset/header.php'); ?>
 
     <h1>Mise en enchère de votre produit</h1>
 
@@ -109,9 +107,8 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
         <button type="submit" name="action" value="submit_new_produitenvente">Publier</button>
     </form>
     
-    <footer>
-        <?php include('preset/footer.php'); ?>
-    </footer>
+
+    <?php include('preset/footer.php'); ?>
     
     <script src="templates/JS/vente_produit.js"></script>
 <?php $content = ob_get_clean(); ?>

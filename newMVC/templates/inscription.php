@@ -46,7 +46,7 @@ $style = "templates/style/Accueil.css";
             </div>
 
             <br>
-            <input type="submit" value="Connexion">
+            <input type="submit" value="Inscription">
         </form>
         <hr>
     </section>

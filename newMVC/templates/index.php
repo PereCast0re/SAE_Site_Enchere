@@ -9,9 +9,8 @@ $style = "templates/style/Accueil.css";
 
 
 <?php ob_start(); ?>
-<header>
-  <?php include('preset/header.php'); ?>
-</header>
+
+<?php include('preset/header.php'); ?>
 
 <main>
   <?php
@@ -41,9 +40,9 @@ $style = "templates/style/Accueil.css";
             // $priceRow est un tableau de lignes; la valeur est dans $priceRow[0]['MAX(new_price)']
             $current_price = null;
             if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-                $current_price = $priceRow[0]['MAX(new_price)'];
+              $current_price = $priceRow[0]['MAX(new_price)'];
             } else {
-                $current_price = $p['start_price'];
+              $current_price = $p['start_price'];
             }
             ?>
             <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
@@ -95,12 +94,12 @@ $style = "templates/style/Accueil.css";
         <?php $cat = getCategory()[$i]; ?>
         <div class="category-card">
           <?php //$images = getImage($p['id_product']);
-          if (!empty($images)) {
-            echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-          } else {
-            echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-          }
-          ?>
+            if (!empty($images)) {
+              echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+            } else {
+              echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+            }
+            ?>
           <h3><?= htmlspecialchars($cat['name']) ?></h3>
           <a class="btn">Voir</a>
         </div>
@@ -111,9 +110,7 @@ $style = "templates/style/Accueil.css";
   </div>
 </main>
 
-<footer>
-  <?php include('preset/footer.php'); ?>
-</footer>
+<?php include('preset/footer.php'); ?>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

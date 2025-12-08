@@ -9,9 +9,8 @@ $style = "templates/style/Accueil.css";
 
 
 <?php ob_start(); ?>
-<header>
-    <?php include('preset/header.php'); ?>
-</header>
+
+<?php include('preset/header.php'); ?>
 
 <main>
     <?php
@@ -51,7 +50,7 @@ $style = "templates/style/Accueil.css";
                         <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
                     </div>
                 <?php endforeach; ?>
-            </div>  
+            </div>
 
             <div class="swiper-pagination"></div>
         </div>
@@ -99,9 +98,7 @@ $style = "templates/style/Accueil.css";
     </div>
 </main>
 
-<footer>
-    <?php include('preset/footer.php'); ?>
-</footer>
+<?php include('preset/footer.php'); ?>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

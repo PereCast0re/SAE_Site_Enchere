@@ -6,9 +6,8 @@ $user = $_SESSION['user'];
 ?>
 
 <?php ob_start(); ?>
-<header>
-    <?php include('preset/header.php'); ?>
-</header>
+
+<?php include('preset/header.php'); ?>
 
 <?php
 // Démarrer la session si nécessaire
@@ -53,7 +52,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 echo htmlspecialchars($current_price);
                 ?> €
             </p>
-            <button id="voir" >Voir</button>
+            <button id="voir">Voir</button>
         </div>
         <?php endforeach; ?>
     </div>
@@ -88,23 +87,23 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
     </div>
 </div>
 
-<footer>
-    <?php include('preset/footer.php'); ?>
-</footer>
+
+<?php include('preset/footer.php'); ?>
+
 <?php $content = ob_get_clean(); ?>
 
 <script src="templates/script/timer.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        
 
-    // Lancer tous les timers de la page
-    document.querySelectorAll('.timer').forEach(el => {
-      const endDate = el.getAttribute('data-end');
-      startCountdown(endDate, el); // Fonction importée depuis timer.js
+
+        // Lancer tous les timers de la page
+        document.querySelectorAll('.timer').forEach(el => {
+            const endDate = el.getAttribute('data-end');
+            startCountdown(endDate, el); // Fonction importée depuis timer.js
+        });
     });
-  });
 
 </script>
 <?php require('preset/layout.php');
