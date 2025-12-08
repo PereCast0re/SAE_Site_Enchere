@@ -13,6 +13,7 @@ require_once('src/controllers/C_unfavorite.php');
 require_once('src/controllers/C_bid.php');
 require_once('src/controllers/C_addComment.php');
 require_once('src/controllers/C_republishAnnoncement.php');
+require_once('src/controllers/C_addComment.php');
 require_once("src/model/pdo.php");
 
 try {
@@ -145,10 +146,9 @@ try {
 
             // Image
         } elseif ($_GET['action'] === 'getImage') {
-            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0 && isset($_GET['title'])) {
+            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
-                $title = $_GET['title'] . "_0";
-                $image = getImage($id_product, $title);
+                $image = getImage($id_product);
                 if ($image !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($image);

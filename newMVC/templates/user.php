@@ -68,16 +68,20 @@ $user = $_SESSION['user'];
 
         <div id="div_historique_annoncement" style="display: none;">
         </div>
+        
         <a class="btn" href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
 
         <div>
             <?php echo(republishAnnoncement(1)); ?>
         </div>
+        
 
         <script src="templates/JS/OuverturePopUp.js"></script>
         <script src="templates/JS/timer.js"></script>
         <script src="templates/JS/Annonce_publie_client.js" defer></script>
 
+        <!-- Appel script api pour les graphes -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
         <footer>
             <?php include('preset/footer.php'); ?>

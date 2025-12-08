@@ -50,16 +50,20 @@ async function print_tab_annoncements(annoncements, div){
             like.nbLike = 0;
         }
         // image
-        let image_url = await getImage(annonce.id_product, annonce.title);
+        let image_url = await getImage(annonce.id_product);
+        let firstImg = (
+            Array.isArray(image_url) &&
+            image_url.length > 0 &&
+            image_url[0].url_image
+        ) ? image_url[0].url_image : "assets/default.png";
 
-        console.log(image_url);
         html += 
             `
             <div class="annonce" style="color: red; padding: 10px;">
                 <table>
                     <tbody>
                     <tr>
-                        <td>image ici ! </td>
+                        <img src="${firstImg}" />
                         <td>${annonce.title}</td>
                         <td><span class="timer" data-end="${annonce.end_date}">Chargement...</span></td>
                         <td class="price_annonce_${annonce.id_product}"> ${ price.last_price } €</td>
@@ -113,32 +117,38 @@ async function print_end_annoncement_reserved($id_user, div){
         let html = ""
 
         for (const annonce of annoncements ){
+            
+            let image_url = await getImage(annonce.id_product);
+            let firstImg = (
+                Array.isArray(image_url) &&
+                image_url.length > 0 &&
+                image_url[0].url_image
+            ) ? image_url[0].url_image : "assets/default.png";
+
             html += `
                 <div>
                     <h3>Vos annonces terminer avec prix de réserve non atteint</h3>
                     <div>
+                        <img src="${firstImg}" />
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>Image</td>
                                     <td>${annonce.title}</td>
                                     <td>Dernière enchére : <br> ${annonce.new_price} </td>
                                     <td>Vôtre prix de reserve : <br> ${annonce.reserve_price} </td>
                                     <td>
-                                        <td>
-                                            <button id="btn_agree" type="button">Accepter</button>
-                                            <br>
-                                            <button id="btn_refuse" type="button">Refuser</button>
-                                        </td>
+                                        <button id="btn_agree" type="button">Accepter</button>
+                                        <br>
+                                        <button id="btn_refuse" type="button">Refuser</button>
                                     </td>
                                 </tr>
                             </tbody>
-                        <table>
+                        </table>
                     </div>
                 </div>
                 `
-            div.innerHTML += html;
         }
+        div.innerHTML += html;
     }
 }
 
@@ -150,18 +160,19 @@ function PrintStatAnnonce(annoncement) {
             <h3> Statistiques de l'annonce: ${annoncement.title} </h3>
             <div style="border: 1px solid black; display: flex; justify-content: space-around;">
                 <div class="stat_views" style="background-color: lightgreen;">
-                    <h4>Vues</h4>
-                    <p> faie le graphe ici </p>
+                    <canvas id="graphVue_${annoncement.id_product} width="300" heigh="150" />
                 </div>
                 <div class="stat_likes" style="background-color: lightblue;">
                     <h4>Likes</h4>
-                    <p> faie le graphe ici </p>
+                    <canvas id="graphLike_${annoncement.id_product}" width="300" height="150" />                
                 </div>
             </div>
         </div>
     `
 
     divStat.innerHTML += html
+    printGraph(`graphLike_${annoncement.id_product}`)
+    printGraph
 }
 
 async function print_historique_annoncement(id_user, div){
@@ -169,21 +180,29 @@ async function print_historique_annoncement(id_user, div){
 
     let annoncements = await getListAnnoncementEnd(id_user);
 
-    if(annoncements && annoncements.length > 0){
+    if(annoncements && annoncements.length >= 0){
 
-        div.style = "display: block;"
+        div.style.display = "block"
         div.innerHTML += `<h3> Vos annonces non concluante </h3>`
         for (const annonce of annoncements){
+
+            let image_url = await getImage(annonce.id_product);
+            let firstImg = (
+                Array.isArray(image_url) &&
+                image_url.length > 0 &&
+                image_url[0].url_image
+            ) ? image_url[0].url_image : "assets/default.png";
+
             html += `
                 <div>
+                    <img src="${firstImg}" />
                     <table>
                         <tbody>
                             <tr>
-                                <td> Image </td>
                                 <td>${annonce.title}</td>
-                                <td id="td_info_lastPrice${annonce.id_product}">${checkEndPrice(annonce.last_price, annonce.id_product)}</td>
+                                <td id="td_info_lastPrice${annonce.id_product}">${checkEndPrice(annonce.last_price)}</td>
                                 <td>
-                                    <button id="btn_republish${annonce.id_product}" style="display: ${annonce.last_price > 0 ? "none" : "block"};" type="button" onclick="alertConfirmation("Republiez cette annoncer ?", "republish")">Republier</button>
+                                    <button id="btn_republish${annonce.id_product}" style="display: ${annonce.last_price > 0 ? "none" : "block"};" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -193,9 +212,11 @@ async function print_historique_annoncement(id_user, div){
         }
         div.innerHTML += html
     }
-
-    document.querySelector('.')
+    else{
+        console.log('Aucune annonce dans votre historique !')
+    }
 }
+
 
 /////////////////////////////////////////////////////////////
             //Fonction Affichage personalisée//
@@ -228,16 +249,26 @@ async function alertConfirmation(message, action, id_product){
 
     let button = document.querySelector("#btnConfirm")
     button.addEventListener('click', async () =>{
-        fetch(`index.php?action=${action}&id_product=${id_product}`);
+        await fetch(`index.php?action=${action}&id_product=${id_product}`);
         popup.remove();
     })
+
+    let cancel = document.querySelector("#btnCancel")
+    cancel.addEventListener('click', () =>{
+        popup.remove();
+    })
+}
+
+async function printGraph(id, title, allData) {
+    let graph = ""
+    
+
 }
 
 
 /////////////////////////////////////////////////////////////
                         //Fonction API//
 ////////////////////////////////////////////////////////////
-
 
 async function getPrice(id_product){
     // Appel pour fetch et récupéré le prix actuel
@@ -271,16 +302,6 @@ async function getLikes(id_product){
     return likes_json;
 }
 
-// A demander de l'aide !!!!!
-async function getImage(id_product, title) {
-    /*
-    const response = await fetch(`index.php?action=getImage&id_product=${id_product}&title=${encodeURIComponent(title)}`);
-    const image_url = await response.json();
-    console.log(image_url)
-    return image_url;
-    */
-}
-
 async function getAnnonceReserved($id_user) {
     const reponse = await fetch(`index.php?action=reservedAnnoncement&id_user=${$id_user}`);
     const annonce_json = await reponse.json();
@@ -288,9 +309,17 @@ async function getAnnonceReserved($id_user) {
     return annonce_json;
 }
 
+async function getImage(id_product) {
+    const response = await fetch(`index.php?action=getImage&id_product=${id_product}`)
+    const imagejson = await response.json();
+    console.log(imagejson)
+    return imagejson
+}
+
 async function getListAnnoncementEnd(id_user) {
     const reponse = await fetch(`index.php?action=LisAnnoncementEnd&id_user=${id_user}`)
     const annonce_json = await reponse.json();
+    console.log('getListAnnoncementEnd')
     console.log(annonce_json)
     return annonce_json
 }
