@@ -57,8 +57,10 @@ $style = "templates/style/Accueil.css";
     <?php endif; ?>
 
     <div class="search_bar">
-        <input type="text" id="searchInput" placeholder="Rechercher une annonce...">
+        <input type="text" id="searchInput" placeholder="Rechercher une annonce..." autocomplete="off">
         <button id="searchButton">Rechercher</button>
+        
+        <div id="suggestions" ></div>
     </div>
 
     <div class="content">
@@ -132,6 +134,38 @@ $style = "templates/style/Accueil.css";
         });
     });
 </script>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', async function () {
+    let q = this.value;
+
+    if (q.length < 2) {
+        document.getElementById('suggestions').style.display = 'none';
+        return;
+    }
+
+    let response = await fetch("src/controllers/suggestion.php?q=" + encodeURIComponent(q));
+    let results = await response.json();
+
+    let box = document.getElementById('suggestions');
+    box.innerHTML = "";
+    box.style.display = "block";
+
+    results.forEach(item => {
+        let div = document.createElement("div");
+        div.style.padding = "8px";
+        div.style.cursor = "pointer";
+        div.innerHTML = item.titre;
+
+        div.onclick = () => {
+            window.location.href = "index.php?action=product&id=" + item.id;
+        };
+
+        box.appendChild(div);
+    });
+});
+</script>
+
 <?php $content = ob_get_clean(); ?>
 
 <?php require('preset/layout.php'); ?>
