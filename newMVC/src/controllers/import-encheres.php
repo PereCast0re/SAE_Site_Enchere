@@ -1,7 +1,6 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
-require 'config.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use Meilisearch\Client;
 
@@ -17,5 +16,3 @@ $index = $client->createIndex('products', ['primaryKey' => 'id']);
 $index = $client->index('products');
 
 $index->addDocuments($products);
-
-echo "Importation terminée";
