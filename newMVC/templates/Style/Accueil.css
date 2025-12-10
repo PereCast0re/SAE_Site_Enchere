@@ -22,41 +22,78 @@ body {
   color: #000;
   height: 100%;
 }
-
-/* ====================== */
-/* HEADER */
-/* ====================== */
-header nav {
-  background: linear-gradient(to right, #002366, #0046CC);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px;
-  font-size: 20px;
-  color: #F5F5DC;
+/* Définir une variable pour la hauteur de la barre de navigation */
+:root {
+    --navbar-height-desktop: 60px;
 }
 
-header ul {
-  list-style: none;
-  display: flex;
-  gap: 100px;
+.navbar-custom {
+    min-height: var(--navbar-height-desktop);
+    background: linear-gradient(to right, #002366, #0046CC) !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 20px;
 }
 
-header a {
-  text-decoration: none;
-  color: #f0f0f0;
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+    color: #f0f0f0 !important;
+    text-decoration: none;
+    font-size: 1.15rem;
 }
 
-header img {
-  position: absolute;
-  background-color: var(--color-background);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  right: 48.8%;
-  top: 20px;
+.navbar-custom .nav-link:hover {
+    color: #a9a9a9 !important; 
 }
 
+.navbar-custom .nav-item {
+    margin-right: 60px;
+}
+
+.navbar-custom .navbar-brand img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* Centrage du Logo et de la Hauteur sur les grands écrans */
+@media (min-width: 992px) {
+    
+    .navbar-custom .container-fluid {
+        height: var(--navbar-height-desktop);
+    }
+    
+    .navbar-custom .navbar-brand {
+        position: absolute;
+        left: 50%;
+        top: 50%; /* Nouvelle règle pour centrage vertical */
+        transform: translate(-50%, -50%); /* Ajustement pour centrage parfait H et V */
+    }
+    
+    .navbar-custom .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .navbar-custom .me-auto {
+        margin-right: auto !important;
+        margin-left: 0 !important; 
+    }
+    
+    .navbar-custom .navbar-nav:last-child {
+        margin-left: auto !important;
+    }
+}
+
+/* Correction pour mobile, pour retirer le positionnement absolu */
+@media (max-width: 991px) {
+    .navbar-custom .navbar-brand {
+        position: static;
+        left: auto;
+        transform: none;
+    }
+}
 /* ====================== */
 /* FOOTER */
 /* ====================== */
