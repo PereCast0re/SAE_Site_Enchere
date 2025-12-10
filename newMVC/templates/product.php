@@ -20,27 +20,31 @@ $script = "templates/JS/favorite.js";
     .container {
         height: 100%;
         margin: 50px 150px;
+        user-select: none;
+        text-align: center;
     }
 
     .swiper {
         width: 100%;
-        height: 100%;
+        height: 500px;
+        border-radius: 10px;
     }
 
     .swiper-slide {
         text-align: center;
         font-size: 18px;
-        background: #444;
+        /* background: #002366; */
         display: flex;
         justify-content: center;
         align-items: center;
+        place-items: center;
     }
 
     .swiper-slide img {
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .mySwiper {
@@ -52,6 +56,7 @@ $script = "templates/JS/favorite.js";
     .mySwiper .swiper-wrapper {
         display: flex;
         justify-content: center;
+        place-items: center;
     }
 
     /* Opacité */
@@ -60,6 +65,7 @@ $script = "templates/JS/favorite.js";
         height: 100%;
         opacity: 0.4;
     }
+
 
     .mySwiper .swiper-slide-thumb-active {
         opacity: 1;
@@ -101,39 +107,33 @@ $script = "templates/JS/favorite.js";
     </div>
 </section>
 
-<p><?= $images[0]["url_image"] ?></p>
-<img src=<?= $images[0]["url_image"] ?>>
-<?php var_dump($images); ?>
-
-<?php foreach ($images as $image) { ?>
-    <img src=<?= $image["url_image"] ?>>
-<?php } ?>
 
 <!-- Swiper -->
-
 <div class="container">
-    <div style="--swiper-navigation-color: #FFF; --swiper-pagination-color: #FFF" class="swiper mySwiper2">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+    <?php if (empty($images)) { ?>
+        <p>Aucune image disponible pour cette annonce.</p>
+    <?php } else { ?>
+        <div style="--swiper-navigation-color: #F0F0F0; --swiper-pagination-color: #F0F0F0;" class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+                <?php foreach ($images as $image) { ?>
+                    <div class="swiper-slide">
+                        <img src=<?= $image["url_image"] ?>>
+                    </div>
+                <?php } ?>
             </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+        <div thumbsSlider="" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <?php foreach ($images as $image) { ?>
+                    <div class="swiper-slide">
+                        <img src=<?= $image["url_image"] ?>>
+                    </div>
+                <?php } ?>
             </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-    <div thumbsSlider="" class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-            </div>
-        </div>
-    </div>
+    <?php } ?>
 </div>
 
 <p><?= $p['description']; ?></p>
