@@ -9,6 +9,7 @@ function Product($id_product)
 
         $comments = getCommentsFromProduct($id_product);
         $current_price = getLastPrice($p['id_product'])['last_price'];
+        $images = getImage($id_product);
         isset($_SESSION['user']) ? $isFav = isProductFavorite($id_product, $_SESSION['user']['id_user']) : $isFav = false;
 
         require("templates/product.php");
