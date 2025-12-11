@@ -17,14 +17,14 @@ function inscription(array $input)
         $input['password']
     )
     ) {
-        $name = $input['name'];
-        $firstname = $input['firstname'];
-        $birth_date = $input['birth_date'];
-        $address = $input['address'];
-        $city = $input['city'];
-        $postal_code = $input['postal_code'];
-        $email = $input['email'];
-        $password = $input['password'];
+        $name = trim(htmlentities($input['name']));
+        $firstname = trim(htmlentities($input['firstname']));
+        $birth_date = trim(htmlentities($input['birth_date']));
+        $address = trim(htmlentities($input['address']));
+        $city = trim(htmlentities($input['city']));
+        $postal_code = trim(htmlentities($input['postal_code']));
+        $email = trim(htmlentities($input['email']));
+        $password = trim(htmlentities(password_hash($input['password'], PASSWORD_ARGON2ID)));
     } else {
         throw new Exception("Les données du formulaire sont invalides !");
     }

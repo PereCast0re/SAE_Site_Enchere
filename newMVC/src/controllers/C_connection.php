@@ -6,9 +6,11 @@ function userConnection(array $input)
 {
     if (!empty($input['email']) && !empty($input['password'])) {
             $email = $input['email'];
-            $password = $input['password'];
-        if(authentication($email, $password)){
-            $info_user = authentication($email, $password);
+            $hasedpassword = gethashPassword($email);
+
+            if($hasedpassword && password_verify($input['password'] , $hasedpassword)){
+            $info_user = authentication($email, $hasedpassword);
+            var_dump($info_user);
             $info_user['DateConnexion'] = date("Y-m-d H:i:s");
 
             if ($info_user) {
