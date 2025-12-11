@@ -27,7 +27,9 @@ $style = "templates/style/Accueil.css";
             <div class="swiper-wrapper">
                 <?php foreach ($products as $p): ?>
                     <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
-                        <div class="swiper-slide">
+
+                        <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>"
+                            class="swiper-slide slide-link">
 
                             <div class="image-container">
                                 <?php
@@ -35,7 +37,6 @@ $style = "templates/style/Accueil.css";
                                 if (!empty($images)) {
                                     echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                                 } else {
-                                    // Le placeholder reste le contenu principal
                                     echo '<div class="no-image-placeholder">Aucune image disponible</div>';
                                 }
                                 ?>
@@ -56,7 +57,7 @@ $style = "templates/style/Accueil.css";
                                 </div>
                             </div>
 
-                        </div>
+                        </a>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
@@ -73,49 +74,49 @@ $style = "templates/style/Accueil.css";
     <div class="content">
         <h1>Nos annonces</h1>
         <div class="annonces">
-    <?php if (empty($products)): ?>
-        <p>Aucune annonce disponible pour le moment.</p>
-    <?php else: ?>
-        <?php 
-        $count_displayed = 0;
-        $max_to_display = 100;
-        ?>
-        
-        <?php foreach ($products as $p): ?>
-            
-            <?php
-            if ($count_displayed >= $max_to_display) {
-                break;
-            }
-            
-            if (new DateTime($p['end_date']) > new DateTime()): 
-            ?>
-                <div class="announce-card">
+            <?php if (empty($products)): ?>
+                <p>Aucune annonce disponible pour le moment.</p>
+            <?php else: ?>
+                <?php
+                $count_displayed = 0;
+                $max_to_display = 100;
+                ?>
+
+                <?php foreach ($products as $p): ?>
+
                     <?php
-                    $images = getImage($p['id_product']);
-                    if (!empty($images)) {
-                        echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                    } else {
-                        echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                    if ($count_displayed >= $max_to_display) {
+                        break;
                     }
+
+                    if (new DateTime($p['end_date']) > new DateTime()):
+                        ?>
+                        <div class="announce-card">
+                            <?php
+                            $images = getImage($p['id_product']);
+                            if (!empty($images)) {
+                                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                            } else {
+                                echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                            }
+                            ?>
+                            <h3><?= htmlspecialchars($p['title']) ?></h3>
+                            <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+                            <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
+                        </div>
+                        <?php $count_displayed++; ?>
+                    <?php endif; ?>
+
+                <?php endforeach; ?>
+
+                <?php
+                if ($count_displayed === 0):
                     ?>
-                    <h3><?= htmlspecialchars($p['title']) ?></h3>
-                    <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-                    <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
-                </div>
-                <?php $count_displayed++; ?>
+                    <p>Aucune annonce active disponible pour le moment.</p>
+                <?php endif; ?>
+
             <?php endif; ?>
-
-        <?php endforeach; ?>
-
-        <?php 
-        if ($count_displayed === 0) :
-        ?>
-            <p>Aucune annonce active disponible pour le moment.</p>
-        <?php endif; ?>
-
-    <?php endif; ?>
-</div>
+        </div>
 
         <!-- <a id="Voir_annonces_btn" class="btns">Voir plus</a> -->
         <br><br><br>

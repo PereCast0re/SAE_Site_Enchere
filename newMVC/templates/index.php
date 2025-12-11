@@ -22,44 +22,44 @@ $style = "templates/style/Accueil.css";
     <p>Aucune annonce disponible pour le moment.</p>
   <?php else: ?>
     <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <?php foreach ($products as $p): ?>
-                <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
-                    
-                    <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>" class="swiper-slide slide-link">
+      <div class="swiper-wrapper">
+        <?php foreach ($products as $p): ?>
+          <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
 
-                        <div class="image-container">
-                            <?php
-                            $images = getImage($p['id_product']);
-                            if (!empty($images)) {
-                                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                            } else {
-                                echo '<div class="no-image-placeholder">Aucune image disponible</div>';
-                            }
-                            ?>
+            <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>" class="swiper-slide slide-link">
 
-                            <div class="text-content-overlay">
-                                <h3><?= htmlspecialchars($p['title']) ?></h3>
-                                <?php
-                                $priceRow = getLastPrice($p['id_product']);
-                                $current_price = null;
-                                if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-                                    $current_price = $priceRow[0]['MAX(new_price)'];
-                                } else {
-                                    $current_price = $p['start_price'];
-                                }
-                                ?>
-                                <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
-                                <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-                            </div>
-                        </div>
+              <div class="image-container">
+                <?php
+                $images = getImage($p['id_product']);
+                if (!empty($images)) {
+                  echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                } else {
+                  echo '<div class="no-image-placeholder">Aucune image disponible</div>';
+                }
+                ?>
 
-                    </a> 
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </div>
+                <div class="text-content-overlay">
+                  <h3><?= htmlspecialchars($p['title']) ?></h3>
+                  <?php
+                  $priceRow = getLastPrice($p['id_product']);
+                  $current_price = null;
+                  if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+                    $current_price = $priceRow[0]['MAX(new_price)'];
+                  } else {
+                    $current_price = $p['start_price'];
+                  }
+                  ?>
+                  <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
+                  <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+                </div>
+              </div>
+
+            </a>
+          <?php endif; ?>
+        <?php endforeach; ?>
+      </div>
     </div>
-<?php endif; ?>
+  <?php endif; ?>
 
   <div class="content">
     <h1>Nos dernières annonces</h1>
@@ -113,7 +113,7 @@ $style = "templates/style/Accueil.css";
   <br><br><br>
   <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
   <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
-<?php $image = null ?>
+  <?php $image = null ?>
   <h1>Nos catégories en vedette</h1>
   <div class="category">
     <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
