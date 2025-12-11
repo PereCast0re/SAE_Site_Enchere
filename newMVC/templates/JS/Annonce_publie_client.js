@@ -13,11 +13,11 @@ async function afficher() {
         div.style.display = 'none'
     }
     else if (nb == 1){
-        div.innerHTML = '<h2>Vôtre annonce publié</h2>'
+        div.innerHTML = '<h2 stryle="text-align: center;">Vôtre annonce publié</h2>'
         print_tab_annoncements(json_values, div)
     }
     else{
-        div.innerHTML = '<h2>Vos annonces publiées</h2>'
+        div.innerHTML = '<h2 style="text-align: center;">Vos annonces publiées</h2>'
         print_tab_annoncements(json_values, div)
     }
 
