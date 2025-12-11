@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Paris');
+
 function connection()
 {
     $host = "localhost";
@@ -184,7 +186,8 @@ function getProduct($id_product)
     return $tmp->fetch(PDO::FETCH_ASSOC);
 }
 
-function get_termined_annonces_by_client($id_client){
+function get_termined_annonces_by_client($id_client)
+{
     $pdo = connection();
     $requete = "
         SELECT
@@ -202,19 +205,19 @@ function get_termined_annonces_by_client($id_client){
         GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
         ORDER BY p.end_date DESC
     ";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
             ':id_client' => $id_client
         ]);
-    }
-    catch (PDOException $e){
+    } catch (PDOException $e) {
         die("Erreur lors de la récupération des annonces terminées pour le client : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_actual_annonces_by_client($id_client){
+function get_actual_annonces_by_client($id_client)
+{
     $pdo = connection();
     $requete = "
         SELECT
@@ -232,13 +235,12 @@ function get_actual_annonces_by_client($id_client){
         GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
         ORDER BY p.end_date ASC
     ";
-    try{
+    try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
             ':id_client' => $id_client
         ]);
-    }
-    catch (PDOException $e){
+    } catch (PDOException $e) {
         die("Erreur lors de la récupération des annonces en cours pour le client : " . $e->getMessage());
     }
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
@@ -318,20 +320,20 @@ function get_Annonce_User($id_client)
 }
 
 function get_price_annoncement($id_annoncement)
-    {
-        $pdo = connection();
-        $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
-        try {
-            $tmp = $pdo->prepare($request);
-            $tmp->execute([
-                ":id_product" => $id_annoncement
-            ]);
-        } catch (PDOException $e) {
-            die("Error on extraction of current bid on your annoncement" . $e->getMessage());
+{
+    $pdo = connection();
+    $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
+    try {
+        $tmp = $pdo->prepare($request);
+        $tmp->execute([
+            ":id_product" => $id_annoncement
+        ]);
+    } catch (PDOException $e) {
+        die("Error on extraction of current bid on your annoncement" . $e->getMessage());
     }
 
-        return $tmp->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // function getAnnonce($id_annoncement){
 //     $pdo = connection();
@@ -416,7 +418,7 @@ function unsetProductFavorite($id_product, $id_user)
 function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
 {
     if ($currentPrice === null) {
-        $currentPrice = getLastPrice($id_product);
+        $currentPrice = getLastPrice($id_product)['last_price'];
     }
     $pdo = connection();
     $request = "INSERT INTO Bid(id_product, id_user, current_price, new_price, bid_date) VALUES (:id_product, :id_user, :current_price, :new_price, NOW())";
@@ -427,6 +429,38 @@ function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
         ':current_price' => $currentPrice,
         ':new_price' => $newPrice
     ]);
+
+    return $success;
+}
+
+function getLastBidder($id_product)
+{
+    $pdo = connection();
+    $request = "SELECT id_user FROM bid WHERE new_price IN (
+    SELECT MAX(new_price) FROM bid WHERE id_product = ?
+    );";
+    $temp = $pdo->prepare($request);
+    $temp->execute([$id_product]);
+
+    return $temp->fetchColumn();
+}
+
+function getProductDate($id_product)
+{
+    $pdo = connection();
+    $request = "SELECT end_date FROM Product WHERE id_product = ?";
+    $temp = $pdo->prepare($request);
+    $temp->execute([$id_product]);
+
+    return $temp->fetchColumn();
+}
+
+function addTime($id_product)
+{
+    $pdo = connection();
+    $request = "UPDATE Product SET end_date = DATE_ADD(end_date, INTERVAL 30 SECOND) WHERE id_product = ?";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([$id_product]);
 
     return $success;
 }
@@ -529,12 +563,13 @@ function getImage($id_product)
     $requete = " SELECT path_image as url_image, alt from image where id_product = :id";
     $temp = $pdo->prepare($requete);
     $temp->execute([
-        ":id" => $id_product    
+        ":id" => $id_product
     ]);
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getAnnoncementEndWithReservedPrice($id_user){
+function getAnnoncementEndWithReservedPrice($id_user)
+{
     $pdo = connection();
     $requete = "SELECT *, MAX(bid.new_price)
                 FROM product as p
@@ -550,7 +585,8 @@ function getAnnoncementEndWithReservedPrice($id_user){
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getListFinishedAnnoncements($id_user){
+function getListFinishedAnnoncements($id_user)
+{
     $pdo = connection();
     $requete = "SELECT 
                 p.*,

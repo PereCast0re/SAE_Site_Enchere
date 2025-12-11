@@ -15,13 +15,46 @@ function bid()
         $id_product = $_GET['id'];
         $id_user = $_SESSION['user']['id_user'];
         $newPrice = (int) $_POST['newPrice'];
+        $id_last_bidder = getLastBidder($id_product);
 
-        $currentPrice = (int) getLastPrice($id_product);
-        if ($newPrice > $currentPrice)
-            echo ("This price is under the current price. Impossible to bid !");
+        $productDate = getProductDate($id_product);
+        $now = time();
+
+        $endTimestamp = strtotime($productDate);
+        $remaining = $endTimestamp - $now;
+
+        // echo $productDate, $endTimestamp, $now, $remaining;
+
+        if ($remaining <= 0) {
+            echo "finished";
+            exit;
+        }
+
+        if ($id_user === $id_last_bidder) {
+            echo "user_not_accepted";
+            exit;
+        }
+
+        $currentPrice = (int) getLastPrice($id_product)['last_price'];
+        if ($newPrice <= $currentPrice) {
+            echo "price_not_accepted";
+            exit;
+        }
 
         $success = bidProduct($id_product, $id_user, $newPrice);
-        if (!$success)
-            throw new Exception("You can't bid this product !");
+        if (!$success) {
+            echo "not_available";
+            exit;
+        }
+
+        // ajouter 30s de plus pour éviter d'enchérir au dernier moment
+        if ($remaining >= 0 && $remaining <= 30) {
+            addTime($id_product);
+            echo "time_extended";
+            exit;
+        }
+
+        echo "success";
+        exit;
     }
 }
