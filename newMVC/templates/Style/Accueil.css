@@ -710,3 +710,120 @@ main #connexion input[type="submit"]:hover {
 body {
   overflow-x: hidden;
 }
+
+/* Page vendre */
+
+.titleVendre {
+    color: var(--color-blue);
+    display: block;
+    text-align: center;
+}
+
+.form_vente_produit {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.containeur_top {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem 2rem;
+    align-items: start;
+}
+
+.img_selector {
+    grid-row: 1;
+}
+
+.information_produit{
+    grid-column: 2;
+    display: block;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid black;
+    padding-left: 2%;
+}
+
+.certificat_authenticite_vente {
+    width: 100%;
+}
+
+.description_produit_vente {
+    width: 100%;
+}
+
+.buttom_image{
+  padding-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Masquer l'input réel */
+.img_selector_input {
+    display: none;
+}
+
+/* Styliser le label comme un bouton */
+.custom-file-upload {
+  width: 450px;
+  height: 30px;
+  font-size: 1em;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 10px;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 60px;
+  text-align: center;
+}
+
+/* Optionnel : changement de couleur au survol */
+.custom-file-upload:hover {
+    color: red;
+}
+
+input.information_produit{
+    font-size: 1em;
+  width: 200px;
+  border-radius: 60px;
+  color: var(--color-blue);
+  background-color: #ffffff;
+  border: 2px solid var(--color-gold);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.img_preview {
+    width: 150px;
+    height: 150px;
+    display: none;
+    margin-top: 10px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.main_image{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.wrapper-annonces {
+  position: relative;
+  margin-left: 80px; 
+  padding-left: 10px;
+}
+
+.barre-noire {
+  position: absolute;
+  left: 0;         
+  top: 70px;          
+  bottom: 40px;      
+  width: 4px;
+  height: calc(100% - 100px);
+  background: #000;
+  border-radius: 2px;
+  z-index: 5;
+  pointer-events: none; 
+}

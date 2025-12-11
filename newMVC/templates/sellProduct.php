@@ -13,59 +13,16 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 ?>
 
 <?php ob_start(); ?>
-    <style>
-        footer {
-            bottom: 0;
-        }
-    </style>
-    
     <?php include('preset/header.php'); ?>
 
-    <h1>Mise en enchère de votre produit</h1>
-
+    <h1 class="titleVendre">Mise en enchère de votre produit</h1>
     <form class="form_vente_produit" action="index.php?action=addProduct" method="POST" enctype="multipart/form-data">
         <div class="containeur_top">
-            <div class="nom_annonce_vente">
-                <h4>Nom de votre annonce</h4>
-                <input type="text" name="nom_annonce_vente" placeholder="Nom de votre annonce" required>
-            </div>
-
-            <div class="img_selector">
-                <h4>Ajouter des images</h4>
-                <p>Vous avez la possibilité de mettre maximum 4 images</p>
-
-                <div class="img_annonces">
-                    <!-- Image 1 -->
-                    <div class="input_selector_image">
-                        <label>Image 1 :</label>
-                        <input type="file" name="image_produit[]" id="1" >
-                        <img src="" id="img_annonce_1" style="width: 150px; height: 150px; display: none; margin-top: 10px;">
-                    </div>
-
-                    <!-- Image 2 -->
-                    <div class="input_selector_image">
-                        <label>Image 2 :</label>
-                        <input type="file" name="image_produit[]" id="2" >
-                        <img src="" id="img_annonce_2" style="width: 150px; height: 150px; display: none; margin-top: 10px;">
-                    </div>
-
-                    <!-- Image 3 -->
-                    <div class="input_selector_image">
-                        <label>Image 3 :</label>
-                        <input type="file" name="image_produit[]" id="3" >
-                        <img src="" id="img_annonce_3" style="width: 150px; height: 150px; display: none; margin-top: 10px;">
-                    </div>
-
-                    <!-- Image 4 -->
-                    <div class="input_selector_image">
-                        <label>Image 4 :</label>
-                        <input type="file" name="image_produit[]" id="4">
-                        <img src="" id="img_annonce_4" style="width: 150px; height: 150px; display: none; margin-top: 10px;">
-                    </div>
-                </div>
-            </div>
-
             <div class="information_produit">
+                <div class="nom_annonce_vente">
+                    <h4>Nom de votre annonce</h4>
+                    <input type="text" name="nom_annonce_vente" placeholder="Nom de votre annonce" required>
+                </div>
                 <div class="produit_categorie">
                     <h4>Catégorie :</h4>
                     <select name="lst_categorie_vente" id="lst_categorie_vente" required>
@@ -82,22 +39,55 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                     <input type="checkbox" id="prix_reserve_checkbox" onclick="afficherInputPrixReserve()">
                     <div id="input_prix_reserve"></div>
                 </div>
+                <div class="date_debut">
+                    <h4>Date de début :</h4>
+                    <input type="date" name="date_debut" required>
+                </div>
+                <div class="date_fin">
+                    <h4>Date de fin :</h4>
+                    <input type="date" name="date_fin" required>
+                </div>
             </div>
-            <div class="date_debut">
-                <h4>Date de début :</h4>
-                <input type="date" name="date_debut" required>
+            
+            <div class="img_selector">
+            <h4>Ajouter des images</h4>
+            <p>Vous avez la possibilité de mettre maximum 4 images</p>
+
+            <div class="img_annonces">
+                <div class="main_image">
+                    <div class="input_selector_image">
+                        <label class="custom-file-upload" for="img1">Image 1</label>
+                        <input type="file" id="img1" name="image_produit[]" class="img_selector_input" accept="image/*">
+                        <img id="img_preview_1" class="img_preview" src="" alt="Prévisualisation Image 1">
+                    </div>
+                </div>
+                
+                <div class="buttom_image">
+                    <div class="input_selector_image">
+                        <label class="custom-file-upload" for="img2">Image 2</label>
+                        <input type="file" id="img2" name="image_produit[]" class="img_selector_input" accept="image/*">
+                        <img id="img_preview_2" class="img_preview" src="" alt="Prévisualisation Image 2">
+                    </div>
+                    <div class="input_selector_image">
+                        <label class="custom-file-upload" for="img3">Image 3</label>
+                        <input type="file" id="img3" name="image_produit[]" class="img_selector_input" accept="image/*">
+                        <img id="img_preview_3" class="img_preview" src="" alt="Prévisualisation Image 3">
+                    </div>
+                    <div class="input_selector_image">
+                        <label class="custom-file-upload" for="img4">Image 4</label>
+                        <input type="file" id="img4" name="image_produit[]" class="img_selector_input" accept="image/*">
+                        <img id="img_preview_4" class="img_preview" src="" alt="Prévisualisation Image 4">
+                    </div>
+                </div>
             </div>
-            <div class="date_fin">
-                <h4>Date de fin :</h4>
-                <input type="date" name="date_fin" required>
-            </div>
+        </div>
+
         </div>
 
         <div class="certificat_authenticite_vente">
             <h4>Certificat d'authenticité format PDF</h4>
             <input type="file" name="certificat_autenticite" accept="application/pdf,image/*">
         </div>
-
         <div class="description_produit_vente">
             <h4>Faites-nous une description de votre produit</h4>
             <textarea placeholder="Votre description ici" name="description_produit" id="description_produit" required></textarea>
