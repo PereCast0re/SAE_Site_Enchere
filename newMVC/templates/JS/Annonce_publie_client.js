@@ -95,7 +95,7 @@ async function print_tab_annoncements(annoncements, div){
 async function print_end_annoncement_reserved($id_user, div){
     let annoncements = await getAnnonceReserved($id_user);
 
-    if (annoncements != null){
+    if (annoncements.length > 0){
         div.style = 'display: block;'
 
         let html = ""
@@ -134,6 +134,9 @@ async function print_end_annoncement_reserved($id_user, div){
         }
         div.innerHTML += html;
     }
+    else{
+        div.style.display = "none"
+    }
 }
 
 function PrintStatAnnonce(annoncement) {
@@ -166,7 +169,7 @@ async function print_historique_annoncement(id_user, div){
 
     let annoncements = await getListAnnoncementEnd(id_user);
 
-    if(annoncements && annoncements.length >= 0){
+    if(annoncements && annoncements.length > 0){
 
         div.style.display = "block"
         div.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;"> Vos annonces non concluante </h3>`
@@ -199,6 +202,7 @@ async function print_historique_annoncement(id_user, div){
         div.innerHTML += html
     }
     else{
+        div.style.display = "none"
         console.log('Aucune annonce dans votre historique !')
     }
 }
