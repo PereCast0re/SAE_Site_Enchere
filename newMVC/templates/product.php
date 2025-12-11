@@ -308,7 +308,7 @@ $script = "templates/JS/favorite.js";
 <section id="product-comment">
     <?php foreach ($comments as $comment) { ?>
         <h3><a
-                href="index.php?action=user&id=<?= $comment['id_user'] ?>"><?= $comment['full_name'] ?></a><?= " " . $comment["comment_date"] ?>
+                href="index.php?action=user&id=<?= $comment['id_user'] ?>"><?= htmlspecialchars(strip_tags($comment['full_name'])) ?></a><?= " " . $comment["comment_date"] ?>
         </h3>
         <p><?= htmlspecialchars(strip_tags($comment['comment'])) ?></p>
     <?php } ?>
@@ -320,6 +320,13 @@ $script = "templates/JS/favorite.js";
         <button class="btn" type="submit">Publier</button>
     </form>
 </section>
+
+<!-- <section>
+    <form method="POST" action="index.php?action=deleteProduct">
+        <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
+        <button type="submit">Supprimer</button>
+    </form>
+</section> -->
 
 <?php include('preset/footer.php'); ?>
 

@@ -61,6 +61,17 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $id_user = $_SESSION['user']['id_user'];
             addNewProduct($id_user, $_POST);
+        } elseif ($_GET['action'] === 'deleteProduct') { // THOMASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+            if (isset($_POST['id']) && $_POST['id'] >= 0) {
+                $success = deleteProduct($_POST['id']);
+                if (!$success) {
+                    throw new Exception("This product can't be deleted");
+                }
+                header("Location: index.php");
+                exit();
+            } else {
+                throw new Exception("Impossible to delete this product !");
+            }
         } elseif ($_GET['action'] === 'addComment') {
             addComment();
 
@@ -80,7 +91,7 @@ try {
             ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
             Product(id_product: $_GET['id']);
-            
+
 
             ////////////////////////////// page user //////////////////////////////
             // get price

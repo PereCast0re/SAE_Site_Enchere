@@ -279,6 +279,16 @@ function createProduct($title, $description, $start_date, $end_date, $reserve_pr
     }
 }
 
+function deleteProduct($id_product)
+{
+    $pdo = connection();
+    $request = "DELETE FROM Product WHERE id_product = ?";
+    $temp = $pdo->prepare($request);
+    $success = $temp->execute([$id_product]);
+
+    return $success;
+}
+
 function addImage($id_product, $path_image, $name_image)
 {
     $pdo = connection();
