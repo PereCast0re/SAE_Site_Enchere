@@ -6,7 +6,6 @@ $style = "templates/style/Accueil.css";
 <?php ob_start(); ?>
 <style>
     footer {
-        position: absolute;
         bottom: 0;
     }
 </style>

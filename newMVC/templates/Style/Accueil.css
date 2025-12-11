@@ -18,7 +18,6 @@
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #F0F0F0;
-  /* fond doux */
   color: #000;
   height: 100%;
 }
@@ -37,7 +36,7 @@ body {
 
 .navbar-custom .nav-link,
 .navbar-custom .navbar-brand {
-    color: #f0f0f0 !important;
+    color: var(--color-background) !important;
     text-decoration: none;
     font-size: 1.15rem;
 }
@@ -101,7 +100,7 @@ footer {
   background: linear-gradient(to top, #002366, #0046CC);
   padding: 30px;
   width: 100%;
-  color: #f0f0f0;
+  color: var(--color-background);
 }
 
 footer section {
@@ -152,7 +151,7 @@ main #accueil {
 /* ====================== */
 /* BOUTON GLOBAL */
 /* ====================== */
-.btn {
+.btns {
   display: inline-block;
   background-color: #ffffff;
   color: #002366;
@@ -169,7 +168,7 @@ main #accueil {
   transition: background-color 0.3s ease;
 }
 
-.btn:hover {
+.btns:hover {
   background-color: #D4AF37;
 }
 
@@ -574,74 +573,101 @@ main #connexion input[type="submit"]:hover {
         
 }
 
-/* Conteneur principal */
 .swiper {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-/* Wrapper qui contient les slides */
 .swiper-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  transition-property: transform;
-  box-sizing: content-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition-property: transform;
+    box-sizing: content-box;
 }
 
-/* Chaque slide */
 .swiper-slide {
-  flex-shrink: 0;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition-property: transform;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
 }
 
-/* Pagination (points) */
+.swiper-slide .image-container {
+    height: 620px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.swiper-slide .no-image-placeholder {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    color: #888;
+    text-align: center;
+}
+
 .swiper-pagination {
-  position: absolute;
-  text-align: center;
-  transition: .3s opacity;
-  transform: translate3d(0,0,0);
-  z-index: 10;
+    position: absolute;
+    text-align: center;
+    transition: .3s opacity;
+    transform: translate3d(0,0,0);
+    z-index: 10;
 }
 
 .swiper-pagination-bullet {
-  width: 8px;
-  height: 8px;
-  background: #000;
-  opacity: .2;
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0 4px;
-  transition: opacity .3s;
+    width: 8px;
+    height: 8px;
+    background: #000;
+    opacity: .2;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 4px;
+    transition: opacity .3s;
 }
 
 .swiper-pagination-bullet-active {
-  opacity: 1;
+    opacity: 1;
 }
 
-
-/* Scrollbar */
 .swiper-scrollbar {
-  border-radius: 10px;
-  position: absolute;
-  left: 1%;
-  bottom: 3px;
-  z-index: 50;
-  height: 5px;
-  width: 98%;
+    border-radius: 10px;
+    position: absolute;
+    left: 1%;
+    bottom: 3px;
+    z-index: 50;
+    height: 5px;
+    width: 98%;
 }
 
 .swiper-scrollbar-drag {
-  height: 100%;
-  background: #000;
-  border-radius: 10px;
-  left: 0;
-  top: 0;
+    height: 100%;
+    background: #000;
+    border-radius: 10px;
+    left: 0;
+    top: 0;
 }
+
 
 body {
   overflow-x: hidden;

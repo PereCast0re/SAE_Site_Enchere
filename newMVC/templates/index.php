@@ -25,14 +25,16 @@ $style = "templates/style/Accueil.css";
       <div class="swiper-wrapper">
         <?php foreach ($products as $p): ?>
           <div class="swiper-slide">
-            <?php
-            //$images = getImage($p['id_product']);
-            if (!empty($images)) {
-              echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-            } else {
-              echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-            }
-            ?>
+            <div class="image-container">
+              <?php
+              $images = getImage($p['id_product']);
+              if (!empty($images)) {
+                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+              } else {
+                echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+              }
+              ?>
+            </div>
             <h3><?= htmlspecialchars($p['title']) ?></h3>
             <p><?= htmlspecialchars($p['description']) ?></p>
             <?php
@@ -63,11 +65,11 @@ $style = "templates/style/Accueil.css";
       <?php if (empty($products)): ?>
         <p>Aucune annonce disponible pour le moment.</p>
       <?php else: ?>
-        <?php for ($i = 0; $i < min(7, count($products)); $i++): ?>
+        <?php for ($i = 0; $i < min(9, count($products)); $i++): ?>
           <?php $p = $products[$i]; ?>
           <div class="announce-card">
             <?php
-            //$images = getImage($p['id_product']);
+            $images = getImage($p['id_product']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -83,17 +85,17 @@ $style = "templates/style/Accueil.css";
       <?php endif; ?>
     </div>
 
-    <a id="Voir_annonces_btn" class="btn" href="index.php?action=buy">Voir les annonces</a>
+    <a id="Voir_annonces_btn" class="btns" href="index.php?action=buy">Voir les annonces</a>
     <br><br><br>
-    <a id="Connexion_button" class="btn" href="index.php?action=connection">Connexion</a><br><br><br>
-    <a id="inscription_button" class="btn" href="index.php?action=inscription">S'inscrire</a>
+    <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
+    <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
 
     <h1>Nos catégories en vedette</h1>
     <div class="category">
       <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
         <?php $cat = getCategory()[$i]; ?>
         <div class="category-card">
-          <?php //$images = getImage($p['id_product']);
+          <?php //$images = getImageCategory($cat['id_category']);
             if (!empty($images)) {
               echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
             } else {
@@ -106,7 +108,7 @@ $style = "templates/style/Accueil.css";
       <?php endfor; ?>
     </div>
     <p>------------TEXTE------------</p>
-    <a class="btn" href="https://www.youtube.com/watch?v=xvFZjo5PgG0">S'abonner</a><br><br><br>
+    <a class="btns" href="https://www.youtube.com/watch?v=xvFZjo5PgG0">S'abonner</a><br><br><br>
   </div>
 </main>
 
@@ -121,6 +123,10 @@ $style = "templates/style/Accueil.css";
   // Initialisation de Swiper
   document.addEventListener('DOMContentLoaded', function () {
     new Swiper('.mySwiper', {
+      autoplay: {
+                delay: 3000, // 3 secondes
+                disableOnInteraction: false, // continue même après interaction
+            },
       loop: true,
       slidesPerView: 1,
       navigation: {

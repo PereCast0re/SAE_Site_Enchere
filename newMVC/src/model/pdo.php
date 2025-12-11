@@ -567,6 +567,24 @@ function getImage($id_product)
     ]);
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
+/*
+function getImageCategory($id_category)
+{
+    $pdo = connection();
+    // recuperer la premiere image de la premiere annonce de cette categorie avec une image
+    $requete = " SELECT img.path_image as url_image, img.alt from image img
+                join product p on p.id_product = img.id_product
+                join belongsto bel on bel.id_product = p.id_product, bel.id_category
+                join category c on c.id_category = bel.id_category
+                where c.id_category = :id_category
+                LIMIT 1 ";
+    $temp = $pdo->prepare($requete);
+    $temp->execute([
+        ":id_category" => $id_category
+    ]);
+    return $temp->fetchAll(PDO::FETCH_ASSOC);
+}
+    */
 
 function getAnnoncementEndWithReservedPrice($id_user)
 {

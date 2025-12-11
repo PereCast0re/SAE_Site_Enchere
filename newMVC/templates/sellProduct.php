@@ -8,14 +8,13 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 
 $title = "Page de vente";
-$style = "templates/style/style.css";
+$style = "templates/style/accueil.css";
 $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
 ?>
 
 <?php ob_start(); ?>
     <style>
         footer {
-            position: absolute;
             bottom: 0;
         }
     </style>

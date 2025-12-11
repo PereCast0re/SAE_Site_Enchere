@@ -27,14 +27,16 @@ $style = "templates/style/Accueil.css";
             <div class="swiper-wrapper">
                 <?php foreach ($products as $p): ?>
                     <div class="swiper-slide">
-                        <?php
-                        //$images = getImage($p['id_product']);
-                        if (!empty($images)) {
-                            echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                        } else {
-                            echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-                        }
-                        ?>
+                        <div class="image-container">
+                            <?php
+                            $images = getImage($p['id_product']);
+                            if (!empty($images)) {
+                                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                            } else {
+                                echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                            }
+                            ?>
+                        </div>
                         <h3><?= htmlspecialchars($p['title']) ?></h3>
                         <p><?= htmlspecialchars($p['description']) ?></p>
                         <?php
@@ -61,8 +63,8 @@ $style = "templates/style/Accueil.css";
     <div class="search_bar">
         <input type="text" id="searchInput" placeholder="Rechercher une annonce..." autocomplete="off">
         <button id="searchButton">Rechercher</button>
-        
-        <div id="suggestions" ></div>
+
+        <div id="suggestions"></div>
     </div>
 
     <div class="content">
@@ -71,11 +73,11 @@ $style = "templates/style/Accueil.css";
             <?php if (empty($products)): ?>
                 <p>Aucune annonce disponible pour le moment.</p>
             <?php else: ?>
-                <?php for ($i = 0; $i < min(7, count($products)); $i++): ?>
+                <?php for ($i = 0; $i < min(100, count($products)); $i++): ?>
                     <?php $p = $products[$i]; ?>
                     <div class="announce-card">
                         <?php
-                        //$images = getImage($p['id_product']);
+                        $images = getImage($p['id_product']);
                         if (!empty($images)) {
                             echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                         } else {
@@ -91,14 +93,14 @@ $style = "templates/style/Accueil.css";
             <?php endif; ?>
         </div>
 
-        <a id="Voir_annonces_btn" class="btn">Voir plus</a>
+        <a id="Voir_annonces_btn" class="btns">Voir plus</a>
         <br><br><br>
-        <a id="Connexion_button" class="btn" href="index.php?action=connection">Connexion</a><br><br><br>
-        <a id="inscription_button" class="btn" href="index.php?action=inscription">S'inscrire</a>
+        <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
+        <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
 
 
         <p>------------TEXTE------------</p>
-        <a class="btn">S'abonner</a><br><br><br>
+        <a class="btns">S'abonner</a><br><br><br>
     </div>
 </main>
 
@@ -138,34 +140,34 @@ $style = "templates/style/Accueil.css";
 </script>
 
 <script>
-document.getElementById('searchInput').addEventListener('keyup', async function () {
-    let q = this.value;
+    document.getElementById('searchInput').addEventListener('keyup', async function () {
+        let q = this.value;
 
-    if (q.length < 2) {
-        document.getElementById('suggestions').style.display = 'none';
-        return;
-    }
+        if (q.length < 2) {
+            document.getElementById('suggestions').style.display = 'none';
+            return;
+        }
 
-    let response = await fetch("src/controllers/suggestion.php?q=" + encodeURIComponent(q));
-    let results = await response.json();
+        let response = await fetch("src/controllers/suggestion.php?q=" + encodeURIComponent(q));
+        let results = await response.json();
 
-    let box = document.getElementById('suggestions');
-    box.innerHTML = "";
-    box.style.display = "block";
+        let box = document.getElementById('suggestions');
+        box.innerHTML = "";
+        box.style.display = "block";
 
-    results.forEach(item => {
-        let div = document.createElement("div");
-        div.style.padding = "8px";
-        div.style.cursor = "pointer";
-        div.innerHTML = item.titre;
+        results.forEach(item => {
+            let div = document.createElement("div");
+            div.style.padding = "8px";
+            div.style.cursor = "pointer";
+            div.innerHTML = item.titre;
 
-        div.onclick = () => {
-            window.location.href = "index.php?action=product&id=" + item.id;
-        };
+            div.onclick = () => {
+                window.location.href = "index.php?action=product&id=" + item.id;
+            };
 
-        box.appendChild(div);
+            box.appendChild(div);
+        });
     });
-});
 </script>
 
 <?php $content = ob_get_clean(); ?>
