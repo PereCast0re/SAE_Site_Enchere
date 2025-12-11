@@ -21,6 +21,8 @@ try {
         ////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
             require("templates/connection.php");
+        } elseif ($_GET['action'] === 'deconnexion'){
+            require_once('src/controllers/C_deconnexion.php');
         } elseif ($_GET['action'] === 'inscription') {
             require("templates/inscription.php");
         } elseif ($_GET['action'] === 'user') {
