@@ -15,6 +15,6 @@
             <p>------</p>
             <p>------</p>
         </div>
-        <img >
+        <img src="templates/images/logo.png" alt="Logo">
     </section>
 </footer>
