@@ -17,21 +17,22 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #F0F0F0;
+  background-color: var(--color-background) !important;
   color: #000;
   height: 100%;
 }
+
 /* Définir une variable pour la hauteur de la barre de navigation */
 :root {
-    --navbar-height-desktop: 60px;
+  --navbar-height-desktop: 60px;
 }
 
 .navbar-custom {
-    min-height: var(--navbar-height-desktop);
-    background: linear-gradient(to right, #002366, #0046CC) !important;
-    padding-top: 0;
-    padding-bottom: 0;
-    font-size: 20px;
+  min-height: var(--navbar-height-desktop);
+  background: linear-gradient(to right, #002366, #0046CC) !important;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 20px;
 }
 
 .navbar-custom .nav-link,
@@ -42,11 +43,11 @@ body {
 }
 
 .navbar-custom .nav-link:hover {
-    color: #a9a9a9 !important; 
+  color: #a9a9a9 !important;
 }
 
 .navbar-custom .nav-item {
-    margin-right: 60px;
+  margin-right: 60px;
 }
 
 .navbar-custom .navbar-brand img {
@@ -57,42 +58,45 @@ body {
 
 /* Centrage du Logo et de la Hauteur sur les grands écrans */
 @media (min-width: 992px) {
-    
-    .navbar-custom .container-fluid {
-        height: var(--navbar-height-desktop);
-    }
-    
-    .navbar-custom .navbar-brand {
-        position: absolute;
-        left: 50%;
-        top: 50%; /* Nouvelle règle pour centrage vertical */
-        transform: translate(-50%, -50%); /* Ajustement pour centrage parfait H et V */
-    }
-    
-    .navbar-custom .navbar-collapse {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-    
-    .navbar-custom .me-auto {
-        margin-right: auto !important;
-        margin-left: 0 !important; 
-    }
-    
-    .navbar-custom .navbar-nav:last-child {
-        margin-left: auto !important;
-    }
+
+  .navbar-custom .container-fluid {
+    height: var(--navbar-height-desktop);
+  }
+
+  .navbar-custom .navbar-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* Nouvelle règle pour centrage vertical */
+    transform: translate(-50%, -50%);
+    /* Ajustement pour centrage parfait H et V */
+  }
+
+  .navbar-custom .navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .navbar-custom .me-auto {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+  }
+
+  .navbar-custom .navbar-nav:last-child {
+    margin-left: auto !important;
+  }
 }
 
 /* Correction pour mobile, pour retirer le positionnement absolu */
 @media (max-width: 991px) {
-    .navbar-custom .navbar-brand {
-        position: static;
-        left: auto;
-        transform: none;
-    }
+  .navbar-custom .navbar-brand {
+    position: static;
+    left: auto;
+    transform: none;
+  }
 }
+
 /* ====================== */
 /* FOOTER */
 /* ====================== */
@@ -123,12 +127,16 @@ main h1 {
   font-size: 3em;
 }
 
-hr {
-  background-color: var(--color-blue);
+.connection hr, .content hr {
+  display: block;
+  border: none;
   height: 1px;
   width: 40%;
-  margin: 50px auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--color-blue);
 }
+
 
 main p {
   padding: 20px;
@@ -438,11 +446,8 @@ padding: 40px 0;
 
 /* ########## Connection ########## */
 
-hr {
-  background-color: var(--color-blue);
-}
-
-.connection, .inscription h1 {
+.connection,
+.inscription h1 {
   text-align: center;
   color: var(--color-blue);
 }
@@ -556,20 +561,21 @@ main #connexion input[type="submit"]:hover {
   cursor: pointer;
   margin-left: 10px;
 }
+
 #searchButton:hover {
   background-color: #0046CC;
 }
 
 #suggestions {
   margin: 0 auto;
-  background:white;
-  border:1px solid #ccc;
-  width:300px;
+  background: white;
+  border: 1px solid #ccc;
+  width: 300px;
   display: none;
-  text-align:center;
+  text-align: center;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        
+
 }
 
 .swiper {
@@ -704,6 +710,3 @@ main #connexion input[type="submit"]:hover {
 body {
   overflow-x: hidden;
 }
-
-
-
