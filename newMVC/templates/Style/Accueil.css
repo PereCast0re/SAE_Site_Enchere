@@ -97,26 +97,84 @@ body {
   }
 }
 
+.navbar-custom .navbar-toggler-icon {
+    filter: invert(1); 
+}
+
+.navbar-custom .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1); 
+}
+
 /* ====================== */
 /* FOOTER */
 /* ====================== */
 footer {
-  background: linear-gradient(to top, #002366, #0046CC);
-  padding: 30px;
-  width: 100%;
-  color: var(--color-background);
+    background: linear-gradient(to top, #002366, #0046CC);
+    padding: 40px 20px;
+    width: 100%;
+    color: #ffffff;
 }
 
 footer section {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+footer section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-bottom: 2px solid #D4AF37;
+    padding-bottom: 5px;
+}
+
+footer section > div {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    min-width: 200px;
+}
+
+footer section a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+footer section a:hover {
+    color: #D4AF37;
 }
 
 footer img {
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    footer section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    footer section > div {
+        margin-bottom: 30px;
+        text-align: center;
+        align-items: center;
+    }
+
+    footer img {
+        margin-top: 20px;
+    }
 }
 
 /* ====================== */
@@ -126,6 +184,8 @@ main h1 {
   padding: 60px;
   font-size: 3em;
 }
+
+main {text-align: center;}
 
 .connection hr, .content hr {
   display: block;
@@ -280,7 +340,7 @@ padding: 40px 0;
   background-color: #f0f0d8;
   color: #777;
   font-size: 14px;
-  height: 160px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,7 +351,7 @@ padding: 40px 0;
   max-width: 250px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .announce-card {
     width: 90%;
   }
@@ -376,7 +436,7 @@ padding: 40px 0;
   background-color: #f0f0d8;
   color: #777;
   font-size: 14px;
-  height: 160px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -623,6 +683,17 @@ main #connexion input[type="submit"]:hover {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+/* Rend le lien de la slide se comporter comme un bloc et retire le soulignement */
+.swiper-slide.slide-link {
+    display: block; 
+    text-decoration: none; 
+    color: inherit; /* Utilise la couleur du texte par défaut de la slide */
+    /* Ces propriétés sont cruciales pour que Swiper fonctionne correctement après avoir inséré le lien */
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .swiper-slide .no-image-placeholder {
