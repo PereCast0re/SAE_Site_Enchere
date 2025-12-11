@@ -76,7 +76,7 @@ $user = $_SESSION['user'];
             <div id="div_historique_annoncement" style="display: none;">
             </div>
         </div>
-        
+        <br>
         <a class="btn" style="margin-top: 20px;" href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
 
         <div>
