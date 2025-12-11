@@ -68,7 +68,7 @@ async function print_tab_annoncements(annoncements, div){
                         <td>Vue journaliére : ${nb_views.nbDailyView}</td>
                         <td>Vue total : ${global_views.nbGlobalView}</td>
                         <td>Like(s) : ${like.nbLike}</td>
-                        <td><button type="button" class="stat_button"> See stats </button></td>
+                        <td><button type="button" class="stat_button" style="display: none;"> See stats </button></td>
                     </tr>
                 </tbody>
                 </table>
@@ -121,9 +121,9 @@ async function print_end_annoncement_reserved($id_user, div){
                                     <td>Dernière enchére : <br> ${annonce.new_price} </td>
                                     <td>Vôtre prix de reserve : <br> ${annonce.reserve_price} </td>
                                     <td>
-                                        <button id="btn_agree" type="button">Accepter</button>
+                                        <button id="btn_agree" type="button" style="display: none;">Accepter</button>
                                         <br>
-                                        <button id="btn_refuse" type="button">Refuser</button>
+                                        <button id="btn_refuse" type="button" style="display: none;">Refuser</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -158,6 +158,9 @@ function PrintStatAnnonce(annoncement) {
     printGraph(`graphLike_${annoncement.id_product}`)
     printGraph
 }
+
+//Button republish
+//style="display: ${annonce.last_price > 0 ? "none" : "block"};"
 async function print_historique_annoncement(id_user, div){
     let html = ""
 
@@ -185,7 +188,7 @@ async function print_historique_annoncement(id_user, div){
                                 <td>${annonce.title}</td>
                                 <td id="td_info_lastPrice${annonce.id_product}">${checkEndPrice(annonce.last_price)}</td>
                                 <td>
-                                    <button id="btn_republish${annonce.id_product}" style="display: ${annonce.last_price > 0 ? "none" : "block"};" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
+                                    <button id="btn_republish${annonce.id_product}" style="display: none;" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
                                 </td>
                             </tr>
                         </tbody>
