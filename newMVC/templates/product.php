@@ -296,7 +296,7 @@ $script = "templates/JS/favorite.js";
 
 <section id="product-description">
     <h2>Description</h2>
-    <p><?= $p['description']; ?></p>
+    <p><?= htmlspecialchars(strip_tags($p['description'])) ?></p>
 </section>
 
 <section class="product-title">
@@ -310,7 +310,7 @@ $script = "templates/JS/favorite.js";
         <h3><a
                 href="index.php?action=user&id=<?= $comment['id_user'] ?>"><?= $comment['full_name'] ?></a><?= " " . $comment["comment_date"] ?>
         </h3>
-        <p><?= $comment['comment'] ?></p>
+        <p><?= htmlspecialchars(strip_tags($comment['comment'])) ?></p>
     <?php } ?>
     <form id="comment-form" method="POST" action="index.php?action=addComment">
         <input type="hidden" name="id" value=<?= $p['id_product'] ?>>

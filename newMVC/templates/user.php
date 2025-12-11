@@ -17,33 +17,33 @@ $user = $_SESSION['user'];
 
 <main>
     <?php
-    echo "<p class='PsuedoClient'>" . $user['firstname'] . " " . $user['name'] . "</p>";
+    echo "<p class='PsuedoClient'>" . htmlspecialchars(strip_tags($user['firstname'])) . " " . htmlspecialchars(strip_tags($user['name'])) . "</p>";
     ?>
 </main>
 
 <div class="section_info">
     <div class="nom_client">
         <p>Nom :</p>
-        <input type="text" name="name" placeholder="<?php echo ($user['name']) ?>" disabled>
+        <input type="text" name="name" placeholder="<?= htmlspecialchars(strip_tags($user['name'])) ?>" disabled>
     </div>
     <div class="prenom_client">
         <p>Prenom :</p>
-        <input type="text" name="firstname" placeholder="<?php echo ($user['firstname']) ?>" disabled>
+        <input type="text" name="firstname" placeholder="<?= htmlspecialchars(strip_tags($user['firstname'])) ?>" disabled>
     </div>
     <div class="email_client">
         <p>Email :</p>
-        <input type="mail" name="email" placeholder="<?php echo ($user['email']) ?>" disabled>
+        <input type="mail" name="email" placeholder="<?= htmlspecialchars(strip_tags(string: $user['email'])) ?>" disabled>
         <button type="button" onclick="ouvrirPopup('Email')">Modifier</button>
     </div>
     <div class="adresse_client">
         <p>Adresse :</p>
         <input type="text" name="address"
-            placeholder="<?php echo ($user['address'] . " " . $user['postal_code'] . " " . $user['city']) ?>" disabled>
+            placeholder="<?= htmlspecialchars(strip_tags($user['address'])) . " " . htmlspecialchars(strip_tags($user['postal_code'])) . " " . htmlspecialchars(strip_tags($user['city'])) ?>" disabled>
         <button type="button" onclick="ouvrirPopup('Adresse')">Modifier</button>
     </div>
     <div class="mdp_client">
         <p>Mot de passe :</p>
-        <input type="password" name="password" placeholder="<?php echo ($user['password']) ?>" disabled>
+        <input type="password" name="password" placeholder="<?= htmlspecialchars($user['password'])?>" disabled>
         <button type="button" onclick="ouvrirPopup('Password')">Modifier</button>
     </div>
 
