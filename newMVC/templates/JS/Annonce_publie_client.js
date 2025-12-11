@@ -3,7 +3,6 @@ async function afficher() {
     const div = document.querySelector(".section_annonce_publier")
     const id_user = document.getElementById('id_user');
 
-    let json_values = []
     json_values = JSON.parse(values_annoncements.value)
 
     let nb = json_values.length
@@ -32,24 +31,19 @@ async function afficher() {
 async function print_tab_annoncements(annoncements, div){
     let html = ""
     for (const annonce of annoncements) {
-        //price
         let price = await getPrice(annonce.id_product);
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
-        //views
         let nb_views = await getDailyViews(annonce.id_product);
-        // global views
         let global_views = await getGlobalViews(annonce.id_product);
         if (global_views.nbGlobalView === null) {
             global_views.nbGlobalView = 0;
         }
-        // likes
         let like = await getLikes(annonce.id_product);
         if (like.nbLike === null) {
             like.nbLike = 0;
         }
-        // image
         let image_url = await getImage(annonce.id_product);
         let firstImg = (
             Array.isArray(image_url) &&
@@ -59,11 +53,11 @@ async function print_tab_annoncements(annoncements, div){
 
         html += 
             `
-            <div class="annonce" style="color: red; padding: 10px;">
+            <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
                 <table>
                     <tbody>
                     <tr>
-                        <img src="${firstImg}" />
+                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;"/>
                         <td>${annonce.title}</td>
                         <td><span class="timer" data-end="${annonce.end_date}">Chargement...</span></td>
                         <td class="price_annonce_${annonce.id_product}"> ${ price.last_price } €</td>
@@ -82,31 +76,21 @@ async function print_tab_annoncements(annoncements, div){
             `
     };
     
-    // Aider avec ia car code collegue non compris 
-    // Ajouter le HTML à la div
     div.innerHTML += html;
 
-    // Initialiser les timers après avoir ajouté le HTML
     document.querySelectorAll('.timer').forEach(timerElement => {
         const endDate = timerElement.getAttribute('data-end');
         if (endDate) {
-            console.log("Initialisation du timer pour la date de fin :", endDate);
             startCountdown(endDate, timerElement);
-        }
-        else {
-            console.error("Date de fin non trouvée pour le timer.");
         }
     });
 
-    // Ajouter d'un ecouteur pour un click btn stat
     document.querySelectorAll('.stat_button').forEach((button, index) => {
         button.addEventListener('click', () => {
-            console.log("Stat button clicked for annonce index:", index);
             PrintStatAnnonce(annoncements[index]);
         });
     });
 }
-
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div){
     let annoncements = await getAnnonceReserved($id_user);
@@ -127,9 +111,9 @@ async function print_end_annoncement_reserved($id_user, div){
 
             html += `
                 <div>
-                    <h3>Vos annonces terminer avec prix de réserve non atteint</h3>
-                    <div>
-                        <img src="${firstImg}" />
+                    <h3 style="padding-top:20px;padding-bottom:10px;" >Vos annonces terminer avec prix de réserve non atteint</h3>
+                    <div style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
+                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;" />
                         <table>
                             <tbody>
                                 <tr>
@@ -156,9 +140,9 @@ function PrintStatAnnonce(annoncement) {
     const divStat = document.querySelector(".stat_annonce")
     divStat.innerHTML = "" 
     html = `
-        <div>
-            <h3> Statistiques de l'annonce: ${annoncement.title} </h3>
-            <div style="border: 1px solid black; display: flex; justify-content: space-around;">
+        <div >
+            <h3 style="padding-top: 20px; padding-bottom: 10px;"> Statistiques de l'annonce: ${annoncement.title} </h3>
+            <div style="border: 1px solid gold;display: flex;justify-content: space-around;width: 50%;box-shadow: 0 5px 15px gray;margin: 0 auto;padding: 10px;border-radius: 15px;">
                 <div class="stat_views" style="background-color: lightgreen;">
                     <canvas id="graphVue_${annoncement.id_product} width="300" heigh="150" />
                 </div>
@@ -174,7 +158,6 @@ function PrintStatAnnonce(annoncement) {
     printGraph(`graphLike_${annoncement.id_product}`)
     printGraph
 }
-
 async function print_historique_annoncement(id_user, div){
     let html = ""
 
@@ -183,7 +166,7 @@ async function print_historique_annoncement(id_user, div){
     if(annoncements && annoncements.length >= 0){
 
         div.style.display = "block"
-        div.innerHTML += `<h3> Vos annonces non concluante </h3>`
+        div.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;"> Vos annonces non concluante </h3>`
         for (const annonce of annoncements){
 
             let image_url = await getImage(annonce.id_product);
@@ -194,8 +177,8 @@ async function print_historique_annoncement(id_user, div){
             ) ? image_url[0].url_image : "assets/default.png";
 
             html += `
-                <div>
-                    <img src="${firstImg}" />
+                <div style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
+                    <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;" />
                     <table>
                         <tbody>
                             <tr>
@@ -207,7 +190,7 @@ async function print_historique_annoncement(id_user, div){
                             </tr>
                         </tbody>
                     </table>
-                <div>
+                </div>
             `
         }
         div.innerHTML += html
