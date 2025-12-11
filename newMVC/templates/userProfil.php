@@ -1,6 +1,5 @@
 <?php
 $title = "Page d'utilisateur";
-// $style = "templates/style/style.css";
 $style = "templates/style/Accueil.css";
 ?>
 
