@@ -201,7 +201,7 @@ function get_termined_annonces_by_client($id_client)
         JOIN published pb ON pb.id_product = p.id_product
         LEFT JOIN bid b ON b.id_product = p.id_product
         WHERE pb.id_user = :id_client
-          AND p.end_date < NOW()
+        AND p.end_date < NOW()
         GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
         ORDER BY p.end_date DESC
     ";
@@ -231,7 +231,7 @@ function get_actual_annonces_by_client($id_client)
         JOIN published pb ON pb.id_product = p.id_product
         LEFT JOIN bid b ON b.id_product = p.id_product
         WHERE pb.id_user = :id_client
-          AND p.end_date >= NOW()
+        AND p.end_date >= NOW()
         GROUP BY p.id_product, p.title, p.description, p.end_date, p.reserve_price
         ORDER BY p.end_date ASC
     ";

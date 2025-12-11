@@ -38,7 +38,7 @@ body {
 .navbar-custom .navbar-brand {
     color: var(--color-background) !important;
     text-decoration: none;
-    font-size: 2rem;
+    font-size: 1.15rem;
 }
 
 .navbar-custom .nav-link:hover {
@@ -50,8 +50,8 @@ body {
 }
 
 .navbar-custom .navbar-brand img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 80%;
 }
 
@@ -594,18 +594,22 @@ main #connexion input[type="submit"]:hover {
     transition-property: transform;
     padding: 20px;
     box-sizing: border-box;
-    text-align: center;
+    display: block; /* Retour à l'affichage normal de la slide */
+    text-align: center; /* Pour centrer le bloc image */
 }
 
+/* Conteneur d'image devient la référence pour le positionnement */
 .swiper-slide .image-container {
     height: 620px;
     width: 100%;
+    margin: 0 auto 15px auto; /* Centrage horizontal et marge en dessous */
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
     background-color: #f5f5f5;
+    /* IMPORTANT pour la superposition */
+    position: relative; 
 }
 
 .swiper-slide img {
@@ -626,6 +630,36 @@ main #connexion input[type="submit"]:hover {
     text-align: center;
 }
 
+/* Styles pour le texte superposé */
+.swiper-slide .text-content-overlay {
+    position: absolute;
+    bottom: 0; /* Placer le texte en bas de l'image */
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7); /* Fond noir semi-transparent pour la lisibilité */
+    color: var(--color-gold);
+    text-align: left;
+    box-sizing: border-box;
+    z-index: 2; /* S'assurer que le texte est au-dessus de l'image */
+}
+
+.swiper-slide .text-content-overlay h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.swiper-slide .text-content-overlay p {
+    margin: 5px 0 0 0;
+    font-size: 0.9em;
+}
+
+/* Styles pour le timer */
+.swiper-slide .text-content-overlay .timer {
+    font-weight: bold;
+}
+
+/* Styles Pagination / Scrollbar (inchangés) */
 .swiper-pagination {
     position: absolute;
     text-align: center;
@@ -666,7 +700,6 @@ main #connexion input[type="submit"]:hover {
     left: 0;
     top: 0;
 }
-
 
 body {
   overflow-x: hidden;

@@ -26,37 +26,40 @@ $style = "templates/style/Accueil.css";
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <?php foreach ($products as $p): ?>
-                    <div class="swiper-slide">
-                        <div class="image-container">
-                            <?php
-                            $images = getImage($p['id_product']);
-                            if (!empty($images)) {
-                                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                            } else {
-                                echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-                            }
-                            ?>
+                    <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
+                        <div class="swiper-slide">
+
+                            <div class="image-container">
+                                <?php
+                                $images = getImage($p['id_product']);
+                                if (!empty($images)) {
+                                    echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                                } else {
+                                    // Le placeholder reste le contenu principal
+                                    echo '<div class="no-image-placeholder">Aucune image disponible</div>';
+                                }
+                                ?>
+
+                                <div class="text-content-overlay">
+                                    <h3><?= htmlspecialchars($p['title']) ?></h3>
+                                    <?php
+                                    $priceRow = getLastPrice($p['id_product']);
+                                    $current_price = null;
+                                    if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+                                        $current_price = $priceRow[0]['MAX(new_price)'];
+                                    } else {
+                                        $current_price = $p['start_price'];
+                                    }
+                                    ?>
+                                    <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
+                                    <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+                                </div>
+                            </div>
+
                         </div>
-                        <h3><?= htmlspecialchars($p['title']) ?></h3>
-                        <p><?= htmlspecialchars($p['description']) ?></p>
-                        <?php
-                        $priceRow = getLastPrice($p['id_product']);
-                        // $priceRow est un tableau de lignes; la valeur est dans $priceRow[0]['MAX(new_price)']
-                        $current_price = null;
-                        if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-                            $current_price = $priceRow[0]['MAX(new_price)'];
-                        } else {
-                            $current_price = $p['start_price'];
-                        }
-                        ?>
-                        <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
-                        <!-- Timer -->
-                        <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-                    </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
-
-            <div class="swiper-pagination"></div>
         </div>
     <?php endif; ?>
 
@@ -70,30 +73,51 @@ $style = "templates/style/Accueil.css";
     <div class="content">
         <h1>Nos annonces</h1>
         <div class="annonces">
-            <?php if (empty($products)): ?>
-                <p>Aucune annonce disponible pour le moment.</p>
-            <?php else: ?>
-                <?php for ($i = 0; $i < min(100, count($products)); $i++): ?>
-                    <?php $p = $products[$i]; ?>
-                    <div class="announce-card">
-                        <?php
-                        $images = getImage($p['id_product']);
-                        if (!empty($images)) {
-                            echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                        } else {
-                            echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-                        }
-                        ?>
-                        <h3><?= htmlspecialchars($p['title']) ?></h3>
-                        <!-- Timer -->
-                        <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-                        <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
-                    </div>
-                <?php endfor; ?>
+    <?php if (empty($products)): ?>
+        <p>Aucune annonce disponible pour le moment.</p>
+    <?php else: ?>
+        <?php 
+        $count_displayed = 0;
+        $max_to_display = 100;
+        ?>
+        
+        <?php foreach ($products as $p): ?>
+            
+            <?php
+            if ($count_displayed >= $max_to_display) {
+                break;
+            }
+            
+            if (new DateTime($p['end_date']) > new DateTime()): 
+            ?>
+                <div class="announce-card">
+                    <?php
+                    $images = getImage($p['id_product']);
+                    if (!empty($images)) {
+                        echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                    } else {
+                        echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                    }
+                    ?>
+                    <h3><?= htmlspecialchars($p['title']) ?></h3>
+                    <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+                    <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
+                </div>
+                <?php $count_displayed++; ?>
             <?php endif; ?>
-        </div>
 
-        <a id="Voir_annonces_btn" class="btns">Voir plus</a>
+        <?php endforeach; ?>
+
+        <?php 
+        if ($count_displayed === 0) :
+        ?>
+            <p>Aucune annonce active disponible pour le moment.</p>
+        <?php endif; ?>
+
+    <?php endif; ?>
+</div>
+
+        <!-- <a id="Voir_annonces_btn" class="btns">Voir plus</a> -->
         <br><br><br>
         <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
         <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
