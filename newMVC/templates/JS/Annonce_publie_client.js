@@ -94,11 +94,12 @@ async function print_tab_annoncements(annoncements, div){
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div){
     let annoncements = await getAnnonceReserved($id_user);
-
+    console.log(annoncements)
     if (annoncements.length > 0){
         div.style = 'display: block;'
 
         let html = ""
+        html.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;" >Vos annonces terminer avec prix de réserve non atteint</h3>`
 
         for (const annonce of annoncements ){
             
@@ -111,7 +112,6 @@ async function print_end_annoncement_reserved($id_user, div){
 
             html += `
                 <div>
-                    <h3 style="padding-top:20px;padding-bottom:10px;" >Vos annonces terminer avec prix de réserve non atteint</h3>
                     <div style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
                         <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;" />
                         <table>

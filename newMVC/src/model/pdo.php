@@ -589,17 +589,23 @@ function getImageCategory($id_category)
 function getAnnoncementEndWithReservedPrice($id_user)
 {
     $pdo = connection();
-    $requete = "SELECT *, MAX(bid.new_price)
-                FROM product as p
-                join published as publi on publi.id_product = p.id_product
-                join bid on bid.id_product = p.id_product
-                where publi.id_user = :id_user and p.end_date < CURRENT_DATE and p.reserve_price > 0
-                ";
+        $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
+                    FROM product AS p
+                    JOIN published AS publi ON publi.id_product = p.id_product
+                    LEFT JOIN bid AS b ON b.id_product = p.id_product
+                    WHERE 
+                        publi.id_user = :id_user 
+                        AND p.end_date < CURRENT_DATE 
+                        AND p.reserve_price > 0
+                    GROUP BY p.id_product  
+                    HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL"; 
+
     $temp = $pdo->prepare($requete);
     $temp->execute([
         ":id_user" => $id_user
     ]);
 
+    
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
