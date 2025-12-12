@@ -41,7 +41,7 @@ $style = "templates/style/Accueil.css";
                         <?php $p = $products[$i]; ?>
                         <div class="announce-card">
                             <?php
-                            //$images = getImage($p['id_product']);
+                            $images = getImage($p['id_product']);
                             if (!empty($images)) {
                                 echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                             } else {
