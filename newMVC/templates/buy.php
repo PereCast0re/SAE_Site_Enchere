@@ -124,7 +124,7 @@ $style = "templates/style/Accueil.css";
         <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
 
 
-        <p>------------TEXTE------------</p>
+        <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
         <a class="btns">S'abonner</a><br><br><br>
     </div>
 </main>

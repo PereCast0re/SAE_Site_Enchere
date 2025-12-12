@@ -1,6 +1,6 @@
 <?php
 $title = "Historique des annonces publiées";
-$style = "templates/style/Historique_annonces.css";
+$style = "templates/style/Accueil.css";
 
 $user = $_SESSION['user'];
 ?>
@@ -24,8 +24,9 @@ $id_client = $user['id_user'];
 $annonces = get_termined_annonces_by_client($id_client);
 $annonces_en_cours = get_actual_annonces_by_client($id_client);
 ?>
+<main>
 <div class="Annonces_en_cours">
-    <h2>Mes enchères en cours</h2>
+    <h1>Mes enchères en cours</h1>
     <?php if (empty($annonces_en_cours)): ?>
         <p>Vous n'avez aucune annonce en cours.</p>
     <?php endif; ?>
@@ -52,7 +53,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 echo htmlspecialchars($current_price);
                 ?> €
             </p>
-            <button id="voir">Voir</button>
+            <a class="btns" id="voir"  href="index.php?action=product&id=<?= $a['id_product'] ?>">Voir</a>
         </div>
         <?php endforeach; ?>
     </div>
@@ -81,18 +82,19 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
                 ?> €
             </p>
             <button id="valider">Valider</button>
-            <button>voir</button>
+            <a href="index.php?action=product&id<?= $a['id_product'] ?>">voir</a>
         </div>
         <?php endforeach; ?>
     </div>
 </div>
+</main>
 
 
 <?php include('preset/footer.php'); ?>
 
 <?php $content = ob_get_clean(); ?>
 
-<script src="templates/script/timer.js"></script>
+<script src="templates/JS/timer.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

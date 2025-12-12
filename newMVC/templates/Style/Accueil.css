@@ -239,6 +239,27 @@ main #accueil {
   background-color: #D4AF37;
 }
 
+button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #002366;
+  border: 2px solid #D4AF37;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  padding: 5px 30px;
+  border-radius: 60px;
+  box-shadow: 0px 0px 6px -1px;
+  text-decoration: none;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #D4AF37;
+}
+
 .content {
   text-align: center;
 }
@@ -897,4 +918,125 @@ input.information_produit{
   border-radius: 2px;
   z-index: 5;
   pointer-events: none; 
+}
+
+.Annonces_en_cours h1, .Historique_annonces h2 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+.Annonces-list-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    justify-items: center;
+    padding: 40px 0;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 2px solid #D4AF37;
+    border-radius: 60px;
+    box-shadow: 0 4px 8px rgba(0, 4, 20, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 30px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    margin-bottom: 0;
+}
+
+.card-content {
+    padding: 0 15px;
+}
+
+.card h3 {
+    font-size: 24px;
+    font-weight: 500;
+    font-family: 'Cormorant Garamond', serif;
+    color: #002366;
+    margin: 15px 0 8px 0;
+}
+
+.card p {
+    font-size: 13px;
+    margin: 0 0 10px 0;
+}
+
+
+
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+    align-items: center;
+}
+
+.card a {
+    display: block;
+    background-color: #ffffff;
+    color: #002366;
+    border: 2px solid #D4AF37;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    padding: 2px 30px;
+    border-radius: 80px;
+    box-shadow: 0px 0px 6px -1px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    margin-left: 30px;
+    text-align: center;
+}
+
+.card button:hover {
+    background-color: #D4AF37;
+    color: white;
+}
+
+#valider:hover {
+    background-color: #D4AF37;
+}
+
+.Annonces_en_cours p:not(.timer) {
+    text-align: center;
+    font-style: italic;
+    color: #6c757d;
+    padding: 10px 0;
+}
+
+@media (max-width: 90%) {
+    .Annonces-list-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 0;
+    }
+    
+    .card {
+        max-width: 90%;
+    }
 }
