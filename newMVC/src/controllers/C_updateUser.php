@@ -48,10 +48,11 @@ function updatePassword(string $password)
     if (!empty($password)) {
         $user = $_SESSION["user"];
         $id_user = $user["id_user"];
+        $pass = trim(htmlentities(password_hash($password, PASSWORD_ARGON2ID)));
 
         $userRepository = new UserRepository();
         $userRepository->connection = new DatabaseConnection();
-        $userRepository->updatePasswordUser($id_user, $password);
+        $userRepository->updatePasswordUser($id_user, $pass);
         $_SESSION["user"]["password"] = $password;
 
         header("Location: index.php?action=user");

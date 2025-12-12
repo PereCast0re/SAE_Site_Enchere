@@ -6,13 +6,13 @@ function addNewProduct(int $id_user, array $input)
 {
     var_dump($input);
     if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
-        $title = $input['nom_annonce_vente'];
-        $category = $input['lst_categorie_vente'];
-        $start_date = $input['date_debut'];
-        $end_date = $input['date_fin'];
-        $description = $input['description_produit'];
+        $title = trim(htmlentities($input['nom_annonce_vente']));
+        $category = trim(htmlentities($input['lst_categorie_vente']));
+        $start_date = trim(htmlentities($input['date_debut']));
+        $end_date = trim(htmlentities($input['date_fin']));
+        $description = trim(htmlentities($input['description_produit']));
         if (isset($input['valeur_reserve'])) {
-            $reserve_price = $input['valeur_reserve'];
+            $reserve_price = trim(htmlentities($input['valeur_reserve']));
         } else {
             $reserve_price = null;
         }
