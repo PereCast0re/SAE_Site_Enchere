@@ -14,18 +14,20 @@ async function afficher() {
     }
     else if (nb == 1){
         div.innerHTML = '<h2 stryle="text-align: center;">Vôtre annonce publié</h2>'
-        print_tab_annoncements(json_values, div)
+        await print_tab_annoncements(json_values, div)
     }
     else{
         div.innerHTML = '<h2 style="text-align: center;">Vos annonces publiées</h2>'
-        print_tab_annoncements(json_values, div)
+        await print_tab_annoncements(json_values, div)
     }
 
     const divAnnonceReserved = document.getElementById("div_end_annoncement_with_reserved")
-    print_end_annoncement_reserved(id_user.value, divAnnonceReserved)
+    await print_end_annoncement_reserved(id_user.value, divAnnonceReserved)
 
     const divhistorique = document.getElementById('div_historique_annoncement')
-    print_historique_annoncement(id_user.value, divhistorique)
+    await print_historique_annoncement(id_user.value, divhistorique)
+
+    await checkBtnHistorique()
 }
 
 async function print_tab_annoncements(annoncements, div){
@@ -204,6 +206,18 @@ async function print_historique_annoncement(id_user, div){
     else{
         div.style.display = "none"
         console.log('Aucune annonce dans votre historique !')
+    }
+}
+
+async function checkBtnHistorique() {
+    const btn = document.getElementById("btn_historique_annonce_published")
+    btn.style.display = "none"
+
+    const div_publier = await document.querySelector(".section_annonce_publier")
+    const div_reserve = await document.getElementById("div_end_annoncement_with_reserved")
+    const div_finish = await document.getElementById('div_historique_annoncement')
+    if (div_finish.style.display === "none" && div_publier.style.display === "none" && div_reserve.style.display === "none"){
+        btn.style.display = "block"
     }
 }
 
