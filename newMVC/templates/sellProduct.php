@@ -47,6 +47,13 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                     <h4>Date de fin :</h4>
                     <input type="date" name="date_fin" required>
                 </div>
+                <div id="celebrite_produit" class="celebrite_produit">
+                    <h4>Célébrité :</h4>
+                    <input type="text" id="inputcelebrity" placeholder="rechercher votre Célébrite">
+                    <div id="celebrite_results">
+                        
+                    </div>
+                </div>
             </div>
             
             <div class="img_selector">

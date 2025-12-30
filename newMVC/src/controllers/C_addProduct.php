@@ -24,21 +24,21 @@ function addNewProduct(int $id_user, array $input)
     if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
-        checkImage($title, $id_product);
+        checkImage($id_product, $id_product);
 
         header("Location: index.php?action=user");
     }
 
 }
 
-function checkImage(string $title, $id_product){
+function checkImage(string $id_annonce, $id_product){
     try{
         //Verification de la présence d'images
         if (!isset($_FILES['image_produit'])) {
             die("Erreur : Aucune image sélectionnée.");
         }
         // Crée le dossier avec le nom de l'annonce
-        $DirAnnonce = __DIR__ . "../../../Annonce/" . $title;
+        $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_annonce;
         
         // Vérifie si le dossier existe déjà
         if (!is_dir($DirAnnonce)) {
@@ -52,11 +52,11 @@ function checkImage(string $title, $id_product){
         for ($i = 0; $i < count($_FILES["image_produit"]['name']); $i++) {
             $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
             if ($tmpFilePath != ""){
-                $newFilePath = $DirAnnonce . "/" . $title . "_" . $i . ".jpg";
+                $newFilePath = $DirAnnonce . "/" . $id_annonce . "_" . $i . ".jpg";
                 if(move_uploaded_file($tmpFilePath, $newFilePath)){
                     //Ajouter dans un tableau qui sera inséré en base de données
-                    $name_image = $title . "_" . $i. ".jpg";
-                    $newFilePath = "Annonce/". $title . "/" . $name_image;
+                    $name_image = $id_annonce . "_" . $i. ".jpg";
+                    $newFilePath = "Annonce/". $id_annonce . "/" . $name_image;
                     addImage($id_product,$newFilePath, $name_image);
                 }
             }
@@ -66,14 +66,14 @@ function checkImage(string $title, $id_product){
     }
 
     if (isset($_FILES['certificat_autenticite'])) {
-        certificat($title, $DirAnnonce);
+        certificat($id_annonce, $DirAnnonce);
     }
 }
 
-function certificat($title, $DirAnnonce){
+function certificat($id_annonce, $DirAnnonce){
     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
     if ($tmpFilePath != ""){
-        $newFilePath = $DirAnnonce . "/" . $title . "_Certificate" . ".pdf";
+        $newFilePath = $DirAnnonce . "/" . $id_annonce . "_Certificate" . ".pdf";
         // Fonction native de php pour déplacer les fichier
         move_uploaded_file($tmpFilePath, $newFilePath);
     }

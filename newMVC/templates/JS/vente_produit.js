@@ -32,4 +32,3 @@ document.querySelectorAll('.img_selector_input').forEach(input => {
         if (label) label.style.display = 'none';
     });
 });
-
