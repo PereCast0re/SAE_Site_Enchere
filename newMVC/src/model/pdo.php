@@ -20,132 +20,6 @@ function connection()
     }
 }
 
-function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
-{
-    $pdo = connection();
-    $requete = "INSERT INTO Users (name, firstname, birth_date, address, city, postal_code, email, password) VALUES (:name, :firstname, :birth_date, :address, :city, :postal_code, :email, :password)";
-    try {
-        $tmp = $pdo->prepare($requete);
-        return $tmp->execute([
-            ':name' => $name,
-            ':firstname' => $firstname,
-            ':birth_date' => $birth_date,
-            ':address' => $address,
-            ':city' => $city,
-            ':postal_code' => $postal_code,
-            ':email' => $email,
-            ':password' => $password,
-        ]);
-    } catch (PDOException $e) {
-        die("Inscription error, try again later !\nError : " . $e->getMessage());
-    }
-}
-
-// On part du principe de l'email et le password sont déja décripté
-function authentication($email, $password)
-{
-    $pdo = connection();
-    $requete = "SELECT * from Users where email = :email and password = :password";
-    try {
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ':email' => $email,
-            ':password' => $password
-        ]);
-    } catch (PDOException $e) {
-        die("Authentication error, try again ! /nError : " . $e->getMessage());
-    }
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
-
-function updateEmailUser($email, $id_user)
-{
-    $pdo = connection();
-    $requete = "UPDATE Users
-                SET email = :email
-                where id_user = :id_user";
-    try {
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":email" => $email,
-            ":id_user" => $id_user
-        ]);
-    } catch (PDOException $e) {
-        die("Modification error, try again !\nError : " . $e->getMessage());
-    }
-}
-
-function updatePasswordUser($id_user, $password)
-{
-    $pdo = connection();
-    $requete = "UPDATE Users
-                SET password = :password
-                Where id_user = :id_user";
-    try {
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":password" => $password,
-            "id_user" => $id_user
-        ]);
-    } catch (PDOException $e) {
-        die("Error during the modification of the password, try again !\nError : " . $e->getMessage());
-    }
-}
-
-function updateFullAddress($address, $city, $postal_code, $id_user)
-{
-    $pdo = connection();
-    $requete = "UPDATE Users
-                set address = :address,
-                    city = :city,
-                    postal_code = :postal_code
-                where id_user = :id_user";
-    try {
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":address" => $address,
-            ":city" => $city,
-            ":postal_code" => $postal_code,
-            ":id_user" => $id_user
-        ]);
-    } catch (PDOException $e) {
-        die("Error during the modification of the adress, try again !\nError : " . $e->getMessage());
-    }
-}
-
-function getAddress($id_user)
-{
-    $pdo = connection();
-    $requete = "SELECT address, postal_code, city
-                from Users
-                where id_user = :id_user
-    ";
-    try {
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":id_user" => $id_user
-        ]);
-    } catch (PDOException $e) {
-        die("Error when selecting the address, try again !\nError : " . $e->getMessage());
-    }
-
-    // auto_completion 
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
-
-// function getLastIdAnnonce(){
-//     $pdo = connection();
-//     $requete = "SELECT MAX(id_annonce) as last_id FROM annonces";
-//     try{
-//         $tmp = $pdo->prepare($requete);
-//         $tmp->execute();
-//     }
-//     catch (PDOException $e){
-//         die("Erreur lors de la récupération du dernier id d'annonce" .$e->getMessage());
-//     }
-//     return $tmp->fetch(PDO::FETCH_ASSOC);
-// }
-
 function getCategory()
 {
     $pdo = connection();
@@ -329,37 +203,6 @@ function get_Annonce_User($id_client)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_price_annoncement($id_annoncement)
-{
-    $pdo = connection();
-    $request = "SELECT MAX(new_price) from bid join product on product.id_product = bid.id_product where bid.id_product = :id_product";
-    try {
-        $tmp = $pdo->prepare($request);
-        $tmp->execute([
-            ":id_product" => $id_annoncement
-        ]);
-    } catch (PDOException $e) {
-        die("Error on extraction of current bid on your annoncement" . $e->getMessage());
-    }
-
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-// function getAnnonce($id_annoncement){
-//     $pdo = connection();
-//     $request = "SELECT * from product where id_product = :id";
-//     try{
-//         $tmp = $pdo->prepare($request);
-//         $tmp->execute([
-//             ":id" => $id_annoncement
-//         ]);
-//         } catch (PDOException $e){
-//             die("Error on the extraction of this product " .$e->getMessage());
-//         }
-//     // Retourner une seule annonce (row) plutôt qu'un tableau de lignes
-//     return $tmp->fetch(PDO::FETCH_ASSOC);
-// }
-
 function getLastPrice($id_product)
 {
     $pdo = connection();
@@ -381,157 +224,18 @@ function getLastPrice($id_product)
 //Favorite Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function setProductFavorite($id_product, $id_user)
-{
-    $pdo = connection();
-    $request = "INSERT INTO Interest(id_product, id_user) VALUES (:id_product, :id_user)";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([
-        ':id_product' => $id_product,
-        ':id_user' => $id_user
-    ]);
-
-    return $success;
-}
-
-function isProductFavorite($id_product, $id_user)
-{
-    $pdo = connection();
-    $request = "SELECT COUNT(*) FROM interest WHERE id_product = :id_product AND id_user = :id_user";
-    $temp = $pdo->prepare($request);
-    $temp->execute([
-        ':id_product' => $id_product,
-        ':id_user' => $id_user
-    ]);
-    $success = $temp->fetchColumn();
-
-    return $success > 0;
-}
-
-function unsetProductFavorite($id_product, $id_user)
-{
-    $pdo = connection();
-    $request = "DELETE FROM Interest WHERE id_product = :id_product AND id_user = :id_user";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([
-        ':id_product' => $id_product,
-        ':id_user' => $id_user
-    ]);
-
-    return $success;
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Bid Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
-{
-    if ($currentPrice === null) {
-        $currentPrice = getLastPrice($id_product)['last_price'];
-    }
-    $pdo = connection();
-    $request = "INSERT INTO Bid(id_product, id_user, current_price, new_price, bid_date) VALUES (:id_product, :id_user, :current_price, :new_price, NOW())";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([
-        ':id_product' => $id_product,
-        ':id_user' => $id_user,
-        ':current_price' => $currentPrice,
-        ':new_price' => $newPrice
-    ]);
-
-    return $success;
-}
-
-function getLastBidder($id_product)
-{
-    $pdo = connection();
-    $request = "SELECT id_user FROM bid WHERE new_price IN (
-    SELECT MAX(new_price) FROM bid WHERE id_product = ?
-    );";
-    $temp = $pdo->prepare($request);
-    $temp->execute([$id_product]);
-
-    return $temp->fetchColumn();
-}
-
-function getProductDate($id_product)
-{
-    $pdo = connection();
-    $request = "SELECT end_date FROM Product WHERE id_product = ?";
-    $temp = $pdo->prepare($request);
-    $temp->execute([$id_product]);
-
-    return $temp->fetchColumn();
-}
-
-function addTime($id_product)
-{
-    $pdo = connection();
-    $request = "UPDATE Product SET end_date = DATE_ADD(end_date, INTERVAL 30 SECOND) WHERE id_product = ?";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([$id_product]);
-
-    return $success;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Comment Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getCommentsFromProduct($id_product)
-{
-    $pdo = connection();
-    $request = "SELECT CONCAT(u.firstname, ' ', u.name) AS full_name, c.comment, c.comment_date, c.id_user FROM Comment c JOIN Users u ON u.id_user = c.id_user WHERE id_product = :id_product ORDER BY comment_date DESC";
-    $temp = $pdo->prepare($request);
-    $temp->execute([
-        "id_product" => $id_product
-    ]);
-
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function addCommentToProduct($id_product, $id_user, $comment)
-{
-    $pdo = connection();
-    $request = "INSERT INTO Comment VALUES (:id_product, :id_user, :comment, NOW())";
-    $temp = $pdo->prepare($request);
-    $success = $temp->execute([
-        "id_product" => $id_product,
-        "id_user" => $id_user,
-        "comment" => $comment
-    ]);
-
-    return $success;
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //User Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function getUser($id_user)
-{
-    $pdo = connection();
-    $request = "SELECT * FROM Users WHERE id_user = :id_user";
-    $temp = $pdo->prepare($request);
-    $temp->execute([
-        "id_user" => $id_user
-    ]);
-
-    return $temp->fetch(PDO::FETCH_ASSOC);
-}
-
-function getRatingUser($id_user)
-{
-    $pdo = connection();
-    $request = "SELECT AVG(rating) as score FROM Rating WHERE id_seller = :id_user";
-    $temp = $pdo->prepare($request);
-    $temp->execute([
-        "id_user" => $id_user
-    ]);
-
-    return $temp->fetchColumn();
-}
 
 /// Wee have to verif if the date is correctly compared
 function getDailyViews($id_product)

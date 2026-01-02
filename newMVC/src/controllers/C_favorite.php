@@ -1,6 +1,8 @@
 <?php
 
-require_once("src/model/pdo.php");
+require_once("src/model/favorite.php");
+require_once("src/lib/database.php");
+
 
 function favorite()
 {
@@ -15,10 +17,13 @@ function favorite()
         $id_product = $_GET['id'];
         $id_user = $_SESSION['user']['id_user'];
 
-        if (isProductFavorite($id_product, $id_user))
+        $pdo = DatabaseConnection::getConnection();
+        $favoriteRepository = new FavoriteRepository($pdo);
+
+        if ($favoriteRepository->isProductFavorite($id_product, $id_user))
             exit;
 
-        $success = setProductFavorite($id_product, $id_user);
+        $success = $favoriteRepository->setProductFavorite($id_product, $id_user);
         if (!$success)
             throw new Exception("You can't favorite this product !");
     } else {

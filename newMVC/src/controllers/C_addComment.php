@@ -1,5 +1,8 @@
 <?php
 
+require_once('src/model/comment.php');
+require_once('src/lib/database.php');
+
 function addComment()
 {
     if (isset($_POST['id']) && $_POST['id'] >= 0 && isset($_POST['comment']) && strlen($_POST['comment']) > 0) {
@@ -12,10 +15,12 @@ function addComment()
         $comment = $_POST['comment'];
         $id_user = $_SESSION['user']['id_user'];
 
-        addCommentToProduct($id_product, $id_user, $comment);
+        $pdo = DatabaseConnection::getConnection();
+        $commentRepository = new CommentRepository($pdo);
+        $commentRepository->addCommentToProduct($id_product, $id_user, $comment);
         header("Location: index.php?action=product&id=" . $id_product);
         exit;
     } else {
-        throw new Exception("Les informations pour mettre en favoris l'annonce a échoué !");
+        throw new Exception("Échoue sur l'ajout du commentaire");
     }
 }

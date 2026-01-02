@@ -5,14 +5,19 @@ require_once('src/lib/database.php');
 class UserRepository
 {
 
-    public DatabaseConnection $connection;
+    public PDO $connection;
 
-    // Encryptage via code cesar depuis une méthode faite avant insertion
-    public function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
+    public function __construct(PDO $pdo)
     {
+        $this->connection = $pdo;
+    }
+
+    function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
+    {
+        $pdo = $this->connection;
         $requete = "INSERT INTO Users (name, firstname, birth_date, address, city, postal_code, email, password) VALUES (:name, :firstname, :birth_date, :address, :city, :postal_code, :email, :password)";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             return $tmp->execute([
                 ':name' => $name,
                 ':firstname' => $firstname,
@@ -29,11 +34,12 @@ class UserRepository
     }
 
     // On part du principe de l'email et le password sont déja décripté
-    public function authentication($email, $password)
+    function authentication($email, $password)
     {
+        $pdo = $this->connection;
         $requete = "SELECT * from Users where email = :email and password = :password";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':email' => $email,
                 ':password' => $password
@@ -44,13 +50,14 @@ class UserRepository
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateEmailUser($email, $id_user)
+    function updateEmailUser($email, $id_user)
     {
+        $pdo = $this->connection;
         $requete = "UPDATE Users
                 SET email = :email
                 where id_user = :id_user";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ":email" => $email,
                 ":id_user" => $id_user
@@ -60,13 +67,14 @@ class UserRepository
         }
     }
 
-    public function updatePasswordUser($id_user, $password)
+    function updatePasswordUser($id_user, $password)
     {
+        $pdo = $this->connection;
         $requete = "UPDATE Users
                 SET password = :password
                 Where id_user = :id_user";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ":password" => $password,
                 "id_user" => $id_user
@@ -76,15 +84,16 @@ class UserRepository
         }
     }
 
-    public function updateFullAddress($address, $city, $postal_code, $id_user)
+    function updateFullAddress($address, $city, $postal_code, $id_user)
     {
+        $pdo = $this->connection;
         $requete = "UPDATE Users
                 set address = :address,
                     city = :city,
                     postal_code = :postal_code
                 where id_user = :id_user";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ":address" => $address,
                 ":city" => $city,
@@ -96,14 +105,15 @@ class UserRepository
         }
     }
 
-    public function getAddress($id_user)
+    function getAddress($id_user)
     {
+        $pdo = $this->connection;
         $requete = "SELECT address, postal_code, city
                 from Users
                 where id_user = :id_user
     ";
         try {
-            $tmp = $this->connection->getConnection()->prepare($requete);
+            $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ":id_user" => $id_user
             ]);
@@ -113,5 +123,29 @@ class UserRepository
 
         // auto_completion 
         return $tmp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getUser($id_user)
+    {
+        $pdo = $this->connection;
+        $request = "SELECT * FROM Users WHERE id_user = :id_user";
+        $temp = $pdo->prepare($request);
+        $temp->execute([
+            "id_user" => $id_user
+        ]);
+
+        return $temp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getRatingUser($id_user)
+    {
+        $pdo = $this->connection;
+        $request = "SELECT AVG(rating) as score FROM Rating WHERE id_seller = :id_user";
+        $temp = $pdo->prepare($request);
+        $temp->execute([
+            "id_user" => $id_user
+        ]);
+
+        return $temp->fetchColumn();
     }
 }

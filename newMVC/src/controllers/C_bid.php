@@ -1,6 +1,8 @@
 <?php
 
 require_once("src/model/pdo.php");
+require_once("src/model/bid.php");
+require_once("src/lib/database.php");
 
 function bid()
 {
@@ -15,9 +17,12 @@ function bid()
         $id_product = $_GET['id'];
         $id_user = $_SESSION['user']['id_user'];
         $newPrice = (int) $_POST['newPrice'];
-        $id_last_bidder = getLastBidder($id_product);
 
-        $productDate = getProductDate($id_product);
+        $pdo = DatabaseConnection::getConnection();
+        $bidRepository = new BidRepository($pdo);
+        $id_last_bidder = $bidRepository->getLastBidder($id_product);
+
+        $productDate = $bidRepository->getProductDate($id_product);
         $now = time();
 
         $endTimestamp = strtotime($productDate);
@@ -41,7 +46,7 @@ function bid()
             exit;
         }
 
-        $success = bidProduct($id_product, $id_user, $newPrice);
+        $success = $bidRepository->bidProduct($id_product, $id_user, $newPrice);
         if (!$success) {
             echo "not_available";
             exit;
@@ -49,7 +54,7 @@ function bid()
 
         // ajouter 30s de plus pour éviter d'enchérir au dernier moment
         if ($remaining >= 0 && $remaining <= 30) {
-            addTime($id_product);
+            $bidRepository->addTime($id_product);
             echo "time_extended";
             exit;
         }
