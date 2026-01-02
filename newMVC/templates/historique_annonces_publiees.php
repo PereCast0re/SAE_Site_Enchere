@@ -17,12 +17,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Chemin correct depuis templates/ vers src/model/pdo.php
 require_once __DIR__ . '/../src/model/pdo.php';
+require_once('src/model/product.php');
+require_once('src/lib/database.php');
 
 
 
 $id_client = $user['id_user'];
-$annonces = get_termined_annonces_by_client($id_client);
-$annonces_en_cours = get_actual_annonces_by_client($id_client);
+$pdo = DatabaseConnection::getConnection();
+$productRepository = new ProductRepository($pdo);
+$annonces = $productRepository->get_termined_annonces_by_client($id_client);
+$annonces_en_cours = $productRepository->get_actual_annonces_by_client($id_client);
 ?>
 <main>
 <div class="Annonces_en_cours">
@@ -42,7 +46,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
             <p>Prix actuel :
                 <?php
                 // get_price_annoncement retourne un array (fetchAll). On convertit en valeur string.
-                $priceRow = get_price_annoncement($a['id_product']);
+                $priceRow = $productRepository->getLastPrice($a['id_product']);
                 $current_price = null;
                 if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
                     $current_price = $priceRow[0]['MAX(new_price)'];
@@ -71,7 +75,7 @@ $annonces_en_cours = get_actual_annonces_by_client($id_client);
             <p>Prix actuel :
                 <?php
                 // Même logique que pour les annonces en cours : convertir le résultat de get_price_annoncement en valeur
-                $priceRow = getLastPrice($a['id_product']);
+                $priceRow = $productRepository->getLastPrice($a['id_product']);
                 $current_price = null;
                 if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
                     $current_price = $priceRow[0]['MAX(new_price)'];

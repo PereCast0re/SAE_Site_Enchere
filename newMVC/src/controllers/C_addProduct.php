@@ -1,6 +1,7 @@
 <?php
 
-require_once("src/model/pdo.php");
+require_once('src/lib/database.php');
+require_once('src/model/product.php');
 
 function addNewProduct(int $id_user, array $input)
 {
@@ -20,18 +21,20 @@ function addNewProduct(int $id_user, array $input)
         throw new Exception("Les données du formulaire sont invalides !");
     }
 
-    $id_product = createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
+    $pdo = DatabaseConnection::getConnection();
+    $productRepository = new ProductRepository($pdo);
+    $id_product = $productRepository->createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
     if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
-        checkImage($title, $id_product);
+        checkImage($title, $id_product, $productRepository);
 
         header("Location: index.php?action=user");
     }
 
 }
 
-function checkImage(string $title, $id_product){
+function checkImage(string $title, $id_product, ProductRepository $productRepository){
     try{
         //Verification de la présence d'images
         if (!isset($_FILES['image_produit'])) {
@@ -57,7 +60,7 @@ function checkImage(string $title, $id_product){
                     //Ajouter dans un tableau qui sera inséré en base de données
                     $name_image = $title . "_" . $i. ".jpg";
                     $newFilePath = "Annonce/". $title . "/" . $name_image;
-                    addImage($id_product,$newFilePath, $name_image);
+                    $productRepository->addImage($id_product,$newFilePath, $name_image);
                 }
             }
         }

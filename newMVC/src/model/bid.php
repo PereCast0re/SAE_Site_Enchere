@@ -1,6 +1,7 @@
 <?php
 
 require_once('src/lib/database.php');
+require_once('src/model/product.php');
 
 class BidRepository
 {
@@ -14,7 +15,8 @@ class BidRepository
     function bidProduct($id_product, $id_user, $newPrice, $currentPrice = null)
     {
         if ($currentPrice === null) {
-            $currentPrice = getLastPrice($id_product)['last_price'];
+            $productRepository = new ProductRepository($this->connection);
+            $currentPrice = $productRepository->getLastPrice($id_product)['last_price'];
         }
         $pdo = $this->connection;
         $request = "INSERT INTO Bid(id_product, id_user, current_price, new_price, bid_date) VALUES (:id_product, :id_user, :current_price, :new_price, NOW())";

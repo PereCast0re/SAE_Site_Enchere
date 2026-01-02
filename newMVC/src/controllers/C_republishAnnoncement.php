@@ -1,9 +1,12 @@
 <?php
 
-require_once("src/model/pdo.php");
+require_once("src/model/product.php");
+require_once('src/lib/database.php');
 
 function republishAnnoncement($id_product){
-    $old_anoncement = getProduct($id_product);
+    $pdo = DatabaseConnection::getConnection();
+    $productRepository = new ProductRepository($pdo);
+    $old_anoncement = $productRepository->getProduct($id_product);
 
     $start = new DateTime($old_anoncement['end_date']);
     $finish = new DateTime($old_anoncement['start_date']);

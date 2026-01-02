@@ -3,20 +3,20 @@
 require_once('src/lib/database.php');
 require_once('src/model/comment.php');
 require_once('src/model/favorite.php');
-require_once('src/model/pdo.php');
 
 function Product($id_product)
 {
     if (isset($id_product) && $id_product >= 0) {
-        $p = getProduct($id_product);
+        $pdo = DatabaseConnection::getConnection();
+        $productRepository = new ProductRepository($pdo);
+        $p = $productRepository->getProduct($id_product);
         if ($p === false)
             throw new Exception("This product doesn't exist !");
 
-        $pdo = DatabaseConnection::getConnection();
         $commentRepository = new CommentRepository($pdo);
         $comments = $commentRepository->getCommentsFromProduct($id_product);
 
-        $current_price = getLastPrice($p['id_product'])['last_price'];
+        $current_price = $productRepository->getLastPrice($p['id_product'])['last_price'];
         $images = getImage($id_product);
 
         $favoriteRepository = new FavoriteRepository($pdo);

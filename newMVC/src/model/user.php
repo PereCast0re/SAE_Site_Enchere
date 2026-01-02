@@ -5,7 +5,7 @@ require_once('src/lib/database.php');
 class UserRepository
 {
 
-    public PDO $connection;
+    private PDO $connection;
 
     public function __construct(PDO $pdo)
     {
@@ -33,7 +33,7 @@ class UserRepository
         }
     }
 
-    // On part du principe de l'email et le password sont déja décripté
+    // On part du principe que l'email et le password sont déja décriptés
     function authentication($email, $password)
     {
         $pdo = $this->connection;

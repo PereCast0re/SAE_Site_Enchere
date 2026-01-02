@@ -1,4 +1,7 @@
 <?php
+require_once('src/lib/database.php');
+require_once('src/model/product.php');
+
 $title = "Page d'accueil";
 $style = "templates/style/Accueil.css";
 
@@ -14,8 +17,9 @@ $style = "templates/style/Accueil.css";
 
 <main>
   <?php
-  require_once('src/model/pdo.php');
-  $products = getAllProduct();
+  $pdo = DatabaseConnection::getConnection();
+  $productRepository = new ProductRepository($pdo);
+  $products = $productRepository->getAllProduct();
   ?>
 
   <?php if (empty($products)): ?>
@@ -41,7 +45,7 @@ $style = "templates/style/Accueil.css";
                 <div class="text-content-overlay">
                   <h3><?= htmlspecialchars($p['title']) ?></h3>
                   <?php
-                  $priceRow = getLastPrice($p['id_product']);
+                  $priceRow = $productRepository->getLastPrice($p['id_product']);
                   $current_price = null;
                   if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
                     $current_price = $priceRow[0]['MAX(new_price)'];
@@ -116,8 +120,8 @@ $style = "templates/style/Accueil.css";
   <?php $image = null ?>
   <h1>Nos catégories en vedette</h1>
   <div class="category">
-    <?php for ($i = 0; $i < min(3, count(getCategory())); $i++): ?>
-      <?php $cat = getCategory()[$i]; ?>
+    <?php for ($i = 0; $i < min(3, count($productRepository->getCategory())); $i++): ?>
+      <?php $cat = $productRepository->getCategory()[$i]; ?>
       <div class="category-card">
         <?php //$images = getImageCategory($cat['id_category']);
           if (!empty($images)) {

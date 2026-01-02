@@ -3,35 +3,14 @@
 require_once('src/model/user.php');
 require_once('src/lib/database.php');
 
-// if (isset($_POST["action"])) {
-//     $action = $_POST["action"];
-
-//     switch ($action) {
-//         case "update_email":
-//             $email = $_POST["new_email"];
-//             updateEmail($email);
-//             break;
-//         case "update_password":
-//             $password = $_POST["new_password_2"];
-//             updatePassword($password);
-//             break;
-//         case "update_address":
-//             updateAddress();
-//             break;
-//         default:
-//             echo"Action non répertorié";
-//             break;
-//     }
-// }
-
 function updateEmail(string $email)
 {
     if (!empty($email)) {
         $user = $_SESSION["user"];
         $id_user = $user["id_user"];
 
-        $userRepository = new UserRepository();
-        $userRepository->connection = new DatabaseConnection();
+        $pdo = DatabaseConnection::getConnection();
+        $userRepository = new UserRepository($pdo);
         $userRepository->updateEmailUser($email, $id_user);
         $_SESSION["user"]["email"] = $email;
 
@@ -50,8 +29,8 @@ function updatePassword(string $password)
         $id_user = $user["id_user"];
         $pass = trim(htmlentities(password_hash($password, PASSWORD_ARGON2ID)));
 
-        $userRepository = new UserRepository();
-        $userRepository->connection = new DatabaseConnection();
+        $pdo = DatabaseConnection::getConnection();
+        $userRepository = new UserRepository($pdo);
         $userRepository->updatePasswordUser($id_user, $pass);
         $_SESSION["user"]["password"] = $password;
 
@@ -70,10 +49,10 @@ function updateAddress(array $input)
     $city = $input["city"];
     $postal_code = $input["postal_code"];
     if (!empty($input["address"]) && !empty($input["city"]) && !empty($input["postal_code"])) {
-        $userRepository = new UserRepository();
-        $userRepository->connection = new DatabaseConnection();
+        $pdo = DatabaseConnection::getConnection();
+        $userRepository = new UserRepository($pdo);
         $userRepository->updateFullAddress($input["address"], $input["city"], $input["postal_code"], $id_user);
-        $address = getAddress($id_user);
+        $address = $userRepository->getAddress($id_user);
         $strAddress = "";
         foreach ($address as $a) {
             $strAddress .= $a . " ";

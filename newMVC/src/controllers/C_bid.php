@@ -1,8 +1,8 @@
 <?php
 
-require_once("src/model/pdo.php");
 require_once("src/model/bid.php");
 require_once("src/lib/database.php");
+require_once("src/model/product.php");
 
 function bid()
 {
@@ -40,7 +40,8 @@ function bid()
             exit;
         }
 
-        $currentPrice = (int) getLastPrice($id_product)['last_price'];
+        $productRepository = new ProductRepository($pdo);
+        $currentPrice = (int) $productRepository->getLastPrice($id_product)['last_price'];
         if ($newPrice <= $currentPrice) {
             echo "price_not_accepted";
             exit;

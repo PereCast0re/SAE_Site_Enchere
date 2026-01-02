@@ -14,23 +14,31 @@ require_once('src/controllers/C_bid.php');
 require_once('src/controllers/C_addComment.php');
 require_once('src/controllers/C_republishAnnoncement.php');
 require_once('src/controllers/C_addComment.php');
+require_once('src/controllers/C_index.php');
+
 require_once("src/model/pdo.php");
+require_once('src/lib/database.php');
+require_once('src/model/user.php');
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         ////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
             require("templates/connection.php");
-        } elseif ($_GET['action'] === 'deconnexion'){
+        } elseif ($_GET['action'] === 'deconnexion') {
             require_once('src/controllers/C_deconnexion.php');
         } elseif ($_GET['action'] === 'inscription') {
             require("templates/inscription.php");
         } elseif ($_GET['action'] === 'user') {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                $score = getRatingUser($_GET['id']);
+                $pdo = DatabaseConnection::getConnection();
+                $userRepository = new UserRepository($pdo);
+                $score = $userRepository->getRatingUser($_GET['id']);
                 $score == null ? $score = 0 : $score;
-                $products = get_Annonce_User($_GET['id']);
-                $u = getUser($_GET['id']);
+
+                $productRepository = new ProductRepository($pdo);
+                $products = $productRepository->get_Annonce_User($_GET['id']);
+                $u = $userRepository->getUser($_GET['id']);
                 require("templates/userProfil.php");
             } else {
                 require("templates/user.php");
@@ -63,7 +71,9 @@ try {
             addNewProduct($id_user, $_POST);
         } elseif ($_GET['action'] === 'deleteProduct') { // THOMASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             if (isset($_POST['id']) && $_POST['id'] >= 0) {
-                $success = deleteProduct($_POST['id']);
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $success = $productRepository->deleteProduct($_POST['id']);
                 if (!$success) {
                     throw new Exception("This product can't be deleted");
                 }
@@ -98,7 +108,9 @@ try {
         } elseif ($_GET['action'] === 'getLastPrice') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
-                $last_price = getLastPrice($id_product);
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $last_price = $productRepository->getLastPrice($id_product);
                 if ($last_price !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($last_price);
@@ -218,6 +230,7 @@ try {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {
+        // homepage(); Kyllian devra changer parce que les fonctions pdo dans l'index c'est pas bien
         require("templates/index.php");
     }
 } catch (Exception $e) {
