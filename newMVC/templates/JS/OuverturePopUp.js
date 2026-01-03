@@ -24,6 +24,30 @@ function ouvrirPopup(page) {
                     document.getElementById('popup_password').style.display = 'block';
                 })
             break
+        case "Bid":
+            temp = document.querySelector('#bid_input').value;
+            fetch('templates/Event/Bid_Validation.php')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('popup').innerHTML = html;
+                    document.getElementById('popup_bid').style.display = 'block';
+                    document.getElementById('bid_validation_text').textContent = "Voulez-vous enchérir " + parseInt(temp).toLocaleString('fr-FR') + " € ?";
+                })
+            break
+        case "BidForm":
+            temp = parseInt(document.querySelector('#bid_button').dataset.currentPrice);
+            fetch('templates/Event/Bid_Form.php')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('popup').innerHTML = html;
+                    document.getElementById('popup_bid_form').style.display = 'block';
+                    const bidInput = document.getElementById('bid_input');
+                    numberToAdd = addToPrice(temp);
+                    bidInput.min = Math.round(temp + numberToAdd);
+                    bidInput.value = Math.round(temp + numberToAdd);
+                    bidInput.step = numberToAdd;
+                })
+            break
         default:
             console.log('Aucun changement')
             break
@@ -41,6 +65,14 @@ function fermerPopupPassword() {
 
 function fermerPopupAdresse() {
     document.getElementById('popup_adresse').style.display = 'none';
+}
+
+function fermerPopupBid() {
+    document.getElementById('popup_bid').style.display = 'none';
+}
+
+function fermerPopupBidForm() {
+    document.getElementById('popup_bid_form').style.display = 'none';
 }
 //#endregion
 
@@ -60,3 +92,12 @@ async function checkupNewPWD(event) {
     }
 }
 
+function addToPrice(currentPrice) {
+    if (currentPrice < 100) return 5;
+    else if (currentPrice < 500) return 10;
+    else if (currentPrice < 1000) return 20;
+    else if (currentPrice < 5000) return 50;
+    else if (currentPrice < 10000) return 100;
+    else if (currentPrice < 50000) return 500;
+    return 1000;
+}

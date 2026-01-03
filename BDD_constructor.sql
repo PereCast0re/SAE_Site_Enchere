@@ -54,23 +54,26 @@ CREATE TABLE BelongsTo (
    id_product INT,
    id_category INT,
    PRIMARY KEY(id_product, id_category),
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_category) REFERENCES Category(id_category)
+   FOREIGN KEY(id_category) REFERENCES Category(id_category),
+   CONSTRAINT fk_belongsto_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Published (
    id_user INT NOT NULL,
    id_product INT NOT NULL,
    FOREIGN KEY(id_user) REFERENCES Users(id_user),
-   FOREIGN KEY(id_product) REFERENCES Product(id_product)
+   CONSTRAINT fk_published_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Concerned (
    id_product INT,
    id_celebrity INT,
    PRIMARY KEY(id_product, id_celebrity),
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_celebrity) REFERENCES Celebrity(id_celebrity)
+   FOREIGN KEY(id_celebrity) REFERENCES Celebrity(id_celebrity),
+   CONSTRAINT fk_concerned_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 -- =======================
@@ -79,8 +82,9 @@ CREATE TABLE Concerned (
 CREATE TABLE Interest (
    id_product INT,
    id_user INT,
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
+   CONSTRAINT fk_interest_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Bid (
@@ -89,8 +93,9 @@ CREATE TABLE Bid (
    current_price DECIMAL(15,2),
    new_price DECIMAL(15,2),
    bid_date DATETIME,
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
+   CONSTRAINT fk_bid_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Comment (
@@ -98,8 +103,9 @@ CREATE TABLE Comment (
    id_user INT,
    comment VARCHAR(550),
    comment_date DATETIME,
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
+   CONSTRAINT fk_comment_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE ProductView (
@@ -107,9 +113,9 @@ CREATE TABLE ProductView (
    id_user INT,
    view_number INT,
    view_date DATETIME,
-   PRIMARY KEY(id_product, id_user),
-   FOREIGN KEY(id_product) REFERENCES Product(id_product),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user)
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
+   CONSTRAINT fk_productview_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 -- =======================
@@ -121,7 +127,8 @@ CREATE TABLE Image (
    path_image VARCHAR(250),
    alt VARCHAR(50),
    PRIMARY KEY(id_image),
-   FOREIGN KEY(id_product) REFERENCES Product(id_product)
+   CONSTRAINT fk_image_product FOREIGN KEY (id_product) 
+   REFERENCES product(id_product) ON DELETE CASCADE
 );
 
 CREATE TABLE Rating (

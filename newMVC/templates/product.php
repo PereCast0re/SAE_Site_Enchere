@@ -15,6 +15,7 @@ $script = "templates/JS/favorite.js";
 <?php include('preset/header.php'); ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link href="templates/style/stylePopup.css" rel="stylesheet" />
 
 <style>
     :root {
@@ -73,8 +74,8 @@ $script = "templates/JS/favorite.js";
     }
 
     .mySwiper .swiper-slide {
-        width: 120px;
-        height: 120px;
+        width: 300px;
+        height: auto;
         opacity: 0.4;
         display: flex;
         justify-content: center;
@@ -239,9 +240,14 @@ $script = "templates/JS/favorite.js";
             $current_price = $p['start_price'];
         }
         ?>
-        <p>Offre actuelle : <br><span style="color: green"><?= htmlspecialchars($current_price) ?> €</span></p>
+        <p>Offre actuelle : <br><span
+                style="color: green"><?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €</span></p>
     </div>
 </section>
+
+<div id="popup">
+</div>
+<button id="bid_button" type="button" data-current-price="<?= $current_price ?>" onclick="ouvrirPopup('BidForm')">Enchérir</button>
 
 <section id="product-bid">
     <div>
@@ -258,6 +264,7 @@ $script = "templates/JS/favorite.js";
         <button class="btn fav-btn" data-id-product=<?= $p['id_product'] ?> data-is-fav=<?= $isFav ? 'true' : 'false' ?>
             id="fav" style="background-color: light-grey; width: 150px; font-size: 2em;"><?= $isFav ? "★" : "☆"; ?>
         </button>
+        <p><?= $like ?></p>
     </div>
 </section>
 
@@ -315,7 +322,8 @@ $script = "templates/JS/favorite.js";
     <form id="comment-form" method="POST" action="index.php?action=addComment">
         <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
         <br>
-        <textarea id="comment-comment" name="comment" placeholder="Laissez un commentaire ici !" type="text" required></textarea>
+        <textarea id="comment-comment" name="comment" placeholder="Laissez un commentaire ici !" type="text"
+            required></textarea>
         <br>
         <button class="btn" type="submit">Publier</button>
     </form>
@@ -356,6 +364,8 @@ $script = "templates/JS/favorite.js";
 <!-- <script src="templates/JS/manageImagesProduct.js"></script> -->
 
 <script src="templates/JS/bid.js"></script>
+
+<script src="templates/JS/OuverturePopUp.js"></script>
 
 <script src="templates/JS/timer.js"></script>
 

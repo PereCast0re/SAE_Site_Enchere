@@ -20,6 +20,10 @@ function Product($id_product)
         $images = getImage($id_product);
 
         $favoriteRepository = new FavoriteRepository($pdo);
+        $like = $favoriteRepository->getLikes($id_product)['nbLike'];
+        if ($like === null) {
+            $like = 0;
+        }
         isset($_SESSION['user']) ? $isFav = $favoriteRepository->isProductFavorite($id_product, $_SESSION['user']['id_user']) : $isFav = false;
 
         require("templates/product.php");
