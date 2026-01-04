@@ -245,18 +245,24 @@ $script = "templates/JS/favorite.js";
     </div>
 </section>
 
+<div id="myToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body"> Hello, world! This is a toast message. </div> <button type="button"
+            class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+
 <div id="popup">
 </div>
-<button id="bid_button" type="button" data-current-price="<?= $current_price ?>" onclick="ouvrirPopup('BidForm')">Enchérir</button>
+<button id="bid_button" type="button" data-current-price="<?= $current_price ?>"
+    onclick="ouvrirPopup('BidForm')">Enchérir</button>
 
 <section id="product-bid">
     <div>
-        <form id="bid-form" method="POST">
+        <form id="bid-form-product" method="POST">
             <input type="hidden" name="currentPrice" value=<?= $current_price ?>>
-            <label id="bid-label" for="montant">Donnez votre montant : </label>
-            <br>
-            <input name="newPrice" id="montant" type="number" min=<?= $current_price + 1 ?> required>
-            <br>
             <button class="btn" id="bid-button" data-id-product=<?= $p['id_product'] ?> type="submit">Enchérir</button>
         </form>
     </div>
