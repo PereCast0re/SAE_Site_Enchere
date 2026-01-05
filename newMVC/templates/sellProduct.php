@@ -25,14 +25,10 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                 </div>
                 <div class="produit_categorie">
                     <h4>Catégorie :</h4>
-                    <select name="lst_categorie_vente" id="lst_categorie_vente" required>
-                        <?php
-                            $categories = getCategory();
-                            foreach($categories as $category) {
-                                echo('<option>'.$category['name'].'</option>');
-                            }
-                        ?>
-                    </select>
+                    <input type="text" name="lst_categorie_vente" id="lst_categorie_vente" placeholder="Ecrivez vôtre catégorie" required/>
+                    <div id="categorie_results">
+                        <!-- Ici affichage d'un select -->
+                    </div>
                 </div>
                 <div class="prix_reserve">
                     <h4>Réserve</h4>
@@ -50,7 +46,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                 <div id="celebrite_produit" class="celebrite_produit">
                     <h4>Célébrité :</h4>
                     <input type="text" id="inputcelebrity" placeholder="rechercher votre Célébrite">
-                    <div id="celebrite_results">
+                    <div id="celebrity_results">
                         
                     </div>
                 </div>
@@ -93,7 +89,8 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 
         <div class="certificat_authenticite_vente">
             <h4>Certificat d'authenticité format PDF</h4>
-            <input type="file" name="certificat_autenticite" accept="application/pdf,image/*">
+            <input type="file" name="certificat_autenticite" id="certificat_authenticite" accept="application/pdf,image/*">
+            <embed src="" width="800" height="500" type="application/pdf" style="margin-left: 20%; margin-right: 20%; display: none;" id="pdf_preview">
         </div>
         <div class="description_produit_vente">
             <h4>Faites-nous une description de votre produit</h4>

@@ -657,3 +657,94 @@ function gethashPassword($email){
     $result = $temp->fetch(PDO::FETCH_ASSOC);
     return $result ? $result['password'] : null;
 }
+
+////////////////////////////////////////////////////////////////////////////
+                    // Ajout d'une vue a une annonce //
+///////////////////////////////////////////////////////////////////////////
+function getViewAnnocement($id_annoncement, $current_date){
+    $pdo = connection();
+    $requete = "SELECT * from productview where id_product = :id_product and view_date = :current_date";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_product" => $id_annoncement,
+        "current_date" => $current_date
+    ]);
+
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function InsertNewView($id_annoncement, $current_date){
+    $pdo = connection();
+    $requete = "INSERT into productview (id_product, id_user, view_number, view_date) VALUES (:id_product, (SELECT id_user from published where  id_product = :id_product), 1, :current_date)";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_product" => $id_annoncement,
+        "current_date" => $current_date
+    ]);
+}
+
+function UpdateNumberView($id_annoncement){
+    $pdo = connection();
+    $requete = "UPDATE ProductView SET view_number = view_number + 1 WHERE id_product = :id";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id" => $id_annoncement
+    ]);
+}
+
+// fonction pour la vérification bot
+function getLastViewVerifBot($id_product) {
+    $pdo = connection();
+    $stmt = $pdo->prepare("
+        SELECT view_date FROM ProductView 
+        WHERE id_product = ? 
+        ORDER BY view_date DESC 
+        LIMIT 1
+    ");
+    $stmt->execute([$id_product]);
+    return $stmt->fetch();
+}
+
+/////////////////////// Recherche autonome categorie ///////////////////
+function getCategoryMod($writting){
+    $pdo = connection();
+    $requete = "SELECT * from category where name like :writting";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":writting" => $search = '%' . $writting . '%'
+    ]);
+
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/////////////////////// Recherche autonome celebrity ///////////////////
+function getCelebrityMod($writting){
+    $pdo = connection();
+    $requete = "SELECT * from celebrity where name like :writting";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":writting" => $search = '%' . $writting . '%'
+    ]);
+
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function saveCertificatePath($id_product, $path_image)
+{
+    $pdo = connection();
+    try {
+        $requete2 = "INSERT INTO image (id_product, path_image, alt) VALUES (:id_product, :path_image, :name_image)";
+
+        $temp = $pdo->prepare($requete2);
+        $temp->execute([
+            ":id_product" => $id_product,
+            ":path_image" => $path_image,
+            ":name_image" => $id_product. "Certificate.pdf"
+        ]);
+
+        return true;
+
+    } catch (PDOException $e) {
+        die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
+    }
+}

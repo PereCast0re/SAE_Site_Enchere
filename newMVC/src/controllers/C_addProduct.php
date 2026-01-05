@@ -24,18 +24,19 @@ function addNewProduct(int $id_user, array $input)
     if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
-        checkImage($id_product, $id_product);
+        checkImage($id_product);
 
         header("Location: index.php?action=user");
     }
 
 }
 
-function checkImage(string $id_annonce, $id_product){
+function checkImage($id_annonce){
     try{
         //Verification de la présence d'images
         if (!isset($_FILES['image_produit'])) {
-            die("Erreur : Aucune image sélectionnée.");
+            echo("Erreur : Aucune image sélectionnée.");
+            exit();
         }
         // Crée le dossier avec le nom de l'annonce
         $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_annonce;
@@ -45,7 +46,8 @@ function checkImage(string $id_annonce, $id_product){
             //creation du dossier
             mkdir($DirAnnonce, 0777, true);
         } else {
-            die("Erreur : Le dossier existe déjà.");
+            echo("Erreur : Le dossier existe déjà.");
+            exit();
         }
         
         // Ajoute les images dans le dossier
@@ -57,16 +59,16 @@ function checkImage(string $id_annonce, $id_product){
                     //Ajouter dans un tableau qui sera inséré en base de données
                     $name_image = $id_annonce . "_" . $i. ".jpg";
                     $newFilePath = "Annonce/". $id_annonce . "/" . $name_image;
-                    addImage($id_product,$newFilePath, $name_image);
+                    addImage($id_annonce,$newFilePath, $name_image);
                 }
             }
         }
+        if (isset($_FILES['certificat_autenticite'])) {
+            certificat($id_annonce, $DirAnnonce);
+        }
     } catch (Exception $e){
-        die("Erreur lors de l'ajout des images : " .$e->getMessage());
-    }
-
-    if (isset($_FILES['certificat_autenticite'])) {
-        certificat($id_annonce, $DirAnnonce);
+        echo("Erreur lors de l'ajout des images : " .$e->getMessage());
+        exit();
     }
 }
 
@@ -76,5 +78,6 @@ function certificat($id_annonce, $DirAnnonce){
         $newFilePath = $DirAnnonce . "/" . $id_annonce . "_Certificate" . ".pdf";
         // Fonction native de php pour déplacer les fichier
         move_uploaded_file($tmpFilePath, $newFilePath);
+        saveCertificatePath($id_annonce, $newFilePath);
     }
 }

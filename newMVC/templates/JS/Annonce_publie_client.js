@@ -37,11 +37,7 @@ async function print_tab_annoncements(annoncements, div){
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
-        let nb_views = await getDailyViews(annonce.id_product);
-        let global_views = await getGlobalViews(annonce.id_product);
-        if (global_views.nbGlobalView === null) {
-            global_views.nbGlobalView = 0;
-        }
+        
         let like = await getLikes(annonce.id_product);
         if (like.nbLike === null) {
             like.nbLike = 0;
@@ -67,8 +63,8 @@ async function print_tab_annoncements(annoncements, div){
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Vue journaliére : ${nb_views.nbDailyView}</td>
-                        <td>Vue total : ${global_views.nbGlobalView}</td>
+                        <td>photo user</td>
+                        <td>utilisateur</td>
                         <td>Like(s) : ${like.nbLike}</td>
                         <td><button type="button" class="stat_button" style="display: block;"> See stats </button></td>
                     </tr>
@@ -280,14 +276,6 @@ async function getPrice(id_product){
     const price_json = await price.json();
     console.log(price_json);
     return price_json;
-}
-
-async function getDailyViews(id_product){
-    // Appel pour fetch et récupéré le prix actuel
-    const views = await fetch(`index.php?action=getDailyViews&id_product=${id_product}`);
-    const views_json = await views.json();
-    console.log(views_json);
-    return views_json;
 }
 
 async function getGlobalViews(id_product){
