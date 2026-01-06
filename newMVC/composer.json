@@ -2,7 +2,8 @@
     "require": {
         "meilisearch/meilisearch-php": "^1.16",
         "guzzlehttp/guzzle": "^7.10",
-        "php-http/guzzle7-adapter": "^1.1"
+        "php-http/guzzle7-adapter": "^1.1",
+        "mailjet/mailjet-apiv3-php": "^1.6"
     },
     "config": {
         "allow-plugins": {

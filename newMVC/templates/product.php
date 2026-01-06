@@ -227,6 +227,14 @@ $script = "templates/JS/favorite.js";
     }
 </style>
 
+<!-- section pour compter la vue au passage d'une personne -->
+<section class="count-view">
+    <?php
+        require_once("src/controllers/C_counterView.php");
+        AddNewView($p);
+    ?>
+</section>
+
 <section class="product-title">
     <hr>
     <h1><?= $p['title']; ?></h1>

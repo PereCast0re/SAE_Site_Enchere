@@ -112,11 +112,11 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user)
+    function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $status)
     {
         $pdo = connection();
-        $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price)
-                values (:title, :description, :start_date, :end_date, :reserve_price);
+        $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price, status)
+                values (:title, :description, :start_date, :end_date, :reserve_price, :status);
     ";
 
         $requete2 = "INSERT INTO Published (id_product, id_user) values (:id_product, :id_user);";
@@ -129,6 +129,7 @@ class ProductRepository
                 ":start_date" => $start_date,
                 ":end_date" => $end_date,
                 ":reserve_price" => $reserve_price,
+                ":status" => $status,
             ]);
 
             $id_product = $pdo->lastInsertId();

@@ -24,11 +24,15 @@ try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         ////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
-            require("templates/connection.php");
+            $_SESSION['show_login_modal'] = true;
+            header("Location: index.php");
+            exit();
         } elseif ($_GET['action'] === 'deconnexion') {
             require_once('src/controllers/C_deconnexion.php');
         } elseif ($_GET['action'] === 'inscription') {
-            require("templates/inscription.php");
+            $_SESSION['show_register_modal'] = true;
+            header('Location: index.php');
+            exit;
         } elseif ($_GET['action'] === 'user') {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
                 $pdo = DatabaseConnection::getConnection();
@@ -67,8 +71,8 @@ try {
 
 
         } elseif ($_GET['action'] === 'addProduct') {
-            $id_user = $_SESSION['user']['id_user'];
-            addNewProduct($id_user, $_POST);
+            $user = $_SESSION['user'];
+            addNewProduct($user, $_POST);
         } elseif ($_GET['action'] === 'deleteProduct') { // THOMASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             if (isset($_POST['id']) && $_POST['id'] >= 0) {
                 $pdo = DatabaseConnection::getConnection();
@@ -121,23 +125,7 @@ try {
             } else {
                 throw new Exception("ID de produit invalide pour récupérer le dernier prix.");
             }
-            // Daily views
-        } elseif ($_GET['action'] === 'getDailyViews') {
-            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
-                $id_product = $_GET['id_product'];
-                $daily_views = getDailyViews($id_product);
-                if ($daily_views !== false) {
-                    header('Content-Type: application/json');
-                    echo json_encode($daily_views);
-                    exit();
-                } else {
-                    throw new Exception("Impossible de récupérer les vues journalières pour ce produit.");
-                }
-            } else {
-                throw new Exception("ID de produit invalide pour récupérer les vues journalières.");
-            }
-
-            // Global views
+            // global views
         } elseif ($_GET['action'] === 'getGlobalViews') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
@@ -224,9 +212,36 @@ try {
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
+            
+            ////////////////////////////// Page sell product ////////////////////////
 
+        }elseif ($_GET['action'] == 'getCategoriesMod'){
+            if (isset($_GET['writting'])){
+                $writting = $_GET['writting'];
+                $categories = getCategoryMod($writting);
+                if ($categories !== false){
+                    header('Content-Type: application/json');
+                    echo json_encode($categories);
+                    exit();
+                }
+            }
+
+        }elseif ($_GET['action'] == 'getCelebrityMod'){
+            if (isset($_GET['writting'])){
+                $writting = $_GET['writting'];
+                $categories = getCelebrityMod($writting);
+                if ($categories !== false){
+                    header('Content-Type: application/json');
+                    echo json_encode($categories);
+                    exit();
+                }
+            }
+        
+            ///////////////////////////////// Admin ////////////////////////////////
+        }elseif ($_GET['action'] == 'admin'){            
+            require('templates/admin_pannel.php');
             ////////////////////////////// Cas de base //////////////////////////////        
-        } else {
+        }else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {
