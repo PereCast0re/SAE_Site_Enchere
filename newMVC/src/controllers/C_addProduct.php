@@ -38,8 +38,8 @@ function addNewProduct($user, $input)
         $user_email = $user['email'];
         $user_name = $user['name'];
         $param =[$user_email, $user_name] ;
-        //routeurMailing('sendEmailConfirmationPlublish', $param);
-        //header("Location: index.php?action=user");
+        routeurMailing('sendEmailConfirmationPlublish', $param);
+        header("Location: index.php?action=user");
     }
 
 }
