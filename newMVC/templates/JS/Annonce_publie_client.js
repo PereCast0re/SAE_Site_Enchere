@@ -37,11 +37,7 @@ async function print_tab_annoncements(annoncements, div){
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
-        let nb_views = await getDailyViews(annonce.id_product);
-        let global_views = await getGlobalViews(annonce.id_product);
-        if (global_views.nbGlobalView === null) {
-            global_views.nbGlobalView = 0;
-        }
+        
         let like = await getLikes(annonce.id_product);
         if (like.nbLike === null) {
             like.nbLike = 0;
@@ -67,14 +63,15 @@ async function print_tab_annoncements(annoncements, div){
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Vue journaliére : ${nb_views.nbDailyView}</td>
-                        <td>Vue total : ${global_views.nbGlobalView}</td>
+                        <td>photo user</td>
+                        <td>utilisateur</td>
                         <td>Like(s) : ${like.nbLike}</td>
-                        <td><button type="button" class="stat_button" style="display: none;"> See stats </button></td>
+                        <td><button type="button" class="stat_button" style="display: block;"> See stats </button></td>
                     </tr>
                 </tbody>
                 </table>
             </div>
+            <div class="stat_annonce${annonce.id_product}"></div>
             `
     };
     
@@ -123,9 +120,9 @@ async function print_end_annoncement_reserved($id_user, div){
                                     <td>Dernière enchére : <br> ${annonce.new_price} </td>
                                     <td>Vôtre prix de reserve : <br> ${annonce.reserve_price} </td>
                                     <td>
-                                        <button id="btn_agree" type="button" style="display: none;">Accepter</button>
+                                        <button id="btn_agree" type="button" style="display: block;">Accepter</button>
                                         <br>
-                                        <button id="btn_refuse" type="button" style="display: none;">Refuser</button>
+                                        <button id="btn_refuse" type="button" style="display: block;">Refuser</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -142,8 +139,9 @@ async function print_end_annoncement_reserved($id_user, div){
 }
 
 function PrintStatAnnonce(annoncement) {
-    const divStat = document.querySelector(".stat_annonce")
-    divStat.innerHTML = "" 
+    const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`)
+    divStat.innerHTML = ""
+    let html = ""
     html = `
         <div >
             <h3 style="padding-top: 20px; padding-bottom: 10px;"> Statistiques de l'annonce: ${annoncement.title} </h3>
@@ -161,7 +159,6 @@ function PrintStatAnnonce(annoncement) {
 
     divStat.innerHTML += html
     printGraph(`graphLike_${annoncement.id_product}`)
-    printGraph
 }
 
 //Button republish
@@ -193,7 +190,7 @@ async function print_historique_annoncement(id_user, div){
                                 <td>${annonce.title}</td>
                                 <td id="td_info_lastPrice${annonce.id_product}">${checkEndPrice(annonce.last_price)}</td>
                                 <td>
-                                    <button id="btn_republish${annonce.id_product}" style="display: none;" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
+                                    <button id="btn_republish${annonce.id_product}" style="display: block;" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -280,14 +277,6 @@ async function getPrice(id_product){
     const price_json = await price.json();
     console.log(price_json);
     return price_json;
-}
-
-async function getDailyViews(id_product){
-    // Appel pour fetch et récupéré le prix actuel
-    const views = await fetch(`index.php?action=getDailyViews&id_product=${id_product}`);
-    const views_json = await views.json();
-    console.log(views_json);
-    return views_json;
 }
 
 async function getGlobalViews(id_product){
