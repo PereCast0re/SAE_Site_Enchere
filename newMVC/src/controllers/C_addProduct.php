@@ -3,6 +3,7 @@
 require_once('src/lib/database.php');
 require_once('src/model/product.php');
 require_once("src/controllers/C_emailing.php");
+require_once("src/model/pdo.php");
 
 function addNewProduct($user, $input)
 {
@@ -48,7 +49,7 @@ function addNewProduct($user, $input)
 
 }
 
-function checkImage(string $title, $id_product, ProductRepository $productRepository){
+function checkImage($id_product, ProductRepository $productRepository){
     try{
         //Verification de la présence d'images
         if (!isset($_FILES['image_produit'])) {
@@ -74,8 +75,8 @@ function checkImage(string $title, $id_product, ProductRepository $productReposi
                 $newFilePath = $DirAnnonce . "/" . $id_product . "_" . $i . ".jpg";
                 if(move_uploaded_file($tmpFilePath, $newFilePath)){
                     //Ajouter dans un tableau qui sera inséré en base de données
-                    $name_image = $title . "_" . $i. ".jpg";
-                    $newFilePath = "Annonce/". $title . "/" . $name_image;
+                    $name_image = $id_product . "_" . $i. ".jpg";
+                    $newFilePath = "Annonce/". $id_product . "/" . $name_image;
                     $productRepository->addImage($id_product,$newFilePath, $name_image);
                 }
             }
