@@ -55,12 +55,13 @@
                         <label>Mot de passe</label>
                         <input type="password" name="password" required>
                         <div class="password-rules">
-                            <div class="valid">✔ 8 caractères minimum</div>
-                            <div class="valid">✔ Au moins un numéro</div>
-                            <div class="invalid">✖ Au moins une lettre minuscule</div>
-                            <div class="invalid">✖ Au moins un caractère spécial</div>
-                            <div class="invalid">✖ Au moins une lettre majuscule</div>
+                            <div class="rule length">8 caractères minimum</div>
+                            <div class="rule number">Au moins un numéro</div>
+                            <div class="rule lower">Au moins une lettre minuscule</div>
+                            <div class="rule upper">Au moins une lettre majuscule</div>
+                            <div class="rule special">Au moins un caractère spécial</div>
                         </div>
+
                     </section>
 
                     <button type="submit" class="rp-submit">Inscription</button>
@@ -74,30 +75,61 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const popup = document.getElementById('registerPopup');
-            const closeBtn = document.getElementById('rpClose');
-            const overlay = popup.querySelector('.rp-overlay');
+document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('registerPopup');
+    const closeBtn = document.getElementById('rpClose');
+    const passwordInput = popup.querySelector('input[name="password"]');
+    const form = popup.querySelector('form');
 
-            // fermeture via X
-            closeBtn.addEventListener('click', () => {
-                popup.style.display = 'none';
-            });
+    const rules = {
+        length: popup.querySelector('.rule.length'),
+        number: popup.querySelector('.rule.number'),
+        lower: popup.querySelector('.rule.lower'),
+        upper: popup.querySelector('.rule.upper'),
+        special: popup.querySelector('.rule.special'),
+    };
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    popup.style.display = 'none';
-                }
-            });
+    // fermeture
+    closeBtn.addEventListener('click', () => popup.style.display = 'none');
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') popup.style.display = 'none';
+    });
 
+    // ouverture serveur
+    const showRegisterModal = <?= isset($_SESSION['show_register_modal']) ? 'true' : 'false' ?>;
+    if (showRegisterModal) popup.style.display = 'flex';
 
-            // ouverture UNIQUEMENT si demandé par le serveur
-            const showRegisterModal = <?= isset($_SESSION['show_register_modal']) ? 'true' : 'false' ?>;
-            if (showRegisterModal) {
-                popup.style.display = 'flex';
-            }
+    // vérification mot de passe
+    passwordInput.addEventListener('input', () => {
+        const value = passwordInput.value;
+
+        const checks = {
+            length: value.length >= 8,
+            number: /\d/.test(value),
+            lower: /[a-z]/.test(value),
+            upper: /[A-Z]/.test(value),
+            special: /[^A-Za-z0-9]/.test(value),
+        };
+
+        Object.keys(checks).forEach(rule => {
+            rules[rule].classList.toggle('valid', checks[rule]);
         });
-    </script>
+    });
+
+    // blocage submit si invalide
+    form.addEventListener('submit', (e) => {
+        const allValid = Object.values(rules).every(rule =>
+            rule.classList.contains('valid')
+        );
+
+        if (!allValid) {
+            e.preventDefault();
+            alert("Le mot de passe ne respecte pas les critères.");
+        }
+    });
+});
+</script>
+
 
     <?php unset($_SESSION['show_register_modal']); ?>
 <?php endif; ?>

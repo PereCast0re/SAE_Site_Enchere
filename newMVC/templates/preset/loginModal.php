@@ -11,7 +11,7 @@
                 <div class="alert alert-error">
                     <?= htmlspecialchars($_SESSION['error']) ?>
                 </div>
-                <?php unset($_SESSION['error']); ?> 
+                <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
 
             <?php if (isset($_SESSION['success'])): ?>
@@ -31,15 +31,17 @@
                     <input type="password" id="login-password" name="password" required placeholder="Mot de passe">
                 </div>
                 <div class="password-rules">
-                    <div class="valid">✔ 8 caractères minimum</div>
-                    <div class="valid">✔ Au moins un numéro</div>
-                    <div class="invalid">✖ Au moins une lettre minuscule</div>
-                    <div class="invalid">✖ Au moins un caractère spécial</div>
-                    <div class="invalid">✖ Au moins une lettre majuscule</div>
+                    <div class="rule length">8 caractères minimum</div>
+                    <div class="rule number">Au moins un numéro</div>
+                    <div class="rule lower">Au moins une lettre minuscule</div>
+                    <div class="rule upper">Au moins une lettre majuscule</div>
+                    <div class="rule special">Au moins un caractère spécial</div>
+
                 </div>
 
+
                 <div class="actions">
-                    <button type="submit" class="btn-submit">Connexion</button>
+                    <button type="submit" class="btn-submit" id="loginSubmit">Connexion</button>
                     <button type="button" class="btn-secondary"
                         onclick="window.location.href='index.php?action=inscription'">
                         Pas de compte ?
@@ -55,34 +57,73 @@
             const closeBtn = document.getElementById('closeLogin');
             const openBtn = document.getElementById('openLogin');
 
-            // Open modal on button click
+            const passwordInput = document.getElementById('login-password');
+            const submitBtn = document.getElementById('loginSubmit');
+
+            const rules = {
+                length: document.querySelector('.rule.length'),
+                number: document.querySelector('.rule.number'),
+                lower: document.querySelector('.rule.lower'),
+                upper: document.querySelector('.rule.upper'),
+                special: document.querySelector('.rule.special')
+            };
+
+            // ---------- MODAL ----------
             if (openBtn) {
-                openBtn.addEventListener('click', (e) => {
+                openBtn.addEventListener('click', e => {
                     e.preventDefault();
                     modal.style.display = 'flex';
                 });
             }
 
-            // Close modal on X button
-            if (closeBtn) {
-                closeBtn.onclick = () => modal.style.display = 'none';
-            }
+            closeBtn?.addEventListener('click', () => modal.style.display = 'none');
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    modal.style.display = 'none';
-                }
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') modal.style.display = 'none';
             });
 
-
-            // Show modal if triggered by PHP session
             const showLoginModal = <?= isset($_SESSION['show_login_modal']) ? 'true' : 'false' ?>;
-            if (showLoginModal && modal) {
-                console.log('Opening login modal from session');
-                modal.style.display = 'flex';
+            if (showLoginModal) modal.style.display = 'flex';
+
+            // ---------- PASSWORD VALIDATION ----------
+            function validatePassword(value) {
+                const checks = {
+                    length: value.length >= 8,
+                    number: /\d/.test(value),
+                    lower: /[a-z]/.test(value),
+                    upper: /[A-Z]/.test(value),
+                    special: /[^A-Za-z0-9]/.test(value)
+                };
+
+                let isValid = true;
+
+                for (const rule in checks) {
+                    if (checks[rule]) {
+                        rules[rule].classList.add('valid');
+                        rules[rule].classList.remove('invalid');
+                    } else {
+                        rules[rule].classList.add('invalid');
+                        rules[rule].classList.remove('valid');
+                        isValid = false;
+                    }
+                }
+
+                submitBtn.disabled = !isValid;
             }
+
+            passwordInput.addEventListener('input', e => {
+                validatePassword(e.target.value);
+            });
+
+            // Empêche toute soumission forcée
+            document.getElementById('login-form').addEventListener('submit', e => {
+                if (submitBtn.disabled) {
+                    e.preventDefault();
+                }
+            });
         });
     </script>
+
 
     <?php
     // Unset the session variable AFTER the JavaScript has read it

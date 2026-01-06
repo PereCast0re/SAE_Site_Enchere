@@ -126,3 +126,23 @@
     cursor: pointer;
     box-shadow: none;
 }
+
+.password-rules .rule {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.password-rules .rule::before {
+    content: "✖";
+    margin-right: 8px;
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.password-rules .rule.valid::before {
+    content: "✔";
+    color: #2e8b57;
+}
+
