@@ -23,6 +23,7 @@ CREATE TABLE Users (
 CREATE TABLE Celebrity (
    id_celebrity INT AUTO_INCREMENT,
    name VARCHAR(50),
+   url VARCHAR(100),
    PRIMARY KEY(id_celebrity)
 );
 
