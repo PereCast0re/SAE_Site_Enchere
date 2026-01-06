@@ -7,9 +7,9 @@ require_once("src/model/pdo.php");
 
 function addNewProduct($user, $input)
 {
-    var_dump($user);
+    // var_dump($user);
     $id_user = $user['id_user'];
-    var_dump($input);
+    // var_dump($input);
     if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
         $title = trim(htmlentities($input['nom_annonce_vente']));
         $category = trim(htmlentities($input['lst_categorie_vente']));
