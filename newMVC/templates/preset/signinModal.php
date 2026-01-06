@@ -10,7 +10,7 @@
                 <button class="rp-close" id="rpClose">&times;</button>
                 <h2 class="rp-title">Inscrivez-vous</h2>
 
-                <form action="index.php?action=register" method="post" class="rp-form">
+                <form action="index.php?action=userInscription" method="post" class="rp-form">
 
                     <section class="rp-section">
                         <h3>Identité</h3>
@@ -21,12 +21,12 @@
                             </div>
                             <div>
                                 <label>Nom</label>
-                                <input type="text" name="lastname" required>
+                                <input type="text" name="name" required>
                             </div>
                         </div>
 
                         <label>Date de naissance</label>
-                        <input type="date" name="birthdate" required>
+                        <input type="date" name="birth_date" required>
                     </section>
 
                     <section class="rp-section">
@@ -43,7 +43,7 @@
                         </div>
 
                         <label>Code postal</label>
-                        <input type="text" name="zipcode" required>
+                        <input type="number" name="postal_code" required>
                     </section>
 
                     <section class="rp-section">

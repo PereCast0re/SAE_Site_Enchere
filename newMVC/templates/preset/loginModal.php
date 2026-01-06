@@ -11,7 +11,7 @@
                 <div class="alert alert-error">
                     <?= htmlspecialchars($_SESSION['error']) ?>
                 </div>
-                <?php unset($_SESSION['error']); ?>
+                <?php unset($_SESSION['error']); ?> 
             <?php endif; ?>
 
             <?php if (isset($_SESSION['success'])): ?>
