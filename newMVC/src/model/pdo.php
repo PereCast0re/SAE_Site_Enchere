@@ -246,11 +246,11 @@ function get_actual_annonces_by_client($id_client)
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user)
+function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $status)
 {
     $pdo = connection();
-    $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price)
-                values (:title, :description, :start_date, :end_date, :reserve_price);
+    $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price, status)
+                values (:title, :description, :start_date, :end_date, :reserve_price, :status);
     ";
 
     $requete2 = "INSERT INTO Published (id_product, id_user) values (:id_product, :id_user);";
@@ -263,6 +263,7 @@ function createProduct($title, $description, $start_date, $end_date, $reserve_pr
             ":start_date" => $start_date,
             ":end_date" => $end_date,
             ":reserve_price" => $reserve_price,
+            ":status" => $status,
         ]);
 
         $id_product = $pdo->lastInsertId();
@@ -747,4 +748,77 @@ function saveCertificatePath($id_product, $path_image)
     } catch (PDOException $e) {
         die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
     }
+}
+
+///////////////////////////////////////////// Cloture d'une annonce ////////////////////////////////////////////////////////
+/// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
+function closeAnnoncement($id_product){
+    $pdo = connection();
+    $requete = "UPDATE product SET end_date = date(now()) and mailIsSent = 1 WHERE id_product = :id_product";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_product" => $id_product
+    ]);
+}
+
+function get_all_annoncement_notMailed(){
+    $pdo = connection();
+    $requete = 'SELECT * from product where mailIsSent != 1';
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute();
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/////////////////////////////////// Admin ////////////////////////////////////////////
+function getAllProduct_admin(){
+    $pdo = connection();
+    $requete = "SELECT * FROM Product where status = 1";
+    try {
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+    } catch (PDOException $e) {
+        die("Error retrieving products, try again !\nError : " . $e->getMessage());
+    }
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getCategoryFromAnnoncement($id_product){
+    $pdo = connection();
+    $requete = "SELECT name 
+                from category as c
+                where c.id_category = (
+                    select id_category 
+                    from belongsto as b 
+                    where b.id_product = :id 
+                    LIMIT 1);";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ":id" => $id_product,
+        ]);
+    }catch(PDOException $e){
+        die("Error on get categorie from a annoncement : " .$e->getMessage());
+    }
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}
+
+function getCelebrityFromAnnoncement($id_product){
+    $pdo = connection();
+    $requete = "SELECT name 
+                from celebrity as c
+                where c.id_celebrity = (
+                    select id_celebrity 
+                    from concerned as c 
+                    where c.id_product  = :id
+                    LIMIT 1);";
+    try{
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ":id" => $id_product,
+        ]);
+    }catch(PDOException $e){
+        die("Error on get categorie from a annoncement : " .$e->getMessage());
+    }
+    return $tmp->fetch(PDO::FETCH_ASSOC);
 }

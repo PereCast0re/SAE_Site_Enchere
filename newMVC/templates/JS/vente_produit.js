@@ -10,27 +10,36 @@ async function afficherInputPrixReserve(){
     }
 }
 
+///////////////////// Categorie /////////////////////////////
+
 async function checkExistingCategory() {
     let div = document.getElementById('categorie_results')
-    div.innerHTML = "";
     let inputCategorie = document.getElementById('lst_categorie_vente');
+    div.innerHTML = "";
 
     const categories = await getCategories(inputCategorie.value);
+    
+    if (categories && categories.length > 0){
+        let html = `<select name="select_categorie_vente" id="select_categorie_vente">`;
+        for(let c of categories){
+            html +=`
+                <option id="select_${c.name}">${c.name}</option>
+            `
+        }
+        html += `</select>`;
+        div.innerHTML += html;
 
-    let html = `<select name="select_categorie_vente" id="select_categorie_vente" required>`;
-    for(let c of categories){
-        html +=`
-            <option id="select_${c.name}">${c.name}</option>
-        `
+            const select = document.getElementById('select_categorie_vente');
+            select.addEventListener('change', async function(){
+            let selectedCategory = document.getElementById('select_categorie_vente').value;
+            inputCategorie.value = selectedCategory;
+            div.innerHTML = "";
+        });
     }
-    html += `</select>`;
-    div.innerHTML += html;
-
-    select = document.getElementById('select_categorie_vente');
-    select.addEventListener('click', async function(){
-        let selectedCategory = document.getElementById('select_categorie_vente').value;
-        inputCategorie.value = selectedCategory;
-    });
+    else{
+        html = "<p>Vous avez inséré une nouvelle catégorie vôtre annonce seras validé par nos administrateur</p>";
+        div.innerHTML += html;
+    }
 }
 
 async function getCategories(input) {
@@ -47,22 +56,29 @@ async function checkExistingCelebrity() {
     div.innerHTML = "";
     const inputCelebrite = document.getElementById('inputcelebrity')
 
-    const categories = await getCelebrity(inputCelebrite.value);
+    const categories = await getCelebrity(inputCelebrite.value)
+    // if no celebrity and also it's a new one
+    if(categories && categories.length > 0){
+        let html = `<select name="select_celebrity" id="select_celebrity" required>`;
+        for(let c of categories){
+            html +=`
+                <option id="select_${c.name}">${c.name}</option>
+            `
+        }
+        html += `</select>`;
+        div.innerHTML += html;
 
-    let html = `<select name="select_celebrity" id="select_celebrity" required>`;
-    for(let c of categories){
-        html +=`
-            <option id="select_${c.name}">${c.name}</option>
-        `
+            select = document.getElementById('select_celebrity');
+            select.addEventListener('click', async function(){
+            let selectedCategory = document.getElementById('select_celebrity').value;
+            inputCelebrite.value = selectedCategory;
+            div.innerHTML = "";
+        });
     }
-    html += `</select>`;
-    div.innerHTML += html;
-
-    select = document.getElementById('select_celebrity');
-    select.addEventListener('click', async function(){
-        let selectedCategory = document.getElementById('select_celebrity').value;
-        inputCelebrite.value = selectedCategory;
-    });
+    else{
+        html = "<p>Vous avez inséré une nouvelle catégorie vôtre annonce seras validé par nos administrateur</p>";
+        div.innerHTML += html;
+    }
 }
 
 async function getCelebrity(input) {

@@ -59,8 +59,8 @@ try {
 
 
         } elseif ($_GET['action'] === 'addProduct') {
-            $id_user = $_SESSION['user']['id_user'];
-            addNewProduct($id_user, $_POST);
+            $user = $_SESSION['user'];
+            addNewProduct($user, $_POST);
         } elseif ($_GET['action'] === 'deleteProduct') { // THOMASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             if (isset($_POST['id']) && $_POST['id'] >= 0) {
                 $success = deleteProduct($_POST['id']);
@@ -221,6 +221,9 @@ try {
                 }
             }
         
+            ///////////////////////////////// Admin ////////////////////////////////
+        }elseif ($_GET['action'] == 'admin'){            
+            require('templates/admin_pannel.php');
             ////////////////////////////// Cas de base //////////////////////////////        
         }else {
             throw new Exception("La page que vous recherchez n'existe pas.");

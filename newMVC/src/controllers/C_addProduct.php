@@ -1,9 +1,12 @@
 <?php
 
 require_once("src/model/pdo.php");
+require_once("src/controllers/C_emailing.php");
 
-function addNewProduct(int $id_user, array $input)
+function addNewProduct($user, $input)
 {
+    var_dump($user);
+    $id_user = $user['id_user'];
     var_dump($input);
     if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
         $title = trim(htmlentities($input['nom_annonce_vente']));
@@ -11,6 +14,7 @@ function addNewProduct(int $id_user, array $input)
         $start_date = trim(htmlentities($input['date_debut']));
         $end_date = trim(htmlentities($input['date_fin']));
         $description = trim(htmlentities($input['description_produit']));
+        $celebrite = trim(htmlentities($input['inputcelebrity']));
         if (isset($input['valeur_reserve'])) {
             $reserve_price = trim(htmlentities($input['valeur_reserve']));
         } else {
@@ -20,13 +24,22 @@ function addNewProduct(int $id_user, array $input)
         throw new Exception("Les données du formulaire sont invalides !");
     }
 
-    $id_product = createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user);
+    // Au cas ou nouvelle categorie ou celebrite
+    $statut_admin_Categorie = checkCategorie($category)? 1 : 0;
+    $statut_admin_Celebrite = checkCelebrite($celebrite);
+
+    if ($statut_admin_Celebrite == 1 && $statut_admin_Categorie == 1){$statut = 1;} else{ $statut = 0;}
+
+    $id_product = createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $statut);
     if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
         checkImage($id_product);
-
-        header("Location: index.php?action=user");
+        $user_email = $user['email'];
+        $user_name = $user['name'];
+        $param =[$user_email, $user_name] ;
+        //routeurMailing('sendEmailConfirmationPlublish', $param);
+        //header("Location: index.php?action=user");
     }
 
 }
@@ -79,5 +92,25 @@ function certificat($id_annonce, $DirAnnonce){
         // Fonction native de php pour déplacer les fichier
         move_uploaded_file($tmpFilePath, $newFilePath);
         saveCertificatePath($id_annonce, $newFilePath);
+    }
+}
+
+function checkCategorie($saisie){
+    $categories = getCategoryMod($saisie);
+    if($categories){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function checkCelebrite($saisie){
+    $celebrite = getCelebrityMod($saisie);
+    if($celebrite){
+        return true;
+    }
+    else{
+        return false;
     }
 }

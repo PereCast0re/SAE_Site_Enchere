@@ -44,6 +44,7 @@ CREATE TABLE Product (
    reserve_price DECIMAL(15,2),
    start_price DECIMAL(15,2) DEFAULT 0,
    status BOOLEAN DEFAULT FALSE,
+   mailIsSent BOOLEAN DEFAULT FALSE,
    PRIMARY KEY(id_product)
 );
 

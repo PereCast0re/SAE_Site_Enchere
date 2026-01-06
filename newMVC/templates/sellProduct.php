@@ -45,7 +45,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                 </div>
                 <div id="celebrite_produit" class="celebrite_produit">
                     <h4>Célébrité :</h4>
-                    <input type="text" id="inputcelebrity" placeholder="rechercher votre Célébrite">
+                    <input type="text" name="inputcelebrity" id="inputcelebrity" placeholder="rechercher votre Célébrite">
                     <div id="celebrity_results">
                         
                     </div>

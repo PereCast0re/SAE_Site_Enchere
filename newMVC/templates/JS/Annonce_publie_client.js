@@ -71,6 +71,7 @@ async function print_tab_annoncements(annoncements, div){
                 </tbody>
                 </table>
             </div>
+            <div class="stat_annonce${annonce.id_product}"></div>
             `
     };
     
@@ -138,8 +139,9 @@ async function print_end_annoncement_reserved($id_user, div){
 }
 
 function PrintStatAnnonce(annoncement) {
-    const divStat = document.querySelector(".stat_annonce")
-    divStat.innerHTML = "" 
+    const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`)
+    divStat.innerHTML = ""
+    let html = ""
     html = `
         <div >
             <h3 style="padding-top: 20px; padding-bottom: 10px;"> Statistiques de l'annonce: ${annoncement.title} </h3>
@@ -157,7 +159,6 @@ function PrintStatAnnonce(annoncement) {
 
     divStat.innerHTML += html
     printGraph(`graphLike_${annoncement.id_product}`)
-    printGraph
 }
 
 //Button republish

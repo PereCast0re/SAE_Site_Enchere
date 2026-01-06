@@ -57,9 +57,9 @@ $user = $_SESSION['user'];
 
                 <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
                 <input type="hidden" id="values_annoncements" value='<?php echo htmlspecialchars(json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, "UTF-8"); ?>'>        
+                    <div class="stat_annonce">
+                    </div>
             </div>
-        </div>
-        <div class="stat_annonce">
         </div>
         
         <div class="wrapper-annonces">
