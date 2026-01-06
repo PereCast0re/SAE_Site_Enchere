@@ -24,11 +24,15 @@ try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         ////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
-            require("templates/connection.php");
+            $_SESSION['show_login_modal'] = true;
+            header("Location: index.php");
+            exit();
         } elseif ($_GET['action'] === 'deconnexion') {
             require_once('src/controllers/C_deconnexion.php');
         } elseif ($_GET['action'] === 'inscription') {
-            require("templates/inscription.php");
+            $_SESSION['show_register_modal'] = true;
+            header('Location: index.php');
+            exit;
         } elseif ($_GET['action'] === 'user') {
             if (isset($_GET['id']) && $_GET['id'] >= 0) {
                 $pdo = DatabaseConnection::getConnection();
