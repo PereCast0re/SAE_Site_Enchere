@@ -9,14 +9,14 @@ async function afficher() {
     console.log(nb)
     console.log(json_values)
 
-    if(nb == 0){
+    if (nb == 0) {
         div.style.display = 'none'
     }
-    else if (nb == 1){
+    else if (nb == 1) {
         div.innerHTML = '<h2 stryle="text-align: center;">Vôtre annonce publié</h2>'
         await print_tab_annoncements(json_values, div)
     }
-    else{
+    else {
         div.innerHTML = '<h2 style="text-align: center;">Vos annonces publiées</h2>'
         await print_tab_annoncements(json_values, div)
     }
@@ -30,14 +30,14 @@ async function afficher() {
     await checkBtnHistorique()
 }
 
-async function print_tab_annoncements(annoncements, div){
+async function print_tab_annoncements(annoncements, div) {
     let html = ""
     for (const annonce of annoncements) {
         let price = await getPrice(annonce.id_product);
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
-        
+
         let like = await getLikes(annonce.id_product);
         if (like.nbLike === null) {
             like.nbLike = 0;
@@ -49,7 +49,7 @@ async function print_tab_annoncements(annoncements, div){
             image_url[0].url_image
         ) ? image_url[0].url_image : "assets/default.png";
 
-        html += 
+        html +=
             `
             <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
                 <table>
@@ -58,7 +58,7 @@ async function print_tab_annoncements(annoncements, div){
                         <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;"/>
                         <td>${annonce.title}</td>
                         <td><span class="timer" data-end="${annonce.end_date}">Chargement...</span></td>
-                        <td class="price_annonce_${annonce.id_product}"> ${ price.last_price } €</td>
+                        <td class="price_annonce_${annonce.id_product}"> ${price.last_price} €</td>
                         <td><a href="index.php?action=product&id=${annonce.id_product}">See Annonce</a></td>
                     </tr>
                     <tr>
@@ -74,7 +74,7 @@ async function print_tab_annoncements(annoncements, div){
             <div class="stat_annonce${annonce.id_product}"></div>
             `
     };
-    
+
     div.innerHTML += html;
 
     document.querySelectorAll('.timer').forEach(timerElement => {
@@ -91,17 +91,17 @@ async function print_tab_annoncements(annoncements, div){
     });
 }
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
-async function print_end_annoncement_reserved($id_user, div){
+async function print_end_annoncement_reserved($id_user, div) {
     let annoncements = await getAnnonceReserved($id_user);
     console.log(annoncements)
-    if (annoncements.length > 0){
+    if (annoncements.length > 0) {
         div.style = 'display: block;'
 
         let html = ""
         html.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;" >Vos annonces terminer avec prix de réserve non atteint</h3>`
 
-        for (const annonce of annoncements ){
-            
+        for (const annonce of annoncements) {
+
             let image_url = await getImage(annonce.id_product);
             let firstImg = (
                 Array.isArray(image_url) &&
@@ -133,46 +133,94 @@ async function print_end_annoncement_reserved($id_user, div){
         }
         div.innerHTML += html;
     }
-    else{
+    else {
         div.style.display = "none"
     }
 }
 
+/////////////////////////////////
+// Statistiques //
+/////////////////////////////////
+
+let chart = null;
+
+const labels = ["BUT Info", "BUT GEA", "BUT MMI"];
+const dataValues = [30, 20, 25];
+
 function PrintStatAnnonce(annoncement) {
+
+    console.log(annoncement);
+
+    function createChart(type, labels, dataValues) {
+        const canvas = document.getElementById('myChart');
+        const ctx = canvas.getContext('2d');
+
+        if (chart) chart.destroy(); // Supprimer l'ancien graphique
+        chart = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre d\'étudiants',
+                    data: dataValues,
+                    backgroundColor: ['red', 'blue', 'green']
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 800,
+                    animateScale: true,
+                    animateRotate: true
+                },
+                scales: type !== 'pie' ? {
+                    y: { beginAtZero: true }
+                } : {}
+            },
+        });
+
+        // Quand on change de type pour les stats
+        document.getElementById('chartType').addEventListener('change', function () {
+            createChart(this.value, labels, dataValues);
+            console.log(chart);
+        });
+    }
+
     const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`)
     divStat.innerHTML = ""
     let html = ""
     html = `
-        <div >
-            <h3 style="padding-top: 20px; padding-bottom: 10px;"> Statistiques de l'annonce: ${annoncement.title} </h3>
-            <div style="border: 1px solid gold;display: flex;justify-content: space-around;width: 50%;box-shadow: 0 5px 15px gray;margin: 0 auto;padding: 10px;border-radius: 15px;">
-                <div class="stat_views" style="background-color: lightgreen;">
-                    <canvas id="graphVue_${annoncement.id_product} width="300" heigh="150" />
-                </div>
-                <div class="stat_likes" style="background-color: lightblue;">
-                    <h4>Likes</h4>
-                    <canvas id="graphLike_${annoncement.id_product}" width="300" height="150" />                
-                </div>
-            </div>
-        </div>
+        <h1>Statistiques étudiantes</h1>
+        <p>Choisissez le type de graphique :</p>
+        <select id="chartType">
+            <option value="bar">Barres</option>
+            <option value="line">Lignes</option>
+            <option value="pie">Camembert</option>
+        </select>
+        <canvas id="myChart" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
     `
 
     divStat.innerHTML += html
+
+    const labels = ["BUT Info", "BUT GEA", "BUT MMI"];
+    const dataValues = [30, 20, 25];
+
+    createChart("bar", labels, dataValues);
     printGraph(`graphLike_${annoncement.id_product}`)
 }
 
 //Button republish
 //style="display: ${annonce.last_price > 0 ? "none" : "block"};"
-async function print_historique_annoncement(id_user, div){
+async function print_historique_annoncement(id_user, div) {
     let html = ""
 
     let annoncements = await getListAnnoncementEnd(id_user);
 
-    if(annoncements && annoncements.length > 0){
+    if (annoncements && annoncements.length > 0) {
 
         div.style.display = "block"
         div.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;"> Vos annonces non concluante </h3>`
-        for (const annonce of annoncements){
+        for (const annonce of annoncements) {
 
             let image_url = await getImage(annonce.id_product);
             let firstImg = (
@@ -200,7 +248,7 @@ async function print_historique_annoncement(id_user, div){
         }
         div.innerHTML += html
     }
-    else{
+    else {
         div.style.display = "none"
         console.log('Aucune annonce dans votre historique !')
     }
@@ -213,29 +261,29 @@ async function checkBtnHistorique() {
     const div_publier = await document.querySelector(".section_annonce_publier")
     const div_reserve = await document.getElementById("div_end_annoncement_with_reserved")
     const div_finish = await document.getElementById('div_historique_annoncement')
-    if (div_finish.style.display === "none" && div_publier.style.display === "none" && div_reserve.style.display === "none"){
+    if (div_finish.style.display === "none" && div_publier.style.display === "none" && div_reserve.style.display === "none") {
         btn.style.display = "block"
     }
 }
 
 
 /////////////////////////////////////////////////////////////
-            //Fonction Affichage personalisée//
+//Fonction Affichage personalisée//
 ////////////////////////////////////////////////////////////
 
-function checkEndPrice(lastPrice){
-    if(lastPrice > 0){
-        return "<p> Vendu pour "+ lastPrice +"€ </p>" 
+function checkEndPrice(lastPrice) {
+    if (lastPrice > 0) {
+        return "<p> Vendu pour " + lastPrice + "€ </p>"
     }
-    else{        
-        return "<p>Produit non vendu !<p>" 
+    else {
+        return "<p>Produit non vendu !<p>"
     }
 }
 
-async function alertConfirmation(message, action, id_product){
+async function alertConfirmation(message, action, id_product) {
     const popup = document.createElement('div')
     console.log("affichage la popup")
-    popup.classList.add('popup-overlay'); 
+    popup.classList.add('popup-overlay');
     popup.innerHTML = `
     <div class="popup-box">
         <p>${message}</p>
@@ -249,29 +297,29 @@ async function alertConfirmation(message, action, id_product){
     document.body.appendChild(popup);
 
     let button = document.querySelector("#btnConfirm")
-    button.addEventListener('click', async () =>{
+    button.addEventListener('click', async () => {
         await fetch(`index.php?action=${action}&id_product=${id_product}`);
         popup.remove();
     })
 
     let cancel = document.querySelector("#btnCancel")
-    cancel.addEventListener('click', () =>{
+    cancel.addEventListener('click', () => {
         popup.remove();
     })
 }
 
 async function printGraph(id, title, allData) {
     let graph = ""
-    
+
 
 }
 
 
 /////////////////////////////////////////////////////////////
-                        //Fonction API//
+//Fonction API//
 ////////////////////////////////////////////////////////////
 
-async function getPrice(id_product){
+async function getPrice(id_product) {
     // Appel pour fetch et récupéré le prix actuel
     const price = await fetch(`index.php?action=getLastPrice&id_product=${id_product}`);
     const price_json = await price.json();
@@ -279,7 +327,7 @@ async function getPrice(id_product){
     return price_json;
 }
 
-async function getGlobalViews(id_product){
+async function getGlobalViews(id_product) {
     // Appel pour fetch et récupéré le prix actuel
     const views = await fetch(`index.php?action=getGlobalViews&id_product=${id_product}`);
     const views_json = await views.json();
@@ -287,7 +335,7 @@ async function getGlobalViews(id_product){
     return views_json;
 }
 
-async function getLikes(id_product){
+async function getLikes(id_product) {
     // Appel pour fetch et récupéré le prix actuel
     const likes = await fetch(`index.php?action=getLikes&id_product=${id_product}`);
     const likes_json = await likes.json();
@@ -298,7 +346,7 @@ async function getLikes(id_product){
 async function getAnnonceReserved($id_user) {
     const reponse = await fetch(`index.php?action=reservedAnnoncement&id_user=${$id_user}`);
     const annonce_json = await reponse.json();
-    console.log( annonce_json)
+    console.log(annonce_json)
     return annonce_json;
 }
 

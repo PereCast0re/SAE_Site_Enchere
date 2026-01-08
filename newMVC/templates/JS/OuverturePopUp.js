@@ -127,7 +127,7 @@ function ouvrirPopup(page) {
                         document.querySelectorAll('.error-msg').forEach(e => e.remove());
                         newPrice = document.querySelector('#bid_input_form').value;
                         currentPrice = document.querySelector('#currentPrice_form').value;
-                        newPriceIsValid(newPrice, currentPrice);
+                        newPriceIsValid(parseInt(newPrice), ParseInt(currentPrice));
                     });
                 })
             break
