@@ -42,6 +42,9 @@
                     <li class="nav-item">
                         <a id="btn_connexion" class="nav-link" href="index.php?action=connection">Connexion</a>
                     </li>
+                    <li class="nav-item">
+                        <a id="btn_deconnexion" class="nav-link" href="index.php?action=deconnexion">Deconnexion</a>
+                    </li>
                 </ul>
 
             </div>
