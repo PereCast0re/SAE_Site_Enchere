@@ -70,6 +70,16 @@ try {
             updatePassword($_POST['new_password_2']);
 
 
+        } elseif ($_GET['action'] === 'newsletter') {
+            $_SESSION['show_newsletter_modal'] = true;
+            header('Location: index.php');
+            exit;
+        } elseif ($_GET['action'] === 'subscribeNewsletter') {
+            $user = $_SESSION['user'];
+            subscribeNewsletter($user['email']);
+            $_SESSION['success'] = "Abonnement confirmé 🎉";
+            header('Location: index.php');
+            exit;
         } elseif ($_GET['action'] === 'addProduct') {
             $user = $_SESSION['user'];
             addNewProduct($user, $_POST);
@@ -212,36 +222,36 @@ try {
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
-            
+
             ////////////////////////////// Page sell product ////////////////////////
 
-        }elseif ($_GET['action'] == 'getCategoriesMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCategoriesMod') {
+            if (isset($_GET['writting'])) {
                 $writting = $_GET['writting'];
                 $categories = getCategoryMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
 
-        }elseif ($_GET['action'] == 'getCelebrityMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCelebrityMod') {
+            if (isset($_GET['writting'])) {
                 $writting = $_GET['writting'];
                 $categories = getCelebrityMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
-        
+
             ///////////////////////////////// Admin ////////////////////////////////
-        }elseif ($_GET['action'] == 'admin'){            
+        } elseif ($_GET['action'] == 'admin') {
             require('templates/admin_pannel.php');
             ////////////////////////////// Cas de base //////////////////////////////        
-        }else {
+        } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {

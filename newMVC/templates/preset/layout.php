@@ -22,6 +22,7 @@ if (isset($_SESSION['user'])){
     <?= $content ?>
     <?php include 'templates/preset/loginModal.php'; ?>
     <?php include 'templates/preset/signinModal.php'; ?>
+    <?php include 'templates/preset/subscribeModal.php'; ?>
 </body>
 
 </html>

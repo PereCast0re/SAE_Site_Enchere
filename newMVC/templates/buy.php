@@ -16,8 +16,9 @@ $style = "templates/style/Accueil.css";
 
 <main>
     <?php
-    require_once('src/model/pdo.php');
-    $products = getAllProduct();
+    $pdo = DatabaseConnection::getConnection();
+    $productRepository = new ProductRepository($pdo);
+    $products = $productRepository->getAllProduct();
     ?>
 
     <?php if (empty($products)): ?>
@@ -44,7 +45,7 @@ $style = "templates/style/Accueil.css";
                                 <div class="text-content-overlay">
                                     <h3><?= htmlspecialchars($p['title']) ?></h3>
                                     <?php
-                                    $priceRow = getLastPrice($p['id_product']);
+                                    $priceRow = $productRepository->getLastPrice($p['id_product']);
                                     $current_price = null;
                                     if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
                                         $current_price = $priceRow[0]['MAX(new_price)'];
@@ -125,7 +126,7 @@ $style = "templates/style/Accueil.css";
 
 
         <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
-        <a class="btns">S'abonner</a><br><br><br>
+        <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
     </div>
 </main>
 

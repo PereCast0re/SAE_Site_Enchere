@@ -136,7 +136,7 @@ $style = "templates/style/Accueil.css";
     <?php endfor; ?>
   </div>
   <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
-  <a class="btns" href="https://www.youtube.com/watch?v=xvFZjo5PgG0">S'abonner</a><br><br><br>
+  <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
   </div>
 </main>
 
