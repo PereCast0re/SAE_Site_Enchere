@@ -212,4 +212,55 @@ class ProductRepository
         }
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
+
+    function getLikesWithOption($id_product, $option)
+    {
+        $pdo = $this->connection;
+        switch ($option) {
+            case 'M':
+                $requete = "SELECT COUNT(view_number) as likes, DATE_FORMAT(view_date, '%Y-%m') AS date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY MONTH(view_date), YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            case 'Y':
+                $requete = "SELECT COUNT(view_number) as likes, YEAR(view_date) as date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            default:
+                $requete = "SELECT COUNT(view_number) as likes, DATE(view_date) as date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY DATE(view_date), YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+        }
+    }
+
+    function getViewsWithOption($id_product)
+    {
+        $pdo = connection();
+        $requete = " SELECT COUNT(view_number) as nbDailyView from productview where id_product = :id and view_date = date(now()) ";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id" => $id_product
+        ]);
+        return $temp->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -144,14 +144,25 @@ try {
             // Likes
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
-                $id_product = $_GET['id_product'];
-                $likes = getLikes($id_product);
-                if ($likes !== false) {
+                if (isset($_GET['option']) && $_GET['option'] >= 0) {
+                    $id_product = $_GET['id_product'];
+                    $option = $_GET['option'];
+                    $pdo = DatabaseConnection::getConnection();
+                    $productRepository = new ProductRepository($pdo);
+                    $likes = $productRepository->getLikesWithOption($id_product, $option);
                     header('Content-Type: application/json');
                     echo json_encode($likes);
                     exit();
                 } else {
-                    throw new Exception("Impossible de récupérer les likes pour ce produit.");
+                    $id_product = $_GET['id_product'];
+                    $likes = getLikes($id_product);
+                    if ($likes !== false) {
+                        header('Content-Type: application/json');
+                        echo json_encode($likes);
+                        exit();
+                    } else {
+                        throw new Exception("Impossible de récupérer les likes pour ce produit.");
+                    }
                 }
             } else {
                 throw new Exception("ID de produit invalide pour récupérer les likes.");
@@ -212,36 +223,36 @@ try {
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
-            
+
             ////////////////////////////// Page sell product ////////////////////////
 
-        }elseif ($_GET['action'] == 'getCategoriesMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCategoriesMod') {
+            if (isset($_GET['writting'])) {
                 $writting = $_GET['writting'];
                 $categories = getCategoryMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
 
-        }elseif ($_GET['action'] == 'getCelebrityMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCelebrityMod') {
+            if (isset($_GET['writting'])) {
                 $writting = $_GET['writting'];
                 $categories = getCelebrityMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
-        
+
             ///////////////////////////////// Admin ////////////////////////////////
-        }elseif ($_GET['action'] == 'admin'){            
+        } elseif ($_GET['action'] == 'admin') {
             require('templates/admin_pannel.php');
             ////////////////////////////// Cas de base //////////////////////////////        
-        }else {
+        } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {

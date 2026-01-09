@@ -25,18 +25,6 @@ function connection()
 //User Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// Wee have to verif if the date is correctly compared
-function getDailyViews($id_product)
-{
-    $pdo = connection();
-    $requete = " SELECT COUNT(view_number) as nbDailyView from productview where id_product = :id and view_date = date(now()) ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id" => $id_product
-    ]);
-    return $temp->fetch(PDO::FETCH_ASSOC);
-}
-
 function getGlobalViews($id_product)
 {
     $pdo = connection();
