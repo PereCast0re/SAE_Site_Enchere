@@ -65,7 +65,7 @@
                     </section>
 
                     <button type="submit" class="rp-submit">Inscription</button>
-                    <button type="button" class="rp-alt" onclick="window.location.href='index.php'">
+                    <button type="button" class="rp-alt" onclick="window.location.href='index.php?action=connection'">
                         Déjà un compte ?
                     </button>
 

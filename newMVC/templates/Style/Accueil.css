@@ -14,12 +14,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+html, body {
+  min-height: 100%;
+}
 
 body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--color-background) !important;
   color: #000;
-  height: 100%;
+  body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 }
 
 /* Définir une variable pour la hauteur de la barre de navigation */
@@ -27,83 +34,7 @@ body {
   --navbar-height-desktop: 60px;
 }
 
-.navbar-custom {
-  min-height: var(--navbar-height-desktop);
-  background: linear-gradient(to right, #002366, #0046CC) !important;
-  padding-top: 0;
-  padding-bottom: 0;
-  font-size: 20px;
-}
 
-.navbar-custom .nav-link,
-.navbar-custom .navbar-brand {
-    color: var(--color-background) !important;
-    text-decoration: none;
-    font-size: 1.15rem;
-}
-
-.navbar-custom .nav-link:hover {
-  color: #a9a9a9 !important;
-}
-
-.navbar-custom .nav-item {
-  margin-right: 60px;
-}
-
-.navbar-custom .navbar-brand img {
-    width: 100px;
-    height: 100px;
-    border-radius: 80%;
-}
-
-/* Centrage du Logo et de la Hauteur sur les grands écrans */
-@media (min-width: 992px) {
-
-  .navbar-custom .container-fluid {
-    height: var(--navbar-height-desktop);
-  }
-
-  .navbar-custom .navbar-brand {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    /* Nouvelle règle pour centrage vertical */
-    transform: translate(-50%, -50%);
-    /* Ajustement pour centrage parfait H et V */
-  }
-
-  .navbar-custom .navbar-collapse {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .navbar-custom .me-auto {
-    margin-right: auto !important;
-    margin-left: 0 !important;
-  }
-
-  .navbar-custom .navbar-nav:last-child {
-    margin-left: auto !important;
-  }
-}
-
-/* Correction pour mobile, pour retirer le positionnement absolu */
-@media (max-width: 991px) {
-  .navbar-custom .navbar-brand {
-    position: static;
-    left: auto;
-    transform: none;
-  }
-}
-
-.navbar-custom .navbar-toggler-icon {
-    filter: invert(1); 
-}
-
-.navbar-custom .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1); 
-}
 
 /* ====================== */
 /* FOOTER */

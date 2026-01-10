@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
     UserCheckConnexion($_SESSION['user']['DateConnexion']);
 }
 
@@ -16,6 +16,10 @@ if (isset($_SESSION['user'])){
 
     <script src="<?= empty($script) ? "" : $script ?>" defer></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
