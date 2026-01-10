@@ -2,7 +2,7 @@
 require_once("src/model/pdo.php");
 
 function AddNewView($annoncement) {
-    // bloque les bots (aider car aucune connaissancer dessus)
+    // bloque les bots (aidé car aucune connaissance sur ce sujet)
     $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
     $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
     
@@ -26,7 +26,7 @@ function AddNewView($annoncement) {
     
     // ajout de la vue
     $now = date('Y-m-d H:i:s');
-    $tabview = getViewAnnocement($annoncement['id_product'], $now);
+    $tabview = getViewProduct($annoncement['id_product'], $now);
     
     if (empty($tabview)) {
         InsertNewView($annoncement['id_product'], $now);

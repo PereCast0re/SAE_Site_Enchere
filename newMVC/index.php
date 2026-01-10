@@ -111,16 +111,27 @@ try {
             // get price
         } elseif ($_GET['action'] === 'getLastPrice') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
-                $id_product = $_GET['id_product'];
-                $pdo = DatabaseConnection::getConnection();
-                $productRepository = new ProductRepository($pdo);
-                $last_price = $productRepository->getLastPrice($id_product);
-                if ($last_price !== false) {
+                if (!empty($_GET['option'])) {
+                    $id_product = $_GET['id_product'];
+                    $option = $_GET['option'];
+                    $pdo = DatabaseConnection::getConnection();
+                    $productRepository = new ProductRepository($pdo);
+                    $data = $productRepository->getPriceWithOption($id_product, $option);
                     header('Content-Type: application/json');
-                    echo json_encode($last_price);
+                    echo json_encode($data);
                     exit();
                 } else {
-                    throw new Exception("Impossible de récupérer le dernier prix pour ce produit.");
+                    $id_product = $_GET['id_product'];
+                    $pdo = DatabaseConnection::getConnection();
+                    $productRepository = new ProductRepository($pdo);
+                    $last_price = $productRepository->getLastPrice($id_product);
+                    if ($last_price !== false) {
+                        header('Content-Type: application/json');
+                        echo json_encode($last_price);
+                        exit();
+                    } else {
+                        throw new Exception("Impossible de récupérer le dernier prix pour ce produit.");
+                    }
                 }
             } else {
                 throw new Exception("ID de produit invalide pour récupérer le dernier prix.");
@@ -128,14 +139,25 @@ try {
             // global views
         } elseif ($_GET['action'] === 'getGlobalViews') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
-                $id_product = $_GET['id_product'];
-                $global_views = getGlobalViews($id_product);
-                if ($global_views !== false) {
+                if (!empty($_GET['option'])) {
+                    $id_product = $_GET['id_product'];
+                    $option = $_GET['option'];
+                    $pdo = DatabaseConnection::getConnection();
+                    $productRepository = new ProductRepository($pdo);
+                    $data = $productRepository->getViewsWithOption($id_product, $option);
                     header('Content-Type: application/json');
-                    echo json_encode($global_views);
+                    echo json_encode($data);
                     exit();
                 } else {
-                    throw new Exception("Impossible de récupérer les vues globales pour ce produit.");
+                    $id_product = $_GET['id_product'];
+                    $global_views = getGlobalViews($id_product);
+                    if ($global_views !== false) {
+                        header('Content-Type: application/json');
+                        echo json_encode($global_views);
+                        exit();
+                    } else {
+                        throw new Exception("Impossible de récupérer les vues globales pour ce produit.");
+                    }
                 }
             } else {
                 throw new Exception("ID de produit invalide pour récupérer les vues globales.");
@@ -144,25 +166,14 @@ try {
             // Likes
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
-                if (isset($_GET['option']) && $_GET['option'] >= 0) {
-                    $id_product = $_GET['id_product'];
-                    $option = $_GET['option'];
-                    $pdo = DatabaseConnection::getConnection();
-                    $productRepository = new ProductRepository($pdo);
-                    $likes = $productRepository->getLikesWithOption($id_product, $option);
+                $id_product = $_GET['id_product'];
+                $likes = getLikes($id_product);
+                if ($likes !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($likes);
                     exit();
                 } else {
-                    $id_product = $_GET['id_product'];
-                    $likes = getLikes($id_product);
-                    if ($likes !== false) {
-                        header('Content-Type: application/json');
-                        echo json_encode($likes);
-                        exit();
-                    } else {
-                        throw new Exception("Impossible de récupérer les likes pour ce produit.");
-                    }
+                    throw new Exception("Impossible de récupérer les likes pour ce produit.");
                 }
             } else {
                 throw new Exception("ID de produit invalide pour récupérer les likes.");

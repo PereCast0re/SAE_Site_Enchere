@@ -142,76 +142,111 @@ async function print_end_annoncement_reserved($id_user, div) {
 // Statistiques //
 /////////////////////////////////
 
-let chart = null;
+let chartV = null;
+let chartP = null;
+
+function createChart(chart, type, annoncement) {
+    const canvas = document.getElementById('myChart' + type);
+    console.log('myChart' + type);
+    const ctx = canvas.getContext('2d');
+
+    if (chart) chart.destroy(); // Supprimer l'ancien graphique
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: "",
+                data: []
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+
+
+    // Quand on change de type pour les stats
+    document.getElementById('chartType' + type).addEventListener('change', async function () {
+        updateChart(chart, this.value, type, annoncement);
+        // console.log(chart);
+        // console.log(dataValues, labels);
+    });
+
+    return chart;
+}
+
+async function updateChart(chart, option, type, annoncement) {
+    let labels = [];
+    let dataValues = [];
+    let data = null;
+
+    switch (type) {
+        case 'V':
+            data = await getViewsWithOption(annoncement["id_product"], option);
+            break;
+        case 'P':
+            data = await getPriceWithOption(annoncement["id_product"], option);
+            break;
+    }
+
+    if (data === null) {
+        if (chart) chart.destroy();
+    } else {
+        data.forEach(content => {
+            labels.push(content.date);
+            dataValues.push(content.value);
+        });
+
+        chart.data = {
+            labels: labels,
+            datasets: [{
+                label: type == 'V' ? "Nombre de vues" : "Prix",
+                data: dataValues,
+                backgroundColor: ['red', 'blue', 'green']
+            }]
+        }
+        chart.update();
+    }
+}
 
 async function PrintStatAnnonce(annoncement) {
     // console.log(annoncement);
 
-    function createChart(labels, dataValues) {
-        const canvas = document.getElementById('myChart');
-        const ctx = canvas.getContext('2d');
-
-        if (chart) chart.destroy(); // Supprimer l'ancien graphique
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "Nombre de likes ajoutés",
-                    data: dataValues,
-                    backgroundColor: ['red', 'blue', 'green']
-                }]
-            },
-            options: {
-                responsive: true,
-                animation: {
-                    duration: 800,
-                    animateScale: true,
-                    animateRotate: true
-                }
-            }
-        });
-
-        // Quand on change de type pour les stats
-        document.getElementById('chartType').addEventListener('change', async function () {
-            let like = await getLikesWithOption(annoncement["id_product"], this.value);
-            labels = [];
-            dataValues = [];
-            for (let content of like) {
-                labels.push(content.date);
-                dataValues.push(content.likes);
-            }
-            createChart(labels, dataValues);
-            // console.log(chart);
-            console.log(dataValues, labels);
-        });
-    }
-
-    const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`)
-    divStat.innerHTML = ""
-    let html = ""
+    const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`);
+    divStat.innerHTML = "";
+    let html = "";
     html = `
-        <h1>Statistiques étudiantes</h1>
+        <h1>Évolution du nombre de vues</h1>
         <p>Choisissez le type de graphique :</p>
-        <select id="chartType">
+        <select id="chartTypeV">
             <option value="D">Par jour</option>
             <option value="M">Par mois</option>
             <option value="Y">Par an</option>
         </select>
-        <canvas id="myChart" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
-    `
+        <canvas id="myChartV" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
 
-    let like = await getLikesWithOption(annoncement["id_product"], "D");
-    labels = [];
-    dataValues = [];
-    for (let content of like) {
-        labels.push(content.date);
-        dataValues.push(content.likes);
-    }
+        <h1>Évolution du prix</h1>
+        <p>Choisissez le type de graphique :</p>
+        <select id="chartTypeP">
+            <option value="D">Par jour</option>
+            <option value="M">Par mois</option>
+            <option value="Y">Par an</option>
+        </select>
+        <canvas id="myChartP" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
+    `
 
     divStat.innerHTML += html
 
-    createChart(labels, dataValues);
+    data = await getPriceWithOption(annoncement["id_product"], 'D');
+    console.log(data);
+
+    chartV = createChart(chartV, 'V', annoncement);
+    updateChart(chartV, 'D', 'V', annoncement);
+
+    chartP = createChart(chartP, 'P', annoncement);
+    updateChart(chartP, 'D', 'P', annoncement);
 }
 
 //Button republish
@@ -325,6 +360,14 @@ async function getPrice(id_product) {
     return price_json;
 }
 
+async function getPriceWithOption(id_product, option) {
+    // Appel pour fetch et récupéré le prix trié en fonction de "option" donc par jour/année/an 
+    const price = await fetch(`index.php?action=getLastPrice&id_product=${id_product}&option=${option}`);
+    const price_json = await price.json();
+    console.log(price_json);
+    return price_json;
+}
+
 async function getGlobalViews(id_product) {
     // Appel pour fetch le nombre total de vue
     const views = await fetch(`index.php?action=getGlobalViews&id_product=${id_product}`);
@@ -333,9 +376,9 @@ async function getGlobalViews(id_product) {
     return views_json;
 }
 
-async function getViewsWithOption(id_product) {
-    // Appel pour fetch le nombre total de vue
-    const views = await fetch(`index.php?action=getGlobalViews&id_product=${id_product}`);
+async function getViewsWithOption(id_product, option) {
+    // Appel pour fetch le nombre vue trié en fonction de "option" donc par jour/année/an 
+    const views = await fetch(`index.php?action=getGlobalViews&id_product=${id_product}&option=${option}`);
     const views_json = await views.json();
     console.log(views_json);
     return views_json;
@@ -344,14 +387,6 @@ async function getViewsWithOption(id_product) {
 async function getLikes(id_product) {
     // Appel pour fetch le nombre total de likes
     const likes = await fetch(`index.php?action=getLikes&id_product=${id_product}`);
-    const likes_json = await likes.json();
-    console.log(likes_json);
-    return likes_json;
-}
-
-async function getLikesWithOption(id_product, option) {
-    // Appel pour fetch le nombre total de likes
-    const likes = await fetch(`index.php?action=getLikes&id_product=${id_product}&option=${option}`);
     const likes_json = await likes.json();
     console.log(likes_json);
     return likes_json;

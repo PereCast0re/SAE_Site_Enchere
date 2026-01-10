@@ -141,7 +141,7 @@ function gethashPassword($email){
 ////////////////////////////////////////////////////////////////////////////
                     // Ajout d'une vue a une annonce //
 ///////////////////////////////////////////////////////////////////////////
-function getViewAnnocement($id_annoncement, $current_date){
+function getViewProduct($id_annoncement, $current_date){
     $pdo = connection();
     $requete = "SELECT * from productview where id_product = :id_product and view_date = :current_date";
     $tmp = $pdo->prepare($requete);
