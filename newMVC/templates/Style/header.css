@@ -3,7 +3,7 @@
     --color-blue: #002366;
     --color-orange: #FFA347;
     --color-gold: #D4AF37;
-    --color-background: #F5F0E9;
+    --color-background: #F5F8FA;
 }
 
 .navbar-custom {
@@ -12,7 +12,7 @@
     left: 0;
     width: 100%;
     z-index: 1050;
-    background: #F5F0E9;
+    background: #F5F8FA;
     min-height: 75px;
 }
 
@@ -44,7 +44,7 @@
 
 
 .navbar-custom #btn_connexion:hover,
-.navbar-custom #btn_deconnexion:hover, {
+.navbar-custom #btn_deconnexion:hover {
     background-color: var(--color-blue) !important;
     color: white !important;
     text-decoration: none;
