@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="templates/Style/footer.css">
+
+
 <footer>
     <section>
         <div>
@@ -15,4 +18,5 @@
         </div>
         <img src="templates/images/logo.png" alt="Logo">
     </section>
+    <p>&copy; 2026 Bidstars. Tous droits réservés.</p>
 </footer>

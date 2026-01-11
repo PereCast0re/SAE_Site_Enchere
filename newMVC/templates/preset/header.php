@@ -39,6 +39,11 @@
                 <ul class="navbar-nav">
                     <?php if (isset($_SESSION['user'])) { ?>
                         <li class="nav-item">
+                            <a id="btn_historique" class="nav-link" href="index.php?action=historique_annonces_publiees">
+                                <img src="templates/images/historique.png" alt="Historique" style="width: 30px; height: 30px;">
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a id="btn_Favoris" class="nav-link" href="index.php?action=getLikes">
                                 <img src="templates/images/coeur.png" alt="Favoris" style="width: 30px; height: 30px;">
                             </a>

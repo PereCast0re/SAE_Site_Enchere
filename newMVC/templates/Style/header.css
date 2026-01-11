@@ -34,17 +34,17 @@
 
 }
 
-#btn_client img, #btn_Favoris img {
+#btn_client img, #btn_Favoris img , #btn_historique img {
     filter: invert(12%) sepia(50%) saturate(4102%) hue-rotate(212deg) brightness(89%) contrast(106%);
 }
 
-#btn_client:hover img , #btn_Favoris:hover img {
+#btn_client:hover img , #btn_Favoris:hover img , #btn_historique:hover img {
     filter: invert(74%) sepia(34%) saturate(802%) hue-rotate(4deg) brightness(90%) contrast(92%);
 }
 
 
 .navbar-custom #btn_connexion:hover,
-.navbar-custom #btn_deconnexion:hover {
+.navbar-custom #btn_deconnexion:hover, {
     background-color: var(--color-blue) !important;
     color: white !important;
     text-decoration: none;
