@@ -4,6 +4,7 @@
     --color-orange: #FFA347;
     --color-gold: #D4AF37;
     --color-background: #F5F8FA;
+    --color-saphire: #3C507D;
 }
 
 * {
@@ -12,7 +13,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     min-height: 100%;
 }
 
@@ -87,34 +89,113 @@ button:hover {
     padding: 40px 0;
 }
 
+/* Container Principal */
 .announce-card {
-    background-color: #ffffff;
-    border: 2px solid #D4AF37;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0, 4, 20, 0.1);
-    width: 90%;
-    max-width: 250px;
+    background-color: #3C507D; /* Bleu saphir exact */
+    border-radius: 40px;      /* Coins très arrondis comme sur l'image */
     overflow: hidden;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 280px;
+    height: auto;
+    padding-bottom: 20px;
+    transition: transform 0.3s ease;
+    border: none;
 }
 
-.announce-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.announce-card img {
+/* Image avec arrondi supérieur */
+.card-img-container img {
     width: 100%;
-    height: 160px;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.card-body {
+    padding: 15px 20px;
+    text-align: center;
+}
+
+/* Textes */
+.announce-card h3 {
+    color: #E0C58F;
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    margin-bottom: 5px;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+
+.announce-card .timer {
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+/* Ligne Célébrité */
+.celebrity-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.avatar-wrapper img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #E0C58F;
     object-fit: cover;
 }
 
-.announce-card h3 {
-    font-size: 24px;
-    font-family: 'Cormorant Garamond', serif;
-    color: #002366;
-    margin: 15px 0 8px;
+.celebrity-name {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Ligne d'action (Coeur + Bouton) */
+.action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.wishlist-btn {
+    background: transparent;
+    border: none;
+    color: #E0C58F;
+    font-size: 34px;
+    padding: 0;
+    margin-left: 10px;
+    box-shadow: none;
+}
+
+.wishlist-btn:hover {
+    color: #D4AF37;
+    background-color: transparent;
+}
+
+.bid-btn {
+    background: #1A2A4D; /* Bleu plus sombre pour le bouton */
+    color: #E0C58F;
+    border: 2px solid #E0C58F;
+    border-radius: 12px;
+    padding: 8px 25px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Lora', serif;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.bid-btn:hover {
+    background: #E0C58F;
+    color: #1A2A4D;
 }
 
 /* ====================== */
@@ -157,16 +238,21 @@ button:hover {
 
 .swiper {
     width: 100%;
-    height: 620px; /* On garde la hauteur */
+    height: 620px;
+    /* On garde la hauteur */
     padding-top: 80px;
-    padding-bottom: 50px; /* Augmente l'espace pour la pagination */
-    margin-bottom: 40px;  /* CRUCIAL : Crée un espace réel avec la suite */
+    padding-bottom: 50px;
+    /* Augmente l'espace pour la pagination */
+    margin-bottom: 40px;
+    /* CRUCIAL : Crée un espace réel avec la suite */
     position: relative;
-    overflow: hidden; /* Empêche le débordement visuel */
+    overflow: hidden;
+    /* Empêche le débordement visuel */
 }
 
 .content {
-    clear: both; /* Sécurité pour annuler d'éventuels floats */
+    clear: both;
+    /* Sécurité pour annuler d'éventuels floats */
     padding-top: 20px;
     position: relative;
     z-index: 1;
@@ -212,30 +298,43 @@ button:hover {
     display: block;
 }
 
-/* Container de l'overlay central */
 .luxury-overlay {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.6); /* Fond sombre transparent */
-    backdrop-filter: blur(10px);    /* Effet de flou moderne */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 15px;
-    border: 1px solid rgba(212, 175, 55, 0.3); /* Bordure dorée subtile */
+    border: 1px solid rgba(212, 175, 55, 0.3);
     width: 90%;
     max-width: 500px;
     color: white;
     text-align: center;
+    align-items: center;
     z-index: 10;
 }
 
 .luxury-overlay h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    color: #fff;
+    font-family: 'Lora', sans-serif;
+    font-size: 32px;
+    color: #E0C58F;
     margin-bottom: 20px;
     text-transform: capitalize;
+    font-weight: bold;
+}
+
+.info-row .timer {
+    color: #3C507D;
+    font-family: 'Lora', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow:
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff;
 }
 
 .info-row {
@@ -249,16 +348,17 @@ button:hover {
 
 .price-box {
     font-weight: bold;
-    font-size: 1.8rem;
+    font-size: 40px;
+    font-family: 'Lora', sans-serif;
 }
 
 /* Bouton spécifique à l'enchère */
 .bid-button {
     margin-top: 20px;
-    background: #002366;
-    color: white;
-    border: 1px solid #D4AF37;
-    padding: 12px 40px;
+    background: var(--color-blue);
+    color: #E0C58F;
+    border: 1px solid #E0C58F;
+    padding: 12px 10px;
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s;
@@ -275,9 +375,8 @@ button:hover {
     background: #fff !important;
     opacity: 0.5;
 }
+
 .swiper-pagination-bullet-active {
     opacity: 1;
     transform: scale(1.2);
 }
-
-

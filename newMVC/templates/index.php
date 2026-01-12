@@ -63,7 +63,7 @@ $style = "templates/style/index.css";
 
                   <div class="info-row price-box">
                     <i class="fa-solid fa-money-bill-wave icon-white"></i>
-                    <span><?= htmlspecialchars($current_price) ?> €</span>
+                    <span class="price"><?= htmlspecialchars($current_price) ?> €</span>
                   </div>
 
                   <div class="bid-button">Enchérir</div>
@@ -98,17 +98,33 @@ $style = "templates/style/index.css";
           if (new DateTime($p['end_date']) > new DateTime()):
             ?>
             <div class="announce-card">
-              <?php
-              $images = getImage($p['id_product']);
-              if (!empty($images)) {
-                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-              } else {
-                echo '<div style="height:300px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-              }
-              ?>
-              <h3><?= htmlspecialchars($p['title']) ?></h3>
-              <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-              <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
+              <div class="card-img-container">
+                <?php
+                $images = getImage($p['id_product']);
+                if (!empty($images)) {
+                  echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                }
+                ?>
+              </div>
+
+              <div class="card-body">
+                <h3><?= htmlspecialchars($p['title']) ?></h3>
+                <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+
+                <div class="celebrity-row">
+                  <div class="avatar-wrapper">
+                    <img src="templates/Images/compte.png" class="celebrity-img" alt="Celebrity">
+                  </div>
+                  <span class="celebrity-name">Célébrité</span>
+                </div>
+
+                <div class="action-row">
+                  <button class="wishlist-btn">
+                    <i class="fa-regular fa-heart"></i>
+                  </button>
+                  <a class="bid-btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Enchérir</a>
+                </div>
+              </div>
             </div>
             <?php $count_displayed++; ?>
           <?php endif; ?>
