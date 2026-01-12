@@ -3,6 +3,7 @@
 require_once('src/lib/database.php');
 require_once('src/model/comment.php');
 require_once('src/model/favorite.php');
+require_once("src/controllers/C_counterView.php");
 
 function Product($id_product)
 {
@@ -12,6 +13,8 @@ function Product($id_product)
         $p = $productRepository->getProduct($id_product);
         if ($p === false)
             throw new Exception("This product doesn't exist !");
+
+        AddNewView($p);
 
         $commentRepository = new CommentRepository($pdo);
         $comments = $commentRepository->getCommentsFromProduct($id_product);
@@ -29,4 +32,3 @@ function Product($id_product)
         require("templates/product.php");
     }
 }
-
