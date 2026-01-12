@@ -186,30 +186,6 @@ function getLastViewVerifBot($id_product) {
     return $stmt->fetch();
 }
 
-/////////////////////// Recherche autonome categorie ///////////////////
-function getCategoryMod($writting){
-    $pdo = connection();
-    $requete = "SELECT * from category where name like :writting";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":writting" => $search = '%' . $writting . '%'
-    ]);
-
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/////////////////////// Recherche autonome celebrity ///////////////////
-function getCelebrityMod($writting){
-    $pdo = connection();
-    $requete = "SELECT * from celebrity where name like :writting";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":writting" => $search = '%' . $writting . '%'
-    ]);
-
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
-
 function saveCertificatePath($id_product, $path_image)
 {
     $pdo = connection();
@@ -253,7 +229,7 @@ function get_all_annoncement_notMailed(){
 /////////////////////////////////// Admin ////////////////////////////////////////////
 function getAllProduct_admin(){
     $pdo = connection();
-    $requete = "SELECT * FROM Product where status = 1";
+    $requete = "SELECT * FROM Product where status = 0 ";
     try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute();

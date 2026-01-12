@@ -51,34 +51,6 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                     </div>
                 </div>
             </div>
-            <div class="produit_categorie">
-                <h4>Catégorie :</h4>
-                <select name="lst_categorie_vente" id="lst_categorie_vente" required>
-                    <?php
-                    $pdo = DatabaseConnection::getConnection();
-                    $productRepository = new ProductRepository($pdo);
-                    $categories = $productRepository->getCategory();
-                    foreach ($categories as $category) {
-                        echo ('<option>' . $category['name'] . '</option>');
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="prix_reserve">
-                <h4>Réserve</h4>
-                <input type="checkbox" id="prix_reserve_checkbox" onclick="afficherInputPrixReserve()">
-                <div id="input_prix_reserve"></div>
-            </div>
-            <div class="date_debut">
-                <h4>Date de début :</h4>
-                <input type="date" name="date_debut" required>
-            </div>
-            <div class="date_fin">
-                <h4>Date de fin :</h4>
-                <input type="date" name="date_fin" required>
-            </div>
-        </div>
-
         <div class="img_selector">
             <h4>Ajouter des images</h4>
             <p>Vous avez la possibilité de mettre maximum 4 images</p>

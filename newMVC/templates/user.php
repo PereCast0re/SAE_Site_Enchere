@@ -82,10 +82,8 @@ $user = $_SESSION['user'];
     </div>
 </div>
 
-
-<div class="wrapper-annonces">
-    <div class="barre-noire"></div>
-    <div id="div_historique_annoncement" style="display: none;">
+    <div class="Product_verif_admin" id="Product_verif_admin">
+        
     </div>
 </div>
 <br>
@@ -98,7 +96,7 @@ $user = $_SESSION['user'];
 </div>
 
 <div>
-    <?php echo (republishAnnoncement(1)); ?>
+    
 </div>
 </div>
 

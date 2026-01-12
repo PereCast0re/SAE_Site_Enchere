@@ -59,11 +59,9 @@
                             <a id="btn_deconnexion" class="nav-link" href="index.php?action=deconnexion">Déconnexion</a>
                         </li>
                     <?php } ?>
-                    <?php if (!isset($_SESSION['user'])) { ?>
-                        <li class="nav-item">
-                            <a id="btn_connexion" class="nav-link" href="index.php?action=connection">Connexion</a>
-                        </li>
-                    <?php } ?>
+                    <li class="nav-item">
+                        <a id="btn_deconnexion" class="nav-link" href="index.php?action=deconnexion">Deconnexion</a>
+                    </li>
                 </ul>
 
             </div>
