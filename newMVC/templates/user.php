@@ -57,21 +57,12 @@ $user = $_SESSION['user'];
         <div class="section_annonce_publier">
             <?php $annoncements = get_all_annoncement($user["id_user"]) ?>
             <input type="hidden" id="number_annoncement" name="action">
-                <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
-                <input type="hidden" id="values_annoncements" value='<?php echo htmlspecialchars(json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, "UTF-8"); ?>'>        
-                    <div class="stat_annonce">
-                    </div>
+            <!-- JSON_UNESCAPED_UNICODE can kept speical caracter like é JSON_UNESCAPED_SLASHES upgrade visualisation of json -->
+            <input type="hidden" id="values_annoncements"
+                value='<?php echo htmlspecialchars(json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, "UTF-8"); ?>'>
+            <div class="stat_annonce">
             </div>
         </div>
-        
-        <div class="wrapper-annonces">
-            <div class="barre-noire"></div>
-            <div id="div_end_annoncement_with_reserved" style="display: none;">
-                <input type="hidden" id="id_user" value="<?php echo ($user["id_user"]) ?>" >
-            </div>
-        </div>
-    </div>
-    <div class="stat_annonce">
     </div>
 
     <div class="wrapper-annonces">
@@ -80,20 +71,30 @@ $user = $_SESSION['user'];
             <input type="hidden" id="id_user" value="<?php echo ($user["id_user"]) ?>">
         </div>
     </div>
+</div>
+<div class="stat_annonce">
+</div>
 
-
-    <div class="wrapper-annonces">
-        <div class="barre-noire"></div>
-        <div id="div_historique_annoncement" style="display: none;">
-        </div>
+<div class="wrapper-annonces">
+    <div class="barre-noire"></div>
+    <div id="div_end_annoncement_with_reserved" style="display: none;">
+        <input type="hidden" id="id_user" value="<?php echo ($user["id_user"]) ?>">
     </div>
-    <br>
-    <a id="btn_historique_annonce_published" class="btn" style="margin-top: 20px;"
-        href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
+</div>
 
-    <div>
-        <?php echo (republishAnnoncement(1)); ?>
+
+<div class="wrapper-annonces">
+    <div class="barre-noire"></div>
+    <div id="div_historique_annoncement" style="display: none;">
     </div>
+</div>
+<br>
+<a id="btn_historique_annonce_published" class="btn" style="margin-top: 20px;"
+    href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
+
+<div>
+    <?php echo (republishAnnoncement(1)); ?>
+</div>
 </div>
 
 <div>
@@ -103,7 +104,7 @@ $user = $_SESSION['user'];
 
 <script src="templates/JS/OuverturePopUp.js"></script>
 <script src="templates/JS/timer.js"></script>
-<script src="templates/JS/Annonce_publie_client.js" defer></script>
+<script src="templates/JS/Annonce_publie_client.js"></script>
 
 <!-- Appel script api pour les graphes -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

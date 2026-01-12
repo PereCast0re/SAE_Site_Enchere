@@ -212,4 +212,88 @@ class ProductRepository
         }
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
+
+    function getViewsWithOption($id_product, $option)
+    {
+        $pdo = $this->connection;
+        switch ($option) {
+            case 'M':
+                $requete = "SELECT COUNT(view_number) as value, DATE_FORMAT(view_date, '%Y-%m') AS date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY MONTH(view_date), YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            case 'Y':
+                $requete = "SELECT COUNT(view_number) as value, YEAR(view_date) as date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            default:
+                $requete = "SELECT COUNT(view_number) as value, DATE(view_date) as date FROM productview
+                            WHERE id_product = :id
+                            GROUP BY DATE(view_date), YEAR(view_date)
+                            ORDER BY view_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+        }
+    }
+
+    function getPriceWithOption($id_product, $option)
+    {
+        $pdo = $this->connection;
+        switch ($option) {
+            case 'M':
+                $requete = "SELECT MAX(new_price) as value, DATE(bid_date) as date FROM bid
+                            WHERE id_product = :id 
+                            AND MONTH(bid_date) = MONTH(NOW()) 
+                            AND YEAR(bid_date) = YEAR(NOW())
+                            GROUP BY DATE(bid_date)
+                            ORDER BY bid_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            case 'Y':
+                $requete = "SELECT MAX(new_price) as value, DATE_FORMAT(bid_date, '%Y-%m') as date FROM bid
+                            WHERE id_product = :id
+                            GROUP BY MONTH(bid_date), YEAR(bid_date)
+                            ORDER BY bid_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+            default:
+                $requete = "SELECT new_price as value, DATE_FORMAT(bid_date, '%H:%i') as date FROM bid
+                            WHERE id_product = :id
+                            AND DAY(bid_date) = DAY(NOW()) 
+                            AND MONTH(bid_date) = MONTH(NOW()) 
+                            AND YEAR(bid_date) = YEAR(NOW())
+                            ORDER BY bid_date ASC;
+                    ";
+                $temp = $pdo->prepare($requete);
+                $temp->execute([
+                    ":id" => $id_product
+                ]);
+                return $temp->fetchall(PDO::FETCH_ASSOC);
+        }
+    }
 }

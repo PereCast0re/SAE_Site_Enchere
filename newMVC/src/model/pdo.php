@@ -25,18 +25,6 @@ function connection()
 //User Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// Wee have to verif if the date is correctly compared
-function getDailyViews($id_product)
-{
-    $pdo = connection();
-    $requete = " SELECT COUNT(view_number) as nbDailyView from productview where id_product = :id and view_date = date(now()) ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id" => $id_product
-    ]);
-    return $temp->fetch(PDO::FETCH_ASSOC);
-}
-
 function getGlobalViews($id_product)
 {
     $pdo = connection();
@@ -154,7 +142,7 @@ function gethashPassword($email){
 ////////////////////////////////////////////////////////////////////////////
                     // Ajout d'une vue a une annonce //
 ///////////////////////////////////////////////////////////////////////////
-function getViewAnnocement($id_annoncement, $current_date){
+function getViewProduct($id_annoncement, $current_date){
     $pdo = connection();
     $requete = "SELECT * from productview where id_product = :id_product and view_date = :current_date";
     $tmp = $pdo->prepare($requete);

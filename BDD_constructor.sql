@@ -39,7 +39,7 @@ CREATE TABLE Category (
 CREATE TABLE Product (
    id_product INT AUTO_INCREMENT,
    title VARCHAR(100),
-   description VARCHAR(250),
+   description VARCHAR(5000),
    start_date DATETIME,
    end_date DATETIME,
    reserve_price DECIMAL(15,2),
