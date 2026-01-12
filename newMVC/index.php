@@ -70,6 +70,16 @@ try {
             updatePassword($_POST['new_password_2']);
 
 
+        } elseif ($_GET['action'] === 'newsletter') {
+            $_SESSION['show_newsletter_modal'] = true;
+            header('Location: index.php');
+            exit;
+        } elseif ($_GET['action'] === 'subscribeNewsletter') {
+            $user = $_SESSION['user'];
+            subscribeNewsletter($user['email']);
+            $_SESSION['success'] = "Abonnement confirmé 🎉";
+            header('Location: index.php');
+            exit;
         } elseif ($_GET['action'] === 'addProduct') {
             $user = $_SESSION['user'];
             addNewProduct($user, $_POST);

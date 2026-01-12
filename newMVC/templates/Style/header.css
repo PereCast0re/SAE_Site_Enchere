@@ -1,0 +1,112 @@
+:root {
+    --linear-blue: linear-gradient(#002366, #0046CC);
+    --color-blue: #002366;
+    --color-orange: #FFA347;
+    --color-gold: #D4AF37;
+    --color-background: #F5F8FA;
+}
+
+.navbar-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    background: #F5F8FA;
+    min-height: 75px;
+}
+
+
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand {
+    color: var(--color-blue) !important;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Lora', sans-serif;
+}
+
+/* bouton connection */
+.navbar-custom #btn_connexion,
+.navbar-custom #btn_deconnexion {
+    border: #002366 2px solid !important;
+    border-radius: 10px;
+    padding: 5px 15px;
+
+}
+
+#btn_client img, #btn_Favoris img , #btn_historique img {
+    filter: invert(12%) sepia(50%) saturate(4102%) hue-rotate(212deg) brightness(89%) contrast(106%);
+}
+
+#btn_client:hover img , #btn_Favoris:hover img , #btn_historique:hover img {
+    filter: invert(74%) sepia(34%) saturate(802%) hue-rotate(4deg) brightness(90%) contrast(92%);
+}
+
+
+.navbar-custom #btn_connexion:hover,
+.navbar-custom #btn_deconnexion:hover {
+    background-color: var(--color-blue) !important;
+    color: white !important;
+    text-decoration: none;
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--color-gold) !important;
+    text-decoration: underline;
+}
+
+.navbar-custom .nav-item {
+    margin-right: 15px;
+}
+
+.navbar-custom .navbar-brand img {
+    width: 75px;
+    height: 75px;
+    border-radius: 80%;
+}
+
+/* Centrage du Logo et de la Hauteur sur les grands écrans */
+@media (min-width: 992px) {
+
+    .navbar-custom .container-fluid {
+        height: var(--navbar-height-desktop);
+    }
+
+    .navbar-custom .navbar-brand {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        /* Nouvelle règle pour centrage vertical */
+        transform: translate(-50%, -50%);
+        /* Ajustement pour centrage parfait H et V */
+    }
+
+    .navbar-custom .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .navbar-custom .me-auto {
+        margin-right: auto !important;
+        margin-left: 0 !important;
+    }
+
+    .navbar-custom .navbar-nav:last-child {
+        margin-left: auto !important;
+    }
+}
+
+/* Correction pour mobile, pour retirer le positionnement absolu */
+@media (max-width: 991px) {
+    .navbar-custom .navbar-brand {
+        position: static;
+        left: auto;
+        transform: none;
+    }
+}
+
+
+.navbar-custom .navbar-toggler {
+    border-color: var(--color-blue);
+}

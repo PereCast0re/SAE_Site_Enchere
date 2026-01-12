@@ -1,5 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="templates/Style/header.css">
 
 
 
@@ -42,9 +43,33 @@
                 </ul>
 
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a id="btn_connexion" class="nav-link" href="index.php?action=connection">Connexion</a>
-                    </li>
+                    <?php if (isset($_SESSION['user'])) { ?>
+                        <li class="nav-item">
+                            <a id="btn_historique" class="nav-link" href="index.php?action=historique_annonces_publiees">
+                                <img src="templates/images/historique.png" alt="Historique" style="width: 30px; height: 30px;">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="btn_Favoris" class="nav-link" href="index.php?action=getLikes">
+                                <img src="templates/images/coeur.png" alt="Favoris" style="width: 30px; height: 30px;">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="btn_client" class="nav-link" href="index.php?action=user">
+                                <img src="templates/images/compte.png" alt="Client" style="width: 30px; height: 30px;">
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['user'])) { ?>
+                        <li class="nav-item">
+                            <a id="btn_deconnexion" class="nav-link" href="index.php?action=deconnexion">Déconnexion</a>
+                        </li>
+                    <?php } ?>
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                        <li class="nav-item">
+                            <a id="btn_connexion" class="nav-link" href="index.php?action=connection">Connexion</a>
+                        </li>
+                    <?php } ?>
                 </ul>
 
             </div>

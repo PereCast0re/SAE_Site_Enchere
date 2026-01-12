@@ -3,12 +3,13 @@ require_once('src/lib/database.php');
 require_once('src/model/product.php');
 
 $title = "Page d'accueil";
-$style = "templates/style/Accueil.css";
+$style = "templates/style/index.css";
 
 ?>
 
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 
 <?php ob_start(); ?>
@@ -30,35 +31,46 @@ $style = "templates/style/Accueil.css";
         <?php foreach ($products as $p): ?>
           <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
 
-            <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>" class="swiper-slide slide-link">
+            <?php
+            // 1. CALCUL DU PRIX (Doit être fait AVANT l'affichage)
+            $priceRow = $productRepository->getLastPrice($p['id_product']);
+            $current_price = null;
 
+            // On vérifie la clé exacte retournée par ta base (MAX(new_price))
+            if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
+              $current_price = $priceRow[0]['MAX(new_price)'];
+            } else {
+              $current_price = $p['start_price'];
+            }
+            ?>
+
+            <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>" class="swiper-slide slide-link">
               <div class="image-container">
                 <?php
                 $images = getImage($p['id_product']);
                 if (!empty($images)) {
                   echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                } else {
-                  echo '<div class="no-image-placeholder">Aucune image disponible</div>';
                 }
                 ?>
 
-                <div class="text-content-overlay">
+                <div class="luxury-overlay">
                   <h3><?= htmlspecialchars($p['title']) ?></h3>
-                  <?php
-                  $priceRow = $productRepository->getLastPrice($p['id_product']);
-                  $current_price = null;
-                  if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-                    $current_price = $priceRow[0]['MAX(new_price)'];
-                  } else {
-                    $current_price = $p['start_price'];
-                  }
-                  ?>
-                  <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
-                  <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+
+                  <div class="info-row">
+                    <i class="fa-regular fa-clock icon-gold"></i>
+                    <span class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></span>
+                  </div>
+
+                  <div class="info-row price-box">
+                    <i class="fa-solid fa-money-bill-wave icon-white"></i>
+                    <span><?= htmlspecialchars($current_price) ?> €</span>
+                  </div>
+
+                  <div class="bid-button">Enchérir</div>
                 </div>
               </div>
-
             </a>
+
           <?php endif; ?>
         <?php endforeach; ?>
       </div>
@@ -114,9 +126,6 @@ $style = "templates/style/Accueil.css";
   </div>
 
   <a id="Voir_annonces_btn" class="btns" href="index.php?action=buy">Voir les annonces</a>
-  <br><br><br>
-  <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
-  <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
   <?php $image = null ?>
   <h1>Nos catégories en vedette</h1>
   <div class="category">
@@ -136,7 +145,7 @@ $style = "templates/style/Accueil.css";
     <?php endfor; ?>
   </div>
   <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
-  <a class="btns" href="https://www.youtube.com/watch?v=xvFZjo5PgG0">S'abonner</a><br><br><br>
+  <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
   </div>
 </main>
 

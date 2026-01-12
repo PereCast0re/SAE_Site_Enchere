@@ -57,6 +57,7 @@ function getImage($id_product)
     ]);
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
+
 /*
 function getImageCategory($id_category)
 {
@@ -300,4 +301,20 @@ function getCelebrityFromAnnoncement($id_product){
         die("Error on get categorie from a annoncement : " .$e->getMessage());
     }
     return $tmp->fetch(PDO::FETCH_ASSOC);
+}
+
+//////////// Newsletter ////////////
+function subscribeNewsletter($email)
+{
+    $pdo = connection();
+    try {
+        $requete = "UPDATE users SET newsletter = 1 WHERE email = :email";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":email" => $email
+        ]);
+    } catch (PDOException $e) {
+        die("Error subscribing to the newsletter, try again !\nError : " . $e->getMessage());
+    }
+    
 }
