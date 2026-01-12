@@ -91,13 +91,13 @@ $user = $_SESSION['user'];
     <a id="btn_historique_annonce_published" class="btn" style="margin-top: 20px;"
         href="index.php?action=historique_annonces_publiees">Voir l'historique de mes annonces</a>
 
-    <div>
-        <?php echo (republishAnnoncement(1)); ?>
+    <div class="Product_verif_admin" id="Product_verif_admin">
+        
     </div>
 </div>
 
 <div>
-    <?php echo (republishAnnoncement(1)); ?>
+    
 </div>
 </div>
 

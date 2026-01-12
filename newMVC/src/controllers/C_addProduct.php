@@ -4,9 +4,14 @@ require_once('src/lib/database.php');
 require_once('src/model/product.php');
 require_once("src/controllers/C_emailing.php");
 require_once("src/model/pdo.php");
+require_once('src/model/celebrity.php');
 
 function addNewProduct($user, $input)
 {
+    $pdo = DatabaseConnection::getConnection();
+    $productRepository = new ProductRepository($pdo);
+    $CelebrityRepository = new CelebrityRepository($pdo);
+
     // var_dump($user);
     $id_user = $user['id_user'];
     // var_dump($input);
@@ -27,15 +32,27 @@ function addNewProduct($user, $input)
     }
 
     // Au cas ou nouvelle categorie ou celebrite
-    $statut_admin_Categorie = checkCategorie($category)? 1 : 0;
-    $statut_admin_Celebrite = checkCelebrite($celebrite);
+    $statut_admin_Categorie = checkCategorie($category, $productRepository)? 1 : 0;
+    $statut_admin_Celebrite = checkCelebrite($celebrite, $CelebrityRepository)? 1: 0;
 
-    if ($statut_admin_Celebrite == 1 && $statut_admin_Categorie == 1){$statut = 1;} else{ $statut = 0;}
+    if ($statut_admin_Celebrite == 0 || $statut_admin_Categorie == 0){$statut = 0;} else{ $statut = 1;}
 
-    $pdo = DatabaseConnection::getConnection();
-    $productRepository = new ProductRepository($pdo);
     $id_product = $productRepository->createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $statut);
     
+    //Insert categorie
+    if ($statut_admin_Categorie == 0){
+        insertCategorie($category, $id_product, $productRepository, $statut_admin_Categorie);
+    } else{
+        $productRepository->linkCategoryProduct($id_product, $category);
+    }
+
+    //Insert Celebrity
+    if ($statut_admin_Celebrite == 0){
+        InsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite);
+    } else {
+        $CelebrityRepository->linkCelebrityProduct($id_product, $celebrite);
+    }
+
     if (!$id_product) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     } else {
@@ -100,8 +117,8 @@ function certificat($id_annonce, $DirAnnonce){
     }
 }
 
-function checkCategorie($saisie){
-    $categories = getCategoryMod($saisie);
+function checkCategorie($saisie, $productRepository){
+    $categories = $productRepository->getCategoryMod($saisie);
     if($categories){
         return true;
     }
@@ -110,12 +127,30 @@ function checkCategorie($saisie){
     }
 }
 
-function checkCelebrite($saisie){
-    $celebrite = getCelebrityMod($saisie);
+function insertCategorie($categories, $id_product, $productRepository, $statut_admin_Categorie){
+    try{
+        $productRepository->insertCategorie($categories, $statut_admin_Categorie);
+        $productRepository->linkCategoryProduct($id_product, $categories);
+    } catch (Exception $e) {
+        die("Error en insertion of your categorie" .$e->getMessage());
+    }
+}
+
+function checkCelebrite($saisie, $CelebrityRepository){
+    $celebrite = $CelebrityRepository->getCelebrityMod($saisie);
     if($celebrite){
         return true;
     }
     else{
         return false;
+    }
+}
+
+function InsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite){
+    try{
+        $CelebrityRepository->insertCelebrity($celebrite, $statut_admin_Celebrite);
+        $CelebrityRepository->linkCelebrityProduct($id_product, $celebrite);
+    } catch (Exception $e){
+        die('Error on insertion of your celebrity' .$e->getMessage());
     }
 }

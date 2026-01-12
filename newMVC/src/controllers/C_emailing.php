@@ -22,6 +22,8 @@ function routeurMailing($action, $param){
         case  'EndAnnoncement':
             EndAnnoncement($param);
             break;
+        case 'Newsletter':
+            SendNewsletter($param);
         default:
             echo("Action emailing non reconnue");
             break;
@@ -152,6 +154,37 @@ function EndAnnoncement($param){
                 'Subject' => 'Votre annonce '.$param[2].' est terminée',
                 'TextPart' => 'Votre annonce a pris fin. Connectez-vous pour voir les résultats.',
                 'HTMLPart' => '<h3>Votre annonce '.$param[2].' est terminée</h3><br />Votre annonce a pris fin. Connectez-vous à votre compte MaBonneEnchere pour voir les résultats et les prochaines étapes.'
+            ]
+        ]
+    ];
+
+    $response = $mj->post(Resources::$Email, ['body' => $body]);
+    if ($response->success()) {
+        echo("<script>console.log('Email envoyé avec succès');</script>");
+    } else {
+        echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+    }
+}
+
+function SendNewsletter($param){
+    global $apiKey, $apisecret;
+    $mj = new \Mailjet\Client($apiKey, $apisecret,true,['version' => 'v3.1']);
+    $body = [ 
+        'Messages' => [
+            [
+                'From' =>[
+                    'Email' => "barthoux44@gmail.com",
+                    'Name' => "Admin MaBonneEnchere"
+                ],
+                'To' => [
+                    [
+                        'Email' => $param[0],
+                        'Name' => $param[1]
+                    ]
+                ],
+                'Subject' => 'Newsletter MaBonneEnchere',
+                'TextPart' => 'Une nouvelle newsletter et a vous.',
+                'HTMLPart' => '<h3>' .$param[2].'</h3><br /><p>' .$param[3].'</p>'
             ]
         ]
     ];

@@ -15,10 +15,14 @@ require_once('src/controllers/C_addComment.php');
 require_once('src/controllers/C_republishAnnoncement.php');
 require_once('src/controllers/C_addComment.php');
 require_once('src/controllers/C_index.php');
+require_once("src/controllers/C_newsletter.php");
+require_once('src/controllers/C_deleteProduct.php');
+require_once('src/controllers/C_updateProduct.php');
 
 require_once("src/model/pdo.php");
 require_once('src/lib/database.php');
 require_once('src/model/user.php');
+require_once('src/model/celebrity.php');
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
@@ -73,21 +77,43 @@ try {
         } elseif ($_GET['action'] === 'addProduct') {
             $user = $_SESSION['user'];
             addNewProduct($user, $_POST);
-        } elseif ($_GET['action'] === 'deleteProduct') { // THOMASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-            if (isset($_POST['id']) && $_POST['id'] >= 0) {
+
+        } elseif ($_GET['action'] === 'deleteProduct') { 
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 $pdo = DatabaseConnection::getConnection();
+                $celebrityRepository = new CelebrityRepository(pdo: $pdo);
                 $productRepository = new ProductRepository($pdo);
-                $success = $productRepository->deleteProduct($_POST['id']);
+                $id_product = $_POST['id_product'];
+                $success = $productRepository->deleteProduct($id_product);
                 if (!$success) {
                     throw new Exception("This product can't be deleted");
                 }
-                header("Location: index.php");
-                exit();
             } else {
                 throw new Exception("Impossible to delete this product !");
             }
+
+        } elseif ($_GET['action'] === 'validateAnnoncement'){
+            if(isset($_POST['id_product']) && $_POST['id_product'] >= 0){
+                $id_product = $_POST['id_product'];
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $celebrityRepository = new CelebrityRepository($pdo);
+                $productRepository->UpdateStatut($id_product);
+                $productRepository->UpdateStatutCategorie($id_product);
+                $celebrityRepository->UpdateStatutCelebrity($id_product);
+                //header("Location: admin_pannel.php");
+                //exit();
+            } else {
+                throw new Exception("Impossible to update product statut !");
+            }
+        
+        } elseif ($_GET['action'] == 'updateProduct'){
+
+
         } elseif ($_GET['action'] === 'addComment') {
-            addComment();
+            if($_POST['id_product'] && $_POST['id_product'] > 0){
+                UpdateProduct($_POST['id_product']);
+            }
 
 
             ////////////////////////////// Favoris //////////////////////////////
@@ -217,8 +243,10 @@ try {
 
         }elseif ($_GET['action'] == 'getCategoriesMod'){
             if (isset($_GET['writting'])){
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
                 $writting = $_GET['writting'];
-                $categories = getCategoryMod($writting);
+                $categories = $productRepository->getCategoryMod($writting);
                 if ($categories !== false){
                     header('Content-Type: application/json');
                     echo json_encode($categories);
@@ -228,8 +256,10 @@ try {
 
         }elseif ($_GET['action'] == 'getCelebrityMod'){
             if (isset($_GET['writting'])){
+                $pdo = DatabaseConnection::getConnection();
+                $celebrityRepository = new CelebrityRepository($pdo);
                 $writting = $_GET['writting'];
-                $categories = getCelebrityMod($writting);
+                $categories = $celebrityRepository->getCelebrityMod($writting);
                 if ($categories !== false){
                     header('Content-Type: application/json');
                     echo json_encode($categories);
@@ -240,7 +270,16 @@ try {
             ///////////////////////////////// Admin ////////////////////////////////
         }elseif ($_GET['action'] == 'admin'){            
             require('templates/admin_pannel.php');
-            ////////////////////////////// Cas de base //////////////////////////////        
+        
+        }elseif ($_GET['action'] == 'sendNewsletter') {
+            PostNewsletter($_POST);
+
+        }elseif ($_GET['action'] === 'deleteProductAdmin') { 
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
+                deleteProductAdmin($_POST['id_product']);
+            }
+
+        ////////////////////////////// Cas de base //////////////////////////////        
         }else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
