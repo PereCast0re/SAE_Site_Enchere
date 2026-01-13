@@ -58,25 +58,6 @@ function getImage($id_product)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/*
-function getImageCategory($id_category)
-{
-    $pdo = connection();
-    // recuperer la premiere image de la premiere annonce de cette categorie avec une image
-    $requete = " SELECT img.path_image as url_image, img.alt from image img
-                join product p on p.id_product = img.id_product
-                join belongsto bel on bel.id_product = p.id_product, bel.id_category
-                join category c on c.id_category = bel.id_category
-                where c.id_category = :id_category
-                LIMIT 1 ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id_category" => $id_category
-    ]);
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-    */
-
 function getAnnoncementEndWithReservedPrice($id_user)
 {
     $pdo = connection();
@@ -239,58 +220,3 @@ function getAllProduct_admin(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getCategoryFromAnnoncement($id_product){
-    $pdo = connection();
-    $requete = "SELECT name 
-                from category as c
-                where c.id_category = (
-                    select id_category 
-                    from belongsto as b 
-                    where b.id_product = :id 
-                    LIMIT 1);";
-    try{
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":id" => $id_product,
-        ]);
-    }catch(PDOException $e){
-        die("Error on get categorie from a annoncement : " .$e->getMessage());
-    }
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
-
-function getCelebrityFromAnnoncement($id_product){
-    $pdo = connection();
-    $requete = "SELECT name 
-                from celebrity as c
-                where c.id_celebrity = (
-                    select id_celebrity 
-                    from concerned as c 
-                    where c.id_product  = :id
-                    LIMIT 1);";
-    try{
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":id" => $id_product,
-        ]);
-    }catch(PDOException $e){
-        die("Error on get categorie from a annoncement : " .$e->getMessage());
-    }
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
-
-//////////// Newsletter ////////////
-function subscribeNewsletter($email)
-{
-    $pdo = connection();
-    try {
-        $requete = "UPDATE users SET newsletter = 1 WHERE email = :email";
-        $temp = $pdo->prepare($requete);
-        $temp->execute([
-            ":email" => $email
-        ]);
-    } catch (PDOException $e) {
-        die("Error subscribing to the newsletter, try again !\nError : " . $e->getMessage());
-    }
-    
-}

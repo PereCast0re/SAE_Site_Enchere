@@ -293,6 +293,54 @@ class ProductRepository
                     ":id" => $id_product
                 ]);
                 return $temp->fetchall(PDO::FETCH_ASSOC);
+            }
+    }
+
+    /// used for admin
+    function getCategoryFromAnnoncement($id_product){
+        $pdo = $this->connection;
+        $requete = "SELECT name 
+                    from category as c
+                    where c.id_category = (
+                        select id_category 
+                        from belongsto as b 
+                        where b.id_product = :id 
+                        LIMIT 1);";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":id" => $id_product,
+            ]);
+        }catch(PDOException $e){
+            die("Error on get categorie from a annoncement : " .$e->getMessage());
+        }
+        return $tmp->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    // Recherche autonome categorie 
+    function getCategoryMod($writting){
+        $pdo = connection();
+        $requete = "SELECT * from category where name like :writting and statut = 1";
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ":writting" => $search = '%' . $writting . '%'
+        ]);
+
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function insertCategorie($name, $statut){
+        $pdo = $this->connection;
+        $requete = "insert into category (name, statut) VALUES (:name, :statut);";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':name' => $name,
+                ':statut' => $statut
+            ]);
+        } catch (PDOException $e){
+            die("Error on insert catégorie from your annoncement :" .$e->getMessage());
         }
 
     /// used for admin
@@ -395,5 +443,58 @@ class ProductRepository
             die("Error on deleting Category and his link to annoncement : " .$e->getMessage());
         }
     }
+    }
+
+    function linkCategoryProduct($id_annoncement, $name){
+        $pdo = $this->connection;
+        $requete = "INSERT INTO belongsto (id_product, id_category) Values (:id_annoncement, (SELECT id_category from category where name like :name Limit 1));";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_annoncement' => $id_annoncement,
+                ":name" => $name
+            ]);
+        } catch (PDOException $e){
+            die("Error on linking your category to your annoncement :" .$e->getMessage());
+        }
+    }
+
+    function UpdateStatut($id_product){
+        $pdo = $this->connection;
+        $requete = "UPDATE product SET status = 1 where id_product = :id";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $succes = $tmp->execute([':id' => $id_product]);
+            return $succes;
+        } catch (PDOException $e) {
+            die("Error on linking your categorie to your annonce : " .$e->getMessage());
+        }
+    }
+
+    function UpdateStatutCategorie($id_product){
+        $pdo = $this->connection;
+        $requete = "UPDATE category SET statut = 1 where id_category = (SELECT id_category from belongsto where id_product = :id)";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $succes = $tmp->execute([':id' => $id_product]);
+            return $succes;
+        } catch (PDOException $e) {
+            die("Error on updating your category statut : " .$e->getMessage());
+        }
+    }
+
+    function deleteCategory($id_product, $nameCategory){
+        $pdo = $this->connection;
+        $requete2 = "DELETE from category where name = :nameC";
+
+        try{
+            $tmp2 = $pdo->prepare($requete2);
+            $tmp2->execute([
+                ':nameC' => $nameCategory
+            ]);
+            
+        } catch (PDOException $e){
+            die("Error on deleting Category and his link to annoncement : " .$e->getMessage());
+        }
     }
 }

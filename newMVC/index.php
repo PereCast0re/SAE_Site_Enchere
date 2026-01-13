@@ -273,22 +273,26 @@ try {
 
             ////////////////////////////// Page sell product ////////////////////////
 
-        } elseif ($_GET['action'] == 'getCategoriesMod') {
-            if (isset($_GET['writting'])) {
+        }elseif ($_GET['action'] == 'getCategoriesMod'){
+            if (isset($_GET['writting'])){
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
                 $writting = $_GET['writting'];
-                $categories = getCategoryMod($writting);
-                if ($categories !== false) {
+                $categories = $productRepository->getCategoryMod($writting);
+                if ($categories !== false){
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
 
-        } elseif ($_GET['action'] == 'getCelebrityMod') {
-            if (isset($_GET['writting'])) {
+        }elseif ($_GET['action'] == 'getCelebrityMod'){
+            if (isset($_GET['writting'])){
+                $pdo = DatabaseConnection::getConnection();
+                $celebrityRepository = new CelebrityRepository($pdo);
                 $writting = $_GET['writting'];
-                $categories = getCelebrityMod($writting);
-                if ($categories !== false) {
+                $categories = $celebrityRepository->getCelebrityMod($writting);
+                if ($categories !== false){
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
@@ -298,8 +302,17 @@ try {
             ///////////////////////////////// Admin ////////////////////////////////
         } elseif ($_GET['action'] == 'admin') {
             require('templates/admin_pannel.php');
-            ////////////////////////////// Cas de base //////////////////////////////        
-        } else {
+        
+        }elseif ($_GET['action'] == 'sendNewsletter') {
+            PostNewsletter($_POST);
+
+        }elseif ($_GET['action'] === 'deleteProductAdmin') { 
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
+                deleteProductAdmin($_POST['id_product']);
+            }
+
+        ////////////////////////////// Cas de base //////////////////////////////        
+        }else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {
