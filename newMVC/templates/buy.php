@@ -11,7 +11,8 @@ $style = "templates/style/Accueil.css";
 <?php ob_start(); ?>
 
 <?php include('preset/header.php'); ?>
-<?php include("src/controllers/update_index.php"); ?>
+<?php include("src/controllers/delete_index.php"); ?>
+<?php include("src/controllers/import-encheres.php"); ?>
 
 <main>
     <?php

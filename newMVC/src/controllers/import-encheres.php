@@ -1,34 +1,18 @@
 <?php
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__.'/../../vendor/autoload.php';
 
 use Meilisearch\Client;
 
 $client = new Client('http://127.0.0.1:7700', 'CLE_TEST_SAE_SITE');
 
-try {
-    $index = $client->getIndex('products');
-    echo "Index products déjà existant\n";
-} catch (Exception $e) {
-    $client->createIndex('products', ['primaryKey' => 'id']);
-    echo "Index products créé\n";
-    $index = $client->index('products');
-}
+$pdo = new PDO('mysql:host=localhost;dbname=auction_site', 'root', '');     
 
+$statement = $pdo->query("SELECT id_product AS id, title, description, start_date, end_date, reserve_price, start_price, status FROM product");
+$products = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$index->updateSearchableAttributes([
-    'title',
-    'description',
-    'category_name'
-]);
+$index = $client->createIndex('products', ['primaryKey' => 'id']);
 
-$index->updateFilterableAttributes([
-    'category_id'
-]);
+$index = $client->index('products');
 
-$index->updateSortableAttributes([
-    'price',
-    'end_date'
-]);
-
-echo "Index products prêt\n";
+$index->addDocuments($products);
