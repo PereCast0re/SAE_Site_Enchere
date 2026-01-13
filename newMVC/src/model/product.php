@@ -294,6 +294,9 @@ class ProductRepository
                     ":id" => $id_product
                 ]);
                 return $temp->fetchall(PDO::FETCH_ASSOC);
+            }
+    }
+
     /// used for admin
     function getCategoryFromAnnoncement($id_product){
         $pdo = $this->connection;
