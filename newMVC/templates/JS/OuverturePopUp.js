@@ -102,10 +102,9 @@ function ouvrirPopup(page) {
             }
             break
         case "BidForm":
-            const bidForm = document.querySelector('#bid-form-product');
 
-            currentPrice = parseInt(bidForm.elements["currentPrice"].value);
-            idProduct = parseInt(bidForm.querySelector('#bid-button').dataset.idProduct);
+            currentPrice = parseInt(document.querySelector('#currentPrice').value);
+            idProduct = parseInt(document.querySelector('#idProduct').value);
 
             fetch('templates/Event/Bid_Form.php')
                 .then(response => response.text())
@@ -118,7 +117,7 @@ function ouvrirPopup(page) {
 
                     const bidInput = document.getElementById('bid_input_form');
                     numberToAdd = addToPrice(currentPrice);
-                    bidInput.min = Math.round(currentPrice + numberToAdd);
+                    // bidInput.min = Math.round(currentPrice + numberToAdd);
                     bidInput.value = Math.round(currentPrice + numberToAdd);
                     bidInput.step = numberToAdd;
 
@@ -127,7 +126,7 @@ function ouvrirPopup(page) {
                         document.querySelectorAll('.error-msg').forEach(e => e.remove());
                         newPrice = document.querySelector('#bid_input_form').value;
                         currentPrice = document.querySelector('#currentPrice_form').value;
-                        newPriceIsValid(parseInt(newPrice), ParseInt(currentPrice));
+                        newPriceIsValid(parseInt(newPrice), parseInt(currentPrice));
                     });
                 })
             break
@@ -186,6 +185,8 @@ function addToPrice(currentPrice) {
 }
 
 function newPriceIsValid(newPrice, currentPrice) {
+    newPrice = parseInt(newPrice);
+    currentPrice = parseInt(currentPrice);
     if (newPrice <= currentPrice) {
 
         const bidLabel = document.querySelector('#bid-label-form');
@@ -195,7 +196,6 @@ function newPriceIsValid(newPrice, currentPrice) {
         const star = document.createElement("span");
         star.classList.add("error-msg");
         star.textContent = "Le montant doit être supérieur à " + currentPrice + "*";
-        star.style.color = "red";
         star.style.marginLeft = "5px";
 
         bidLabel.appendChild(star);
