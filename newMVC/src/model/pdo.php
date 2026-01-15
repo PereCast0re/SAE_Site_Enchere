@@ -191,7 +191,7 @@ function saveCertificatePath($id_product, $path_image)
 /// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
 function closeAnnoncement($id_product){
     $pdo = connection();
-    $requete = "UPDATE product SET end_date = date(now()) and mailIsSent = 1 WHERE id_product = :id_product";
+    $requete = "UPDATE product SET end_date = now(), mailIsSent = 1 WHERE id_product = :id_product";
     $tmp = $pdo->prepare($requete);
     $tmp->execute([
         ":id_product" => $id_product
