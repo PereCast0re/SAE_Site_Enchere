@@ -3,6 +3,10 @@
 // Executer dans le header pour garder une constance dans le temps
 // Permet d'envoyer le mail de fin d'annonce 
 
+if (!isset($_SESSION['user'])) {
+    return;
+}
+
 $user = $_SESSION['user'];
 
 require_once __DIR__ . '/../model/pdo.php';
@@ -30,12 +34,12 @@ function verif($user)
         $date_fin = $annonce['end_date'];
         $current_date = date('Y-m-d H:i:s');
         $mail = $annonce['mailIsSent'];
-        var_dump($annonce);
+        // var_dump($annonce);
         if ($current_date >= $date_fin && $mail != 1) {
             // L'annonce est terminée, envoyer le mail de fin d'annonce
             $user_email = $user['email'];
             $user_name = $user['name'];
-            var_dump("hello");
+            // var_dump("hello");
             $params = [$user_email, $user_name, $annonce['title']];
             routeurMailing('EndAnnoncement', $params);
             closeAnnoncement($annonce['id_product']);
