@@ -9,7 +9,7 @@ btnFav.addEventListener("click", async () => {
         const value = !(btnFav.dataset.isFav === "true");
 
         if (value) {
-            // console.log("j'ajoute le produit en favoris");
+            console.log("j'ajoute le produit en favoris");
 
             const response = await fetch("index.php?action=favorite&id=" + idProduct);
             const data = await response.text();
@@ -21,7 +21,7 @@ btnFav.addEventListener("click", async () => {
 
             btnFav.textContent = "★";
         } else {
-            // console.log("j'enlève");
+            console.log("j'enlève");
 
             const response = await fetch("index.php?action=unfavorite&id=" + idProduct);
             const data = await response.text();
@@ -39,7 +39,7 @@ btnFav.addEventListener("click", async () => {
 
         // console.log(idProduct, value);
 
-        window.location.reload();
+        // window.location.reload();
 
         // Réactive le clic après 1s (éviter les abus)
         setTimeout(() => active = false, 1000);

@@ -20,6 +20,11 @@ function bid()
 
         $pdo = DatabaseConnection::getConnection();
         $bidRepository = new BidRepository($pdo);
+        if ($bidRepository->sameUser($id_product, $id_user)) {
+            echo "same";
+            exit;
+        }
+        
         $id_last_bidder = $bidRepository->getLastBidder($id_product);
 
         $productDate = $bidRepository->getProductDate($id_product);

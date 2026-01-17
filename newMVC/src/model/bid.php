@@ -62,4 +62,15 @@ class BidRepository
 
         return $success;
     }
+
+    function sameUser($id_product, $id_user)
+    {
+        $pdo = $this->connection;
+        $request = "SELECT id_user FROM published WHERE id_product = ?";
+        $temp = $pdo->prepare($request);
+        $temp->execute([$id_product]);
+        $result = $temp->fetch(PDO::FETCH_ASSOC);
+
+        return $id_user === $result["id_user"];
+    }
 }

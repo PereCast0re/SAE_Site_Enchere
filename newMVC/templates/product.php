@@ -13,35 +13,30 @@ $script = "templates/JS/favorite.js";
 <?php ob_start(); ?>
 
 <!-- <?php include('preset/header.php'); ?> -->
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link href="templates/style/stylePopup.css" rel="stylesheet" />
 
 <div id="popup">
 </div>
 
+<div id="toastBox"></div>
+
+<script src="https://kit.fontawesome.com/645d3e5fd2.js" crossorigin="anonymous"></script>
+
 <main>
     <h1><?= $p['title']; ?></h1>
 
-    <section id="product-timer-price">
-        <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-        <div class="product-price">
-            <?php if ($current_price === null) {
-                $current_price = $p['start_price'];
-            }
-            ?>
-            <p>Offre actuelle : <br><span
-                    style="color: green"><?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €</span>
-            </p>
-        </div>
-    </section>
+    <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
 
-    <div id="myToast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive"
-        aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body"> Hello, world! This is a toast message. </div> <button type="button"
-                class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
+    <div class="product-price">
+        <?php if ($current_price === null) {
+            $current_price = $p['start_price'];
+        }
+        ?>
+        <p>Offre actuelle : <br><span style="color: green">
+                <?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €
+            </span>
+        </p>
     </div>
 
     <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
@@ -49,10 +44,15 @@ $script = "templates/JS/favorite.js";
     <button class="btn" id="bid_button" type="button" data-current-price="<?= $current_price ?>"
         onclick="ouvrirPopup('BidForm')">Enchérir</button>
 
+
+
+
+
     <section id="product-bid">
         <div class="fav-btn">
-            <button class="btn fav-btn" data-id-product=<?= $p['id_product'] ?> data-is-fav="<?= $isFav ? 'true' : 'false' ?>"
-            id=" fav" style="background-color: light-grey; width: 150px; font-size: 2em;">
+            <button class="btn fav-btn" data-id-product=<?= $p['id_product'] ?>
+                data-is-fav="<?= $isFav ? 'true' : 'false' ?>" id="fav"
+                style="background-color: light-grey; width: 150px; font-size: 2em;">
                 <?= $isFav ? "★" : "☆"; ?>
             </button>
             <p><?= $like ?></p>
@@ -167,6 +167,32 @@ $script = "templates/JS/favorite.js";
             startCountdown(endDate, el); // Fonction importée depuis timer.js
         });
     });
+</script>
+
+<script>
+    const toastBox = document.querySelector('#toastBox')
+
+    function showToast(numberValidation, msg) {
+        let toast = document.createElement('div');
+        toast.classList.add('toast');
+
+        if (numberValidation === 1) {
+            toast.classList.add('invalid');
+            toast.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+        }
+        else if (numberValidation > 1) {
+            toast.classList.add('error');
+            toast.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> ${msg}`;
+        } else {
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+        }
+
+        toastBox.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 6000);
+    }
 </script>
 <?php $content = ob_get_clean() ?>
 

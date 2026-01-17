@@ -56,10 +56,6 @@ function ouvrirPopup(page) {
                             try {
                                 console.log(currentPrice, newPrice, idProduct);
 
-                                const toastEl = document.getElementById('myToast');
-                                const toast = new bootstrap.Toast(toastEl);
-                                toast.show();
-
                                 // L’utilisateur a cliqué sur OUI
                                 console.log("Confirmé !");
 
@@ -70,30 +66,36 @@ function ouvrirPopup(page) {
                                 });
                                 const data = await response.text();
 
+                                if (data === "same") {
+                                    showToast(2, "Vous ne pouvez pas enchérir sur votre propre annonce !");
+                                    return;
+                                }
                                 if (data === "not_logged") {
                                     window.location.href = "index.php?action=connection";
                                     return;
                                 }
                                 if (data === "finished") {
-                                    window.alert("L'annonce est terminé !");
+                                    showToast(2, "L'annonce est terminé !");
                                     return;
                                 }
                                 if (data === "user_not_accepted") {
-                                    window.alert("Vous êtes déjà le dernier à avoir enchéri !");
+                                    showToast(1, "Vous êtes déjà le dernier à avoir enchéri !");
                                     return;
                                 }
                                 if (data === "price_not_accepted") {
-                                    window.alert("Vous devez enchérir au dessus de la valeur actuelle !");
+                                    showToast(2, 'Enchérissez au dessus de la valeur actuelle !');
                                     return;
                                 }
                                 if (data === "price_not_available") {
-                                    window.alert("Vous ne pouvez pas enchérir pour le moment !");
+                                    showToast(2, 'Enchérissement avec succès !');
                                     return;
                                 }
 
                                 // window.alert(data);
 
                                 window.location.reload();
+
+                                showToast(0, 'Enchérissement avec succès !');
                             } catch (e) {
                                 console.error("Erreur lors du fetch : ", e)
                             }
