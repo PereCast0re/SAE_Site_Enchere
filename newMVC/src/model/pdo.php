@@ -220,3 +220,26 @@ function getAllProduct_admin(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getProductsByCategory($id_category){
+    $pdo = connection();
+    $requete = "SELECT * FROM Product
+                JOIN belongsto ON Product.id_product = belongsto.id_product
+                WHERE belongsto.id_category = :id_category";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_category" => $id_category
+    ]);
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getProductsByCelebrity($id_celebrity){
+    $pdo = connection();
+    $requete = "SELECT * FROM Product
+                JOIN concerned ON Product.id_product = concerned.id_product
+                WHERE concerned.id_celebrity = :id_celebrity";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_celebrity" => $id_celebrity
+    ]);
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
+}

@@ -11,8 +11,7 @@ $style = "templates/style/Accueil.css";
 <?php ob_start(); ?>
 
 <?php include('preset/header.php'); ?>
-<?php include("src/controllers/delete_index.php"); ?>
-<?php include("src/controllers/import-encheres.php"); ?>
+<?php include("src/controllers/update-index.php"); ?>
 
 <main>
     <?php
@@ -120,10 +119,6 @@ $style = "templates/style/Accueil.css";
         </div>
 
         <!-- <a id="Voir_annonces_btn" class="btns">Voir plus</a> -->
-        <br><br><br>
-        <a id="Connexion_button" class="btns" href="index.php?action=connection">Connexion</a><br><br><br>
-        <a id="inscription_button" class="btns" href="index.php?action=inscription">S'inscrire</a>
-
 
         <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
         <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
@@ -138,14 +133,13 @@ $style = "templates/style/Accueil.css";
 <script src="templates/JS/timer.js"></script>
 
 <script>
-    // Initialisation de Swiper
     document.addEventListener('DOMContentLoaded', function () {
         new Swiper('.mySwiper', {
             autoplay: {
-                delay: 3000, // 3 secondes
-                disableOnInteraction: false, // continue même après interaction
+                delay: 3000,
+                disableOnInteraction: false, 
             },
-            loop: true, // optionnel mais recommandé
+            loop: true, 
             slidesPerView: 1,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -157,43 +151,180 @@ $style = "templates/style/Accueil.css";
             },
         });
 
-        // Lancer tous les timers de la page
         document.querySelectorAll('.timer').forEach(el => {
             const endDate = el.getAttribute('data-end');
-            startCountdown(endDate, el); // Fonction importée depuis timer.js
+            startCountdown(endDate, el); 
         });
     });
 </script>
 
 <script>
-    document.getElementById('searchInput').addEventListener('keyup', async function () {
-        let q = this.value;
+    document.getElementById('searchButton').addEventListener('click', async function () {
+        const q = document.getElementById('searchInput').value.trim();
+        if (q.length < 2) return;
+
+        const response = await fetch("src/controllers/search.php?q=" + encodeURIComponent(q));
+        const results = await response.json();
+
+        const container = document.querySelector(".annonces");
+        container.innerHTML = "";
+
+        if (results.length === 0) {
+            container.innerHTML = "<p>Aucun résultat trouvé.</p>";
+        } else {
+            results.forEach(p => {
+                const card = document.createElement("div");
+                card.classList.add("announce-card");
+
+                let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+                if (p.image_url) imageHtml = `<img src="${p.image_url}" alt="Image annonce">`;
+
+                card.innerHTML = `
+                ${imageHtml}
+                <h3>${p.title}</h3>
+                <p>Prix : ${p.price ?? '-'} €</p>
+                <p class="timer" data-end="${p.end_date}"></p>
+                <a class="btn" href="index.php?action=product&id=${p.id}">Voir</a>
+            `;
+                container.appendChild(card);
+            });
+
+            document.querySelectorAll('.timer').forEach(el => {
+                startCountdown(el.getAttribute('data-end'), el);
+            });
+        }
+
+        const box = document.getElementById('suggestions');
+        box.style.display = 'none';
+        box.innerHTML = '';
+    });
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsBox = document.getElementById('suggestions');
+
+    searchInput.addEventListener('keyup', async function () {
+        const q = this.value.trim();
 
         if (q.length < 2) {
-            document.getElementById('suggestions').style.display = 'none';
+            suggestionsBox.style.display = 'none';
             return;
         }
 
-        let response = await fetch("src/controllers/suggestion.php?q=" + encodeURIComponent(q));
-        let results = await response.json();
+        try {
+            const response = await fetch("src/model/suggestion.php?q=" + encodeURIComponent(q));
+            const results = await response.json();
 
-        let box = document.getElementById('suggestions');
-        box.innerHTML = "";
-        box.style.display = "block";
+            suggestionsBox.innerHTML = '';
+            suggestionsBox.style.display = 'block';
 
-        results.forEach(item => {
-            let div = document.createElement("div");
-            div.style.padding = "8px";
-            div.style.cursor = "pointer";
-            div.innerHTML = item.titre;
+            if (results.length === 0) {
+                suggestionsBox.innerHTML = '<div style="padding:8px;color:#555;">Aucun résultat</div>';
+                return;
+            }
 
-            div.onclick = () => {
-                window.location.href = "index.php?action=product&id=" + item.id;
-            };
+            results.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('suggestion-item');
+                div.style.padding = '8px';
+                div.style.cursor = 'pointer';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.backgroundColor = '#fff';
 
-            box.appendChild(div);
-        });
+                let typeText = '';
+                if (item.type === 'product') typeText = 'produit';
+                else if (item.type === 'category') typeText = 'catégorie';
+                else if (item.type === 'celebrity') typeText = 'célébrité';
+
+                div.textContent = `${item.title} dans ${typeText}`;
+
+                div.onclick = () => {
+                    if (item.type === 'product') {
+                        window.location.href = "index.php?action=product&id=" + item.product_id;
+                    } else if (item.type === 'category') {
+                        loadCategory(item.category_id);
+                        suggestionsBox.style.display = 'none';
+                        searchInput.value = item.title;
+                    } else if (item.type === 'celebrity') {
+                        loadCelebrity(item.celebrity_id);
+                        suggestionsBox.style.display = 'none';
+                        searchInput.value = item.title;
+                    }
+                };
+
+                suggestionsBox.appendChild(div);
+            });
+
+        } catch (err) {
+            console.error(err);
+            suggestionsBox.innerHTML = '<div style="padding:8px;color:red;">Erreur lors de la recherche</div>';
+        }
     });
+
+    async function loadCategory(categoryId) {
+        const response = await fetch(
+            "src/controllers/filterByCategory.php?id=" + categoryId
+        );
+        const products = await response.json();
+
+        const container = document.querySelector('.annonces');
+        container.innerHTML = '';
+
+        if (products.length === 0) {
+            container.innerHTML = "<p>Aucune annonce.</p>";
+            return;
+        }
+
+        products.forEach(p => {
+            container.innerHTML += renderProductCard(p);
+        });
+
+        document.querySelectorAll('.timer').forEach(el => {
+            startCountdown(el.getAttribute('data-end'), el);
+        });
+    }
+    async function loadCelebrity(celebrityId) {
+        const response = await fetch(
+            "src/controllers/filterByCelebrity.php?id=" + celebrityId
+        );
+        const products = await response.json();
+
+        const container = document.querySelector('.annonces');
+        container.innerHTML = '';
+
+        if (products.length === 0) {
+            container.innerHTML = "<p>Aucune annonce.</p>";
+            return;
+        }
+
+        products.forEach(p => {
+            container.innerHTML += renderProductCard(p);
+        });
+
+        document.querySelectorAll('.timer').forEach(el => {
+            startCountdown(el.getAttribute('data-end'), el);
+        });
+    }
+
+    function renderProductCard(p) {
+    console.log('Produit:', p);
+    console.log('Images:', p.images);
+    
+    let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+    
+    if (p.images && p.images.length > 0) {
+        console.log('URL image:', p.images[0].url_image);
+        imageHtml = `<img src="${p.images[0].url_image}" alt="Image annonce">`;
+    }
+    
+    return `
+        <div class="announce-card">
+            ${imageHtml}
+            <h3>${p.title}</h3>
+            <p class="timer" data-end="${p.end_date}"></p>
+            <a class="btn" href="index.php?action=product&id=${p.id_product ?? p.id}">Voir</a>
+        </div>
+    `;
+}
+
 </script>
 
 <?php $content = ob_get_clean(); ?>
