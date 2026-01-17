@@ -90,6 +90,7 @@
     font-size: var(--H2-size);
     font-family: var(--H2-font);
     font-weight: normal;
+    margin: 10px;
 }
 
 .popup-form {

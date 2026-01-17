@@ -41,24 +41,17 @@ $script = "templates/JS/favorite.js";
 
     <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
     <input id="idProduct" type="hidden" name="idProduct" value=<?= $p['id_product'] ?>>
-    <button class="btn" id="bid_button" type="button" data-current-price="<?= $current_price ?>"
-        onclick="ouvrirPopup('BidForm')">Enchérir</button>
+
+    <button class="btn" id="bid_button" type="button" onclick="ouvrirPopup('BidForm')">Enchérir</button>
 
 
+    <div style="font-size: 2em" data-is-fav="<?= $isFav ? 'true' : 'false' ?>" id="fav">
+        <?= $isFav ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>'; ?>
+    </div>
+    <p><?= $like ?></p>
 
 
-
-    <section id="product-bid">
-        <div class="fav-btn">
-            <button class="btn fav-btn" data-id-product=<?= $p['id_product'] ?>
-                data-is-fav="<?= $isFav ? 'true' : 'false' ?>" id="fav"
-                style="background-color: light-grey; width: 150px; font-size: 2em;">
-                <?= $isFav ? "★" : "☆"; ?>
-            </button>
-            <p><?= $like ?></p>
-        </div>
-    </section>
-
+    
 
     <!-- Swiper -->
     <div class="container">

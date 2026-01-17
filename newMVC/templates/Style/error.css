@@ -1,0 +1,75 @@
+:root {
+    --Sapphire: #3C507D;
+    --Royal-blue: #112250;
+    --Quicksand: #E0C58F;
+    --Swan-wing: #F5F0E9;
+    --Sheelstone: #D9CBC2;
+    --Gold: #D2A047;
+    --Green: #3A7F4F;
+    --Red: #C0392B;
+
+    --H1-font: "Lora", serif;
+    --H1-size: 40px;
+    --H1-weight: 700;
+
+    --H2-font: "Lora", serif;
+    --H2-size: 32px;
+    --H2-weight: 700;
+
+    --H3-font: "Lora", serif;
+    --H3-size: 24px;
+    --H3-weight: 700;
+
+    --p-font: "Poppins", serif;
+    --p-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--Swan-wing);
+}
+
+div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 2px var(--Royal-blue);
+    padding: 40px;
+    width: 450px;
+    text-align: center;
+    color: var(--Royal-blue);
+    border-radius: 15px;
+    background-color: var(--Quicksand);
+    font-family: var(--H2-font);
+}
+
+div span {
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+}
+
+div i {
+    font-size: 6em;
+    display: flex;
+}
+
+div p {
+    padding: 20px;
+    font-style: italic;
+}
+
+div a {
+    color: var(--Sapphire);
+    text-decoration: none;
+}

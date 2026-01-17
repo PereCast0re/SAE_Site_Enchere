@@ -114,7 +114,12 @@ try {
 
             ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
-            Product(id_product: $_GET['id']);
+            // Product(id_product: $_GET['id']);
+
+            // A supprimer une fois le style de la effectué
+            $errorMessage = '<i class="fa-solid fa-hammer"></i>  <span>Désolé</span> En cours de développement ! Réessayez ultérieurement !';
+            require('templates/preset/error.php');
+
 
 
             ////////////////////////////// page user //////////////////////////////
@@ -281,7 +286,10 @@ try {
         require("templates/index.php");
     }
 } catch (Exception $e) {
+
     $errorMessage = $e->getMessage();
+
+    $errorMessage = '<i class="fa-solid fa-bug"></i> <span>Erreur 404 :</span> Page non trouvé !';
 
     require('templates/preset/error.php');
 }

@@ -50,7 +50,7 @@ Veuillez donc trouver toutes les procédures dans `Documents\Procedure`.
 
 
 
-BidStars est un site d'enchère centré uniquement sur les objets appartenant ou appartenu aux célébrités.
+BidStars est un site d'enchères centré uniquement sur les objets appartenant ou ayant appartenu aux célébrités.
 
 
 
@@ -129,7 +129,7 @@ Tappez
 
 ```
 
-.\\mysql.exe -u root -p
+.\mysql.exe -u root -p
 
 ```
 
@@ -151,7 +151,7 @@ Copier le fichier `BDD_constructor.sql` de ce projet situé à la racine du proj
 
 
 
-Coller le dans le dossier où vous avez ouvert l'`invite de commande` (`C:\\wamp64\\bin\\mysql\\mysql9.1.0\\bin`)
+Coller le dans le dossier où vous avez ouvert l'`invite de commande` (`C:\wamp64\bin\mysql\mysql9.1.0\bin`)
 
 
 
@@ -159,7 +159,7 @@ Pour initialiser la database, tappez
 
 ```
 
-SOURCE BDD\_constructor.sql;
+SOURCE BDD_constructor.sql;
 
 ```
 
@@ -213,7 +213,7 @@ Après avoir suivi les étapes ci-dessus, vous pouvez désormais utiliser notre 
 
 
 
-Rendez-vous dans le fichier www de WampServer (`C:\\wamp64\\www`).
+Rendez-vous dans le fichier www de WampServer (`C:\wamp64\www`).
 
 
 

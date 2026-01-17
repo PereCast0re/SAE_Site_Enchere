@@ -1,11 +1,14 @@
 const btnFav = document.querySelector('#fav')
 let active = false;
+const fullStar = '<i class="fa-solid fa-star"></i>';
+const emptyStar = '<i class="fa-regular fa-star"></i>';
 
 btnFav.addEventListener("click", async () => {
     if (active) return;
     try {
         active = true;
-        const idProduct = btnFav.dataset.idProduct;
+        const idProduct = document.querySelector('#idProduct').value;
+        console.log(idProduct);
         const value = !(btnFav.dataset.isFav === "true");
 
         if (value) {
@@ -19,7 +22,7 @@ btnFav.addEventListener("click", async () => {
                 return;
             }
 
-            btnFav.textContent = "★";
+            btnFav.innerHTML = fullStar;
         } else {
             console.log("j'enlève");
 
@@ -31,7 +34,7 @@ btnFav.addEventListener("click", async () => {
                 return;
             }
 
-            btnFav.textContent = "☆";
+            btnFav.innerHTML = emptyStar;
         }
 
         btnFav.dataset.isFav = value;

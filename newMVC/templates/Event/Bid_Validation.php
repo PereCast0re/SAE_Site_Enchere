@@ -12,7 +12,7 @@
             <input type="hidden" id="currentPrice_validation">
             <input type="hidden" id="newPrice_validation">
             <button class="btn" id="bid-button" type="submit" onclick="fermerPopupBid()">Oui, je souhaite enchérir</button>
-            <button class="btn-second" onclick="fermerPopupBid()">Non</button>
+            <button class="btn-second" type="button" onclick="fermerPopupBid()">Non</button>
         </form>
     </div>
 </div>
