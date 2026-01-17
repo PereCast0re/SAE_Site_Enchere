@@ -28,7 +28,7 @@ Dans ce projet vous y trouverez le code source mais aussi tous les rendus que no
 
 
 
->Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
+> Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
 
 
 
