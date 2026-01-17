@@ -38,7 +38,7 @@ Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https
 
 Il est possible que si vous ajoutez des images trop volumineuses, qu'une erreur s'affiche.
 
-Il est aussi possible que si vous créer un compte et que vous souhaitez recevoir les mails, que vous n'avez pas tous les paramètres nécessaires pour les recevoir.
+Il est aussi possible que si vous créer un compte et que vous souhaitez recevoir les mails, que vous n'ayez pas tous les paramètres nécessaires pour les recevoir.
 
 
 
@@ -71,9 +71,9 @@ Dans ce site vous pouvez :
 
 
 
-* Thomas BARTHOUX-SAUZE → PereCasCast0re (https://github.com/PereCast0re)
-* Kyllian RIVIERE → Kyno3146 (https://github.com/Kyno3146)
-* Jimmy GARNIER → JimmyGAR (https://github.com/JimmyGAR)
+* Thomas BARTHOUX-SAUZE → \[PereCast0re](https://github.com/PereCast0re)
+* Kyllian RIVIERE → \[Kyno3146](https://github.com/Kyno3146)
+* Jimmy GARNIER → \[JimmyGAR](https://github.com/JimmyGAR)
 
 
 
@@ -125,7 +125,13 @@ Ouvrez l'invite de commande en faisant un clic droit sur un espace vide du fichi
 
 
 
-Tappez ```.\\mysql.exe -u root -p```.
+Tappez 
+
+```
+
+.\\mysql.exe -u root -p
+
+```
 
 
 
@@ -149,7 +155,13 @@ Coller le dans le dossier où vous avez ouvert l'`invite de commande` (`C:\\wamp
 
 
 
-Tappez ```SOURCE BDD\_constructor.sql;``` pour initialiser la database.
+Pour initialiser la database, tappez 
+
+```
+
+SOURCE BDD\_constructor.sql;
+
+```
 
 
 
@@ -161,7 +173,7 @@ Tappez ```SOURCE BDD\_constructor.sql;``` pour initialiser la database.
 
 
 
-Ouvrez votre navigateur et rendez vous à l'adresse suivante : ```http://localhost/phpmyadmin/```
+Ouvrez votre navigateur et rendez vous à l'adresse suivante : ```http://localhost/phpmyadmin/``` ou \[cliquez ici](http://localhost/phpmyadmin/)
 
 
 
@@ -177,7 +189,7 @@ Entrez votre nom d'utilisateur et votre mot de passe (si vous venez d'installer 
 
 
 
-Dans la barre situé en haut de l'écran de la page, vous devriez apercevoir `\*\*Importer\*\*`.
+Dans la barre situé en haut de l'écran de la page, vous devriez apercevoir `Importer`.
 
 
 
@@ -209,7 +221,13 @@ Copier/coller tout le projet directement dans ce dossier.
 
 
 
-Ouvrez votre navigateur et dirigez vous à l'adresse suivante : ```http://localhost/```.
+Ouvrez votre navigateur et dirigez vous à l'adresse suivante : 
+
+```
+
+http://localhost/
+
+```
 
 
 
@@ -227,15 +245,39 @@ Puis cliquez sur `newMVC`.
 
 * Admin (permet d'accepter ou refuser des annonces publiées)
 
-&nbsp;	email : ```admin@gmail.com```
+&nbsp;	email : 
 
-&nbsp;	mot de passe : ```Admin1234!```
+&nbsp;	```
+
+&nbsp;	admin@gmail.com
+
+&nbsp;	```
+
+&nbsp;	mot de passe : 
+
+&nbsp;	```
+
+&nbsp;	Admin1234!
+
+&nbsp;	```
 
 * Utilisateur de test (simple utilisateur ayant accès au site pour naviguer, enchérir et publier une annonce)
 
-&nbsp;	email : ```test@gmail.com```
+&nbsp;	email : 
 
- 	mot de passe : ```Test1234!```
+&nbsp;	```
+
+&nbsp;	test@gmail.com
+
+&nbsp;	```
+
+ 	mot de passe : 
+
+&nbsp;	```
+
+&nbsp;	Test1234!
+
+&nbsp;	```
 
 
 
