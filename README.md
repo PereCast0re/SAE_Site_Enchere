@@ -237,11 +237,43 @@ Cliquez sur le nom de votre fichier (si vous n'avez pas créé de fichiers, le n
 
 Puis cliquez sur `newMVC`.
 
+### Scripts (moteur de recherche + recherche de célébrités)
 
+A la racine du projet vous pouvez retrouver différents scripts.
 
-Identifiant de connection
+#### Moteur de recherche
 
+Lorsque que vous accéderez à notre site d'enchère, vous aurez la possibilité de rechercher une annonce.
 
+Seulement pour que la recherche soit effective, il faut démarrer notre API.
+
+Dans un premier temps il faut télécharger l'exécutable en fonction de votre système d'exploitation via le lien suivant :
+[cliquez ici pour télécharger l'exécutable](https://github.com/meilisearch/meilisearch/releases)
+
+Ensuite, il faut exécuter le fichier `meilisearch-windows-amd64.exe`.
+
+Ouvrez l'invite de commande en faisant un clic droit dans le vide à la racine de ce projet.
+
+Puis exécuter la requête suivante :
+```
+.\meilisearch-windows-amd64.exe --master-key CLE_TEST_SAE_SITE
+```
+
+### Recherche de célébrités
+
+Vous pouvez aussi rechercher des célébrités via le script python `ScriptCelebrity.py`.
+
+Vous devez donc avoir [python](https://www.python.org/downloads/) d'installé sur votre machine.
+
+Pour lancer la recherche il suffit d'ouvrir le terminal à la racine du projet.
+
+Puis exécuter la commande suivante :
+```
+python .\ScriptCelebrity.py
+```
+OU en lançant le fichier sur un logiciel comme Visual Studio ou Thonny et l'exécuter via leur interface.
+
+### Identifiant de connection
 
 * Admin (permet d'accepter ou refuser des annonces publiées)
 
