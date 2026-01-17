@@ -245,15 +245,15 @@ Identifiant de connection
 
 * Admin (permet d'accepter ou refuser des annonces publiées)
 
-&nbsp;	email : ```admin@gmail.com```
+&nbsp;	email : `admin@gmail.com`
 
-&nbsp;	mot de passe : ```Admin1234!```
+&nbsp;	mot de passe : `Admin1234!`
 
 * Utilisateur de test (simple utilisateur ayant accès au site pour naviguer, enchérir et publier une annonce)
 
-&nbsp;	email : ```test@gmail.com```
+&nbsp;	email : `test@gmail.com`
 
- 	mot de passe : ```Test1234!```
+ 	mot de passe : `Test1234!`
 
 
 
