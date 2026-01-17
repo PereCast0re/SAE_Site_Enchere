@@ -28,7 +28,7 @@ Dans ce projet vous y trouverez le code source mais aussi tous les rendus que no
 
 
 
-Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
+>Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
 
 
 
@@ -245,39 +245,15 @@ Puis cliquez sur `newMVC`.
 
 * Admin (permet d'accepter ou refuser des annonces publiées)
 
-&nbsp;	email : 
+&nbsp;	email : ```admin@gmail.com```
 
-&nbsp;	```
-
-&nbsp;	admin@gmail.com
-
-&nbsp;	```
-
-&nbsp;	mot de passe : 
-
-&nbsp;	```
-
-&nbsp;	Admin1234!
-
-&nbsp;	```
+&nbsp;	mot de passe : ```Admin1234!```
 
 * Utilisateur de test (simple utilisateur ayant accès au site pour naviguer, enchérir et publier une annonce)
 
-&nbsp;	email : 
+&nbsp;	email : ```test@gmail.com```
 
-&nbsp;	```
-
-&nbsp;	test@gmail.com
-
-&nbsp;	```
-
- 	mot de passe : 
-
-&nbsp;	```
-
-&nbsp;	Test1234!
-
-&nbsp;	```
+ 	mot de passe : ```Test1234!```
 
 
 
