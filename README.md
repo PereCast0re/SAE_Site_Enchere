@@ -1,16 +1,12 @@
-# BidStars
+\# BidStars
 
 
 
-## Présentation
+\## Présentation
 
 
 
-\[Bun](https://bun.sh)
-
-
-
-###### Projet
+\### Projet
 
 
 
@@ -20,7 +16,7 @@ Durant cette SAE et pendant un semestre, nous devions développer une applicatio
 
 
 
-###### Documents
+\### Documents
 
 
 
@@ -28,7 +24,7 @@ Dans ce projet vous y trouverez le code source mais aussi tous les rendus que no
 
 
 
-###### Notion
+\### Notion
 
 
 
@@ -36,7 +32,7 @@ Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https
 
 
 
-###### Procédures
+\### Procédures
 
 
 
@@ -50,7 +46,7 @@ Veuillez donc trouver toutes les procédures dans `Documents\\Procedure`.
 
 
 
-## But de l'application
+\## But de l'application
 
 
 
@@ -71,7 +67,7 @@ Dans ce site vous pouvez :
 
 
 
-## Membres (3)
+\## Membres (3)
 
 
 
@@ -81,7 +77,7 @@ Dans ce site vous pouvez :
 
 
 
-## Lancement de l'application
+\## Lancement de l'application
 
 
 
@@ -93,7 +89,7 @@ Lancer WampServer.
 
 
 
-#### Initialisation
+\### Initialisation
 
 
 
@@ -101,11 +97,11 @@ Télécharger le dossier du projet (Bouton vert `<> Code` → `Download ZIP`).
 
 
 
-##### Méthode 1 (invite de commande)
+\#### Méthode 1 (invite de commande)
 
 
 
-###### Étape 1
+\##### Étape 1
 
 
 
@@ -117,7 +113,7 @@ Suivant l'arborescence de l'explorateur du fichier, rendez-vous dans \*\*bin\*\*
 
 
 
-###### Étape 2
+\##### Étape 2
 
 
 
@@ -147,7 +143,7 @@ Vous avez désormais accès à la base de donnée.
 
 
 
-###### Étape 3
+\##### Étape 3
 
 
 
@@ -169,11 +165,11 @@ SOURCE BDD\_constructor.sql;
 
 
 
-##### Méthode 2 (PhpMyAdmin)
+\#### Méthode 2 (PhpMyAdmin)
 
 
 
-###### Étape 1
+\##### Étape 1
 
 
 
@@ -181,7 +177,7 @@ Ouvrez votre navigateur et rendez vous à l'adresse suivante : ```http://localho
 
 
 
-###### Étape 2
+\##### Étape 2
 
 
 
@@ -189,7 +185,7 @@ Entrez votre nom d'utilisateur et votre mot de passe (si vous venez d'installer 
 
 
 
-###### Étape 3
+\##### Étape 3
 
 
 
@@ -209,7 +205,7 @@ Puis scrollez et cliquez sur le bouton `Importer`.
 
 
 
-#### Lancement de l'application
+\### Configuration
 
 
 
@@ -243,7 +239,7 @@ Puis cliquez sur `newMVC`.
 
 
 
-###### Identifiant de connection
+Identifiant de connection
 
 
 
@@ -263,11 +259,11 @@ Puis cliquez sur `newMVC`.
 
 
 
-###### Vous avez désormais accès à notre site d'enchère ! 
+Vous avez désormais accès à notre site d'enchère ! 
 
-###### Libre à vous d'essayer toutes les fonctionnalités !
+Libre à vous d'essayer toutes les fonctionnalités !
 
-###### Merci pour le temps que vous consacrerez à regarder ce projet !
+Merci pour le temps que vous consacrerez à regarder ce projet !
 
 
 
