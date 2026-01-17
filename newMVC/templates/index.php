@@ -143,23 +143,7 @@ $style = "templates/style/index.css";
 
   <a id="Voir_annonces_btn" class="btns" href="index.php?action=buy">Voir les annonces</a>
   <?php $image = null ?>
-  <h1>Nos catégories en vedette</h1>
-  <div class="category">
-    <?php for ($i = 0; $i < min(3, count($productRepository->getCategory())); $i++): ?>
-      <?php $cat = $productRepository->getCategory()[$i]; ?>
-      <div class="category-card">
-        <?php //$images = getImageCategory($cat['id_category']);
-          if (!empty($images)) {
-            echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-          } else {
-            echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-          }
-          ?>
-        <h3><?= htmlspecialchars($cat['name']) ?></h3>
-        <a class="btn">Voir</a>
-      </div>
-    <?php endfor; ?>
-  </div>
+  
   <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
   <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
   </div>

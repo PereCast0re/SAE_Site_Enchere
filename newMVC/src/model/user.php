@@ -148,4 +148,13 @@ class UserRepository
 
         return $temp->fetchColumn();
     }
+
+    function getUserNewsletter(){
+        $pdo = $this->connection;
+        $requete = "SELECT name,email from users where newsletter = 1";
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

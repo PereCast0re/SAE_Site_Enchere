@@ -58,25 +58,6 @@ function getImage($id_product)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/*
-function getImageCategory($id_category)
-{
-    $pdo = connection();
-    // recuperer la premiere image de la premiere annonce de cette categorie avec une image
-    $requete = " SELECT img.path_image as url_image, img.alt from image img
-                join product p on p.id_product = img.id_product
-                join belongsto bel on bel.id_product = p.id_product, bel.id_category
-                join category c on c.id_category = bel.id_category
-                where c.id_category = :id_category
-                LIMIT 1 ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id_category" => $id_category
-    ]);
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-    */
-
 function getAnnoncementEndWithReservedPrice($id_user)
 {
     $pdo = connection();
@@ -186,30 +167,6 @@ function getLastViewVerifBot($id_product) {
     return $stmt->fetch();
 }
 
-/////////////////////// Recherche autonome categorie ///////////////////
-function getCategoryMod($writting){
-    $pdo = connection();
-    $requete = "SELECT * from category where name like :writting";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":writting" => $search = '%' . $writting . '%'
-    ]);
-
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/////////////////////// Recherche autonome celebrity ///////////////////
-function getCelebrityMod($writting){
-    $pdo = connection();
-    $requete = "SELECT * from celebrity where name like :writting";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":writting" => $search = '%' . $writting . '%'
-    ]);
-
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
-
 function saveCertificatePath($id_product, $path_image)
 {
     $pdo = connection();
@@ -234,7 +191,7 @@ function saveCertificatePath($id_product, $path_image)
 /// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
 function closeAnnoncement($id_product){
     $pdo = connection();
-    $requete = "UPDATE product SET end_date = date(now()) and mailIsSent = 1 WHERE id_product = :id_product";
+    $requete = "UPDATE product SET end_date = now(), mailIsSent = 1 WHERE id_product = :id_product";
     $tmp = $pdo->prepare($requete);
     $tmp->execute([
         ":id_product" => $id_product
@@ -253,7 +210,7 @@ function get_all_annoncement_notMailed(){
 /////////////////////////////////// Admin ////////////////////////////////////////////
 function getAllProduct_admin(){
     $pdo = connection();
-    $requete = "SELECT * FROM Product where status = 1";
+    $requete = "SELECT * FROM Product where status = 0 ";
     try {
         $tmp = $pdo->prepare($requete);
         $tmp->execute();
@@ -263,58 +220,26 @@ function getAllProduct_admin(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getCategoryFromAnnoncement($id_product){
+function getProductsByCategory($id_category){
     $pdo = connection();
-    $requete = "SELECT name 
-                from category as c
-                where c.id_category = (
-                    select id_category 
-                    from belongsto as b 
-                    where b.id_product = :id 
-                    LIMIT 1);";
-    try{
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":id" => $id_product,
-        ]);
-    }catch(PDOException $e){
-        die("Error on get categorie from a annoncement : " .$e->getMessage());
-    }
-    return $tmp->fetch(PDO::FETCH_ASSOC);
+    $requete = "SELECT * FROM Product
+                JOIN belongsto ON Product.id_product = belongsto.id_product
+                WHERE belongsto.id_category = :id_category";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_category" => $id_category
+    ]);
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getCelebrityFromAnnoncement($id_product){
+function getProductsByCelebrity($id_celebrity){
     $pdo = connection();
-    $requete = "SELECT name 
-                from celebrity as c
-                where c.id_celebrity = (
-                    select id_celebrity 
-                    from concerned as c 
-                    where c.id_product  = :id
-                    LIMIT 1);";
-    try{
-        $tmp = $pdo->prepare($requete);
-        $tmp->execute([
-            ":id" => $id_product,
-        ]);
-    }catch(PDOException $e){
-        die("Error on get categorie from a annoncement : " .$e->getMessage());
-    }
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
-
-//////////// Newsletter ////////////
-function subscribeNewsletter($email)
-{
-    $pdo = connection();
-    try {
-        $requete = "UPDATE users SET newsletter = 1 WHERE email = :email";
-        $temp = $pdo->prepare($requete);
-        $temp->execute([
-            ":email" => $email
-        ]);
-    } catch (PDOException $e) {
-        die("Error subscribing to the newsletter, try again !\nError : " . $e->getMessage());
-    }
-    
+    $requete = "SELECT * FROM Product
+                JOIN concerned ON Product.id_product = concerned.id_product
+                WHERE concerned.id_celebrity = :id_celebrity";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_celebrity" => $id_celebrity
+    ]);
+    return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }

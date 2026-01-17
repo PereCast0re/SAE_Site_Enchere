@@ -27,12 +27,16 @@ async function afficher() {
     const divhistorique = document.getElementById('div_historique_annoncement')
     await print_historique_annoncement(id_user.value, divhistorique)
 
+    const divAnnonceVerifAdmin = document.getElementById('Product_verif_admin')
+    await print_unverifed_product(divAnnonceVerifAdmin, json_values)
+
     await checkBtnHistorique()
 }
 
 async function print_tab_annoncements(annoncements, div) {
     let html = ""
     for (const annonce of annoncements) {
+        if(annonce.status == 0){continue}
         let price = await getPrice(annonce.id_product);
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
@@ -51,6 +55,7 @@ async function print_tab_annoncements(annoncements, div) {
 
         html +=
             `
+            <input type="hidden" id="id_product" value="${annonce.id_product}"/>
             <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
                 <table>
                     <tbody>
@@ -70,6 +75,7 @@ async function print_tab_annoncements(annoncements, div) {
                     </tr>
                 </tbody>
                 </table>
+                <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
             </div>
             <div class="stat_annonce${annonce.id_product}"></div>
             `
@@ -90,6 +96,53 @@ async function print_tab_annoncements(annoncements, div) {
         });
     });
 }
+
+async function print_unverifed_product(div, annoncements) {
+    let annonce_attente = "<div class='annonce_attente_validation'> <p style='text-align:center; font-size=15px;'> Annonce en attente de validation par nos Administrateurs </p>"
+    for (const annonce of annoncements) {
+        if(annonce.status == 1){continue}
+        let price = await getPrice(annonce.id_product);
+        if (price.last_price === null) {
+            price.last_price = annonce.start_price;
+        }
+        
+        let like = await getLikes(annonce.id_product);
+        if (like.nbLike === null) {
+            like.nbLike = 0;
+        }
+        let image_url = await getImage(annonce.id_product);
+        let firstImg = (
+            Array.isArray(image_url) &&
+            image_url.length > 0 &&
+            image_url[0].url_image
+        ) ? image_url[0].url_image : "assets/default.png";
+
+        annonce_attente += 
+            `
+            <input type="hidden" id="id_product" value="${annonce.id_product}"/>
+            <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
+                <table>
+                    <tbody>
+                    <tr>
+                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;"/>
+                        <td>${annonce.title}</td>
+                        <td><a href="index.php?action=product&id=${annonce.id_product}">See Annonce</a></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>photo user</td>
+                        <td>utilisateur</td>
+                    </tr>
+                </tbody>
+                </table>
+                <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
+            </div>
+            `
+    };
+    annonce_attente += '</div>'
+    div.innerHTML += annonce_attente;
+}
+
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div) {
     let annoncements = await getAnnonceReserved($id_user);
@@ -328,31 +381,87 @@ async function alertConfirmation(message, action, id_product) {
     <div class="popup-box">
         <p>${message}</p>
         <div style="display: flex; justify-content: space-around; margin-top: 15px;">
-            <button id="btnConfirm">Accepter</button>
-            <button id="btnCancel">Refuser</button>
+            <button class="btnConfirm">Accepter</button>
+            <button class="btnCancel">Quitter</button>
         </div>
     </div>
 `;
 
     document.body.appendChild(popup);
 
-    let button = document.querySelector("#btnConfirm")
-    button.addEventListener('click', async () => {
-        await fetch(`index.php?action=${action}&id_product=${id_product}`);
+    let button = popup.querySelector(".btnConfirm")
+    button.addEventListener('click', async () =>{
+        await fetch(`index.php?action=${action}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id_product=${id_product}`
+        });
         popup.remove();
+        location.reload();
     })
 
-    let cancel = document.querySelector("#btnCancel")
-    cancel.addEventListener('click', () => {
+    let cancel = popup.querySelector(".btnCancel")
+    cancel.addEventListener('click', () =>{
         popup.remove();
     })
 }
+
+async function printGraph(id, title, allData) {
+    let graph = ""
+    
+
+}
+
+async function ShowPopUpOption(id_product) { // On reçoit l'ID ici
+    const popup = document.createElement('div');
+    popup.classList.add('popup-overlay'); 
+    popup.innerHTML = `
+    <div class="popup-box">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button class="btnsupprimer" style="background: #ff4444; color: white;">Supprimer</button>
+            <button class="btnmodifier">Modifier</button>
+            <button class="btn_retour">Retour</button>
+        </div>
+    </div>`;
+
+    document.body.appendChild(popup);
+
+    // BOUTON SUPPRIMER
+    popup.querySelector('.btnsupprimer').addEventListener('click', () => {
+        alertConfirmation('Voulez-vous vraiment supprimer ce produit ?', 'deleteProduct', id_product);
+        popup.remove();
+    });
+
+    popup.querySelector('.btnmodifier').addEventListener('click', () => {
+        alertConfirmation('Voulez-vous modifier cette annonce ?', 'updateProduct', id_product);
+        popup.remove();
+    })
+
+    popup.querySelector('.btn_retour').addEventListener('click', () => popup.remove());
+}
+
 
 /////////////////////////////////////////////////////////////
 //Fonction API//
 ////////////////////////////////////////////////////////////
 
-async function getPrice(id_product) {
+async function deleteProduct(id_product) {
+    const response = await fetch(`index.php?action=deleteProduct&id_product=${id_product}`);    
+    console.log(response);
+    const result = await response.json();
+    console.log(result);
+    
+    if (result.success) {
+        console.log('Suppression réussie');
+        //location.reload(); // Recharge la page pour mettre à jour la liste
+    } else {
+        alert('Erreur lors de la suppression en base de données');
+    }
+}
+
+async function getPrice(id_product){
     // Appel pour fetch et récupéré le prix actuel
     const price = await fetch(`index.php?action=getLastPrice&id_product=${id_product}`);
     const price_json = await price.json();
