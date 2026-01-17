@@ -1,12 +1,12 @@
-\# BidStars
+# BidStars
 
 
 
-\## Présentation
+## Présentation
 
 
 
-\### Projet
+### Projet
 
 
 
@@ -16,7 +16,7 @@ Durant cette SAE et pendant un semestre, nous devions développer une applicatio
 
 
 
-\### Documents
+### Documents
 
 
 
@@ -24,15 +24,15 @@ Dans ce projet vous y trouverez le code source mais aussi tous les rendus que no
 
 
 
-\### Notion
+### Notion
 
 
 
-Pour plus d'informations, veuillez trouver ci-joint le \[notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
+Pour plus d'informations, veuillez trouver ci-joint le [notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
 
 
 
-\### Procédures
+### Procédures
 
 
 
@@ -42,11 +42,11 @@ Il est aussi possible que si vous créer un compte et que vous souhaitez recevoi
 
 
 
-Veuillez donc trouver toutes les procédures dans `Documents\\Procedure`.
+Veuillez donc trouver toutes les procédures dans `Documents\Procedure`.
 
 
 
-\## But de l'application
+## But de l'application
 
 
 
@@ -67,21 +67,21 @@ Dans ce site vous pouvez :
 
 
 
-\## Membres (3)
+## Membres (3)
 
 
 
-* Thomas BARTHOUX-SAUZE → \[PereCast0re](https://github.com/PereCast0re)
-* Kyllian RIVIERE → \[Kyno3146](https://github.com/Kyno3146)
-* Jimmy GARNIER → \[JimmyGAR](https://github.com/JimmyGAR)
+* Thomas BARTHOUX-SAUZE → [PereCast0re](https://github.com/PereCast0re)
+* Kyllian RIVIERE → [Kyno3146](https://github.com/Kyno3146)
+* Jimmy GARNIER → [JimmyGAR](https://github.com/JimmyGAR)
 
 
 
-\## Lancement de l'application
+## Lancement de l'application
 
 
 
-Pour utiliser notre application, vous devez avoir installé au préalable \[WamppServer](https://www.wampserver.com/).
+Pour utiliser notre application, vous devez avoir installé au préalable [WamppServer](https://www.wampserver.com/).
 
 
 
@@ -89,7 +89,7 @@ Lancer WampServer.
 
 
 
-\### Initialisation
+### Initialisation
 
 
 
@@ -97,11 +97,11 @@ Télécharger le dossier du projet (Bouton vert `<> Code` → `Download ZIP`).
 
 
 
-\#### Méthode 1 (invite de commande)
+#### Méthode 1 (invite de commande)
 
 
 
-\##### Étape 1
+##### Étape 1
 
 
 
@@ -109,11 +109,11 @@ Rendez-vous dans les fichiers de l'application WampServer.
 
 
 
-Suivant l'arborescence de l'explorateur du fichier, rendez-vous dans \*\*bin\*\* (C:\\wamp64\\bin\\mysql\\mysql9.1.0\\bin)
+Suivant l'arborescence de l'explorateur du fichier, rendez-vous dans **bin** (C:\\wamp64\\bin\\mysql\\mysql9.1.0\\bin)
 
 
 
-\##### Étape 2
+##### Étape 2
 
 
 
@@ -143,11 +143,11 @@ Vous avez désormais accès à la base de donnée.
 
 
 
-\##### Étape 3
+##### Étape 3
 
 
 
-Copier le fichier `BDD\_constructor.sql` de ce projet situé à la racine du projet.
+Copier le fichier `BDD_constructor.sql` de ce projet situé à la racine du projet.
 
 
 
@@ -165,19 +165,19 @@ SOURCE BDD\_constructor.sql;
 
 
 
-\#### Méthode 2 (PhpMyAdmin)
+#### Méthode 2 (PhpMyAdmin)
 
 
 
-\##### Étape 1
+##### Étape 1
 
 
 
-Ouvrez votre navigateur et rendez vous à l'adresse suivante : ```http://localhost/phpmyadmin/``` ou \[cliquez ici](http://localhost/phpmyadmin/)
+Ouvrez votre navigateur et rendez vous à l'adresse suivante : ```http://localhost/phpmyadmin/``` ou [cliquez ici](http://localhost/phpmyadmin/)
 
 
 
-\##### Étape 2
+##### Étape 2
 
 
 
@@ -185,7 +185,7 @@ Entrez votre nom d'utilisateur et votre mot de passe (si vous venez d'installer 
 
 
 
-\##### Étape 3
+##### Étape 3
 
 
 
@@ -197,7 +197,7 @@ Cliquez dessus.
 
 
 
-Ajouter le fichier `BDD\_constructor.sql` de ce projet situé à la racine du projet.
+Ajouter le fichier `BDD_constructor.sql` de ce projet situé à la racine du projet.
 
 
 
@@ -205,7 +205,7 @@ Puis scrollez et cliquez sur le bouton `Importer`.
 
 
 
-\### Configuration
+### Configuration
 
 
 
@@ -231,7 +231,7 @@ http://localhost/
 
 
 
-Cliquez sur le nom de votre fichier (si vous n'avez pas créé de fichiers, le nom sera `SAE\_Site\_Enchere`)
+Cliquez sur le nom de votre fichier (si vous n'avez pas créé de fichiers, le nom sera `SAE_Site_Enchere`)
 
 
 
