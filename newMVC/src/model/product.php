@@ -45,6 +45,7 @@ class ProductRepository
         $requete = "SELECT pr.*, 
                     CONCAT(u.firstname, ' ', u.name) as fullname,
                     u.city as userCity,
+                    u.id_user as userID,
                     c.name as celebrityName,
                     c.url as celebrityUrl
                     FROM Published pu
