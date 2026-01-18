@@ -85,7 +85,7 @@ $style = "templates/style/index.css";
       <?php else: ?>
         <?php
         $count_displayed = 0;
-        $max_to_display = 9;
+        $max_to_display = 12;
         ?>
 
         <?php foreach ($products as $p): ?>
@@ -115,7 +115,14 @@ $style = "templates/style/index.css";
                   <div class="avatar-wrapper">
                     <img src="templates/Images/compte.png" class="celebrity-img" alt="Celebrity">
                   </div>
-                  <span class="celebrity-name">Célébrité</span>
+                  <?php
+                  $celebrity = $productRepository->getCelebrityNameByAnnoncement($p['id_product']);
+                  if (!empty($celebrity)) {
+                    echo '<span class="celebrity-name">Célébrité : ' . htmlspecialchars($celebrity['name']) . '</span>';
+                  } else {
+                    echo '<span class="celebrity-name">Célébrité : N/A</span>';
+                  }
+                  ?>
                 </div>
 
                 <div class="action-row">

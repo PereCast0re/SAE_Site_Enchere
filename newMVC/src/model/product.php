@@ -397,4 +397,16 @@ class ProductRepository
             die("Error on deleting Category and his link to annoncement : " .$e->getMessage());
         }
     }
+    function getCelebrityNameByAnnoncement($id_product){
+    $pdo = $this->connection;
+    $requete = "SELECT c.name FROM celebrity c
+                JOIN concerned con ON c.id_celebrity = con.id_celebrity
+                WHERE con.id_product = :id_product";
+    $tmp = $pdo->prepare($requete);
+    $tmp->execute([
+        ":id_product" => $id_product
+    ]);
+    // ne retourner que le nom en string
+    return $tmp->fetch(PDO::FETCH_ASSOC);
+}
 }

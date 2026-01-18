@@ -243,3 +243,4 @@ function getProductsByCelebrity($id_celebrity){
     ]);
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
+
