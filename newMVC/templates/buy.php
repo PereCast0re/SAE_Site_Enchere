@@ -20,58 +20,7 @@ $style = "templates/style/buy.css";
     $products = $productRepository->getAllProduct();
     ?>
 
-    <?php if (empty($products)): ?>
-        <p>Aucune annonce disponible pour le moment.</p>
-    <?php else: ?>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <?php foreach ($products as $p): ?>
-                    <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
-
-                        <?php
-                        $priceRow = $productRepository->getLastPrice($p['id_product']);
-                        $current_price = null;
-
-                        if (!empty($priceRow) && isset($priceRow['last_price']) && $priceRow['last_price'] !== null) {
-                            $current_price = $priceRow['last_price'];
-                        } else {
-                            $current_price = $p['start_price'];
-                        }
-                        ?>
-
-                        <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>"
-                            class="swiper-slide slide-link">
-                            <div class="image-container">
-                                <?php
-                                $images = getImage($p['id_product']);
-                                if (!empty($images)) {
-                                    echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                                }
-                                ?>
-
-                                <div class="luxury-overlay">
-                                    <h3><?= htmlspecialchars($p['title']) ?></h3>
-
-                                    <div class="info-row">
-                                        <i class="fa-regular fa-clock icon-gold"></i>
-                                        <span class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></span>
-                                    </div>
-
-                                    <div class="info-row price-box">
-                                        <i class="fa-solid fa-money-bill-wave icon-white"></i>
-                                        <span class="price"><?= htmlspecialchars($current_price) ?> €</span>
-                                    </div>
-
-                                    <div class="bid-button">Enchérir</div>
-                                </div>
-                            </div>
-                        </a>
-
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    <?php endif; ?>
+    
 
     <div class="search_bar">
         <input type="text" id="searchInput" placeholder="Recherchez une annonce, une catégorie, une célébrité..."
@@ -184,45 +133,6 @@ $style = "templates/style/buy.css";
 </script>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', async function () {
-        const q = document.getElementById('searchInput').value.trim();
-        if (q.length < 2) return;
-
-        const response = await fetch("src/controllers/search.php?q=" + encodeURIComponent(q));
-        const results = await response.json();
-
-        const container = document.querySelector(".annonces");
-        container.innerHTML = "";
-
-        if (results.length === 0) {
-            container.innerHTML = "<p>Aucun résultat trouvé.</p>";
-        } else {
-            results.forEach(p => {
-                const card = document.createElement("div");
-                card.classList.add("announce-card");
-
-                let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-                if (p.image_url) imageHtml = `<img src="${p.image_url}" alt="Image annonce">`;
-
-                card.innerHTML = `
-                ${imageHtml}
-                <h3>${p.title}</h3>
-                <p>Prix : ${p.price ?? '-'} €</p>
-                <p class="timer" data-end="${p.end_date}"></p>
-                <a class="btn" href="index.php?action=product&id=${p.id}">Voir</a>
-            `;
-                container.appendChild(card);
-            });
-
-            document.querySelectorAll('.timer').forEach(el => {
-                startCountdown(el.getAttribute('data-end'), el);
-            });
-        }
-
-        const box = document.getElementById('suggestions');
-        box.style.display = 'none';
-        box.innerHTML = '';
-    });
     const searchInput = document.getElementById('searchInput');
     const suggestionsBox = document.getElementById('suggestions');
 
@@ -330,27 +240,91 @@ $style = "templates/style/buy.css";
     }
 
     function renderProductCard(p) {
-        console.log('Produit:', p);
-        console.log('Images:', p.images);
-
-        let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-
-        if (p.images && p.images.length > 0) {
-            console.log('URL image:', p.images[0].url_image);
-            imageHtml = `<img src="${p.images[0].url_image}" alt="Image annonce">`;
-        }
+        const imgUrl = (p.images && p.images.length > 0)
+            ? p.images[0].url_image
+            : 'templates/Images/default.png';
 
         return `
         <div class="announce-card">
-            ${imageHtml}
-            <h3>${p.title}</h3>
-            <p class="timer" data-end="${p.end_date}"></p>
-            <a class="btn" href="index.php?action=product&id=${p.id_product ?? p.id}">Voir</a>
+            <div class="card-img-container">
+                <img src="${imgUrl}" alt="Image annonce">
+            </div>
+
+            <div class="card-body">
+                <h3>${p.title}</h3>
+                <p class="timer" data-end="${p.end_date || ''}"></p>
+
+                <div class="celebrity-row">
+                    <div class="avatar-wrapper">
+                        <img src="templates/Images/compte.png" class="celebrity-img" alt="Celebrity">
+                    </div>
+                    <span class="celebrity-name">Célébrité : ${p.celebrity_name || 'N/A'}</span>
+                </div>
+
+                <div class="action-row">
+                    <button class="wishlist-btn">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    <a class="bid-btn" href="index.php?action=product&id=${p.id_product}">Enchérir</a>
+                </div>
+            </div>
         </div>
     `;
     }
 
 </script>
+
+<script>
+    const searchButton = document.getElementById('searchButton');
+    const announcementsContainer = document.querySelector('.annonces');
+
+    async function performSearch() {
+        const q = searchInput.value.trim();
+        if (q.length === 0) return;
+
+        suggestionsBox.style.display = 'none';
+        announcementsContainer.innerHTML = '<p>Chargement...</p>'; // Feedback utilisateur
+
+        try {
+            const response = await fetch(`src/controllers/search.php?q=${encodeURIComponent(q)}`);
+            const hits = await response.json();
+
+            announcementsContainer.innerHTML = '';
+
+            // Rigueur : on vérifie si on a au moins un produit à afficher
+            const productsToDisplay = hits.filter(h => h.type === 'product' || h.id_product);
+
+            if (productsToDisplay.length === 0) {
+                announcementsContainer.innerHTML = '<p class="no-result">Aucun produit trouvé pour votre recherche.</p>';
+                return;
+            }
+
+            productsToDisplay.forEach(hit => {
+                announcementsContainer.innerHTML += renderProductCard(hit);
+            });
+
+            initTimers();
+
+        } catch (err) {
+            console.error("Erreur de recherche stratégique:", err);
+            announcementsContainer.innerHTML = '<p>Erreur lors de la récupération des données.</p>';
+        }
+    }
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+
+    function initTimers() {
+        document.querySelectorAll('.timer').forEach(el => {
+            const endDate = el.getAttribute('data-end');
+            if (endDate) startCountdown(endDate, el);
+        });
+    }
+
+    initTimers();
+</script>
+
 
 <?php $content = ob_get_clean(); ?>
 
