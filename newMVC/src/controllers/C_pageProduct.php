@@ -19,8 +19,24 @@ function Product($id_product)
         $commentRepository = new CommentRepository($pdo);
         $comments = $commentRepository->getCommentsFromProduct($id_product);
 
+        $category = $productRepository->getCategoryFromAnnoncement($id_product);
+        // var_dump($category);
         $current_price = $productRepository->getLastPrice($p['id_product'])['last_price'];
         $images = getImage($id_product);
+
+        $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        $images = array_filter($images, function ($img) use ($extensions_valides) {
+            $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
+            return in_array($ext, $extensions_valides);
+        });
+
+        $certificate = array_filter($images, function ($img) {
+            $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
+            return $ext === "pdf";
+        });
+
+        $certificate = array_values($certificate);
 
         $favoriteRepository = new FavoriteRepository($pdo);
         $like = $favoriteRepository->getLikes($id_product)['nbLike'];

@@ -26,12 +26,13 @@ $script = "templates/JS/favorite.js";
     #swiper-container {
         position: relative;
         height: auto;
-        width: 40%;
+        width: 30%;
         margin: 0;
         padding: 0;
         /* background-color: pink; */
         user-select: none;
         display: flex;
+        gap: 10px;
     }
 
     .swiper {
@@ -43,8 +44,18 @@ $script = "templates/JS/favorite.js";
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 10px;
+        border: 2px solid black;
+    }
+
+    .mySwiper2 .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 10px;
+        border: none;
     }
 
     .mySwiper2 {
@@ -108,82 +119,59 @@ $script = "templates/JS/favorite.js";
     <h2><?= $like ?></h2>
 
 
-
     <div id="swiper-container">
-        <div thumbsSlider="" class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </div>
-            </div>
-        </div>
-        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-    <!-- Swiper -->
-    <!-- <div class="container">
         <?php if (empty($images)) { ?>
             <p>Aucune image disponible pour cette annonce.</p>
+        <?php } else if (count($images) < 2) { ?>
+                <img src=<?= $images[0]["url_image"] ?> alt=<?= $images[0]["alt"] ?>>
         <?php } else { ?>
-            <div style="--swiper-navigation-color: #000000; --swiper-pagination-color: #000000;" class="swiper mySwiper2">
-                <div class="swiper-wrapper">
+                <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
                     <?php foreach ($images as $image) { ?>
-                        <div class="swiper-slide">
-                            <img src=<?= $image["url_image"] ?>>
-                        </div>
+                            <div class="swiper-slide">
+                                <img src=<?= $image["url_image"] ?>>
+                            </div>
                     <?php } ?>
+                    </div>
                 </div>
-                <div class="swiper-button-wrapper">
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                    <div class="swiper-wrapper">
+                    <?php foreach ($images as $image) { ?>
+                            <div class="swiper-slide">
+                                <img src=<?= $image["url_image"] ?>>
+                            </div>
+                    <?php } ?>
+                    </div>
                     <div class="swiper-button-next"></div>
-                </div>
-                <div class="swiper-button-wrapper">
                     <div class="swiper-button-prev"></div>
                 </div>
-            </div>
-            <div thumbsSlider="" class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <?php foreach ($images as $image) { ?>
-                        <div class="swiper-slide">
-                            <img src=<?= $image["url_image"] ?>>
-                        </div>
-                    <?php } ?>
-                </div>
-            </div>
         <?php } ?>
-    </div> -->
+    </div>
+
+    <?php if (!empty($certificate)): ?>
+        <a href="<?= $certificate[0]['url_image'] ?>" target="_blank">
+            Voir le certificat PDF
+        </a>
+    <?php endif; ?>
+
+    <ul>
+        <li><?= $category["name"] ?></li>
+        <li><?= $p["userCity"] ?></li>
+    </ul>
+
+    <h1>
+        <img src="./templates/images/profil-icon.png" alt="Logo du vendeur">
+        <?= $p["fullname"] ?>
+    </h1>
+
+    <h1>
+        <?php if (!empty($p["celebrityUrl"])) { ?>
+            <img src=<?= $p["celebrityUrl"] ?> alt=<?= $p["celebrityUrl"] ?>>
+        <?php } ?>
+        <?= $p["celebrityName"] ?>
+    </h1>
+
+
 
     <section id="product-description">
         <h2>Description</h2>
@@ -228,10 +216,15 @@ $script = "templates/JS/favorite.js";
 
 <!-- Initialize Swiper -->
 <script>
+    const swiperSlides = document.querySelectorAll('.mySwiper .swiper-slide');
+    const slideCount = swiperSlides.length;
+
+    const slidesToShow = Math.min(slideCount, 4);
+
     var swiper = new Swiper(".mySwiper", {
         direction: 'vertical',
         spaceBetween: 0,
-        slidesPerView: 4,
+        slidesPerView: slidesToShow,
         freeMode: true,
         watchSlidesProgress: true,
     });
