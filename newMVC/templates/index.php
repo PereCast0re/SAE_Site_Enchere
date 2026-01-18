@@ -37,8 +37,8 @@ $style = "templates/style/index.css";
             $current_price = null;
 
             // On vérifie la clé exacte retournée par ta base (MAX(new_price))
-            if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-              $current_price = $priceRow[0]['MAX(new_price)'];
+            if (!empty($priceRow) && isset($priceRow['last_price']) && $priceRow['last_price'] !== null) {
+              $current_price = $priceRow['last_price'];
             } else {
               $current_price = $p['start_price'];
             }
@@ -150,10 +150,37 @@ $style = "templates/style/index.css";
 
   <a id="Voir_annonces_btn" class="btns" href="index.php?action=buy">Voir les annonces</a>
   <?php $image = null ?>
-  
+
   <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
   <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
   </div>
+  <section class="qui-sommes-nous">
+    <h2>Qui sommes-nous ?</h2>
+
+    <div class="cercles-container">
+      <div class="cercle cercle-gauche">
+        <div class="icon"><img src="templates/Images/france.png" alt="Icon France" class="icon-france"></div>
+        <h3>Site d'enchère d'origine française</h3>
+        <p>Site hébergé et réalisé par des français en France. Disponibles uniquement en France !</p>
+      </div>
+
+      <div class="cercle cercle-centre">
+        <div class="icon">
+          <img src="templates/Images/etoile.png" alt="Icon star" class="icon-star">
+        </div>
+        <h3>Centré sur les stars d'internet</h3>
+        <p>Site d'enchère où seul les objets de célébrités sont disponibles. Nous proposons également une grande variété
+          de catégories qui peuvent que vous plaire.</p>
+      </div>
+
+      <div class="cercle cercle-droite">
+        <div class="icon"><img src="templates/Images/etudiant.png" alt="Icon student" class="icon-student"></div>
+        <h3>Réalisé par des étudiants</h3>
+        <p>Une équipe de développeurs en BUT informatique composé de Thomas Barthoux Saure, Kyllian Riviere et de Jimmy
+          Garnier ont réalisé ce site d'enchère !</p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <?php include('preset/footer.php'); ?>

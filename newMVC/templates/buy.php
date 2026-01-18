@@ -1,6 +1,6 @@
 <?php
 $title = "Page d'achats";
-$style = "templates/style/Accueil.css";
+$style = "templates/style/buy.css";
 
 ?>
 
@@ -28,36 +28,45 @@ $style = "templates/style/Accueil.css";
                 <?php foreach ($products as $p): ?>
                     <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
 
+                        <?php
+                        $priceRow = $productRepository->getLastPrice($p['id_product']);
+                        $current_price = null;
+
+                        if (!empty($priceRow) && isset($priceRow['last_price']) && $priceRow['last_price'] !== null) {
+                            $current_price = $priceRow['last_price'];
+                        } else {
+                            $current_price = $p['start_price'];
+                        }
+                        ?>
+
                         <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>"
                             class="swiper-slide slide-link">
-
                             <div class="image-container">
                                 <?php
                                 $images = getImage($p['id_product']);
                                 if (!empty($images)) {
                                     echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                                } else {
-                                    echo '<div class="no-image-placeholder">Aucune image disponible</div>';
                                 }
                                 ?>
 
-                                <div class="text-content-overlay">
+                                <div class="luxury-overlay">
                                     <h3><?= htmlspecialchars($p['title']) ?></h3>
-                                    <?php
-                                    $priceRow = $productRepository->getLastPrice($p['id_product']);
-                                    $current_price = null;
-                                    if (!empty($priceRow) && isset($priceRow[0]['MAX(new_price)']) && $priceRow[0]['MAX(new_price)'] !== null) {
-                                        $current_price = $priceRow[0]['MAX(new_price)'];
-                                    } else {
-                                        $current_price = $p['start_price'];
-                                    }
-                                    ?>
-                                    <p>Prix actuel : <?= htmlspecialchars($current_price) ?> €</p>
-                                    <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+
+                                    <div class="info-row">
+                                        <i class="fa-regular fa-clock icon-gold"></i>
+                                        <span class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></span>
+                                    </div>
+
+                                    <div class="info-row price-box">
+                                        <i class="fa-solid fa-money-bill-wave icon-white"></i>
+                                        <span class="price"><?= htmlspecialchars($current_price) ?> €</span>
+                                    </div>
+
+                                    <div class="bid-button">Enchérir</div>
                                 </div>
                             </div>
-
                         </a>
+
                     <?php endif; ?>
                 <?php endforeach; ?>
             </div>
@@ -65,14 +74,14 @@ $style = "templates/style/Accueil.css";
     <?php endif; ?>
 
     <div class="search_bar">
-        <input type="text" id="searchInput" placeholder="Rechercher une annonce..." autocomplete="off">
+        <input type="text" id="searchInput" placeholder="Recherchez une annonce, une catégorie, une célébrité..."
+            autocomplete="on">
         <button id="searchButton">Rechercher</button>
 
         <div id="suggestions"></div>
     </div>
 
     <div class="content">
-        <h1>Nos annonces</h1>
         <div class="annonces">
             <?php if (empty($products)): ?>
                 <p>Aucune annonce disponible pour le moment.</p>
@@ -92,21 +101,43 @@ $style = "templates/style/Accueil.css";
                     if (new DateTime($p['end_date']) > new DateTime()):
                         ?>
                         <div class="announce-card">
-                            <?php
-                            $images = getImage($p['id_product']);
-                            if (!empty($images)) {
-                                echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
-                            } else {
-                                echo '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-                            }
-                            ?>
-                            <h3><?= htmlspecialchars($p['title']) ?></h3>
-                            <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
-                            <a class="btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Voir</a>
+                            <div class="card-img-container">
+                                <?php
+                                $images = getImage($p['id_product']);
+                                if (!empty($images)) {
+                                    echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
+                                }
+                                ?>
+                            </div>
+
+                            <div class="card-body">
+                                <h3><?= htmlspecialchars($p['title']) ?></h3>
+                                <p class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></p>
+
+                                <div class="celebrity-row">
+                                    <div class="avatar-wrapper">
+                                        <img src="templates/Images/compte.png" class="celebrity-img" alt="Celebrity">
+                                    </div>
+                                    <?php
+                                    $celebrity = $productRepository->getCelebrityNameByAnnoncement($p['id_product']);
+                                    if (!empty($celebrity)) {
+                                        echo '<span class="celebrity-name">Célébrité : ' . htmlspecialchars($celebrity['name']) . '</span>';
+                                    } else {
+                                        echo '<span class="celebrity-name">Célébrité : N/A</span>';
+                                    }
+                                    ?>
+                                </div>
+
+                                <div class="action-row">
+                                    <button class="wishlist-btn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                    <a class="bid-btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Enchérir</a>
+                                </div>
+                            </div>
                         </div>
                         <?php $count_displayed++; ?>
                     <?php endif; ?>
-
                 <?php endforeach; ?>
 
                 <?php
@@ -117,17 +148,11 @@ $style = "templates/style/Accueil.css";
 
             <?php endif; ?>
         </div>
-
-        <!-- <a id="Voir_annonces_btn" class="btns">Voir plus</a> -->
-
-        <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
-        <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
     </div>
 </main>
 
 <?php include('preset/footer.php'); ?>
 
-<!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script src="templates/JS/timer.js"></script>
@@ -137,9 +162,9 @@ $style = "templates/style/Accueil.css";
         new Swiper('.mySwiper', {
             autoplay: {
                 delay: 3000,
-                disableOnInteraction: false, 
+                disableOnInteraction: false,
             },
-            loop: true, 
+            loop: true,
             slidesPerView: 1,
             navigation: {
                 nextEl: '.swiper-button-next',
@@ -153,7 +178,7 @@ $style = "templates/style/Accueil.css";
 
         document.querySelectorAll('.timer').forEach(el => {
             const endDate = el.getAttribute('data-end');
-            startCountdown(endDate, el); 
+            startCountdown(endDate, el);
         });
     });
 </script>
@@ -305,17 +330,17 @@ $style = "templates/style/Accueil.css";
     }
 
     function renderProductCard(p) {
-    console.log('Produit:', p);
-    console.log('Images:', p.images);
-    
-    let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
-    
-    if (p.images && p.images.length > 0) {
-        console.log('URL image:', p.images[0].url_image);
-        imageHtml = `<img src="${p.images[0].url_image}" alt="Image annonce">`;
-    }
-    
-    return `
+        console.log('Produit:', p);
+        console.log('Images:', p.images);
+
+        let imageHtml = '<div style="height:100px;display:flex;align-items:center;justify-content:center;">Aucune image disponible</div>';
+
+        if (p.images && p.images.length > 0) {
+            console.log('URL image:', p.images[0].url_image);
+            imageHtml = `<img src="${p.images[0].url_image}" alt="Image annonce">`;
+        }
+
+        return `
         <div class="announce-card">
             ${imageHtml}
             <h3>${p.title}</h3>
@@ -323,7 +348,7 @@ $style = "templates/style/Accueil.css";
             <a class="btn" href="index.php?action=product&id=${p.id_product ?? p.id}">Voir</a>
         </div>
     `;
-}
+    }
 
 </script>
 

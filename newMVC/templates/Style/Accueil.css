@@ -478,45 +478,7 @@ main #connexion input[type="submit"]:hover {
 /* ====================== */
 /* BARRE DE RECHERCHE */
 
-.search_bar {
-  text-align: center;
-  margin: 20px 0;
-}
 
-#searchInput {
-  width: 300px;
-  padding: 10px;
-  border: 2px solid #D4AF37;
-  border-radius: 30px;
-  font-size: 16px;
-}
-
-#searchButton {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 30px;
-  background-color: #002366;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-#searchButton:hover {
-  background-color: #0046CC;
-}
-
-#suggestions {
-  margin: 0 auto;
-  background: white;
-  border: 1px solid #ccc;
-  width: 300px;
-  display: none;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-
-}
 
 .swiper {
     width: 100%;
