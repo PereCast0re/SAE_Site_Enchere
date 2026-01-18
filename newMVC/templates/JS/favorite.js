@@ -1,7 +1,7 @@
 const btnFav = document.querySelector('#fav')
 let active = false;
-const fullStar = '<i class="fa-solid fa-star"></i>';
-const emptyStar = '<i class="fa-regular fa-star"></i>';
+const fullHeart = '<i class="fa-solid fa-heart"></i>';
+const emptyHeart = '<i class="fa-regular fa-heart"></i>';
 
 btnFav.addEventListener("click", async () => {
     if (active) return;
@@ -22,7 +22,7 @@ btnFav.addEventListener("click", async () => {
                 return;
             }
 
-            btnFav.innerHTML = fullStar;
+            btnFav.innerHTML = fullHeart;
         } else {
             console.log("j'enlève");
 
@@ -34,7 +34,7 @@ btnFav.addEventListener("click", async () => {
                 return;
             }
 
-            btnFav.innerHTML = emptyStar;
+            btnFav.innerHTML = emptyHeart;
         }
 
         btnFav.dataset.isFav = value;

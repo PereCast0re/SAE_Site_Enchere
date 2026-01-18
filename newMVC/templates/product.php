@@ -14,7 +14,6 @@ $script = "templates/JS/favorite.js";
 
 <!-- <?php include('preset/header.php'); ?> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<link href="templates/style/stylePopup.css" rel="stylesheet" />
 
 <div id="popup">
 </div>
@@ -22,6 +21,64 @@ $script = "templates/JS/favorite.js";
 <div id="toastBox"></div>
 
 <script src="https://kit.fontawesome.com/645d3e5fd2.js" crossorigin="anonymous"></script>
+
+<style>
+    #swiper-container {
+        position: relative;
+        height: auto;
+        width: 40%;
+        margin: 0;
+        padding: 0;
+        /* background-color: pink; */
+        user-select: none;
+        display: flex;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .mySwiper2 {
+        width: 100%;
+        height: auto;
+    }
+
+    .mySwiper {
+        display: flex;
+        width: 25%;
+        height: auto;
+    }
+
+    .mySwiper .swiper-wrapper {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .mySwiper .swiper-slide {
+        width: 100%;
+        height: auto;
+        opacity: 0.4;
+        padding: 2%;
+    }
+
+    .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+</style>
 
 <main>
     <h1><?= $p['title']; ?></h1>
@@ -46,15 +103,58 @@ $script = "templates/JS/favorite.js";
 
 
     <div style="font-size: 2em" data-is-fav="<?= $isFav ? 'true' : 'false' ?>" id="fav">
-        <?= $isFav ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>'; ?>
+        <?= $isFav ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'; ?>
     </div>
-    <p><?= $like ?></p>
+    <h2><?= $like ?></h2>
 
 
-    
+
+    <div id="swiper-container">
+        <div thumbsSlider="" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                </div>
+            </div>
+        </div>
+        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
 
     <!-- Swiper -->
-    <div class="container">
+    <!-- <div class="container">
         <?php if (empty($images)) { ?>
             <p>Aucune image disponible pour cette annonce.</p>
         <?php } else { ?>
@@ -83,7 +183,7 @@ $script = "templates/JS/favorite.js";
                 </div>
             </div>
         <?php } ?>
-    </div>
+    </div> -->
 
     <section id="product-description">
         <h2>Description</h2>
@@ -129,7 +229,8 @@ $script = "templates/JS/favorite.js";
 <!-- Initialize Swiper -->
 <script>
     var swiper = new Swiper(".mySwiper", {
-        spaceBetween: 10,
+        direction: 'vertical',
+        spaceBetween: 0,
         slidesPerView: 4,
         freeMode: true,
         watchSlidesProgress: true,
@@ -143,6 +244,12 @@ $script = "templates/JS/favorite.js";
         thumbs: {
             swiper: swiper,
         },
+    });
+
+    document.querySelectorAll('.mySwiper .swiper-slide').forEach((slide, index) => {
+        slide.addEventListener('mouseenter', () => {
+            swiper2.slideTo(index);
+        });
     });
 </script>
 
