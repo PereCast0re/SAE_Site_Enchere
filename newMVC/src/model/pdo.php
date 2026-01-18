@@ -61,7 +61,7 @@ function getImage($id_product)
 function getAnnoncementEndWithReservedPrice($id_user)
 {
     $pdo = connection();
-        $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
+    $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
                     FROM product AS p
                     JOIN published AS publi ON publi.id_product = p.id_product
                     LEFT JOIN bid AS b ON b.id_product = p.id_product
@@ -70,14 +70,14 @@ function getAnnoncementEndWithReservedPrice($id_user)
                         AND p.end_date < CURRENT_DATE 
                         AND p.reserve_price > 0
                     GROUP BY p.id_product  
-                    HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL"; 
+                    HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL";
 
     $temp = $pdo->prepare($requete);
     $temp->execute([
         ":id_user" => $id_user
     ]);
 
-    
+
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -108,12 +108,13 @@ function getListFinishedAnnoncements($id_user)
     return $temp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function gethashPassword($email){
+function gethashPassword($email)
+{
     $pdo = connection();
     $requete = "SELECT password from users where email = :email ";
     $temp = $pdo->prepare($requete);
     $temp->execute([
-        ":email" => $email 
+        ":email" => $email
     ]);
 
     $result = $temp->fetch(PDO::FETCH_ASSOC);
@@ -121,9 +122,10 @@ function gethashPassword($email){
 }
 
 ////////////////////////////////////////////////////////////////////////////
-                    // Ajout d'une vue a une annonce //
+// Ajout d'une vue a une annonce //
 ///////////////////////////////////////////////////////////////////////////
-function getViewProduct($id_annoncement, $current_date){
+function getViewProduct($id_annoncement, $current_date)
+{
     $pdo = connection();
     $requete = "SELECT * from productview where id_product = :id_product and view_date = :current_date";
     $tmp = $pdo->prepare($requete);
@@ -135,7 +137,8 @@ function getViewProduct($id_annoncement, $current_date){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function InsertNewView($id_annoncement, $current_date){
+function InsertNewView($id_annoncement, $current_date)
+{
     $pdo = connection();
     $requete = "INSERT into productview (id_product, id_user, view_number, view_date) VALUES (:id_product, (SELECT id_user from published where  id_product = :id_product), 1, :current_date)";
     $tmp = $pdo->prepare($requete);
@@ -145,7 +148,8 @@ function InsertNewView($id_annoncement, $current_date){
     ]);
 }
 
-function UpdateNumberView($id_annoncement){
+function UpdateNumberView($id_annoncement)
+{
     $pdo = connection();
     $requete = "UPDATE ProductView SET view_number = view_number + 1 WHERE id_product = :id";
     $tmp = $pdo->prepare($requete);
@@ -155,7 +159,8 @@ function UpdateNumberView($id_annoncement){
 }
 
 // fonction pour la vérification bot
-function getLastViewVerifBot($id_product) {
+function getLastViewVerifBot($id_product)
+{
     $pdo = connection();
     $stmt = $pdo->prepare("
         SELECT view_date FROM ProductView 
@@ -177,7 +182,7 @@ function saveCertificatePath($id_product, $path_image)
         $temp->execute([
             ":id_product" => $id_product,
             ":path_image" => $path_image,
-            ":name_image" => $id_product. "Certificate.pdf"
+            ":name_image" => $id_product . "Certificate.pdf"
         ]);
 
         return true;
@@ -189,7 +194,8 @@ function saveCertificatePath($id_product, $path_image)
 
 ///////////////////////////////////////////// Cloture d'une annonce ////////////////////////////////////////////////////////
 /// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
-function closeAnnoncement($id_product){
+function closeAnnoncement($id_product)
+{
     $pdo = connection();
     $requete = "UPDATE product SET end_date = now(), mailIsSent = 1 WHERE id_product = :id_product";
     $tmp = $pdo->prepare($requete);
@@ -198,7 +204,8 @@ function closeAnnoncement($id_product){
     ]);
 }
 
-function get_all_annoncement_notMailed(){
+function get_all_annoncement_notMailed()
+{
     $pdo = connection();
     $requete = 'SELECT * from product where mailIsSent != 1';
     $tmp = $pdo->prepare($requete);
@@ -208,7 +215,8 @@ function get_all_annoncement_notMailed(){
 
 
 /////////////////////////////////// Admin ////////////////////////////////////////////
-function getAllProduct_admin(){
+function getAllProduct_admin()
+{
     $pdo = connection();
     $requete = "SELECT * FROM Product where status = 0 ";
     try {
@@ -220,10 +228,14 @@ function getAllProduct_admin(){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getProductsByCategory($id_category){
+function getProductsByCategory($id_category)
+{
     $pdo = connection();
-    $requete = "SELECT * FROM Product
+    $requete = "SELECT Product.*, celebrity.name AS celebrity_name
+                FROM Product
                 JOIN belongsto ON Product.id_product = belongsto.id_product
+                JOIN concerned ON Product.id_product = concerned.id_product
+                JOIN Celebrity ON concerned.id_celebrity = Celebrity.id_celebrity
                 WHERE belongsto.id_category = :id_category";
     $tmp = $pdo->prepare($requete);
     $tmp->execute([
@@ -232,10 +244,13 @@ function getProductsByCategory($id_category){
     return $tmp->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getProductsByCelebrity($id_celebrity){
+function getProductsByCelebrity($id_celebrity)
+{
     $pdo = connection();
-    $requete = "SELECT * FROM Product
+    $requete = "SELECT Product.*, celebrity.name AS celebrity_name
+                FROM Product
                 JOIN concerned ON Product.id_product = concerned.id_product
+                JOIN Celebrity ON concerned.id_celebrity = Celebrity.id_celebrity
                 WHERE concerned.id_celebrity = :id_celebrity";
     $tmp = $pdo->prepare($requete);
     $tmp->execute([

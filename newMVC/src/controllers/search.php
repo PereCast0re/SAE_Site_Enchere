@@ -41,7 +41,7 @@ try {
                 'type'       => $h['type'],
                 'title'      => $h['title'],
                 'end_date'   => $productData['end_date'] ?? null,
-                'celebrity'  => $celebrity['name'] ?? 'N/A',
+                'celebrity_name'  => $celebrity['name'] ?? 'N/A',
                 'images'     => getImage($pId) 
             ];
         }

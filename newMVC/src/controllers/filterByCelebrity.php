@@ -11,5 +11,8 @@ $id = (int)$_GET['id'];
 $products = getProductsByCelebrity($id);
 foreach ($products as &$p) {
     $p['images'] = getImage($p['id_product']);
+    if (!isset($p['celebrity']) || empty($p['celebrity'])) {
+        $p['celebrity'] = 'N/A';
+    }
 }
 echo json_encode($products);
