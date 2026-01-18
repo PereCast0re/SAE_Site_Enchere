@@ -13,7 +13,6 @@ $script = "templates/JS/favorite.js";
 <?php ob_start(); ?>
 
 <!-- <?php include('preset/header.php'); ?> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <div id="popup">
 </div>
@@ -21,75 +20,6 @@ $script = "templates/JS/favorite.js";
 <div id="toastBox"></div>
 
 <script src="https://kit.fontawesome.com/645d3e5fd2.js" crossorigin="anonymous"></script>
-
-<style>
-    #swiper-container {
-        position: relative;
-        height: auto;
-        width: 30%;
-        margin: 0;
-        padding: 0;
-        /* background-color: pink; */
-        user-select: none;
-        display: flex;
-        gap: 10px;
-    }
-
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        border-radius: 10px;
-        border: 2px solid black;
-    }
-
-    .mySwiper2 .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        border-radius: 10px;
-        border: none;
-    }
-
-    .mySwiper2 {
-        width: 100%;
-        height: auto;
-    }
-
-    .mySwiper {
-        display: flex;
-        width: 25%;
-        height: auto;
-    }
-
-    .mySwiper .swiper-wrapper {
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .mySwiper .swiper-slide {
-        width: 100%;
-        height: auto;
-        opacity: 0.4;
-        padding: 2%;
-    }
-
-    .mySwiper .swiper-slide-thumb-active {
-        opacity: 1;
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        display: none;
-    }
-</style>
 
 <main>
     <h1><?= $p['title']; ?></h1>
@@ -123,7 +53,7 @@ $script = "templates/JS/favorite.js";
         <?php if (empty($images)) { ?>
             <p>Aucune image disponible pour cette annonce.</p>
         <?php } else if (count($images) < 2) { ?>
-                <img src=<?= $images[0]["url_image"] ?> alt=<?= $images[0]["alt"] ?>>
+                <img class="uniqueImage" src=<?= $images[0]["url_image"] ?> alt=<?= $images[0]["alt"] ?>>
         <?php } else { ?>
                 <div thumbsSlider="" class="swiper mySwiper">
                     <div class="swiper-wrapper">
