@@ -53,31 +53,46 @@ async function print_tab_annoncements(annoncements, div) {
             image_url[0].url_image
         ) ? image_url[0].url_image : "assets/default.png";
 
+        celebrity = await getCelebrity(annonce.id_product);
+        if (celebrity != null){
+            if (celebrity.url == null){
+                celebrity.url = 'templates/Images/profil-icon.png'
+            }
+        }
+
+        category = await getCategory(annonce.id_product);
+        console.log("category")
+        console.log(category)
+
+        let city = document.getElementById('city_hidden').value;
+
         html +=
             `
-            <input type="hidden" id="id_product" value="${annonce.id_product}"/>
-            <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
-                <table>
-                    <tbody>
-                    <tr>
-                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;"/>
-                        <td>${annonce.title}</td>
-                        <td><span class="timer" data-end="${annonce.end_date}">Chargement...</span></td>
-                        <td class="price_annonce_${annonce.id_product}"> ${price.last_price} €</td>
-                        <td><a href="index.php?action=product&id=${annonce.id_product}">See Annonce</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>photo user</td>
-                        <td>utilisateur</td>
-                        <td>Like(s) : ${like.nbLike}</td>
-                        <td><button type="button" class="stat_button" style="display: block;"> See stats </button></td>
-                    </tr>
-                </tbody>
-                </table>
-                <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
+            <div class="annonce_wrapper">
+                <div class="annonce_card">
+                    <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" />
+                    <div class="annonce_info_top">
+                        <span class="categorie_annonce">${category.name}</span>
+                        <span class="ville_annonce">${city}</span>
+                    </div>
+                    <div class="annonce_details">
+                        <h3 class="annonce_title">${annonce.title}</h3>
+                        <div class="annonce_meta">
+                            <span class="timer_display timer" data-end="${annonce.end_date}">Chargement...</span>
+                            <span class="price_display price_annonce_${annonce.id_product}">${price.last_price} €</span>
+                            <a href="index.php?action=product&id=${annonce.id_product}">Voir</a>
+                        </div>
+                        <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
+                        <div class="user_info">
+                            <img class="celebrity_img" src="${celebrity.url}" alt="${celebrity.name}" />
+                            <span>Celebrite : ${celebrity.name}</span>
+                            <span>Like(s): ${like.nbLike}</span>
+                            <button type='button' class='stat_button'>Voir les statistiques</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat_annonce${annonce.id_product}"></div>
             </div>
-            <div class="stat_annonce${annonce.id_product}"></div>
             `
     };
 
@@ -120,11 +135,11 @@ async function print_unverifed_product(div, annoncements) {
         annonce_attente += 
             `
             <input type="hidden" id="id_product" value="${annonce.id_product}"/>
-            <div class="annonce_user" style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
+            <div class="annonce_user">
                 <table>
                     <tbody>
                     <tr>
-                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;"/>
+                        <img src="${firstImg}"/>
                         <td>${annonce.title}</td>
                         <td><a href="index.php?action=product&id=${annonce.id_product}">See Annonce</a></td>
                     </tr>
@@ -146,48 +161,46 @@ async function print_unverifed_product(div, annoncements) {
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div) {
     let annoncements = await getAnnonceReserved($id_user);
+    console.log("ici avec reserves")
     console.log(annoncements)
-    if (annoncements.length > 0) {
-        div.style = 'display: block;'
+    if (Array.isArray(annoncements) && annoncements.length > 0) {
+        div.style.display = 'block';
 
-        let html = ""
-        html.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;" >Vos annonces terminer avec prix de réserve non atteint</h3>`
+        let html = '<h3 style="padding-top:20px;padding-bottom:10px;">Vos annonces terminées avec prix de réserve non atteint</h3>';
 
         for (const annonce of annoncements) {
-
             let image_url = await getImage(annonce.id_product);
             let firstImg = (
-                Array.isArray(image_url) &&
-                image_url.length > 0 &&
-                image_url[0].url_image
+                Array.isArray(image_url) && image_url.length > 0 && image_url[0].url_image
             ) ? image_url[0].url_image : "assets/default.png";
 
             html += `
-                <div>
-                    <div style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
-                        <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;" />
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>${annonce.title}</td>
-                                    <td>Dernière enchére : <br> ${annonce.new_price} </td>
-                                    <td>Vôtre prix de reserve : <br> ${annonce.reserve_price} </td>
-                                    <td>
-                                        <button id="btn_agree" type="button" style="display: block;">Accepter</button>
-                                        <br>
-                                        <button id="btn_refuse" type="button" style="display: block;">Refuser</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="annonce_wrapper">
+                    <div class="annonce_card">
+                        <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" />
+                        <div class="annonce_details">
+                            <h3 class="annonce_title">${annonce.title}</h3>
+                            <div class="annonce_meta">
+                                <span>Dernière enchère : <strong>${annonce.new_price ?? 'Aucune'}</strong></span>
+                                <span>Prix de réserve : <strong>${annonce.reserve_price}</strong></span>
+                            </div>
+                        </div>
+                        <div class="tags-row">
+                            <button class="btn_agree btn-modifier" data-id="${annonce.id_product}">Accepter</button>
+                            <button class="btn_refuse btn-modifier" data-id="${annonce.id_product}">Refuser</button>
+                        </div>
                     </div>
                 </div>
-                `
+            `;
         }
-        div.innerHTML += html;
-    }
-    else {
-        div.style.display = "none"
+
+        div.innerHTML = html;
+        // add handler placeholders if needed
+        div.querySelectorAll('.btn_agree').forEach(b => b.addEventListener('click', () => console.log('agree', b.dataset.id)));
+        div.querySelectorAll('.btn_refuse').forEach(b => b.addEventListener('click', () => console.log('refuse', b.dataset.id)));
+    } else {
+        div.style.display = 'none';
+        div.innerHTML = '';
     }
 }
 
@@ -268,29 +281,45 @@ async function PrintStatAnnonce(annoncement) {
     // console.log(annoncement);
 
     const divStat = document.querySelector(`.stat_annonce${annoncement.id_product}`);
+    divStat.style.display = 'block'
     divStat.innerHTML = "";
     let html = "";
     html = `
-        <h1>Évolution du nombre de vues</h1>
-        <p>Choisissez le type de graphique :</p>
-        <select id="chartTypeV">
-            <option value="D">Par jour</option>
-            <option value="M">Par mois</option>
-            <option value="Y">Par an</option>
-        </select>
-        <canvas id="myChartV" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
+        <div class="stat_annonce_inner">
+            <div class="charts_controls" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;align-items:center;">
+                <button class='btn_close_stat'>X</button>
+                <div>
+                    <div class="chart-title">Évolution du nombre de vues</div>
+                    <select id="chartTypeV">
+                        <option value="D">Par jour</option>
+                        <option value="M">Par mois</option>
+                        <option value="Y">Par an</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="chart-title">Évolution du prix</div>
+                    <select id="chartTypeP">
+                        <option value="D">Par jour</option>
+                        <option value="M">Par mois</option>
+                        <option value="Y">Par an</option>
+                    </select>
+                </div>
+            </div>
 
-        <h1>Évolution du prix</h1>
-        <p>Choisissez le type de graphique :</p>
-        <select id="chartTypeP">
-            <option value="D">Par jour</option>
-            <option value="M">Par mois</option>
-            <option value="Y">Par an</option>
-        </select>
-        <canvas id="myChartP" width="400" height="200" style="max-width: 600px; margin-top: 20px;"></canvas>
-    `
+            <div class="charts_container">
+                <div class="chart-box">
+                    <div class="chart-title">Nombre de vues</div>
+                    <canvas id="myChartV"></canvas>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-title">Prix</div>
+                    <canvas id="myChartP"></canvas>
+                </div>
+            </div>
+        </div>
+    `;
 
-    divStat.innerHTML += html
+    divStat.innerHTML = html;
 
     data = await getPriceWithOption(annoncement["id_product"], 'D');
     console.log(data);
@@ -300,6 +329,12 @@ async function PrintStatAnnonce(annoncement) {
 
     chartP = createChart(chartP, 'P', annoncement);
     updateChart(chartP, 'D', 'P', annoncement);
+
+    document.querySelectorAll('.btn_close_stat').forEach((button, index) => {
+        button.addEventListener('click', () => {
+            divStat.style.display = 'none'
+        });
+    });
 }
 
 //Button republish
@@ -312,7 +347,7 @@ async function print_historique_annoncement(id_user, div) {
     if (annoncements && annoncements.length > 0) {
 
         div.style.display = "block"
-        div.innerHTML += `<h3 style="padding-top:20px;padding-bottom:10px;"> Vos annonces non concluante </h3>`
+        div.innerHTML += `<h3> Vos annonces non concluante </h3>`
         for (const annonce of annoncements) {
 
             let image_url = await getImage(annonce.id_product);
@@ -323,8 +358,8 @@ async function print_historique_annoncement(id_user, div) {
             ) ? image_url[0].url_image : "assets/default.png";
 
             html += `
-                <div style="padding: 10px; display: flex; background: white; border: 2px solid black; box-shadow: black 0px 3px 6px, black 0px 3px 6px; width: 50%; border-radius: 15px; align-items: center; margin-left: 5%; padding: 15px; gap:15px; margin-top:20px;">
-                    <img src="${firstImg}" style="width: 80px;height: 80px; border-radius: 15px;" />
+                <div>
+                    <img src="${firstImg}" />
                     <table>
                         <tbody>
                             <tr>
@@ -391,6 +426,23 @@ async function alertConfirmation(message, action, id_product) {
 
     let button = popup.querySelector(".btnConfirm")
     button.addEventListener('click', async () =>{
+        if (action === 'updateProduct') {
+            const frm = document.createElement('form')
+            frm.value = id_product
+            frm.action = 'index.php?action=updateProduct'
+            frm.method = 'POST'
+            frm.style.display = 'none'
+
+            const input = document.createElement('input')
+            input.type = 'hidden'
+            input.name = 'id_product'
+            input.value = id_product
+            frm.appendChild(input)
+
+            document.body.appendChild(frm)
+            frm.submit()
+            return
+        }
         await fetch(`index.php?action=${action}`, {
             method: 'POST',
             headers: {
@@ -521,6 +573,20 @@ async function getListAnnoncementEnd(id_user) {
     console.log('getListAnnoncementEnd')
     console.log(annonce_json)
     return annonce_json
+}
+
+async function getCelebrity(id_product) {
+    const response = await fetch(`index.php?action=getCelebrityFromProduct&id_product=${id_product}`);
+    const celebrity_json = await response.json();
+    console.log(celebrity_json);
+    return celebrity_json;
+}
+
+async function getCategory(id_product) {
+    const response = await fetch(`index.php?action=getCategoryFromProduct&id_product=${id_product}`);
+    const category_json = await response.json();
+    console.log(category_json);
+    return category_json;
 }
 
 

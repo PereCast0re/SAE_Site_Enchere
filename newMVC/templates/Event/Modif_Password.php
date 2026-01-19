@@ -10,13 +10,15 @@
         <form class="form_modif_password" id="form_modif_password" action="index.php?action=update_password" method="POST" onsubmit="checkupNewPWD(event)">
             <input type="hidden" name="action" value="update_password">
             
+            <p>Taper vôtre ancien mot de passe</p>
+            <input class="old_password" type="password" name="old_password" placeholder="Votre ancien mot de passe">
+
             <p>Taper nouveau mot de passe </p>
             <input class="new_password_1" type="password" name="new_password_1" placeholder="Votre nouveau mot de passe">
 
             <p>Retaper nouveau mot de passe </p>
             <input class="new_password_2" type="password" name="new_password_2" placeholder="Répéter le mot de passe">
 
-            <!-- Obligation de rajouté un input caché pour avoir l'action dans l'url du au onsubmit qui passe outre -->
             <button type="submit">Valider</button>
         </form>
     

@@ -117,13 +117,25 @@ try {
                 throw new Exception("Impossible to update product statut !");
             }
         
-        } elseif ($_GET['action'] == 'updateProduct'){
+        } elseif ($_GET['action'] === 'updateProduct'){
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0){
+                UpdateFromProduct($_POST['id_product']);
+            } else {
+                throw new Exception("Impossible de modifier ce produit !" .$e->getMessage());
+            }
+        
 
+        } elseif ($_GET['action'] == 'updateProductPage'){
+            require('templates/updateProduct.php');
 
+        } elseif ($_GET['action'] === 'finalUpdateProduct'){
+            $user = $_SESSION['user'];
+            finalUpdateProduct($user, $_POST);
+        
         } elseif ($_GET['action'] === 'addComment') {
             if($_POST['id_product'] && $_POST['id_product'] > 0){
                 UpdateProduct($_POST['id_product']);
-            }
+            } 
 
 
             ////////////////////////////// Favoris //////////////////////////////
@@ -270,6 +282,41 @@ try {
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
+        
+        } elseif ($_GET['action'] == 'getCelebrityFromProduct'){
+            if(isset($_GET['id_product']) && $_GET['id_product'] >= 0){
+                $id_product = $_GET['id_product'];
+                $pdo = DatabaseConnection::getConnection();
+                $celebrityRepository = new CelebrityRepository($pdo);
+                $celebrity = $celebrityRepository->getCelebrityFromAnnoncement($id_product);
+                if ($celebrity !== false){
+                    header('Content-Type: application/json');
+                    echo json_encode($celebrity);
+                    exit();
+                } else {
+                    throw new Exception("Impossible de récupérer la célébrité associée à ce produit.");
+                }
+            } else {
+                throw new Exception("ID de produit invalide pour récupérer la célébrité.");
+            }
+
+        } elseif ($_GET['action'] == 'getCategoryFromProduct'){
+            if(isset($_GET['id_product']) && $_GET['id_product'] >= 0){
+                $id_product = $_GET['id_product'];
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $category = $productRepository->getCategoryFromAnnoncement($id_product);
+                if ($category !== false){
+                    header('Content-Type: application/json');
+                    echo json_encode($category);
+                    exit();
+                } else {
+                    throw new Exception("Impossible de récupérer la catégorie associée à ce produit.");
+                }
+            } else {
+                throw new Exception("ID de produit invalide pour récupérer la catégorie.");
+            }
+        
 
             ////////////////////////////// Page sell product ////////////////////////
 

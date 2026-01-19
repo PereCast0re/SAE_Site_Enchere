@@ -80,9 +80,6 @@ function checkImage($id_product, ProductRepository $productRepository){
         if (!is_dir($DirAnnonce)) {
             //creation du dossier
             mkdir($DirAnnonce, 0777, true);
-        } else {
-            echo("Erreur : Le dossier existe déjà.");
-            exit();
         }
         
         // Ajoute les images dans le dossier
@@ -109,11 +106,21 @@ function checkImage($id_product, ProductRepository $productRepository){
 
 function certificat($id_annonce, $DirAnnonce){
     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
+    var_dump($tmpFilePath);
     if ($tmpFilePath != ""){
         $newFilePath = $DirAnnonce . "/" . $id_annonce . "_Certificate" . ".pdf";
+        $databasePath = "Annonce/". $id_annonce . "/" . $id_annonce . "_Certificate" . ".pdf";
         // Fonction native de php pour déplacer les fichier
-        move_uploaded_file($tmpFilePath, $newFilePath);
-        saveCertificatePath($id_annonce, $newFilePath);
+        try{
+            move_uploaded_file($tmpFilePath, $newFilePath);
+        } catch (Exception $e){
+            throw new Exception("Error while moving your certificate file !" . $e->getMessage());
+        }
+        try{
+            saveCertificatePath($id_annonce, $databasePath);
+        } catch (Exception $e){
+            throw new Exception("Error while saving your certificate path in database !" . $e->getMessage());
+        }
     }
 }
 

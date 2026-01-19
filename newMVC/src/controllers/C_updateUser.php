@@ -22,18 +22,28 @@ function updateEmail(string $email)
     }
 }
 
-function updatePassword(string $password)
+function updatePassword($post)
 {
-    if (!empty($password)) {
-        $user = $_SESSION["user"];
-        $id_user = $user["id_user"];
-        $pass = trim(htmlentities(password_hash($password, PASSWORD_ARGON2ID)));
-
-        $pdo = DatabaseConnection::getConnection();
-        $userRepository = new UserRepository($pdo);
-        $userRepository->updatePasswordUser($id_user, $pass);
-        $_SESSION["user"]["password"] = $password;
-
+    if (!empty($post["old_password"]) && !empty($post["new_password_1"]) && !empty($post["new_password_2"])) {
+        $oldPass = trim(htmlentities(password_hash($post["old_password"], PASSWORD_ARGON2ID)));
+        $newPass = trim(htmlentities($post["new_password_1"]));
+        $confirmPass = trim(htmlentities($post["new_password_2"]));
+    
+        $oldPassDatabase = $_SESSION["user"]["password"];
+        
+        if ($oldPassDatabase == $oldPass ){
+            if( $newPass == $confirmPass){
+                $user = $_SESSION["user"];
+                $id_user = $user["id_user"];
+                $newPass = trim(htmlentities(password_hash($newPass, PASSWORD_ARGON2ID)));
+            } 
+            $pdo = DatabaseConnection::getConnection();
+            $userRepository = new UserRepository($pdo);
+            $userRepository->updatePasswordUser($id_user, $newPass);
+            $_SESSION["user"]["password"] = $newPass;
+        } else {
+            throw new Exception("L'ancien mot de passe est incorrect.");
+        }
         header("Location: index.php?action=user");
         exit();
     } else {

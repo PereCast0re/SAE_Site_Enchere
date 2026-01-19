@@ -1,0 +1,472 @@
+/* Variables */
+:root {
+    --dark-blue: #112250;
+    --darker-blue: #0e1a33;
+    --beige: #efe9df;
+    --card-beige: #e8d8b8;
+    --gold: #cfaa74;
+    --text-color: #222;
+    --bg-color: #f7f3ef;
+    --input-bg: #ffffff;
+    --muted: #9aa3b2;
+}
+
+body {
+    background-color: var(--Swan-wing);
+    font-family: 'Lora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+}
+
+.user-profile-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px 20px 80px 20px;
+}
+
+/* --- TITRES --- */
+.profile-header {
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin: 0 0 12px 0;
+}
+
+.separator-line {
+    height: 2px;
+    background-color: rgba(17,34,80,0.12);
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+/* --- FORMULAIRE INFOS --- */
+.section_info {
+    margin-left: 30px;
+    border-left: 4px solid var(--dark-blue);
+    padding-left: 40px;
+    padding-top: 8px;
+}
+
+.info-group {
+    margin-bottom: 20px;
+}
+
+.info-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--dark-blue);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 680px;
+}
+
+.input-wrapper input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid rgba(17,34,80,0.08);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    font-size: 0.95rem;
+    color: var(--dark-blue);
+    height: 36px;
+}
+
+.input-wrapper input::placeholder {
+    color: var(--muted);
+}
+
+.btn-modifier {
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(17,34,80,0.08);
+}
+
+.btn-modifier:hover {
+    background-color: var(--darker-blue);
+}
+
+/* --- ANNONCES & FILTRES --- */
+.filters-bar {
+    display: flex;
+    gap: 12px;
+    margin: 12px 0 24px 0;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    background: white;
+    border: 1px solid rgba(17,34,80,0.12);
+    border-radius: 20px;
+    padding: 6px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dark-blue);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.filter-pill:hover {
+    transform: translateY(-2px);
+}
+
+/* --- CARTE ANNONCE (Design capture) --- */
+.annonce_wrapper {
+    margin-bottom: 28px;
+}
+
+.annonce_card {
+    background: linear-gradient(90deg, rgba(17,34,80,0.95) 0%, rgba(34,56,96,0.95) 100%);
+    padding: 18px;
+    display: flex;
+    gap: 18px;
+    color: white;
+    position: relative;
+    align-items: center;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(17,34,80,0.12);
+}
+
+.annonce_img {
+    width: 220px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.annonce_details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.annonce_title {
+    color: var(--gold);
+    font-size: 1.25rem;
+    margin: 0 0 6px 0;
+    font-family: 'Lora', serif;
+}
+
+.annonce_meta {
+    display: flex;
+    gap: 18px;
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.timer_display {
+    color: rgba(255,255,255,0.9);
+    font-family: monospace;
+}
+
+.price_display {
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.user_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+}
+
+.user_avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.08);
+}
+
+.btn-stats {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+.btn-stats:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.tags-row {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.tag {
+    background: white;
+    color: var(--dark-blue);
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.annonce_user {
+    position: relative;
+}
+
+.btn_moreoption {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: xx-large;    
+    background: none;
+    border: none;
+    color: #f1c27d;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.btn_close_stat {
+    top: 10px;
+    right: 10px;
+
+    background: white;
+    color: var(--dark-blue);
+    border: none;
+    border-radius: 14px;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+}
+
+
+/* --- STATS PANEL (Partie beige) --- */
+.stats_panel {
+    background-color: var(--card-beige);
+    padding: 18px;
+    display: none;
+    border-radius: 12px;
+}
+
+.stats_panel.active {
+    display: block;
+    animation: slideDown 0.28s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.charts_container {
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.chart-box {
+    flex: 1;
+    min-width: 260px;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 6px 14px rgba(17,34,80,0.06);
+}
+
+.chart-title {
+    color: var(--dark-blue);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* --- Statistiques (dans chaque annonce) --- */
+.stat_annonce_inner {
+    background: linear-gradient(180deg, rgba(232,216,184,0.95) 0%, rgba(240,232,210,0.95) 100%);
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 14px;
+    box-shadow: 0 6px 18px rgba(17,34,80,0.06);
+    margin-top: -25px;
+    padding-top: 35px;
+}
+
+.stat_annonce .charts_container {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.stat_annonce .chart-box {
+    background: var(--);
+    padding: 12px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.stat_annonce .chart-box canvas {
+    width: 100% !important;
+    height: 180px !important;
+}
+
+.stat_annonce .chart-title {
+    font-size: 0.95rem;
+    color: var(--dark-blue);
+    margin-bottom: 8px;
+}
+
+.stat_annonce .btn-history, .stat_annonce .btn-modifier {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .stat_annonce .charts_container {
+        flex-direction: column;
+    }
+    .stat_annonce .chart-box canvas {
+        height: 220px !important;
+    }
+}
+
+/* --- BOUTON HISTORIQUE --- */
+.btn-history {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid var(--dark-blue);
+    color: var(--dark-blue);
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.btn-history:hover {
+    background-color: var(--dark-blue);
+    color: white;
+}
+
+.stat_button{
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(17,34,80,0.08);
+    width: 30%;
+}
+
+.celebrity_img{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.08);
+}
+
+.annonce_info_top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.categorie_annonce,
+.ville_annonce {
+    background-color: var(--bg-color);
+    color: var(--darker-blue);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .section_info {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+    
+    .input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-modifier {
+        width: 100%;
+    }
+
+    .annonce_card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .annonce_img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .annonce_details {
+        align-items: center;
+    }
+
+    .annonce_meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tags-row {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    .btn-stats {
+        width: 100%;
+        margin-top: 15px;
+    }
+}

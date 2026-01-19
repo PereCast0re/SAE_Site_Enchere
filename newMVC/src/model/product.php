@@ -397,4 +397,75 @@ class ProductRepository
             die("Error on deleting Category and his link to annoncement : " .$e->getMessage());
         }
     }
+
+    function getThisProduct($id_product){
+        $pdo = $this->connection;
+        $requete = "SELECT * FROM product where id_product = :id";
+
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id' => $id_product
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            die("Error on recuperation of this product : " .$e->getMessage());
+        }
+    }
+
+    function getFilesFromAnnoncement($id_product){
+        $pdo = $this->connection;
+        $requete = "SELECT * from image where id_product = :id";
+
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id' => $id_product
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            die("Error on recuperation of files from this product : " .$e->getMessage());
+        }
+    }
+
+    function updateProduct($id, $title, $description, $start_date, $end_date, $reserve_price, $statut){
+        $pdo = $this->connection;
+        $requete = "UPDATE Product 
+                    SET title = :title, description = :description, start_date = :start_date, end_date = :end_date, reserve_price = :reserve_price, status = :status
+                    WHERE id_product = :id;";
+
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':title' => $title,
+                ':description' => $description,
+                ':start_date' => $start_date,
+                ':end_date' => $end_date,
+                ':reserve_price' => $reserve_price,
+                ':status' => $statut,
+                ':id' => $id
+            ]);
+
+            return $pdo->lastInsertId();
+
+        } catch (PDOException $e){
+            die("Error on updating your product into the database, try again !\n Error : " . $e->getMessage());
+        }
+    }
+
+    function updateLinkCategoryProduct($id_annoncement, $name){
+        $pdo = $this->connection;
+        $requete = "UPDATE belongsto 
+                    SET id_category = (SELECT id_category from category where name like :name Limit 1)
+                    WHERE id_product = :id_annoncement;";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_annoncement' => $id_annoncement,
+                ":name" => $name
+            ]);
+        } catch (PDOException $e){
+            die("Error on updating linking your category to your annoncement :" .$e->getMessage());
+        }
+    }
 }
