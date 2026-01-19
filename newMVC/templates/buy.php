@@ -47,7 +47,7 @@ $style = "templates/style/buy.css";
                         break;
                     }
 
-                    if (new DateTime($p['end_date']) > new DateTime()):
+                    if (new DateTime($p['end_date']) > new DateTime() && $p['status'] == 1):
                         ?>
                         <div class="announce-card">
                             <div class="card-img-container">

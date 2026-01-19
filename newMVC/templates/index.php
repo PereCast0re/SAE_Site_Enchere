@@ -29,14 +29,11 @@ $style = "templates/style/index.css";
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         <?php foreach ($products as $p): ?>
-          <?php if (new DateTime($p['end_date']) > new DateTime()): ?>
+          <?php if (new DateTime($p['end_date']) > new DateTime() && $p['status'] == 1): ?>
 
             <?php
-            // 1. CALCUL DU PRIX (Doit être fait AVANT l'affichage)
             $priceRow = $productRepository->getLastPrice($p['id_product']);
             $current_price = null;
-
-            // On vérifie la clé exacte retournée par ta base (MAX(new_price))
             if (!empty($priceRow) && isset($priceRow['last_price']) && $priceRow['last_price'] !== null) {
               $current_price = $priceRow['last_price'];
             } else {
@@ -95,7 +92,7 @@ $style = "templates/style/index.css";
             break;
           }
 
-          if (new DateTime($p['end_date']) > new DateTime()):
+          if (new DateTime($p['end_date']) > new DateTime() && $p['status'] == 1):
             ?>
             <div class="announce-card">
               <div class="card-img-container">
