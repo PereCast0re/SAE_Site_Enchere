@@ -18,6 +18,8 @@ require_once('src/controllers/C_index.php');
 require_once("src/controllers/C_newsletter.php");
 require_once('src/controllers/C_deleteProduct.php');
 require_once('src/controllers/C_updateProduct.php');
+require_once('src/controllers/C_getComments.php');
+
 
 require_once("src/model/pdo.php");
 require_once('src/lib/database.php');
@@ -145,7 +147,8 @@ try {
             // $errorMessage = '<i class="fa-solid fa-hammer"></i>  <span>Désolé</span> En cours de développement ! Réessayez ultérieurement !';
             // require('templates/preset/error.php');
 
-
+        } elseif ($_GET['action'] == 'getComments') {
+            getComments();
 
             ////////////////////////////// page user //////////////////////////////
             // get price

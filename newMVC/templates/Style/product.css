@@ -312,6 +312,8 @@ input {
     width: 600px;
     height: auto;
     margin: 20px;
+    padding: 20px;
+    border-radius: 30px;
 }
 
 .swiper {
@@ -325,7 +327,7 @@ input {
     height: 100%;
     object-fit: contain;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 2px solid var(--Royal-blue);
 }
 
 .mySwiper2 .swiper-slide img {
@@ -602,4 +604,48 @@ main {
     background: #000;
     border-radius: 2px;
     background-color: var(--Royal-blue);
+}
+
+.comment-test {
+    background-color: var(--Sapphire);
+    color: var(--Swan-wing);
+    font-size: var(--H3-size);
+    font-weight: var(--H3-weight);
+    font-family: var(--H3-font);
+    border-radius: 20px;
+    padding: 15px;
+    width: 60%;
+    overflow-wrap: break-word;
+}
+
+.comment-test p {
+    font-size: var(--p-size);
+    font-family: var(--p-font);
+    padding: 15px 0;
+}
+
+#comment-form {
+    text-align: center;
+}
+
+#comment-form textarea {
+    border: 2px solid var(--Royal-blue);
+    border-radius: 20px;
+    text-align: center;
+    font-size: var(--p-size);
+    font-family: var(--p-font);
+    background-color: var(--Swan-wing);
+    width: 80%;
+    height: 100px;
+}
+
+@media (max-width: 1200px) {
+
+    /* * {
+        background-color: red;
+    } */
+
+    #product-section {
+        flex-direction: column;
+    }
 }

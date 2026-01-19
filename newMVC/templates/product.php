@@ -6,7 +6,7 @@
 
 <?php
 $title = "Page du produit";
-$style = "templates/style/product.css";
+$style = "templates/Style/product.css";
 $script = "templates/JS/favorite.js";
 ?>
 
@@ -145,26 +145,12 @@ $script = "templates/JS/favorite.js";
         </div>
     </section>
 
-    <!-- <section id="comment-section">
+    <section id="comment-section">
         <div>
-            <h2 class="title-section">Commentaires</h2>
-            <template id="comment-template">
-                <div>
-                    <div class="comment-author-name font-bold">NOM</div>
-                    <p class="comment-content">CONTENU</p>
-                </div>
-            </template>
+            <h2 class="title-section">Commentaires (<span id="comments-counter">0</span>)</h2>
             <section id="product-comment">
-                <?php foreach ($comments as $comment) { ?>
-                    <h3><a href="index.php?action=user&id=<?= $comment['id_user'] ?>">
-                            <?= htmlspecialchars(strip_tags($comment['full_name'])) ?>
-                        </a>
-                        <?= " " . $comment["comment_date"] ?>
-                    </h3>
-                    <p>
-                        <?= htmlspecialchars(strip_tags($comment['comment'])) ?>
-                    </p>
-                <?php } ?>
+                <ul id="comments" class=""></ul>
+
                 <form id="comment-form" method="POST" action="index.php?action=addComment">
                     <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
                     <br>
@@ -174,8 +160,15 @@ $script = "templates/JS/favorite.js";
                     <button class="btn" type="submit">Publier</button>
                 </form>
             </section>
+
+            <template id="comment-template">
+                <div class="comment-container">
+                    <h3 class="comment-author-name">NOM</h3>
+                    <p class="comment-content">CONTENU</p>
+                </div>
+            </template>
         </div>
-    </section> -->
+    </section>
 
 </main>
 
@@ -257,6 +250,8 @@ $script = "templates/JS/favorite.js";
 </script>
 
 <script src="https://kit.fontawesome.com/645d3e5fd2.js" crossorigin="anonymous"></script>
+
+<script src="templates/JS/comment.js"></script>
 
 <?php $content = ob_get_clean() ?>
 

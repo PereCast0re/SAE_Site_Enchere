@@ -1,16 +1,34 @@
 :root {
-    --linear-blue: linear-gradient(#002366, #0046CC);
-    --color-blue: #002366;
-    --color-orange: #FFA347;
-    --color-gold: #D4AF37;
-    --color-background: #F8F9FA;
+    --Sapphire: #3C507D;
+    --Royal-blue: #112250;
+    --Quicksand: #E0C58F;
+    --Swan-wing: #F5F0E9;
+    --Sheelstone: #D9CBC2;
+    --Gold: #D2A047;
+    --Green: #3A7F4F;
+    --Red: #C0392B;
+
+    --H1-font: "Lora", serif;
+    --H1-size: 40px;
+    --H1-weight: 700;
+
+    --H2-font: "Lora", serif;
+    --H2-size: 32px;
+    --H2-weight: 700;
+
+    --H3-font: "Lora", serif;
+    --H3-size: 24px;
+    --H3-weight: 700;
+
+    --p-font: "Poppins", serif;
+    --p-size: 16px;
 }
 
 footer {
-    background: var(--color-background);
+    background: var(--Swan-wing);
     padding: 40px 20px;
     width: 100%;
-    color: var(--color-blue);
+    color: var(--Royal-blue);
 }
 
 footer section {
@@ -27,7 +45,7 @@ footer section h3 {
     font-size: 1.5rem;
     margin-bottom: 20px;
     font-weight: bold;
-    border-bottom: 2px solid #D4AF37;
+    border-bottom: 2px solid var(--Gold);
     padding-bottom: 5px;
 }
 
@@ -47,7 +65,7 @@ footer section a {
 }
 
 footer section a:hover {
-    color: #D4AF37;
+    color: var(--Gold);
 }
 
 footer img {
