@@ -1,4 +1,5 @@
 const btnFav = document.querySelector('#fav')
+// const btnFav = document.querySelector('#fav-container')
 let active = false;
 const fullHeart = '<i class="fa-solid fa-heart"></i>';
 const emptyHeart = '<i class="fa-regular fa-heart"></i>';

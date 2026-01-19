@@ -1,4 +1,4 @@
-function ouvrirPopup(page) {
+function ouvrirPopup(page, element = null) {
     let newPrice = null;
     let currentPrice = null;
     let idProduct = null;
@@ -131,6 +131,82 @@ function ouvrirPopup(page) {
                         newPriceIsValid(parseInt(newPrice), parseInt(currentPrice));
                     });
                 })
+            break
+        case "BidValidation":
+
+            newPrice = element.dataset.price;
+            currentPrice = element.dataset.current;
+            idProduct = element.dataset.id;
+
+            console.log(newPrice + " " + currentPrice + " " + idProduct);
+
+            if (newPriceIsValid(newPrice, currentPrice)) {
+                fetch('templates/Event/Bid_Validation.php')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('popup').innerHTML = html;
+                        document.getElementById('popup_bid').style.display = 'block';
+
+                        document.getElementById('currentPrice_validation').value = currentPrice;
+                        document.getElementById('idProduct_validation').value = idProduct;
+                        document.getElementById('newPrice_validation').value = newPrice;
+
+                        document.getElementById('bid_validation_text').textContent = "Voulez-vous enchérir " + parseInt(newPrice).toLocaleString('fr-FR') + " € ?";
+
+                        // start
+                        const bidForm = document.querySelector('#bid-form');
+
+                        bidForm.addEventListener("submit", async (event) => {
+                            event.preventDefault();
+                            try {
+                                console.log(currentPrice, newPrice, idProduct);
+
+                                // L’utilisateur a cliqué sur OUI
+                                console.log("Confirmé !");
+
+                                const response = await fetch(`index.php?action=bid&id=${idProduct}`, {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                                    body: new URLSearchParams({ newPrice })
+                                });
+                                const data = await response.text();
+
+                                if (data === "same") {
+                                    showToast(2, "Vous ne pouvez pas enchérir sur votre propre annonce !");
+                                    return;
+                                }
+                                if (data === "not_logged") {
+                                    window.location.href = "index.php?action=connection";
+                                    return;
+                                }
+                                if (data === "finished") {
+                                    showToast(2, "L'annonce est terminé !");
+                                    return;
+                                }
+                                if (data === "user_not_accepted") {
+                                    showToast(1, "Vous êtes déjà le dernier à avoir enchéri !");
+                                    return;
+                                }
+                                if (data === "price_not_accepted") {
+                                    showToast(2, 'Enchérissez au dessus de la valeur actuelle !');
+                                    return;
+                                }
+                                if (data === "price_not_available") {
+                                    showToast(2, 'Enchérissement avec succès !');
+                                    return;
+                                }
+
+                                // window.alert(data);
+
+                                window.location.reload();
+
+                                showToast(0, 'Enchérissement avec succès !');
+                            } catch (e) {
+                                console.error("Erreur lors du fetch : ", e)
+                            }
+                        });
+                    })
+            }
             break
         default:
             console.log('Aucun changement')

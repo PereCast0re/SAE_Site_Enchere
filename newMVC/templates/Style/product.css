@@ -34,6 +34,34 @@ body {
     background-color: var(--Swan-wing);
 }
 
+/* h1 {
+    font-size: var(--H1-size);
+    font-family: var(--H1-font);
+    font-weight: var(--H1-weight);
+    color: var(--Royal-blue);
+}
+
+h2 {
+    font-size: var(--H2-size);
+    font-family: var(--H2-font);
+    font-weight: var(--H2-weight);
+    color: var(--Royal-blue);
+}
+
+h3 {
+    font-size: var(--H3-size);
+    font-family: var(--H3-font);
+    font-weight: var(--H3-weight);
+    color: var(--Royal-blue);
+}
+
+p {
+    font-size: var(--p-size);
+    font-family: var(--p-font);
+    font-weight: var(--p-weight);
+    color: var(--Royal-blue);
+} */
+
 /* POP UP */
 
 .popup {
@@ -126,6 +154,17 @@ input {
     color: var(--Red);
 }
 
+/* .btn {
+    color: var(--Sheelstone);
+    background-color: var(--Royal-blue);
+    border: 2px solid var(--Sheelstone);
+    border-radius: 10px;
+    font-size: var(--H2-size);
+    font-family: var(--H2-font);
+    font-weight: var(--H2-weight);
+    padding: 10px 50px;
+} */
+
 .btn {
     color: var(--Sheelstone);
     background-color: var(--Royal-blue);
@@ -135,6 +174,33 @@ input {
     font-family: var(--H2-font);
     font-weight: var(--H2-weight);
     padding: 10px 50px;
+    transition:
+        box-shadow 0.15s,
+        transform 0.15s;
+    touch-action: manipulation;
+    will-change: box-shadow, transform;
+    cursor: pointer;
+}
+
+.btn:focus {
+    box-shadow:
+        #d6d6e7 0 0 0 1.5px inset,
+        rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+        #d6d6e7 0 -3px 0 inset;
+}
+
+.btn:hover {
+    box-shadow:
+        rgba(45, 35, 66, 0.3) 0 5px 8px,
+        rgba(45, 35, 66, 0.2) 0 7px 13px -3px,
+        var(--Sheelstone) 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    box-shadow: var(--Sheelstone) 0 3px 7px inset;
+    transform: translateY(2px);
 }
 
 .btn-second {
@@ -165,16 +231,21 @@ input {
 .toast {
     width: 400px;
     height: 80px;
-    background: white;
+    background: var(--Swan-wing);
+    border: 2px solid var(--Royal-blue);
+    color: var(--Royal-blue);
     font-weight: 500;
     margin: 15px 0;
-    box-shadow: 0 0 20px black;
+    box-shadow: 0 0 5px var(--Royal-blue);
     z-index: 100;
     display: flex;
     align-items: center;
     position: relative;
     transform: translateX(100%);
     animation: moveToast 0.5s linear forwards;
+    font-size: var(--p-size);
+    font-family: var(--H3-font);
+    font-weight: var(--H3-weight);
 }
 
 @keyframes moveToast {
@@ -186,11 +257,11 @@ input {
 .toast i {
     margin: 0 20px;
     font-size: 35px;
-    color: green;
+    color: var(--Green);
 }
 
 .toast.error i {
-    color: red;
+    color: var(--Red);
 }
 
 .toast.invalid i {
@@ -204,12 +275,12 @@ input {
     bottom: 0;
     width: 100%;
     height: 5px;
-    background: green;
+    background: var(--Green);
     animation: toastAnim 5s linear forwards;
 }
 
 .toast.error::after {
-    background: red;
+    background: var(--Red);
 }
 
 .toast.invalid::after {
@@ -320,6 +391,7 @@ main {
     border: 1px solid var(--Royal-blue);
     border-radius: 10px;
     z-index: 5000;
+    cursor: pointer;
 }
 
 #product-section {
@@ -390,7 +462,7 @@ main {
     align-items: center;
     gap: 10px;
     padding-bottom: 10px;
-    padding: 0 20px;
+    padding: 10px 20px;
 }
 
 .myBox1 .celebrity-section div {
@@ -404,8 +476,10 @@ main {
 .myBox1 .celebrity-section img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Remplit le cercle en conservant les proportions */
-    display: block; /* Enlève l'espace en bas de l'image */
+    object-fit: cover;
+    /* Remplit le cercle en conservant les proportions */
+    display: block;
+    /* Enlève l'espace en bas de l'image */
 }
 
 .myBox1 .celebrity-section h3 {
@@ -420,6 +494,20 @@ main {
     display: flex;
     text-decoration: none;
     color: var(--Royal-blue);
+}
+
+#product-description {
+    flex-direction: column;
+    /* background-color: aqua; */
+    padding: 15px;
+}
+
+#product-description p {
+    font-size: var(--p-size);
+    font-family: var(--p-font);
+    font-weight: var(--p-weight);
+    color: var(--Royal-blue);
+    padding: 30px 0;
 }
 
 .myBox2 {
@@ -464,6 +552,7 @@ main {
     background-color: var(--Quicksand);
     border-radius: 10px;
     margin: 20px;
+    cursor: pointer;
 }
 
 .myBox2 .btn {
@@ -488,4 +577,29 @@ main {
     padding: 10px;
     text-decoration: none;
     padding: 10px 50px;
+}
+
+#comment-section div {
+    margin: 40px;
+}
+
+.title-section {
+    font-size: var(--H2-size);
+    font-family: var(--H2-font);
+    font-weight: var(--H1-weight);
+    color: var(--Royal-blue);
+    padding: 15px 0;
+    position: relative;
+}
+
+.title-section::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 400px;
+    height: 2px;
+    background: #000;
+    border-radius: 2px;
+    background-color: var(--Royal-blue);
 }

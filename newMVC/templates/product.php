@@ -66,7 +66,7 @@ $script = "templates/JS/favorite.js";
                 <?php } ?>
             </div>
             <section id="product-description">
-                <h2>Description</h2>
+                <h2 class="title-section">Description</h2>
                 <p>
                     <?= htmlspecialchars(strip_tags($p['description'])) ?>
                 </p>
@@ -125,10 +125,8 @@ $script = "templates/JS/favorite.js";
             <div class="myBox2">
                 <div class="price-ex-section">
                     <?php foreach ($price_ex as $price) { ?>
-                        <input type="hidden" id="idProduct_form" value=<?= $id_product ?>>
-                        <input type="hidden" id="currentPrice_form" value=<?= $current_price ?>>
-                        <input id="bid_input_form" type="hidden" value=<?= $price ?>>
-                        <button onclick="ouvrirPopup('Bid')">
+                        <button id="bid-ex-btn" data-price="<?= $price ?>" data-id="<?= $id_product ?>"
+                            data-current="<?= $current_price ?>" onclick="ouvrirPopup('BidValidation', this)">
                             <?= number_format($price, 0, ',', ' ') ?>
                         </button>
                     <?php } ?>
@@ -148,27 +146,35 @@ $script = "templates/JS/favorite.js";
     </section>
 
     <!-- <section id="comment-section">
-        <h2>Commentaires</h2>
-        <section id="product-comment">
-            <?php foreach ($comments as $comment) { ?>
-                <h3><a href="index.php?action=user&id=<?= $comment['id_user'] ?>">
-                        <?= htmlspecialchars(strip_tags($comment['full_name'])) ?>
-                    </a>
-                    <?= " " . $comment["comment_date"] ?>
-                </h3>
-                <p>
-                    <?= htmlspecialchars(strip_tags($comment['comment'])) ?>
-                </p>
-            <?php } ?>
-            <form id="comment-form" method="POST" action="index.php?action=addComment">
-                <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
-                <br>
-                <textarea id="comment-comment" name="comment" placeholder="Laissez un commentaire ici !" type="text"
-                    required></textarea>
-                <br>
-                <button class="btn" type="submit">Publier</button>
-            </form>
-        </section>
+        <div>
+            <h2 class="title-section">Commentaires</h2>
+            <template id="comment-template">
+                <div>
+                    <div class="comment-author-name font-bold">NOM</div>
+                    <p class="comment-content">CONTENU</p>
+                </div>
+            </template>
+            <section id="product-comment">
+                <?php foreach ($comments as $comment) { ?>
+                    <h3><a href="index.php?action=user&id=<?= $comment['id_user'] ?>">
+                            <?= htmlspecialchars(strip_tags($comment['full_name'])) ?>
+                        </a>
+                        <?= " " . $comment["comment_date"] ?>
+                    </h3>
+                    <p>
+                        <?= htmlspecialchars(strip_tags($comment['comment'])) ?>
+                    </p>
+                <?php } ?>
+                <form id="comment-form" method="POST" action="index.php?action=addComment">
+                    <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
+                    <br>
+                    <textarea id="comment-comment" name="comment" placeholder="Laissez un commentaire ici !" type="text"
+                        required></textarea>
+                    <br>
+                    <button class="btn" type="submit">Publier</button>
+                </form>
+            </section>
+        </div>
     </section> -->
 
 </main>
