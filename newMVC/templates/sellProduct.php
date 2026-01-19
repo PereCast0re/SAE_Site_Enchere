@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 
 $title = "Page de vente";
-$style = "templates/style/accueil.css";
+$style = "templates/Style/SellProduct.css";
 $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
 ?>
 
@@ -52,13 +52,13 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                 </div>
             </div>
         <div class="img_selector">
-            <h4>Ajouter des images</h4>
-            <p>Vous avez la possibilité de mettre maximum 4 images</p>
+            <h4>Vos photos</h4>
+            <p>Vous avez la possibilité de mettre maximum 4 images et d'une taille maximal de 10 Megas</p>
 
             <div class="img_annonces">
                 <div class="main_image">
                     <div class="input_selector_image">
-                        <label class="custom-file-upload" for="img1">Image 1</label>
+                        <label class="custom-file-upload" for="img1">+</label>
                         <input type="file" id="img1" name="image_produit[]" class="img_selector_input" accept="image/*">
                         <img id="img_preview_1" class="img_preview" src="" alt="Prévisualisation Image 1">
                     </div>
@@ -66,17 +66,17 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 
                 <div class="buttom_image">
                     <div class="input_selector_image">
-                        <label class="custom-file-upload" for="img2">Image 2</label>
+                        <label class="custom-file-upload" for="img2">+</label>
                         <input type="file" id="img2" name="image_produit[]" class="img_selector_input" accept="image/*">
                         <img id="img_preview_2" class="img_preview" src="" alt="Prévisualisation Image 2">
                     </div>
                     <div class="input_selector_image">
-                        <label class="custom-file-upload" for="img3">Image 3</label>
+                        <label class="custom-file-upload" for="img3">+</label>
                         <input type="file" id="img3" name="image_produit[]" class="img_selector_input" accept="image/*">
                         <img id="img_preview_3" class="img_preview" src="" alt="Prévisualisation Image 3">
                     </div>
                     <div class="input_selector_image">
-                        <label class="custom-file-upload" for="img4">Image 4</label>
+                        <label class="custom-file-upload" for="img4">+</label>
                         <input type="file" id="img4" name="image_produit[]" class="img_selector_input" accept="image/*">
                         <img id="img_preview_4" class="img_preview" src="" alt="Prévisualisation Image 4">
                     </div>
@@ -88,7 +88,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 
         <div class="certificat_authenticite_vente">
             <h4>Certificat d'authenticité format PDF</h4>
-            <input type="file" name="certificat_autenticite" id="certificat_authenticite" accept="application/pdf,image/*">
+            <input type="file" name="certificat_autenticite" id="certificat_authenticite" accept="application/pdf,image/*"  />
             <embed src="" width="800" height="500" type="application/pdf" style="margin-left: 20%; margin-right: 20%; display: none;" id="pdf_preview">
         </div>
         <div class="description_produit_vente">
@@ -96,7 +96,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
             <textarea placeholder="Votre description ici" name="description_produit" id="description_produit" required></textarea>
         </div>
 
-    <button type="submit" name="action" value="submit_new_produitenvente">Publier</button>
+    <button type="submit" class="submit_new_produitenvente" name="action" value="submit_new_produitenvente">Publier</button>
 </form>
 
 

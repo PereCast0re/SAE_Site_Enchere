@@ -1,0 +1,347 @@
+:root {
+    --Sapphire: #3C507D;
+    --Royal-blue: #112250;
+    --Quicksand: #E0C58F;
+    --Swan-wing: #F5F0E9;
+    --Sheelstone: #D9CBC2;
+    --Gold: #D2A047;
+    --Green: #3A7F4F;
+    --Red: #C0392B;
+
+    --H1-font: "Lora", serif;
+    --H1-size: 40px;
+    --H1-weight: 700;
+
+    --H2-font: "Lora", serif;
+    --H2-size: 32px;
+    --H2-weight: 700;
+
+    --H3-font: "Lora", serif;
+    --H3-size: 24px;
+    --H3-weight: 700;
+
+    --p-font: "Poppins", serif;
+    --p-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Reset de base */
+html, body {
+  background-color: var(--Swan-wing);
+}
+
+body {
+  font-family: var(--font-serif);
+  color: var(--Royal-blue);
+  margin: 0;
+  padding-bottom: 50px;
+}
+
+.titleVendre {
+  padding-top: 50px;
+  color: var(--Royal-blue);
+  text-align: center;
+  font-size: 2rem;
+  margin: 2rem 0 3rem 0;
+  font-weight: 700;
+}
+
+/* --- Layout Principal --- */
+.form_vente_produit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Conteneur Haut : Grille 2 colonnes */
+.containeur_top {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 4rem;
+  margin-bottom: 2rem;
+}
+
+/* --- Colonne Gauche : Images (Inversé visuellement avec order) --- */
+.img_selector {
+  order: 1; 
+  width: 45%;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img_selector h4 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Masquer le paragraphe explicatif pour épurer */
+.img_selector p {
+  display: none;
+}
+
+/* --- Gestion des Images --- */
+.img_selector_input {
+  display: none;
+}
+
+.img_preview {
+  display: none; 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Image Principale (Grande) */
+.main_image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.main_image .input_selector_image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #ccc; 
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Boutons "+" (Labels) */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 3rem;
+  color: #777;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+/* Petite Images (Vignettes) */
+.buttom_image {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+.buttom_image .input_selector_image {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background-color: #ccc;
+  position: relative;
+  overflow: hidden;
+}
+
+.buttom_image .custom-file-upload {
+  font-size: 2rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+
+/* --- Colonne Droite : Formulaire (Inputs) --- */
+.information_produit {
+  order: 2;
+  width: 45%;
+  border-left: none !important; 
+  padding-left: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.information_produit h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  color: var(--color-blue);
+}
+
+/* Style uniforme des inputs */
+.information_produit input[type="text"],
+.information_produit input[type="date"],
+.information_produit select,
+#input_prix_reserve input,
+#inputcelebrity {
+  width: 100%;
+  height: 45px;
+  background-color: var(--input-bg);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0 15px;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--Royal-blue);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+  border-color: var(--Royal-blue);
+}
+
+/* Checkbox Réserve */
+.prix_reserve {
+  display: flex;
+  flex-direction: row;    
+  align-items: center;
+  gap: 10px;
+}
+
+.prix_reserve input[type="checkbox"] {
+  width: 20px; 
+  height: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  accent-color: var(--color-blue);
+  margin-top: 10px; 
+}
+
+
+/* --- Section Basse (Certificat & Description) --- */
+.certificat_authenticite_vente, 
+.description_produit_vente {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Input File du bas */
+.certificat_authenticite_vente input[type="file"] {
+  background-color: var(--input-bg);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+/* Zone de texte */
+textarea#description_produit {
+  width: 100%;
+  height: 150px;
+  background-color: var(--input-bg);
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  resize: vertical;
+}
+
+/* --- LE BOUTON CORRIGÉ --- */
+
+.submit_new_produitenvente {
+  display: block;          
+  margin: 3rem auto;        
+  padding: 15px 50px;
+  border: 2px solid var(--Royal-blue);
+  background-color: var(--Royal-blue);
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.4s ease;
+  outline: none;
+  position: relative;       
+  overflow: hidden;         
+  font-weight: bold;
+  font-family: var(--p-font);
+}
+
+.submit_new_produitenvente::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: scale(0);     
+  transition: transform 0.5s ease;
+}
+
+
+.submit_new_produitenvente:hover::after {
+  transform: scale(4);
+}
+
+.submit_new_produitenvente:hover {
+  border-color: var(--Sapphire);
+  background-color: var(--Sapphire);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(17, 34, 80, 0.2);
+}
+
+
+/* --- Barre de séparation --- */
+.containeur_top {
+  position: relative;
+}
+
+.containeur_top::before {
+  content: "";
+  position: absolute;
+  top:15%;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 75%;
+  background-color: var(--Royal-blue);
+  transform: translateX(-50%);
+}
+
+
+/* --- RESPONSIVE --- */
+@media screen and (max-width: 900px) {
+  .containeur_top {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .containeur_top::before {
+    display: none;
+  }
+
+  .img_selector, 
+  .information_produit {
+    width: 100%;
+    order: unset; 
+    padding: 0;
+    border: none; 
+  }
+
+  .img_selector { order: 1; }
+  .information_produit { order: 2; }
+  
+  .titleVendre {
+    font-size: 1.5rem;
+  }
+}

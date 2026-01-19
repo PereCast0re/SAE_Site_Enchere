@@ -24,6 +24,10 @@ function routeurMailing($action, $param){
             break;
         case 'Newsletter':
             SendNewsletter($param);
+            break;
+        case 'sendEmailConfirmationUpdate':
+            sendEmailConfirmationUpdate($param);
+            break;
         default:
             echo("Action emailing non reconnue");
             break;
@@ -63,6 +67,41 @@ function sendEmailConfirmationPlublish($param){
         echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
     }
 }
+
+// Emailing functions : send a confirmation email when a annonce is updated
+function sendEmailConfirmationUpdate($param){
+    global $apiKey, $apisecret;
+    $mj = new \Mailjet\Client($apiKey, $apisecret,true,['version' => 'v3.1']);
+
+    $body = [
+        'Messages' => [
+        [
+            'From' =>[
+                'Email' => "barthoux44@gmail.com",
+                'Name' => "Admin MaBonneEnchere"
+            ],
+            'To' => [
+                [
+                    'Email' => $param[0],
+                    'Name' => $param[1]
+                ]
+            ],
+                'Subject' => 'Modification de votre annonce sur BidStar',
+                'TextPart' => 'Félicitations, votre annonce a été modifié avec succès !',
+                'HTMLPart' => '<h3>Félicitations, votre annonce a été modifié avec succès !</h3><br />Merci de faire confiance à MaBonneEnchere pour vos achats et ventes en ligne.'
+            ]
+        ]
+    ];
+
+    $response = $mj->post(Resources::$Email, ['body' => $body]);
+
+    if ($response->success()) {
+        echo("<script>console.log('Email envoyé avec succès');</script>");
+    } else {
+        echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+    }
+}
+
 
 // Emailing functions : send a confirmation email when a user subscribe to the newsletter
 function InscriptionNewsletter($param){

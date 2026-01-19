@@ -102,4 +102,17 @@ class CelebrityRepository
         }
     }
 
+    function updateLinkCelebrityProduct($id_annoncement, $name){
+        $pdo = $this->connection;
+        $requete = "UPDATE concerned SET id_celebrity = (SELECT id_celebrity from celebrity where name like :name limit 1) where id_product = :id_annoncement;";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_annoncement' => $id_annoncement,
+                ":name" => $name
+            ]);
+        } catch (PDOException $e){
+            die("Error on updating linking your product and the celebrity :" .$e->getMessage());
+        }
+    }
 }

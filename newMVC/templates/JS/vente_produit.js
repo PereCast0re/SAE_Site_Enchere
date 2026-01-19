@@ -10,6 +10,14 @@ async function afficherInputPrixReserve(){
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.getElementById('prix_reserve_checkbox');
+    if(checkbox.checked){
+        const div = document.getElementById('input_prix_reserve')
+        div.innerHTML = '<input type="number" name="valeur_reserve" value="' + checkbox.value + '">'
+    }
+});
+
 ///////////////////// Categorie /////////////////////////////
 
 async function checkExistingCategory() {
@@ -104,7 +112,7 @@ document.querySelectorAll('.img_selector_input').forEach(input => {
         if (!file) return;
 
         // Récupérer l'image correspondante
-        const index = this.id.replace('img', ''); // ex: "1", "2"
+        const index = this.id.replace('img', '');
         const preview = document.getElementById('img_preview_' + index);
 
         // Afficher l'image sélectionnée
@@ -120,7 +128,6 @@ document.querySelectorAll('.img_selector_input').forEach(input => {
         if (label) label.style.display = 'none';
     });
 });
-
 
 ////////////// PDF previsualisation //////////////
 const pdfInput = document.getElementById('certificat_authenticite');
