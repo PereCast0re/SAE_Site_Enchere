@@ -145,11 +145,11 @@ $style = "templates/style/index.css";
     </div>
   </div>
 
-  <a id="Voir_annonces_btn" class="btns" href="index.php?action=buy">Voir les annonces</a>
+  <a id="Voir_annonces_btn" class="btn_voir_annonces" href="index.php?action=buy">Voir les annonces</a>
   <?php $image = null ?>
 
   <p>Ne ratez aucune annonce ! <br> Abonnez-vous dès maintenant et gratuitement à nos newletters !</p>
-  <a class="btns" href="index.php?action=newsletter">S'abonner</a><br><br><br>
+  <a class="btn_newsletter" href="index.php?action=newsletter">S'abonner</a><br><br><br>
   </div>
   <section class="qui-sommes-nous">
     <h2>Qui sommes-nous ?</h2>
@@ -173,7 +173,7 @@ $style = "templates/style/index.css";
       <div class="cercle cercle-droite">
         <div class="icon"><img src="templates/Images/etudiant.png" alt="Icon student" class="icon-student"></div>
         <h3>Réalisé par des étudiants</h3>
-        <p>Une équipe de développeurs en BUT informatique composé de Thomas Barthoux Saure, Kyllian Riviere et de Jimmy
+        <p>Une équipe de développeurs en BUT informatique composé de Thomas Barthoux Sauze, Kyllian Riviere et de Jimmy
           Garnier ont réalisé ce site d'enchère !</p>
       </div>
     </div>

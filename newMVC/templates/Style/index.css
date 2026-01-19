@@ -5,6 +5,30 @@
     --color-gold: #D4AF37;
     --color-background: #F5F8FA;
     --color-saphire: #3C507D;
+    --Sapphire: #3C507D;
+    --Royal-blue: #112250;
+    --Quicksand: #E0C58F;
+    --Swan-wing: #F5F0E9;
+    --Sheelstone: #D9CBC2;
+    --Gold: #D2A047;
+    --Green: #3A7F4F;
+    --Red: #C0392B;
+
+    
+    --H1-font: "Lora", serif;
+    --H1-size: 40px;
+    --H1-weight: 700;
+
+    --H2-font: "Lora", serif;
+    --H2-size: 32px;
+    --H2-weight: 700;
+
+    --H3-font: "Lora", serif;
+    --H3-size: 24px;
+    --H3-weight: 700;
+
+    --p-font: "Poppins", serif;
+    --p-size: 16px;
 }
 
 * {
@@ -46,28 +70,71 @@ h3 {
 }
 
 .btns,
+.btn_voir_annonces, 
+.btn_newsletter,
 button {
     display: inline-block;
-    background-color: #ffffff;
-    color: #002366;
-    border: 2px solid #D4AF37;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 18px;
-    font-family: 'Cormorant Garamond', serif;
-    padding: 5px 30px;
-    border-radius: 60px;
-    box-shadow: 0px 0px 6px -1px;
+    padding: 8px 50px;
+    border: 2px solid var(--Royal-blue);
+    background-color: var(--Royal-blue);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: var(--p-font);
     text-decoration: none;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.4s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+    margin: 1rem;
+    box-shadow: 0 4px 10px rgba(17, 34, 80, 0.15);
 }
 
+/* Effet de brillance au survol */
+.btns::after,
+.btn_voir_annonces::after, 
+.btn_newsletter::after,
+button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0) 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+/* Hover général */
 .btns:hover,
+.btn_voir_annonces:hover, 
+.btn_newsletter:hover,
 button:hover {
-    background-color: #D4AF37;
+    border-color: var(--Sapphire);
+    background-color: var(--Sapphire);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(17, 34, 80, 0.3);
 }
 
+.btns:hover::after,
+.btn_voir_annonces:hover::after, 
+.btn_newsletter:hover::after,
+button:hover::after {
+    transform: scale(4);
+}
+
+/* Boutons en mode block (pour centrage) */
+.btn_voir_annonces, 
+.btn_newsletter {
+    display: block;
+    margin: 3rem auto;
+    width: fit-content;
+}
 .annonces {
     display: grid;
     grid-template-columns: repeat(3, 0.2fr);
@@ -353,7 +420,7 @@ button:hover {
 
 .qui-sommes-nous {
     background-color: var(--color-background);
-    padding: 60px 20px 100px;
+    padding: 0px 20px 10px;
     text-align: center;
 }
 
@@ -533,3 +600,4 @@ button:hover {
         font-size: 0.85rem;
     }
 }
+
