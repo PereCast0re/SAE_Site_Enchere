@@ -294,11 +294,12 @@ class ProductRepository
                     ":id" => $id_product
                 ]);
                 return $temp->fetchall(PDO::FETCH_ASSOC);
-            }
+        }
     }
 
     /// used for admin
-    function getCategoryFromAnnoncement($id_product){
+    function getCategoryFromAnnoncement($id_product)
+    {
         $pdo = $this->connection;
         $requete = "SELECT name 
                     from category as c
@@ -307,20 +308,21 @@ class ProductRepository
                         from belongsto as b 
                         where b.id_product = :id 
                         LIMIT 1);";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ":id" => $id_product,
             ]);
-        }catch(PDOException $e){
-            die("Error on get categorie from a annoncement : " .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on get categorie from a annoncement : " . $e->getMessage());
         }
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
 
     // Recherche autonome categorie 
-    function getCategoryMod($writting){
+    function getCategoryMod($writting)
+    {
         $pdo = connection();
         $requete = "SELECT * from category where name like :writting and statut = 1";
         $tmp = $pdo->prepare($requete);
@@ -331,82 +333,164 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function insertCategorie($name, $statut){
+    function insertCategorie($name, $statut)
+    {
         $pdo = $this->connection;
         $requete = "insert into category (name, statut) VALUES (:name, :statut);";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':name' => $name,
                 ':statut' => $statut
             ]);
-        } catch (PDOException $e){
-            die("Error on insert catégorie from your annoncement :" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on insert catégorie from your annoncement :" . $e->getMessage());
         }
     }
 
-    function linkCategoryProduct($id_annoncement, $name){
+    function linkCategoryProduct($id_annoncement, $name)
+    {
         $pdo = $this->connection;
         $requete = "INSERT INTO belongsto (id_product, id_category) Values (:id_annoncement, (SELECT id_category from category where name like :name Limit 1));";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id_annoncement' => $id_annoncement,
                 ":name" => $name
             ]);
-        } catch (PDOException $e){
-            die("Error on linking your category to your annoncement :" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on linking your category to your annoncement :" . $e->getMessage());
         }
     }
 
-    function UpdateStatut($id_product){
+    function UpdateStatut($id_product)
+    {
         $pdo = $this->connection;
         $requete = "UPDATE product SET status = 1 where id_product = :id";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $succes = $tmp->execute([':id' => $id_product]);
             return $succes;
         } catch (PDOException $e) {
-            die("Error on linking your categorie to your annonce : " .$e->getMessage());
+            die("Error on linking your categorie to your annonce : " . $e->getMessage());
         }
     }
 
-    function UpdateStatutCategorie($id_product){
+    function UpdateStatutCategorie($id_product)
+    {
         $pdo = $this->connection;
         $requete = "UPDATE category SET statut = 1 where id_category = (SELECT id_category from belongsto where id_product = :id)";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $succes = $tmp->execute([':id' => $id_product]);
             return $succes;
         } catch (PDOException $e) {
-            die("Error on updating your category statut : " .$e->getMessage());
+            die("Error on updating your category statut : " . $e->getMessage());
         }
     }
 
-    function deleteCategory($id_product, $nameCategory){
+    function deleteCategory($id_product, $nameCategory)
+    {
         $pdo = $this->connection;
         $requete2 = "DELETE from category where name = :nameC";
 
-        try{
+        try {
             $tmp2 = $pdo->prepare($requete2);
             $tmp2->execute([
                 ':nameC' => $nameCategory
             ]);
-            
-        } catch (PDOException $e){
-            die("Error on deleting Category and his link to annoncement : " .$e->getMessage());
+
+        } catch (PDOException $e) {
+            die("Error on deleting Category and his link to annoncement : " . $e->getMessage());
         }
     }
-    function getCelebrityNameByAnnoncement($id_product){
-    $pdo = $this->connection;
-    $requete = "SELECT c.name FROM celebrity c
+
+    function getCelebrityNameByAnnoncement($id_product)
+    {
+        $pdo = $this->connection;
+        $requete = "SELECT c.name FROM celebrity c
                 JOIN concerned con ON c.id_celebrity = con.id_celebrity
                 WHERE con.id_product = :id_product";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":id_product" => $id_product
-    ]);
-    // ne retourner que le nom en string
-    return $tmp->fetch(PDO::FETCH_ASSOC);
-}
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute([
+            ":id_product" => $id_product
+        ]);
+        // ne retourner que le nom en string
+        return $tmp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getThisProduct($id_product)
+    {
+        $pdo = $this->connection;
+        $requete = "SELECT * FROM product where id_product = :id";
+
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id' => $id_product
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Error on recuperation of this product : " . $e->getMessage());
+        }
+    }
+
+    function getFilesFromAnnoncement($id_product)
+    {
+        $pdo = $this->connection;
+        $requete = "SELECT * from image where id_product = :id";
+
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id' => $id_product
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Error on recuperation of files from this product : " . $e->getMessage());
+        }
+    }
+
+    function updateProduct($id, $title, $description, $start_date, $end_date, $reserve_price, $statut)
+    {
+        $pdo = $this->connection;
+        $requete = "UPDATE Product 
+                    SET title = :title, description = :description, start_date = :start_date, end_date = :end_date, reserve_price = :reserve_price, status = :status
+                    WHERE id_product = :id;";
+
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':title' => $title,
+                ':description' => $description,
+                ':start_date' => $start_date,
+                ':end_date' => $end_date,
+                ':reserve_price' => $reserve_price,
+                ':status' => $statut,
+                ':id' => $id
+            ]);
+
+            return $pdo->lastInsertId();
+
+        } catch (PDOException $e) {
+            die("Error on updating your product into the database, try again !\n Error : " . $e->getMessage());
+        }
+    }
+
+    function updateLinkCategoryProduct($id_annoncement, $name)
+    {
+        $pdo = $this->connection;
+        $requete = "UPDATE belongsto 
+                    SET id_category = (SELECT id_category from category where name like :name Limit 1)
+                    WHERE id_product = :id_annoncement;";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_annoncement' => $id_annoncement,
+                ":name" => $name
+            ]);
+        } catch (PDOException $e) {
+            die("Error on updating linking your category to your annoncement :" . $e->getMessage());
+        }
+    }
 }

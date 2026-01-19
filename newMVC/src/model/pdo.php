@@ -67,7 +67,7 @@ function getAnnoncementEndWithReservedPrice($id_user)
                     LEFT JOIN bid AS b ON b.id_product = p.id_product
                     WHERE 
                         publi.id_user = :id_user 
-                        AND p.end_date < CURRENT_DATE 
+                        AND p.end_date < NOW()
                         AND p.reserve_price > 0
                     GROUP BY p.id_product  
                     HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL";

@@ -23,26 +23,24 @@ if (!isset($_SESSION['last_check'])) {
 // Si la date actuelle - la date du dernier check et supérieur au délais autorisé 
 if (($date_now - $_SESSION['last_check']) >= $delai) {
     $last_check = $date_now;
-    verif($user);
-    $_SESSION['last_check'] = time();
-}
-
-function verif($user)
-{
-    $annoncementClient = get_all_annoncement_notMailed();
-    foreach ($annoncementClient as $annonce) {
-        $date_fin = $annonce['end_date'];
-        $current_date = date('Y-m-d H:i:s');
-        $mail = $annonce['mailIsSent'];
-        // var_dump($annonce);
-        if ($current_date >= $date_fin && $mail != 1) {
-            // L'annonce est terminée, envoyer le mail de fin d'annonce
-            $user_email = $user['email'];
-            $user_name = $user['name'];
-            // var_dump("hello");
-            $params = [$user_email, $user_name, $annonce['title']];
-            routeurMailing('EndAnnoncement', $params);
-            closeAnnoncement($annonce['id_product']);
+    if (!function_exists('verif')) {
+        function verif($user)
+        {
+            $annoncementClient = get_all_annoncement_notMailed();
+            foreach ($annoncementClient as $annonce) {
+                $date_fin = $annonce['end_date'];
+                $current_date = date('Y-m-d H:i:s');
+                $mail = $annonce['mailIsSent'];
+                if ($current_date >= $date_fin && $mail != 1) {
+                    $user_email = $user['email'];
+                    $user_name = $user['name'];
+                    $params = [$user_email, $user_name, $annonce['title']];
+                    routeurMailing('EndAnnoncement', $params);
+                    closeAnnoncement($annonce['id_product']);
+                }
+            }
         }
     }
+    verif($user);
+    $_SESSION['last_check'] = time();
 }
