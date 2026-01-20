@@ -14,14 +14,14 @@ async function afficher() {
     }
     else if (nb == 1) {
         div.innerHTML = `<div class="pending_section_header">
-                        <p>Vos annonce publiée</p>
+                        <p>Vos annonces publiées</p>
                         <div class="separator-line"></div>
                         </div>`
         await print_tab_annoncements(json_values, div)
     }
     else {
         div.innerHTML = `<div class="pending_section_header">
-                        <p>Vos annonce publiées</p>
+                        <p>Vos annonces publiées</p>
                         <div class="separator-line"></div>
                         </div>`
         await print_tab_annoncements(json_values, div)
