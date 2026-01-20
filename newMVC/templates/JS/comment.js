@@ -32,7 +32,7 @@ async function addComment(comment, prepend = false) {
 window.addEventListener("load", async function () {
     const comments = await getComments(this.document.querySelector('#idProduct').value);
 
-    console.log(comments);
+    // console.log(comments);
 
     await Promise.all(comments.map((comment) => addComment(comment)));
 

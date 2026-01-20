@@ -31,7 +31,7 @@ async function afficher() {
     await print_end_annoncement_reserved(id_user.value, divAnnonceReserved)
 
     const divhistorique = document.getElementById('historique_product')
-    if (divhistorique){
+    if (divhistorique) {
         await print_historique_annoncement(id_user.value, divhistorique)
     }
 
@@ -45,8 +45,8 @@ async function print_tab_annoncements(annoncements, div) {
     let html = ""
     for (const annonce of annoncements) {
         // on change d'incrément si une annonce est expirée et si elle doit être verifier
-        if(new Date(annonce.end_date) < new Date()){continue}
-        if(annonce.status == 0){continue}
+        if (new Date(annonce.end_date) < new Date()) { continue }
+        if (annonce.status == 0) { continue }
         let price = await getPrice(annonce.id_product);
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
@@ -64,8 +64,8 @@ async function print_tab_annoncements(annoncements, div) {
         ) ? image_url[0].url_image : "assets/default.png";
 
         celebrity = await getCelebrity(annonce.id_product);
-        if (celebrity != null){
-            if (celebrity.url == null){
+        if (celebrity != null) {
+            if (celebrity.url == null) {
                 celebrity.url = 'templates/Images/profil-icon.png'
             }
         }
@@ -124,7 +124,7 @@ async function print_tab_annoncements(annoncements, div) {
 
 async function print_unverifed_product(div, annoncements) {
     console.log("print unverifed");
-    
+
     // Vérification de la présence d'annonces
     if (count(annoncements['statut']) == 0) {
         div.style.display = 'none';
@@ -132,7 +132,7 @@ async function print_unverifed_product(div, annoncements) {
     }
 
     div.style.display = 'block';
-    
+
     // Header de la section avec le style du site
     let htmlContent = `
         <div class="pending_section_header">
@@ -152,8 +152,8 @@ async function print_unverifed_product(div, annoncements) {
         let currentPrice = price.last_price ?? annonce.start_price;
 
         let image_url = await getImage(annonce.id_product);
-        let firstImg = (Array.isArray(image_url) && image_url.length > 0 && image_url[0].url_image) 
-            ? image_url[0].url_image 
+        let firstImg = (Array.isArray(image_url) && image_url.length > 0 && image_url[0].url_image)
+            ? image_url[0].url_image
             : "assets/default.png";
 
         // Construction de la carte (Style identique à .annonce_card)
@@ -221,7 +221,7 @@ async function print_end_annoncement_reserved($id_user, div) {
 
         div.innerHTML = html;
     } else {
-        div.style.display = 'none'; 
+        div.style.display = 'none';
         div.innerHTML = '';
     }
 
@@ -229,7 +229,7 @@ async function print_end_annoncement_reserved($id_user, div) {
         button.addEventListener('click', async () => {
             const id_product = button.getAttribute('data-id');
             const lastPrice = await getPrice(id_product);
-            alertConfirmation('Accepter la dernière offre et conclure la vente ' + lastPrice.last_price +'  ?', 'acceptReservedPrice', id_product);
+            alertConfirmation('Accepter la dernière offre et conclure la vente ' + lastPrice.last_price + '  ?', 'acceptReservedPrice', id_product);
         });
     });
 
@@ -371,12 +371,13 @@ async function PrintStatAnnonce(annoncement) {
     document.querySelectorAll('.btn_close_stat').forEach((button, index) => {
         button.addEventListener('click', () => {
             divStat.style.display = 'none'
+            window.location.reload();
         });
     });
 }
 
 async function checkBtnHistorique(id_user) {
-    product = await getListAnnoncementEnd(id_user) 
+    product = await getListAnnoncementEnd(id_user)
     if (product && product.length >= 1) {
         btn.style.display = "block"
     }
@@ -414,7 +415,7 @@ async function alertConfirmation(message, action, id_product) {
 
     let button = popup.querySelector(".btnConfirm")
     // Si on a besoin de refaire une redirection (avec navigation dans les pages) on simule l'envoie d'un form 
-    button.addEventListener('click', async () =>{
+    button.addEventListener('click', async () => {
         if (action === 'updateProduct') {
             const frm = document.createElement('form')
             frm.value = id_product
@@ -444,20 +445,20 @@ async function alertConfirmation(message, action, id_product) {
     })
 
     let cancel = popup.querySelector(".btnCancel")
-    cancel.addEventListener('click', () =>{
+    cancel.addEventListener('click', () => {
         popup.remove();
     })
 }
 
 async function printGraph(id, title, allData) {
     let graph = ""
-    
+
 
 }
 
 async function ShowPopUpOption(id_product) { // On reçoit l'ID ici
     const popup = document.createElement('div');
-    popup.classList.add('popup-overlay'); 
+    popup.classList.add('popup-overlay');
     popup.innerHTML = `
     <div class="popup-box">
         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -489,11 +490,11 @@ async function ShowPopUpOption(id_product) { // On reçoit l'ID ici
 ////////////////////////////////////////////////////////////
 
 async function deleteProduct(id_product) {
-    const response = await fetch(`index.php?action=deleteProduct&id_product=${id_product}`);    
+    const response = await fetch(`index.php?action=deleteProduct&id_product=${id_product}`);
     console.log(response);
     const result = await response.json();
     console.log(result);
-    
+
     if (result.success) {
         console.log('Suppression réussie');
         //location.reload(); // Recharge la page pour mettre à jour la liste
@@ -502,7 +503,7 @@ async function deleteProduct(id_product) {
     }
 }
 
-async function getPrice(id_product){
+async function getPrice(id_product) {
     // Appel pour fetch et récupéré le prix actuel
     const price = await fetch(`index.php?action=getLastPrice&id_product=${id_product}`);
     const price_json = await price.json();
