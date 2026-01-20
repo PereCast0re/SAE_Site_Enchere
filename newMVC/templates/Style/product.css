@@ -606,7 +606,14 @@ main {
     background-color: var(--Royal-blue);
 }
 
-.comment-test {
+#comments {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.comment-user {
     background-color: var(--Sapphire);
     color: var(--Swan-wing);
     font-size: var(--H3-size);
@@ -616,9 +623,30 @@ main {
     padding: 15px;
     width: 60%;
     overflow-wrap: break-word;
+    align-self: flex-end;
 }
 
-.comment-test p {
+.comment-user p {
+    font-size: var(--p-size);
+    font-family: var(--p-font);
+    padding: 15px 0;
+}
+
+.comment-seller {
+    border: 2px solid var(--Royal-blue);
+    background-color: var(--Quicksand);
+    color: var(--Royal-blue);
+    font-size: var(--H3-size);
+    font-weight: var(--H3-weight);
+    font-family: var(--H3-font);
+    border-radius: 20px;
+    padding: 15px;
+    width: 60%;
+    overflow-wrap: break-word;
+    align-self: flex-start;
+}
+
+.comment-seller p {
     font-size: var(--p-size);
     font-family: var(--p-font);
     padding: 15px 0;

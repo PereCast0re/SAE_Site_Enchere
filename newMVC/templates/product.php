@@ -16,6 +16,8 @@ $script = "templates/JS/favorite.js";
 
 <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
 <input id="idProduct" type="hidden" name="idProduct" value=<?= $p['id_product'] ?>>
+<input id="userID" type="hidden" name="userID" value=<?= $p['userID'] ?>>
+<input id="userID" type="hidden" name="userID" value=<?= isset($_SESSION['user']["id_user"]) ? $_SESSION['user']["id_user"] : "" ?>>
 
 <div id="popup">
 </div>

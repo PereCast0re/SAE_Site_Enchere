@@ -12,8 +12,14 @@ async function addComment(comment, prepend = false) {
 
     commentEl.querySelector(".comment-content").innerText = comment["comment"];
     commentEl.querySelector(".comment-author-name").innerText = comment["full_name"];
-    commentEl.querySelector(".comment-container").classList.add("comment-test");
-    
+
+    const userID = document.querySelector('#userID').value;
+
+    if (userID == comment["id_user"]) {
+        commentEl.querySelector(".comment-container").classList.add("comment-seller");
+    } else {
+        commentEl.querySelector(".comment-container").classList.add("comment-user");
+    }
 
     if (prepend) {
         commentsListEl.prepend(commentEl);
