@@ -7,7 +7,7 @@ $user = $_SESSION['user'];
 
 <?php ob_start(); ?>
 
-<!-- <?php include('preset/header.php'); ?> -->
+<?php include('preset/second-header.php'); ?>
 
 <?php
 // Démarrer la session si nécessaire

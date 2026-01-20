@@ -42,7 +42,7 @@ require(dirname(__DIR__, 2) . '/src/script/verif_online_annoncement.php');
                         </a>
                     </li>
                     <li>
-                        <a href="index.php?action=getLikes">
+                        <a href="index.php?action=getLikesPage">
                             <i class="fa-regular fa-heart"></i>
                         </a>
                     </li>

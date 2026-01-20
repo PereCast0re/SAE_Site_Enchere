@@ -419,7 +419,7 @@ button:hover::after {
 }
 
 .qui-sommes-nous {
-    background-color: var(--color-background);
+    background-color: #F5F0E9;
     padding: 0px 20px 10px;
     text-align: center;
 }
