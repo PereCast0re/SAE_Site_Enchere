@@ -47,7 +47,7 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
                         $buyer_email = $buyer['email'];
                         $buyer_name = $buyer['name'] . ' ' . $buyer['firstname'];
                         $paramsBuyer = [$buyer_email, $buyer_name, $annonce['title'], $last_price['last_price']];
-                        $params = [$user_email, $user_name, $annonce['title'], $last_price['new_price'], $buyer_name, $buyer_email];
+                        $params = [$user_email, $user_name, $annonce['title'], $last_price['last_price'], $buyer_name, $buyer_email];
                         routeurMailing('EndAnnoncement', $params);
                         routeurMailing('winner', $paramsBuyer);
                     }

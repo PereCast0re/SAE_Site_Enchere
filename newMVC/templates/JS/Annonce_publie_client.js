@@ -90,6 +90,8 @@ async function print_tab_annoncements(annoncements, div) {
                         <div class="annonce_meta">
                             <span class="timer_display timer" data-end="${annonce.end_date}">Chargement...</span>
                             <span class="price_display price_annonce_${annonce.id_product}">${price.last_price} €</span>
+                        </div>
+                        <div class="user_info">
                             <a href="index.php?action=product&id=${annonce.id_product}">Voir</a>
                         </div>
                         <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
@@ -126,7 +128,7 @@ async function print_unverifed_product(div, annoncements) {
     console.log("print unverifed");
 
     // Vérification de la présence d'annonces
-    $nb = annoncements.some(a => a.status === 0);
+    nb = annoncements.some(a => a.status === 0);
 
     if (!nb) {
         div.style.display = 'none';
