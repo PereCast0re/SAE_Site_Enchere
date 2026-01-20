@@ -12,7 +12,7 @@ $script = "templates/JS/favorite.js";
 
 <?php ob_start(); ?>
 
-<!-- <?php include('preset/header.php'); ?> -->
+<?php include('preset/second-header.php'); ?>
 
 <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
 <input id="idProduct" type="hidden" name="idProduct" value=<?= $p['id_product'] ?>>

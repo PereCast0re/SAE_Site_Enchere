@@ -212,6 +212,31 @@ input {
     font-family: var(--H2-font);
     font-weight: var(--H2-weight);
     padding: 10px;
+    cursor: pointer;
+    transition:
+        box-shadow 0.15s,
+        transform 0.15s;
+}
+
+.btn-second:focus {
+    box-shadow:
+        var(--Royal-blue) 0 0 0 1.5px inset,
+        rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+        var(--Royal-blue) 0 -3px 0 inset;
+}
+
+.btn-second:hover {
+    box-shadow:
+        rgba(45, 35, 66, 0.3) 0 5px 8px,
+        rgba(45, 35, 66, 0.2) 0 7px 13px -3px,
+        var(--Royal-blue) 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.btn-second:active {
+    box-shadow: var(--Royal-blue) 0 3px 7px inset;
+    transform: translateY(2px);
 }
 
 /* TOAST */
@@ -231,9 +256,8 @@ input {
 .toast {
     width: 400px;
     height: 80px;
-    background: var(--Swan-wing);
-    border: 2px solid var(--Royal-blue);
-    color: var(--Royal-blue);
+    background: var(--Royal-blue);
+    color: var(--Swan-wing);
     font-weight: 500;
     margin: 15px 0;
     box-shadow: 0 0 5px var(--Royal-blue);

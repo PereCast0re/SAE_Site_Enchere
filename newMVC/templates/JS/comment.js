@@ -17,6 +17,7 @@ async function addComment(comment, prepend = false) {
 
     if (userID == comment["id_user"]) {
         commentEl.querySelector(".comment-container").classList.add("comment-seller");
+            commentEl.querySelector(".comment-author-name").innerText = comment["full_name"] + " (vendeur)";
     } else {
         commentEl.querySelector(".comment-container").classList.add("comment-user");
     }
