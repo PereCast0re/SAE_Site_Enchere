@@ -37,16 +37,6 @@ async function print_historique_annoncement() {
                                     ${checkEndPrice(annonce.last_price)}
                                 </span>
                             </div>
-
-                            <div class="user_info">
-                                <button id="btn_republish${annonce.id_product}" 
-                                        class="btn-modifier" 
-                                        style="display: block;" 
-                                        type="button" 
-                                        onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">
-                                    Republier l'annonce
-                                </button>
-                            </div>
                         </div>
 
                         <div class="tags-row">
