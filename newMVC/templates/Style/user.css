@@ -26,6 +26,7 @@ body {
 /* --- TITRES --- */
 .profile-header {
     margin-bottom: 20px;
+    z-index: 100;
 }
 
 .profile-header h1 {

@@ -112,7 +112,7 @@
 }
 </style>
 
-<div id="popup_password" >
+<div id="popup_password" style="z-index: 9999 !important;">
     <div>
         
         <button type="button" onclick="fermerPopupPassword()">X</button>

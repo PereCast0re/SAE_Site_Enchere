@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* devant tout */
+    z-index: 9999 !important; /* devant tout */
 }
 
 /* Contenu de la pop-up */

@@ -35,7 +35,7 @@ function acceptReservedPrice($data, $id_user){
     }
 }
 
-function refuseReservedPrice($data){
+function refuseReservedPrice($data, $id_user){
     if (isset($data['id_product'])) {
         $id_product = $data['id_product'];
 

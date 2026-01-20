@@ -37,7 +37,7 @@ body {
 header {
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 8000;
     background-color: var(--Swan-wing);
     height: 75px;
     display: flex;

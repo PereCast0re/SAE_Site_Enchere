@@ -112,7 +112,7 @@
 }
 </style>
 
-<div id="popup_name" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000;">
+<div id="popup_name" style="z-index: 9999 !important; display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000;">
     <div style="background:#fff; margin:10vh auto; padding:2em; width:300px; border-radius:8px; position:relative;">
 
         <button onclick="fermerPopupName()" style="position:absolute; top:10px; right:10px;">X</button>
