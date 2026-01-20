@@ -1,5 +1,8 @@
 <?php
 
+date_default_timezone_set('Europe/Paris');
+
+
 session_start();
 
 require_once('src/controllers/C_addProduct.php');
@@ -75,9 +78,9 @@ try {
             updateAddress($_POST);
         } elseif ($_GET['action'] === 'update_password') {
             updatePassword($_POST['new_password_2']);
-        }elseif ($_GET['action'] === 'update_Firstname'){
+        } elseif ($_GET['action'] === 'update_Firstname') {
             updateFirstname($_POST);
-        } elseif ($_GET["action"] === 'update_Name'){
+        } elseif ($_GET["action"] === 'update_Name') {
             updateName($_POST);
 
         } elseif ($_GET['action'] === 'newsletter') {
@@ -130,18 +133,18 @@ try {
                 throw new Exception("Impossible to update product statut !");
             }
 
-        } elseif ($_GET['action'] === 'updateProduct'){
-            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0){
+        } elseif ($_GET['action'] === 'updateProduct') {
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 UpdateFromProduct($_POST['id_product']);
             } else {
-                throw new Exception("Impossible de modifier ce produit !" .$e->getMessage());
+                throw new Exception("Impossible de modifier ce produit !" . $e->getMessage());
             }
-        
 
-        } elseif ($_GET['action'] == 'updateProductPage'){
+
+        } elseif ($_GET['action'] == 'updateProductPage') {
             require('templates/updateProduct.php');
 
-        } elseif ($_GET['action'] === 'finalUpdateProduct'){
+        } elseif ($_GET['action'] === 'finalUpdateProduct') {
             $user = $_SESSION['user'];
             finalUpdateProduct($user, $_POST);
 
@@ -153,8 +156,8 @@ try {
             favorite();
         } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
             unfavorite();
-        } elseif ($_GET['action'] === 'LisAnnoncementLike'){
-            if(isset($_GET['id_user'])){
+        } elseif ($_GET['action'] === 'LisAnnoncementLike') {
+            if (isset($_GET['id_user'])) {
                 $id = $_GET['id_user'];
                 $pdo = DatabaseConnection::getConnection();
                 $productRepository = new ProductRepository($pdo);
@@ -163,8 +166,8 @@ try {
                 echo json_encode($data);
                 exit();
             }
-        } elseif ($_GET['action'] === 'AnnoncementLike'){
-            if(isset($_GET['id_product'])){
+        } elseif ($_GET['action'] === 'AnnoncementLike') {
+            if (isset($_GET['id_product'])) {
                 $id = $_GET['id_product'];
                 $pdo = DatabaseConnection::getConnection();
                 $productRepository = new ProductRepository($pdo);
@@ -321,14 +324,14 @@ try {
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
-        
-        } elseif ($_GET['action'] == 'getCelebrityFromProduct'){
-            if(isset($_GET['id_product']) && $_GET['id_product'] >= 0){
+
+        } elseif ($_GET['action'] == 'getCelebrityFromProduct') {
+            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
                 $pdo = DatabaseConnection::getConnection();
                 $celebrityRepository = new CelebrityRepository($pdo);
                 $celebrity = $celebrityRepository->getCelebrityFromAnnoncement($id_product);
-                if ($celebrity !== false){
+                if ($celebrity !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($celebrity);
                     exit();
@@ -339,13 +342,13 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer la célébrité.");
             }
 
-        } elseif ($_GET['action'] == 'getCategoryFromProduct'){
-            if(isset($_GET['id_product']) && $_GET['id_product'] >= 0){
+        } elseif ($_GET['action'] == 'getCategoryFromProduct') {
+            if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
                 $pdo = DatabaseConnection::getConnection();
                 $productRepository = new ProductRepository($pdo);
                 $category = $productRepository->getCategoryFromAnnoncement($id_product);
-                if ($category !== false){
+                if ($category !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($category);
                     exit();
@@ -356,10 +359,10 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer la catégorie.");
             }
 
-        }elseif ($_GET['action'] == 'acceptReservedPrice'){
+        } elseif ($_GET['action'] == 'acceptReservedPrice') {
             acceptReservedPrice($_POST, $_SESSION['user']['id_user']);
 
-        } elseif ($_GET['action'] == 'refuseReservedPrice'){
+        } elseif ($_GET['action'] == 'refuseReservedPrice') {
             refuseReservedPrice($_POST, $_SESSION['user']['id_user']);
 
             ////////////////////////////// Page sell product ////////////////////////

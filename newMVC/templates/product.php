@@ -129,7 +129,7 @@ $script = "templates/JS/favorite.js";
                     <?php foreach ($price_ex as $price) { ?>
                         <button id="bid-ex-btn" data-price="<?= $price ?>" data-id="<?= $id_product ?>"
                             data-current="<?= $current_price ?>" onclick="ouvrirPopup('BidValidation', this)">
-                            <?= number_format($price, 0, ',', ' ') ?>
+                            <?= htmlspecialchars(number_format($price, 0, ',', ' ')) ?>
                         </button>
                     <?php } ?>
                 </div>

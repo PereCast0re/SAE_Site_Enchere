@@ -60,7 +60,7 @@ $style = "templates/style/index.css";
 
                   <div class="info-row price-box">
                     <i class="fa-solid fa-money-bill-wave icon-white"></i>
-                    <span class="price"><?= htmlspecialchars($current_price) ?> €</span>
+                    <span class="price"><?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €</span>
                   </div>
 
                   <div class="bid-button">Enchérir</div>

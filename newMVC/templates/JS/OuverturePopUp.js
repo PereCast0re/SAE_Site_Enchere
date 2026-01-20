@@ -215,7 +215,7 @@ function ouvrirPopup(page, element = null) {
 
                                 // window.alert(data);
 
-                                window.location.reload();
+                                // window.location.reload();
 
                                 showToast(0, 'Enchérissement avec succès !');
                             } catch (e) {
