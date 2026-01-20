@@ -532,7 +532,7 @@ class ProductRepository
             $tmp->execute([
                 ':id_product' => $id_product
             ]);
-            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+            return $tmp->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e){
             die("Error on get buyer info :" .$e->getMessage());
         }
@@ -551,4 +551,34 @@ class ProductRepository
             die('Error on extraction of liked prduct : ' .$e->getMessage());
         }
     }
+
+    // retourne les info du proprio de l'annonce
+    function get_Specific_Annonce_User($id_annoncement){
+        $pdo = $this->connection;
+
+        $requete = "
+            SELECT 
+                u.id_user,
+                u.name,
+                u.firstname,
+                u.email
+            FROM users u
+            JOIN published pb ON pb.id_user = u.id_user
+            WHERE pb.id_product = :id_annoncement
+            LIMIT 1
+        ";
+
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_annoncement' => $id_annoncement
+            ]);
+
+            return $tmp->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            die('Error on getting annonce owner info : ' . $e->getMessage());
+        }
+    }
+
 }
