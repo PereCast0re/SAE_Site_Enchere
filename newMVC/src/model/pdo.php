@@ -190,6 +190,23 @@ function saveCertificatePath($id_product, $path_image)
     }
 }
 
+
+function subscribeNewsletter($email)
+{
+    $pdo = connection();
+    try {
+        $requete = "UPDATE users SET newsletter = 1 WHERE email = :email";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":email" => $email
+        ]);
+    } catch (PDOException $e) {
+        die("Error subscribing to the newsletter, try again !\nError : " . $e->getMessage());
+    }
+    
+}
+
+
 ///////////////////////////////////////////// Cloture d'une annonce ////////////////////////////////////////////////////////
 /// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
 function closeAnnoncement($id_product)
