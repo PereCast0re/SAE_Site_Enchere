@@ -42,7 +42,18 @@ class ProductRepository
     function getProduct($id_product)
     {
         $pdo = $this->connection;
-        $requete = "SELECT * FROM Product WHERE id_product = ?";
+        $requete = "SELECT pr.*, 
+                    CONCAT(u.firstname, ' ', u.name) as fullname,
+                    u.city as userCity,
+                    u.id_user as userID,
+                    c.name as celebrityName,
+                    c.url as celebrityUrl
+                    FROM Published pu
+                    JOIN Users u ON pu.id_user = u.id_user
+                    JOIN Product pr ON pu.id_product = pr.id_product
+                    JOIN Concerned co ON co.id_product = pu.id_product
+                    JOIN Celebrity c ON c.id_celebrity = co.id_celebrity
+                    WHERE pu.id_product = ? AND status = 1";
         try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([$id_product]);

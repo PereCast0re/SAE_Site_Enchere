@@ -259,7 +259,7 @@ Puis exécuter la requête suivante :
 .\meilisearch-windows-amd64.exe --master-key CLE_TEST_SAE_SITE
 ```
 
-### Recherche de célébrités
+#### Recherche de célébrités
 
 Vous pouvez aussi rechercher des célébrités via le script python `ScriptCelebrity.py`.
 

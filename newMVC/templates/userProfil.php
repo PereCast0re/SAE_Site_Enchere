@@ -5,7 +5,7 @@ $style = "templates/style/Accueil.css";
 
 <?php ob_start(); ?>
 
-<?php include('preset/header.php'); ?>
+<?php include('preset/second-header.php'); ?>
 
 <?php if (empty($products)) { ?>
     <style>
@@ -17,7 +17,6 @@ $style = "templates/style/Accueil.css";
 <?php } ?>
 
 <main>
-
     <section id="profil">
         <div>
             <img src="./templates/images/profil-icon.png" alt="Logo du vendeur">

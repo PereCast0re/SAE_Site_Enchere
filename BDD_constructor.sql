@@ -115,7 +115,7 @@ DROP TABLE IF EXISTS `celebrity`;
 CREATE TABLE IF NOT EXISTS `celebrity` (
   `id_celebrity` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
-  `url` varchar(100) DEFAULT NULL,
+  `url` varchar(200) DEFAULT NULL,
   `statut` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_celebrity`),
   UNIQUE KEY `name` (`name`)

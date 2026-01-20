@@ -10,7 +10,7 @@ $style = "templates/style/buy.css";
 
 <?php ob_start(); ?>
 
-<?php include('preset/header.php'); ?>
+<?php include('preset/second-header.php'); ?>
 <?php include("src/controllers/update-index.php"); ?>
 
 <main>

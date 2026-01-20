@@ -18,9 +18,9 @@ def save_celebrities(celebrities):
     cursor = db.cursor()
 
     sql = """
-    INSERT INTO celebrity (name, url)
-    VALUES (%s, %s)
-    ON DUPLICATE KEY UPDATE url = VALUES(url) 
+    INSERT INTO celebrity (name, url, statut)
+    VALUES (%s, %s, 1)
+    ON DUPLICATE KEY UPDATE url = VALUES(url), statut = 1;
     """
     # ON DUPLICATE permet de mettre à jour et éviter les duplications
 

@@ -1,0 +1,220 @@
+:root {
+    --Sapphire: #3C507D;
+    --Royal-blue: #112250;
+    --Quicksand: #E0C58F;
+    --Swan-wing: #F5F0E9;
+    --Sheelstone: #D9CBC2;
+    --Gold: #D2A047;
+    --Green: #3A7F4F;
+    --Red: #C0392B;
+
+    --H1-font: "Lora", serif;
+    --H1-size: 40px;
+    --H1-weight: 700;
+
+    --H2-font: "Lora", serif;
+    --H2-size: 32px;
+    --H2-weight: 700;
+
+    --H3-font: "Lora", serif;
+    --H3-size: 24px;
+    --H3-weight: 700;
+
+    --p-font: "Poppins", serif;
+    --p-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--Swan-wing) !important;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background-color: var(--Swan-wing);
+    height: 75px;
+    display: flex;
+    align-items: center;
+}
+
+header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+header #header-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+header img {
+    width: 75px;
+    height: 75px;
+}
+
+header #header-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+header ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    color: var(--Royal-blue);
+    font-size: var(--H3-size);
+    font-weight: var(--H3-weight);
+    font-family: var(--H3-font);
+    transition: color 0.3s ease;
+}
+
+header a:hover:not(.header-btn) {
+    color: var(--Gold);
+}
+
+header i {
+    font-size: var(--H3-size);
+}
+
+.header-btn {
+    border: 2px solid var(--Royal-blue);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition:
+        box-shadow 0.15s,
+        transform 0.15s;
+}
+
+.header-btn:focus {
+    box-shadow:
+        var(--Royal-blue) 0 0 0 1.5px inset,
+        rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+        var(--Royal-blue) 0 -3px 0 inset;
+}
+
+.header-btn:hover {
+    box-shadow:
+        rgba(45, 35, 66, 0.3) 0 5px 8px,
+        rgba(45, 35, 66, 0.2) 0 7px 13px -3px,
+        var(--Royal-blue) 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.header-btn:active {
+    box-shadow: var(--Royal-blue) 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 11;
+    padding: 10px;
+}
+
+.burger-menu span {
+    width: 30px;
+    height: 3px;
+    background-color: var(--Royal-blue);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu.active span:nth-child(1) {
+    transform: translate(8px, 8px) rotate(45deg);
+}
+
+.burger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+    transform: translate(8px, -8px) rotate(-45deg);
+}
+
+@media (max-width: 1200px) {
+
+    .burger-menu {
+        display: flex;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    header #header-links {
+        position: fixed;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 75px);
+        background-color: var(--Swan-wing);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 40px 20px;
+        gap: 30px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+    }
+
+    header #header-links.active {
+        transform: translateX(0);
+    }
+
+    header ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+    }
+
+    header ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    header a {
+        display: block;
+        width: 100%;
+        padding: 15px;
+    }
+
+    .header-btn {
+        width: 100%;
+    }
+
+    header #header-logo {
+        left: 20px;
+        transform: translateY(-50%);
+    }
+
+    header img {
+        width: 60px;
+        height: 60px;
+    }
+}

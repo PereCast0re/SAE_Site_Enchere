@@ -67,7 +67,7 @@ $user = $_SESSION['user'];
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 <?php ob_start(); ?>
 
-<?php include('preset/header.php'); ?>
+<?php include('preset/second-header.php'); ?>
 
 <main>
   <div class="newsletter">

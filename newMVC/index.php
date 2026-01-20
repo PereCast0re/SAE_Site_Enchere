@@ -20,6 +20,7 @@ require_once('src/controllers/C_deleteProduct.php');
 require_once('src/controllers/C_updateProduct.php');
 require_once('src/controllers/C_emailing.php');
 require_once('src/controllers/C_reservedPrice.php');
+require_once('src/controllers/C_getComments.php');
 
 require_once("src/model/pdo.php");
 require_once('src/lib/database.php');
@@ -94,7 +95,7 @@ try {
             $user = $_SESSION['user'];
             addNewProduct($user, $_POST);
 
-        } elseif ($_GET['action'] === 'deleteProduct') { 
+        } elseif ($_GET['action'] === 'deleteProduct') {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 $pdo = DatabaseConnection::getConnection();
                 $celebrityRepository = new CelebrityRepository(pdo: $pdo);
@@ -108,8 +109,8 @@ try {
                 throw new Exception("Impossible to delete this product !");
             }
 
-        } elseif ($_GET['action'] === 'validateAnnoncement'){
-            if(isset($_POST['id_product']) && $_POST['id_product'] >= 0){
+        } elseif ($_GET['action'] === 'validateAnnoncement') {
+            if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 $id_product = $_POST['id_product'];
                 $pdo = DatabaseConnection::getConnection();
                 $productRepository = new ProductRepository($pdo);
@@ -128,7 +129,7 @@ try {
             } else {
                 throw new Exception("Impossible to update product statut !");
             }
-        
+
         } elseif ($_GET['action'] === 'updateProduct'){
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0){
                 UpdateFromProduct($_POST['id_product']);
@@ -143,12 +144,9 @@ try {
         } elseif ($_GET['action'] === 'finalUpdateProduct'){
             $user = $_SESSION['user'];
             finalUpdateProduct($user, $_POST);
-        
-        } elseif ($_GET['action'] === 'addComment') {
-            if($_POST['id_product'] && $_POST['id_product'] > 0){
-                UpdateProduct($_POST['id_product']);
-            } 
 
+        } elseif ($_GET['action'] === 'addComment') {
+            addComment();
 
             ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite
@@ -184,13 +182,14 @@ try {
 
             ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
-            // Product(id_product: $_GET['id']);
+            Product(id_product: $_GET['id']);
 
             // A supprimer une fois le style de la effectué
-            $errorMessage = '<i class="fa-solid fa-hammer"></i>  <span>Désolé</span> En cours de développement ! Réessayez ultérieurement !';
-            require('templates/preset/error.php');
+            // $errorMessage = '<i class="fa-solid fa-hammer"></i>  <span>Désolé</span> En cours de développement ! Réessayez ultérieurement !';
+            // require('templates/preset/error.php');
 
-
+        } elseif ($_GET['action'] == 'getComments') {
+            getComments();
 
             ////////////////////////////// page user //////////////////////////////
             // get price
@@ -365,26 +364,26 @@ try {
 
             ////////////////////////////// Page sell product ////////////////////////
 
-        }elseif ($_GET['action'] == 'getCategoriesMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCategoriesMod') {
+            if (isset($_GET['writting'])) {
                 $pdo = DatabaseConnection::getConnection();
                 $productRepository = new ProductRepository($pdo);
                 $writting = $_GET['writting'];
                 $categories = $productRepository->getCategoryMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
                 }
             }
 
-        }elseif ($_GET['action'] == 'getCelebrityMod'){
-            if (isset($_GET['writting'])){
+        } elseif ($_GET['action'] == 'getCelebrityMod') {
+            if (isset($_GET['writting'])) {
                 $pdo = DatabaseConnection::getConnection();
                 $celebrityRepository = new CelebrityRepository($pdo);
                 $writting = $_GET['writting'];
                 $categories = $celebrityRepository->getCelebrityMod($writting);
-                if ($categories !== false){
+                if ($categories !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($categories);
                     exit();
@@ -394,17 +393,17 @@ try {
             ///////////////////////////////// Admin ////////////////////////////////
         } elseif ($_GET['action'] == 'admin') {
             require('templates/admin_pannel.php');
-        
-        }elseif ($_GET['action'] == 'sendNewsletter') {
+
+        } elseif ($_GET['action'] == 'sendNewsletter') {
             PostNewsletter($_POST);
 
-        }elseif ($_GET['action'] === 'deleteProductAdmin') { 
+        } elseif ($_GET['action'] === 'deleteProductAdmin') {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 deleteProductAdmin($_POST['id_product'], $_SESSION['user']['email'], $_SESSION['user']['username']);
             }
 
-        ////////////////////////////// Cas de base //////////////////////////////        
-        }else {
+            ////////////////////////////// Cas de base //////////////////////////////        
+        } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
         }
     } else {
