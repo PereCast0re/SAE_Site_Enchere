@@ -14,7 +14,7 @@ $style = "templates/style/index.css";
 
 <?php ob_start(); ?>
 
-<?php include('preset/header.php'); ?>
+<?php include('preset/second-header.php'); ?>
 
 <main>
   <?php

@@ -48,7 +48,7 @@ require(dirname(__DIR__, 2) . '/src/script/verif_online_annoncement.php');
                     </li>
                     <li>
                         <a href="index.php?action=user">
-                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-user"></i>
                         </a>
                     </li>
                 <?php } ?>

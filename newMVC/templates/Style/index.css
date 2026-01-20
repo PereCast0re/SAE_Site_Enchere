@@ -240,7 +240,6 @@ button:hover {
     width: 100%;
     height: 620px;
     /* On garde la hauteur */
-    padding-top: 80px;
     padding-bottom: 50px;
     /* Augmente l'espace pour la pagination */
     margin-bottom: 40px;

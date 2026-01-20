@@ -12,7 +12,7 @@ $user = $_SESSION['user'];
 ?>
 
 <?php ob_start(); ?>
-<?php include('preset/header.php'); ?>
+<?php include('preset/second-header.php'); ?>
 <link href="templates/style/stylePopup.css" rel="stylesheet" />
 
 <main>
