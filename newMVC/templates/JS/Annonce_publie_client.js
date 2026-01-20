@@ -126,7 +126,9 @@ async function print_unverifed_product(div, annoncements) {
     console.log("print unverifed");
     
     // Vérification de la présence d'annonces
-    if (count(annoncements['statut']) == 0) {
+    $nb = annoncements.some(a => a.status === 0);
+
+    if (!nb) {
         div.style.display = 'none';
         return;
     }
@@ -184,8 +186,10 @@ async function print_unverifed_product(div, annoncements) {
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div) {
     let annoncements = await getAnnonceReserved($id_user);
+    const nbreserved = annoncements.some(a => a.reserve_price !== null);
 
-    if (Array.isArray(annoncements) && annoncements.length > 0 && annoncements.lastPrice != null) {
+    if (nbreserved) {
+        console.log('on passe en block reserved')
         div.style.display = 'block';
 
         let html = `<div class="pending_section_header">

@@ -361,7 +361,7 @@ try {
             acceptReservedPrice($_POST, $_SESSION['user']['id_user']);
 
         } elseif ($_GET['action'] == 'refuseReservedPrice'){
-            refuseReservedPrice($_POST, $_SESSION['user']['id_user']);
+            refuseReservedPrice($_POST);
 
             ////////////////////////////// Page sell product ////////////////////////
 

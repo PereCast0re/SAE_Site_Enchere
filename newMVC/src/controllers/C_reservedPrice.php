@@ -41,15 +41,17 @@ function refuseReservedPrice($data){
 
         $pdo = DatabaseConnection::getConnection();
         $productRepository = new ProductRepository($pdo);
+        $userRepository = new UserRepository($pdo);
         $succes = $productRepository->updateReservePrice($id_product);
+        $prd = $productRepository->getProduct($id_product);
         if ($succes){
-            $product = $productRepository->getProduct($id_product);
+            $user = $productRepository->get_Specific_Annonce_User($id_product);
             // 0
-            $email = $product['seller_email'];
+            $email = $user['email'];
             // 1 name
-            $name = $product['seller_name'] . ' ' . $product['seller_firstname'];
+            $name = $user['seller_name'] . ' ' . $user['seller_firstname'];
             // 2
-            $titleProduct = $product['title'];
+            $titleProduct = $prd['title'];
 
             $paramSeller = [$email, $name, $titleProduct];
             routeurMailing('refuseReservedPrice', $paramSeller);

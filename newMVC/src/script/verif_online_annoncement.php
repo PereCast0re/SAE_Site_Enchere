@@ -32,6 +32,7 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
             $productRepository = new ProductRepository($pdo);
             $annoncementClient = get_all_annoncement_notMailed();
             foreach ($annoncementClient as $annonce) {
+                if ($annonce['reserve_price'] != null){continue;}
                 $date_fin = $annonce['end_date'];
                 $current_date = date('Y-m-d H:i:s');
                 $mail = $annonce['mailIsSent'];
