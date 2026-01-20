@@ -13,7 +13,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 ?>
 
 <?php ob_start(); ?>
-<?php include('preset/header.php'); ?>
+<!-- <?php include('preset/header.php'); ?> -->
 
     <h1 class="titleVendre">Mise en enchère de votre produit</h1>
     <form class="form_vente_produit" action="index.php?action=addProduct" method="POST" enctype="multipart/form-data">

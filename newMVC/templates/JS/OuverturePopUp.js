@@ -3,12 +3,29 @@ function ouvrirPopup(page) {
     let currentPrice = null;
     let idProduct = null;
     switch (page) {
+        case "Name":
+            fetch('templates/Event/Modif_Name.php')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('popup').innerHTML = html;
+                    document.getElementById('popup_name').style.display = 'grid';
+                })
+            break
+        case "FirstName":
+            fetch('templates/Event/Modif_FirstName.php')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('popup').innerHTML = html;
+                    document.getElementById('popup_firstname').style.display = 'grid';
+                }
+            )
+            break
         case "Adresse":
             fetch('templates/Event/Modif_Address.php')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
-                    document.getElementById('popup_adresse').style.display = 'block';
+                    document.getElementById('popup_adresse').style.display = 'grid';
                 })
             break
         case "Email":
@@ -16,7 +33,7 @@ function ouvrirPopup(page) {
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
-                    document.getElementById('popup_email').style.display = 'block';
+                    document.getElementById('popup_email').style.display = 'grid';
                 })
             break
         case "Password":
@@ -24,7 +41,7 @@ function ouvrirPopup(page) {
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('popup').innerHTML = html;
-                    document.getElementById('popup_password').style.display = 'block';
+                    document.getElementById('popup_password').style.display = 'grid';
                 })
             break
         case "Bid":
@@ -158,6 +175,15 @@ function fermerPopupBid() {
 function fermerPopupBidForm() {
     document.getElementById('popup_bid_form').style.display = 'none';
 }
+
+function fermerPopupName() {
+    document.getElementById('popup_name').style.display = 'none';
+}
+
+function fermerPopupFistname() {
+    document.getElementById('popup_firstname').style.display = 'none';
+}
+
 //#endregion
 
 async function checkupNewPWD(event) {

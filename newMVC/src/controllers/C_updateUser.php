@@ -74,3 +74,29 @@ function updateAddress(array $input)
         exit();
     }
 }
+
+function updateFirstname($f){
+    if (isset($f)){
+        $firstname = $f;
+        $pdo = DatabaseConnection::getConnection();
+        $userRepository = new UserRepository($pdo);
+        $userRepository->updateFirstnameUser($firstname, $_SESSION['user']['id_user']);
+        $_SESSION['user']['firstname'] = $firstname['firstname'];
+        
+        header("Location: index.php?action=user");
+        exit();
+    }
+}
+
+function updateName($f){
+    if (isset($f)){
+        $name = $f;
+        $pdo = DatabaseConnection::getConnection();
+        $userRepository = new UserRepository($pdo);
+        $userRepository->updateNameUser($name, $_SESSION['user']['id_user']);
+        $_SESSION['user']['name'] = $name['name'];
+        
+        header("Location: index.php?action=user");
+        exit();
+    }
+}

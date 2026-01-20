@@ -493,4 +493,51 @@ class ProductRepository
             die("Error on updating linking your category to your annoncement :" . $e->getMessage());
         }
     }
+
+    function updateReservePrice($id){
+        $pdo = $this->connection;
+        $requete = "UPDATE product set reserve_price = null where id_product = :id";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id' => $id
+            ]);
+            return $tmp;
+        } catch (PDOException $e){
+            die("Error on update your reserve price" .$e->getMessage());
+        }
+    }
+
+    function getBuyer($id_product){
+        $pdo = $this->connection;
+        $requete = "SELECT u.name, u.firstname, u.email
+                    from users as u
+                    join bid as b on b.id_user = u.id_user
+                    where b.id_product = :id_product
+                    order by b.new_price desc
+                    limit 1;";
+        try{
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':id_product' => $id_product
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            die("Error on get buyer info :" .$e->getMessage());
+        }
+    }
+
+    function getAllProductLike($id){
+        $pdo = $this->connection;
+        $r = "SELECT * from interest where id_user = :id";
+        try{
+            $tmp = $pdo->prepare($r);
+            $tmp->execute([
+                ":id" => $id
+            ]);
+            return $tmp->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e){
+            die('Error on extraction of liked prduct : ' .$e->getMessage());
+        }
+    }
 }

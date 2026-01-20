@@ -112,31 +112,21 @@
 }
 </style>
 
-<div id="popup_password" >
-    <div>
+<div id="popup_firstname" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="background:#fff; margin:10vh auto; padding:2em; width:300px; border-radius:8px; position:relative;">
+
+        <button onclick="fermerPopupFistname()" style="position:absolute; top:10px; right:10px;">X</button>
         
-        <button type="button" onclick="fermerPopupPassword()">X</button>
-
-        <h1>Modifier votre mot de passe</h1>
+        <h1>Modifier votre prénom</h1>
         
-        <div class="div_erreur"></div>
+        <form action="index.php?action=update_Firstname" class="form_modif_firstname" method="POST">
+            <p>Taper votre mail</p>
+            <input type="text" name="firstname" placeholder="Votre nouvel prénom">
+            <button type="submit" name="action">Valider</button>
         
-        <form class="form_modif_password" id="form_modif_password" action="index.php?action=update_password" method="POST" onsubmit="checkupNewPWD(event)">
-            <input type="hidden" name="action" value="update_password">
-            
-            <p>Taper vôtre ancien mot de passe</p>
-            <input class="old_password" type="password" name="old_password" placeholder="Votre ancien mot de passe">
-
-            <p>Taper nouveau mot de passe </p>
-            <input class="new_password_1" type="password" name="new_password_1" placeholder="Votre nouveau mot de passe">
-
-            <p>Retaper nouveau mot de passe </p>
-            <input class="new_password_2" type="password" name="new_password_2" placeholder="Répéter le mot de passe">
-
-            <button type="submit">Valider</button>
         </form>
-    
-    </div>
-</div>
 
+    </div>
+
+</div>
 <script src="templates/JS/OuverturePopUp.js"></script>

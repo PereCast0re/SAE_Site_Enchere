@@ -48,7 +48,7 @@ require_once(dirname(__DIR__, 2) . '/src/script/verif_online_annoncement.php');
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="btn_Favoris" class="nav-link" href="index.php?action=getLikes">
+                            <a id="btn_Favoris" class="nav-link" href="index.php?action=getLikesPage">
                                 <img src="templates/images/coeur.png" alt="Favoris" style="width: 30px; height: 30px;">
                             </a>
                         </li>

@@ -5,6 +5,7 @@ require_once('src/model/product.php');
 require_once("src/controllers/C_emailing.php");
 require_once("src/model/pdo.php");
 require_once('src/model/celebrity.php');
+require_once('src/model/user.php');
 
 function addNewProduct($user, $input)
 {
@@ -59,8 +60,26 @@ function addNewProduct($user, $input)
         checkImage($id_product, $productRepository);
         $user_email = $user['email'];
         $user_name = $user['name'];
-        $param =[$user_email, $user_name] ;
-        routeurMailing('sendEmailConfirmationPlublish', $param);
+        if( $statut == 0){
+            $param =[$user_email, $user_name, $title] ;
+            routeurMailing('sendEmailPendingPlublish', $param);
+            //Mail aux admin pour validation
+            $pdo = DatabaseConnection::getConnection();
+            $userRepository = new UserRepository($pdo);
+            $Admins = $userRepository->getAdmin();
+            if (count($Admins) > 1){
+                $admin_choosen = $Admins[array_rand($Admins)];
+            }
+            else{
+                $admin_choosen = $Admins[0];
+            }
+            $param = [$admin_choosen['email'], $admin_choosen['name'] . ' ' . $admin_choosen['firstname']];
+
+            routeurMailing('productValidationAdmin', $param);
+        } else {
+            $param =[$user_email, $user_name] ;
+            routeurMailing('sendEmailConfirmationPlublish', $param);
+        }
         header("Location: index.php?action=user");
     }
 
@@ -106,7 +125,6 @@ function checkImage($id_product, ProductRepository $productRepository){
 
 function certificat($id_annonce, $DirAnnonce){
     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
-    var_dump($tmpFilePath);
     if ($tmpFilePath != ""){
         $newFilePath = $DirAnnonce . "/" . $id_annonce . "_Certificate" . ".pdf";
         $databasePath = "Annonce/". $id_annonce . "/" . $id_annonce . "_Certificate" . ".pdf";

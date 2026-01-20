@@ -2,6 +2,7 @@
 
 require_once('src/lib/database.php');
 require_once('src/model/user.php');
+require_once('C_emailing.php');
 
 function inscription(array $input)
 {
@@ -38,6 +39,7 @@ function inscription(array $input)
         throw new Exception("Impossible de s'inscrire pour le moment !");
     } else {
         // Redirection ou message de succès
+        routeurMailing('InscriptionWebsite', [$email, $name . ' ' . $firstname]);
         header('Location: index.php?action=user');
     }
 }

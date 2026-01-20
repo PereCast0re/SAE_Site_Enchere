@@ -157,4 +157,49 @@ class UserRepository
 
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    function getAdmin(){
+        $pdo = $this->connection;
+        $requete = "SELECT * from users where admin = 1";
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function updateFirstnameUser($f, $id){
+        $pdo = $this->connection;
+        $requete = "UPDATE Users
+                SET firstname = :firstname
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":firstname" => $f['firstname'],
+                ":id_user" => $id
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the firstname, try again !\nError : " . $e->getMessage());
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function updateNameUser($n, $id){
+        $pdo = $this->connection;
+        $requete = "UPDATE users
+                SET name = :name
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":name" => $n['name'],
+                ":id_user" => $id
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the name, try again !\nError : " . $e->getMessage());
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }
