@@ -86,7 +86,7 @@ function sendEmailConfirmationPlublish($param){
         [
             'From' =>[
                 'Email' => "barthoux44@gmail.com",
-                'Name' => "Admin MaBonneEnchere"
+                'Name' => "Admin BidStars"
             ],
             'To' => [
                 [
@@ -94,9 +94,9 @@ function sendEmailConfirmationPlublish($param){
                     'Name' => $param[1]
                 ]
             ],
-                'Subject' => 'Publication de votre annonce sur MaBonneEnchere',
+                'Subject' => 'Publication de votre annonce sur BidStars',
                 'TextPart' => 'Félicitations, votre annonce a été publiée avec succès !',
-                'HTMLPart' => '<h3>Félicitations, votre annonce a été publiée avec succès !</h3><br />Merci de faire confiance à MaBonneEnchere pour vos achats et ventes en ligne.'
+                'HTMLPart' => '<h3>Félicitations, votre annonce a été publiée avec succès !</h3><br />Merci de faire confiance à BidStars pour vos achats et ventes en ligne.'
             ]
         ]
     ];
@@ -120,7 +120,7 @@ function sendEmailConfirmationUpdate($param){
         [
             'From' =>[
                 'Email' => "barthoux44@gmail.com",
-                'Name' => "Admin MaBonneEnchere"
+                'Name' => "Admin BidStars"
             ],
             'To' => [
                 [
@@ -128,9 +128,9 @@ function sendEmailConfirmationUpdate($param){
                     'Name' => $param[1]
                 ]
             ],
-                'Subject' => 'Modification de votre annonce sur BidStar',
-                'TextPart' => 'Félicitations, votre annonce a été modifié avec succès !',
-                'HTMLPart' => '<h3>Félicitations, votre annonce a été modifié avec succès !</h3><br />Merci de faire confiance à MaBonneEnchere pour vos achats et ventes en ligne.'
+                'Subject' => 'Modification de votre annonce sur BidStars',
+                'TextPart' => 'Félicitations, votre annonce a été modifiée avec succès !',
+                'HTMLPart' => '<h3>Félicitations, votre annonce a été modifiée avec succès !</h3><br />Merci de faire confiance à BidStars pour vos achats et ventes en ligne.'
             ]
         ]
     ];
@@ -154,7 +154,7 @@ function InscriptionNewsletter($param){
         [
             'From' =>[
                 'Email' => "barthoux44@gmail.com",
-                'Name' => "Admin MaBonneEnchere"
+                'Name' => "Admin BidStars"
             ],
             'To' => [
                 [
@@ -162,9 +162,9 @@ function InscriptionNewsletter($param){
                     'Name' => $param[1]
                 ]
             ],
-                'Subject' => 'Inscription à la Newsletter MaBonneEnchere',
-                'TextPart' => 'Bienvenue dans la communauté MaBonneEnchere !',
-                'HTMLPart' => '<h3>Bienvenue dans la communauté MaBonneEnchere !</h3><br />Merci de vous être inscrit à notre newsletter. Restez à l\'écoute pour les dernières nouvelles et offres.'
+                'Subject' => 'Inscription à la Newsletter BidStars',
+                'TextPart' => 'Bienvenue dans la communauté BidStars !',
+                'HTMLPart' => '<h3>Bienvenue dans la communauté BidStars !</h3><br />Merci de vous être inscrit à notre newsletter. Restez à l\'écoute pour les dernières nouvelles et offres.'
             ]
         ]
     ];
@@ -189,7 +189,7 @@ function InscriptionWebsite($param){
         [
             'From' =>[
                 'Email' => "barthoux44@gmail.com",
-                'Name' => "Admin MaBonneEnchere"
+                'Name' => "Admin BidStars"
             ],
             'To' => [
                 [
@@ -224,7 +224,7 @@ function EndAnnoncement($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin MaBonneEnchere"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -234,7 +234,7 @@ function EndAnnoncement($param){
                 ],
                 'Subject' => 'Votre annonce ' . $param[2] .' à trouvé preneur ',
                 'TextPart' => 'Votre annonce à trouvé preneur !',
-                'HTMLPart' => '<h3>Votre annonce '.$param[2].' est finis </h3><br />Votre produit à trouver un nouveau propriétaire.
+                'HTMLPart' => '<h3>Votre annonce '.$param[2].' est finie </h3><br />Votre produit à trouvé un nouveau propriétaire.
                     <br>
                     Montant de la dernière enchère : '.$param[3].'
                     <br>
@@ -242,10 +242,10 @@ function EndAnnoncement($param){
                     <br>
                     Nom de l\'acheteur : '.$param[4].'<br>
                     email de l\'acheteur : '.$param[5]. '<br>
-                    Vous conviendrait avec l\'acheteur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Condition général de vente</a>.
+                    Vous conviendrez avec l\'acheteur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Condition général de vente</a>.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -267,7 +267,7 @@ function EndAnnoncement2($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin MaBonneEnchere"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -275,12 +275,12 @@ function EndAnnoncement2($param){
                         'Name' => $param[1]
                     ]
                 ],
-                'Subject' => 'Votre annonce ' . $param[2] .' n\'as pas trouvé preneur ',
-                'TextPart' => 'Votre annonce n\'as pas trouvé preneur !',
-                'HTMLPart' => '<h3>Votre annonce '.$param[2].' est finis </h3><br />Votre produit n\'as pas trouver un nouveau propriétaire.
+                'Subject' => 'Votre annonce ' . $param[2] .' n\'a pas trouvé preneur ',
+                'TextPart' => 'Votre annonce n\'a pas trouvé preneur !',
+                'HTMLPart' => '<h3>Votre annonce '.$param[2].' est finie </h3><br />Votre produit n\'a pas trouvé de nouveau propriétaire. Vous pouvez tenter de la republier sur BidStars.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -374,7 +374,7 @@ function EmailReservedAcceptBuyer($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -382,16 +382,16 @@ function EmailReservedAcceptBuyer($param){
                         'Name' => $param[1]
                     ]
                 ],
-                'Subject' => 'Vous remporté l\'enchere malgré le prix de reserve non atteint '.$param[2],
-                'TextPart' => 'Vous avez remporter l\'enchère.',
-                'HTMLPart' => '<h3>Votre dernière offre pour l\'annonce '.$param[2].' à était accepter !</h3><br /> 
+                'Subject' => 'Vous remportez l\'enchere malgré le prix de reserve non atteint '.$param[2],
+                'TextPart' => 'Vous avez remporté l\'enchère.',
+                'HTMLPart' => '<h3>Votre dernière offre pour l\'annonce '.$param[2].' à été acceptée !</h3><br /> 
                     <br>
-                    Vous serez contacter par le vendeur pour finaliser la transaction.
+                    Vous serez contacté par le vendeur pour finaliser la transaction.
                     <br>
-                    Vous conviendrait avec le vendeur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Condition général de vente</a>.
+                    Vous conviendrez avec le vendeur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Conditions générales de vente</a>.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -414,7 +414,7 @@ function EmailReservedPriceDenied($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -423,11 +423,11 @@ function EmailReservedPriceDenied($param){
                     ]
                 ],
                 'Subject' => 'Prix réservé refuser pour votre annonce '.$param[2],
-                'TextPart' => 'Vous avez refuser la dernière offre.',
-                'HTMLPart' => '<h3>Prix de réserve refusez pour votre annonce '.$param[2].'</h3><br />Le prix réservé pour votre annonce a été refuser votre annonce et a présent hors ligne. 
+                'TextPart' => 'Vous avez refusé la dernière offre.',
+                'HTMLPart' => '<h3>Prix de réserve refusé pour votre annonce '.$param[2].'</h3><br />Le prix réservé pour votre annonce a été refusé votre annonce et a présent hors ligne. 
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -450,7 +450,7 @@ function EmailWinner($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -459,15 +459,15 @@ function EmailWinner($param){
                     ]
                 ],
                 'Subject' => 'Vous remporté l\'enchere '.$param[2],
-                'TextPart' => 'Vous avez remporter l\'enchère.',
+                'TextPart' => 'Vous avez remporté l\'enchère.',
                 'HTMLPart' => '<h3>Votre dernière offre pour l\'annonce '.$param[2].' était la bonne !</h3><br /> 
                     <br>
-                    Vous serez contacter par le vendeur pour finaliser la transaction.
+                    Vous serez contacté par le vendeur pour finaliser la transaction.
                     <br>
-                    Vous conviendrait avec le vendeur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Condition général de vente</a>.
+                    Vous conviendrez avec le vendeur des modalitès de paiements et de livraison comme expliqué sur notre site web dans la catégorie <a href="http://localhost/SAE_Site_Enchere/newMVC/index.php">Conditions générales de vente</a>.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -490,7 +490,7 @@ function EmailProductValidationAdmin($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -505,7 +505,7 @@ function EmailProductValidationAdmin($param){
                     Veuillez vous connecter à votre compte administrateur pour valider ou refuser l\'annonce.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -528,7 +528,7 @@ function EmailValidationProductUser($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -540,7 +540,7 @@ function EmailValidationProductUser($param){
                 'TextPart' => 'Une annonce est en attente de validation.',
                 'HTMLPart' => '<h3>Votre annonce ' .$param[2]. ' est en attente de validation</h3><br /> 
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -563,7 +563,7 @@ function EmailRefusalProductUser($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -576,7 +576,7 @@ function EmailRefusalProductUser($param){
                 'HTMLPart' => '<h3>Votre annonce ' .$param[2]. ' a été refusée par un administrateur</h3><br /> 
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -600,7 +600,7 @@ function EmailAcceptProductUser($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -613,7 +613,7 @@ function EmailAcceptProductUser($param){
                 'HTMLPart' => '<h3>Votre annonce ' .$param[2]. ' a été acceptée par un administrateur</h3><br /> 
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
@@ -636,7 +636,7 @@ function EmailPendingAdmin($param){
             [
                 'From' =>[
                     'Email' => "barthoux44@gmail.com",
-                    'Name' => "Admin BidStar"
+                    'Name' => "Admin BidStars"
                 ],
                 'To' => [
                     [
@@ -651,7 +651,7 @@ function EmailPendingAdmin($param){
                     Nous vous informerons dès qu\'un administrateur aura examiné votre annonce.
                     <br>
                     Cordialement,<br>
-                    L\'équipe BidStar.
+                    L\'équipe BidStars.
                     '
             ]
         ]
