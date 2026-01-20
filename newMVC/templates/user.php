@@ -12,12 +12,12 @@ $user = $_SESSION['user'];
 ?>
 
 <?php ob_start(); ?>
-<?php include('preset/header.php'); ?>
+<!--<?php include('preset/header.php'); ?>-->
 <link href="templates/style/stylePopup.css" rel="stylesheet" />
 
 <div class="user-profile-container">
     <header class="profile-header">
-        <h1><?= htmlspecialchars(strip_tags($user['firstname'])) ?> <?= htmlspecialchars(strip_tags($user['name'])) ?></h1>
+        <h1>Vos informations personnelles   </h1>
         <div class="separator-line"></div>
     </header>
 
@@ -34,7 +34,7 @@ $user = $_SESSION['user'];
             <label>Prénom</label>
             <div class="input-wrapper">
                 <input type="text" name="firstname" placeholder="<?= htmlspecialchars(strip_tags($user['firstname'])) ?>" disabled>
-                <button class="btn-modifier" type="button" onclick="ouvrirPopup('Firstname')">Modifier</button>
+                <button class="btn-modifier" type="button" onclick="ouvrirPopup('FirstName')">Modifier</button>
             </div>
         </div>
 

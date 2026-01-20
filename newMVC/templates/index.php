@@ -123,10 +123,10 @@ $style = "templates/style/index.css";
                 </div>
 
                 <div class="action-row">
-                  <button class="wishlist-btn">
+                  <!--<button class="wishlist-btn">
                     <i class="fa-regular fa-heart"></i>
-                  </button>
-                  <a class="bid-btn" href="index.php?action=product&id=<?= $p['id_product'] ?>">Enchérir</a>
+                  </button>-->
+                  <a class="bid-btn" href="index.php?action=product&id=<?= $p['id_product'] ?>" style="item-align: center;">Enchérir</a>
                 </div>
               </div>
             </div>

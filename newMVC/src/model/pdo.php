@@ -94,11 +94,9 @@ function getListFinishedAnnoncements($id_user)
                 LEFT JOIN bid b
                 ON b.id_product = p.id_product
                 WHERE publi.id_user = :id_user
-                AND p.end_date < CURRENT_DATE
+                AND p.end_date < NOW()
                 GROUP BY p.id_product
                 HAVING last_price IS NULL OR last_price = 0 
-                LIMIT 5;
-
                 ";
     $temp = $pdo->prepare($requete);
     $temp->execute([

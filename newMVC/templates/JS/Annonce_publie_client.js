@@ -13,29 +13,39 @@ async function afficher() {
         div.style.display = 'none'
     }
     else if (nb == 1) {
-        div.innerHTML = '<h2 stryle="text-align: center;">Vôtre annonce publié</h2>'
+        div.innerHTML = `<div class="pending_section_header">
+                        <p>Vos annonce publiée</p>
+                        <div class="separator-line"></div>
+                        </div>`
         await print_tab_annoncements(json_values, div)
     }
     else {
-        div.innerHTML = '<h2 style="text-align: center;">Vos annonces publiées</h2>'
+        div.innerHTML = `<div class="pending_section_header">
+                        <p>Vos annonce publiées</p>
+                        <div class="separator-line"></div>
+                        </div>`
         await print_tab_annoncements(json_values, div)
     }
 
     const divAnnonceReserved = document.getElementById("div_end_annoncement_with_reserved")
     await print_end_annoncement_reserved(id_user.value, divAnnonceReserved)
 
-    const divhistorique = document.getElementById('div_historique_annoncement')
-    await print_historique_annoncement(id_user.value, divhistorique)
+    const divhistorique = document.getElementById('historique_product')
+    if (divhistorique){
+        await print_historique_annoncement(id_user.value, divhistorique)
+    }
 
     const divAnnonceVerifAdmin = document.getElementById('Product_verif_admin')
     await print_unverifed_product(divAnnonceVerifAdmin, json_values)
 
-    await checkBtnHistorique()
+    await checkBtnHistorique(id_user.value)
 }
 
 async function print_tab_annoncements(annoncements, div) {
     let html = ""
     for (const annonce of annoncements) {
+        // on change d'incrément si une annonce est expirée et si elle doit être verifier
+        if(new Date(annonce.end_date) < new Date()){continue}
         if(annonce.status == 0){continue}
         let price = await getPrice(annonce.id_product);
         if (price.last_price === null) {
@@ -113,60 +123,75 @@ async function print_tab_annoncements(annoncements, div) {
 }
 
 async function print_unverifed_product(div, annoncements) {
-    let annonce_attente = "<div class='annonce_attente_validation'> <p style='text-align:center; font-size=15px;'> Annonce en attente de validation par nos Administrateurs </p>"
-    for (const annonce of annoncements) {
-        if(annonce.status == 1){continue}
-        let price = await getPrice(annonce.id_product);
-        if (price.last_price === null) {
-            price.last_price = annonce.start_price;
-        }
-        
-        let like = await getLikes(annonce.id_product);
-        if (like.nbLike === null) {
-            like.nbLike = 0;
-        }
-        let image_url = await getImage(annonce.id_product);
-        let firstImg = (
-            Array.isArray(image_url) &&
-            image_url.length > 0 &&
-            image_url[0].url_image
-        ) ? image_url[0].url_image : "assets/default.png";
+    console.log("print unverifed");
+    
+    // Vérification de la présence d'annonces
+    if (count(annoncements['statut']) == 0) {
+        div.style.display = 'none';
+        return;
+    }
 
-        annonce_attente += 
-            `
-            <input type="hidden" id="id_product" value="${annonce.id_product}"/>
-            <div class="annonce_user">
-                <table>
-                    <tbody>
-                    <tr>
-                        <img src="${firstImg}"/>
-                        <td>${annonce.title}</td>
-                        <td><a href="index.php?action=product&id=${annonce.id_product}">See Annonce</a></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>photo user</td>
-                        <td>utilisateur</td>
-                    </tr>
-                </tbody>
-                </table>
-                <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
+    div.style.display = 'block';
+    
+    // Header de la section avec le style du site
+    let htmlContent = `
+        <div class="pending_section_header">
+            <p>Annonces en attente de validation par nos Administrateurs</p>
+            <div class="separator-line"></div>
+        </div>
+        <div class="unverified_container">
+    `;
+
+    for (const annonce of annoncements) {
+        // Correction : si annoncements est un objet avec 'statut', s'assurer de boucler sur la bonne propriété 
+        // ou adapter selon la structure de ton JSON
+        if (annonce.status == 1) continue;
+
+        // Récupération des données
+        let price = await getPrice(annonce.id_product);
+        let currentPrice = price.last_price ?? annonce.start_price;
+
+        let image_url = await getImage(annonce.id_product);
+        let firstImg = (Array.isArray(image_url) && image_url.length > 0 && image_url[0].url_image) 
+            ? image_url[0].url_image 
+            : "assets/default.png";
+
+        // Construction de la carte (Style identique à .annonce_card)
+        htmlContent += `
+            <div class="annonce_wrapper">
+                <input type="hidden" id="id_product" value="${annonce.id_product}"/>
+                <div class="annonce_card pending_card">
+                    <img src="${firstImg}" class="annonce_img" alt="${annonce.title}"/>
+                    
+                    <div class="annonce_details">
+                        <h3 class="annonce_title">${annonce.title}</h3>
+                    </div>
+
+                    <button type='button' class='btn_moreoption' onclick='ShowPopUpOption(${annonce.id_product})'>...</button>
+                    
+                    <div class="tags-row">
+                        <span class="tag" style="background: var(--gold); color: var(--dark-blue);">EN ATTENTE DE VERIFICATION</span>
+                    </div>
+                </div>
             </div>
-            `
-    };
-    annonce_attente += '</div>'
-    div.innerHTML += annonce_attente;
+        `;
+    }
+
+    htmlContent += '</div>';
+    div.innerHTML = htmlContent;
 }
 
 // Div when a annoncement is end and if a reserved price is set and the finsih price is under of reserved price
 async function print_end_annoncement_reserved($id_user, div) {
     let annoncements = await getAnnonceReserved($id_user);
-    console.log("ici avec reserves")
-    console.log(annoncements)
-    if (Array.isArray(annoncements) && annoncements.length > 0) {
+
+    if (Array.isArray(annoncements) && annoncements.length > 0 && annoncements.lastPrice != null) {
         div.style.display = 'block';
 
-        let html = '<h3 style="padding-top:20px;padding-bottom:10px;">Vos annonces terminées avec prix de réserve non atteint</h3>';
+        let html = `<div class="pending_section_header">
+            <p>Vos annonces terminées avec prix de réserve non atteint</p>
+            <div class="separator-line"></div>
+            </div>`
 
         for (const annonce of annoncements) {
             let image_url = await getImage(annonce.id_product);
@@ -195,13 +220,26 @@ async function print_end_annoncement_reserved($id_user, div) {
         }
 
         div.innerHTML = html;
-        // add handler placeholders if needed
-        div.querySelectorAll('.btn_agree').forEach(b => b.addEventListener('click', () => console.log('agree', b.dataset.id)));
-        div.querySelectorAll('.btn_refuse').forEach(b => b.addEventListener('click', () => console.log('refuse', b.dataset.id)));
     } else {
-        div.style.display = 'none';
+        div.style.display = 'none'; 
         div.innerHTML = '';
     }
+
+    document.querySelectorAll('.btn_agree').forEach((button) => {
+        button.addEventListener('click', async () => {
+            const id_product = button.getAttribute('data-id');
+            const lastPrice = await getPrice(id_product);
+            alertConfirmation('Accepter la dernière offre et conclure la vente ' + lastPrice.last_price +'  ?', 'acceptReservedPrice', id_product);
+        });
+    });
+
+    document.querySelectorAll('.btn_refuse').forEach((button) => {
+        button.addEventListener('click', async () => {
+            const id_product = button.getAttribute('data-id');
+            const lastPrice = await getPrice(id_product);
+            alertConfirmation('Refuser la dernière offre de ' + lastPrice.last_price + ' et annuler la vente ?', 'refuseReservedPrice', id_product);
+        });
+    });
 }
 
 /////////////////////////////////
@@ -337,59 +375,9 @@ async function PrintStatAnnonce(annoncement) {
     });
 }
 
-//Button republish
-//style="display: ${annonce.last_price > 0 ? "none" : "block"};"
-async function print_historique_annoncement(id_user, div) {
-    let html = ""
-
-    let annoncements = await getListAnnoncementEnd(id_user);
-
-    if (annoncements && annoncements.length > 0) {
-
-        div.style.display = "block"
-        div.innerHTML += `<h3> Vos annonces non concluante </h3>`
-        for (const annonce of annoncements) {
-
-            let image_url = await getImage(annonce.id_product);
-            let firstImg = (
-                Array.isArray(image_url) &&
-                image_url.length > 0 &&
-                image_url[0].url_image
-            ) ? image_url[0].url_image : "assets/default.png";
-
-            html += `
-                <div>
-                    <img src="${firstImg}" />
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>${annonce.title}</td>
-                                <td id="td_info_lastPrice${annonce.id_product}">${checkEndPrice(annonce.last_price)}</td>
-                                <td>
-                                    <button id="btn_republish${annonce.id_product}" style="display: block;" type="button" onclick="alertConfirmation('Republiez cette annonce ?', 'republish', ${annonce.id_product})">Republier</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            `
-        }
-        div.innerHTML += html
-    }
-    else {
-        div.style.display = "none"
-        console.log('Aucune annonce dans votre historique !')
-    }
-}
-
-async function checkBtnHistorique() {
-    const btn = document.getElementById("btn_historique_annonce_published")
-    btn.style.display = "none"
-
-    const div_publier = await document.querySelector(".section_annonce_publier")
-    const div_reserve = await document.getElementById("div_end_annoncement_with_reserved")
-    const div_finish = await document.getElementById('div_historique_annoncement')
-    if (div_finish.style.display === "none" && div_publier.style.display === "none" && div_reserve.style.display === "none") {
+async function checkBtnHistorique(id_user) {
+    product = await getListAnnoncementEnd(id_user) 
+    if (product && product.length >= 1) {
         btn.style.display = "block"
     }
 }
@@ -425,6 +413,7 @@ async function alertConfirmation(message, action, id_product) {
     document.body.appendChild(popup);
 
     let button = popup.querySelector(".btnConfirm")
+    // Si on a besoin de refaire une redirection (avec navigation dans les pages) on simule l'envoie d'un form 
     button.addEventListener('click', async () =>{
         if (action === 'updateProduct') {
             const frm = document.createElement('form')

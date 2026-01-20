@@ -1,0 +1,165 @@
+/* Variables */
+:root {
+    --dark-blue: #112250;
+    --darker-blue: #0e1a33;
+    --beige: #efe9df;
+    --card-beige: #e8d8b8;
+    --gold: #cfaa74;
+    --text-color: #222;
+    --bg-color: #f7f3ef;
+    --input-bg: #ffffff;
+    --muted: #9aa3b2;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Lora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+}
+
+/* --- EN-TÊTE --- */
+.profile-header {
+    max-width: 800px;
+    margin: 30px auto 20px;
+    padding: 0 20px;
+}
+
+.profile-header h1 {
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    color: var(--text-color);
+}
+
+
+/* --- CONTENEUR DES ANNONCES LIKE --- */
+#like_product {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- WRAPPER D'ANNONCE --- */
+.annonce_wrapper {
+    margin-bottom: 20px;
+}
+
+/* --- LA CARTE (Structure Horizontale Compacte) --- */
+.annonce_card.history_card {
+    background: var(--dark-blue);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* --- L'IMAGE --- */
+.annonce_card .annonce_img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* --- ZONE DE DÉTAILS (Centrée) --- */
+.annonce_card .annonce_details {
+    flex-grow: 1;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.annonce_card .annonce_title {
+    color: var(--gold);
+    font-size: 1.3rem;
+    margin: 0;
+    font-family: 'Lora', serif;
+}
+
+/* --- META (Prix) --- */
+.annonce_meta {
+    margin: 0;
+}
+
+.annonce_card .price_display {
+    color: var(--beige);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* --- LIEN VOIR --- */
+.annonce_card .user_info a {
+    display: inline-block;
+    background-color: var(--darker-blue);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.annonce_card .user_info a:hover {
+    background-color: var(--gold);
+    color: var(--dark-blue);
+}
+
+/* --- TAG LIKE (Top Right) --- */
+.annonce_card .tags-row {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.annonce_card .tag {
+    background: white;
+    color: var(--dark-blue);
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .profile-header,
+    #like_product {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .annonce_card.history_card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .annonce_card .annonce_img {
+        width: 100%;
+        max-width: 300px;
+        height: 180px;
+        margin: 0 auto;
+    }
+    
+    .annonce_card .annonce_details {
+        padding: 15px 0;
+    }
+    
+    .annonce_card .user_info a {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .annonce_card .tags-row {
+        top: 10px;
+        right: 10px;
+    }
+}

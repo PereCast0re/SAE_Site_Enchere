@@ -18,6 +18,8 @@ require_once('src/controllers/C_index.php');
 require_once("src/controllers/C_newsletter.php");
 require_once('src/controllers/C_deleteProduct.php');
 require_once('src/controllers/C_updateProduct.php');
+require_once('src/controllers/C_emailing.php');
+require_once('src/controllers/C_reservedPrice.php');
 
 require_once("src/model/pdo.php");
 require_once('src/lib/database.php');
@@ -72,7 +74,10 @@ try {
             updateAddress($_POST);
         } elseif ($_GET['action'] === 'update_password') {
             updatePassword($_POST['new_password_2']);
-
+        }elseif ($_GET['action'] === 'update_Firstname'){
+            updateFirstname($_POST);
+        } elseif ($_GET["action"] === 'update_Name'){
+            updateName($_POST);
 
         } elseif ($_GET['action'] === 'newsletter') {
             $_SESSION['show_newsletter_modal'] = true;
@@ -82,6 +87,7 @@ try {
             $user = $_SESSION['user'];
             subscribeNewsletter($user['email']);
             $_SESSION['success'] = "Abonnement confirmé 🎉";
+            routeurMailing('subscriptionNewsletter', [$user['email'], $user['name'] . ' ' . $user['firstname']]);
             header('Location: index.php');
             exit;
         } elseif ($_GET['action'] === 'addProduct') {
@@ -111,6 +117,12 @@ try {
                 $productRepository->UpdateStatut($id_product);
                 $productRepository->UpdateStatutCategorie($id_product);
                 $celebrityRepository->UpdateStatutCelebrity($id_product);
+
+                $name = $_SESSION['user']['name'] . $_SESSION['user']['firstname'];
+                $product = $productRepository->getProduct($id_product);
+                $title = $product['title'];
+                $param = [$_SESSION['user']['email'], $name, $title];
+                routeurMailing('acceptProductUser', $param);
                 //header("Location: admin_pannel.php");
                 //exit();
             } else {
@@ -143,6 +155,26 @@ try {
             favorite();
         } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
             unfavorite();
+        } elseif ($_GET['action'] === 'LisAnnoncementLike'){
+            if(isset($_GET['id_user'])){
+                $id = $_GET['id_user'];
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $data = $productRepository->getAllProductLike($id);
+                header('Content-Type: application/json');
+                echo json_encode($data);
+                exit();
+            }
+        } elseif ($_GET['action'] === 'AnnoncementLike'){
+            if(isset($_GET['id_product'])){
+                $id = $_GET['id_product'];
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $data = $productRepository->getProduct($id);
+                header('Content-Type: application/json');
+                echo json_encode($data);
+                exit();
+            }
 
 
             ////////////////////////////// Bid //////////////////////////////
@@ -231,6 +263,9 @@ try {
             } else {
                 throw new Exception("ID de produit invalide pour récupérer les likes.");
             }
+
+        } elseif ($_GET['action'] === 'getLikesPage') {
+            require_once('templates/like.php');
 
             // Image
         } elseif ($_GET['action'] === 'getImage') {
@@ -321,7 +356,12 @@ try {
             } else {
                 throw new Exception("ID de produit invalide pour récupérer la catégorie.");
             }
-        
+
+        }elseif ($_GET['action'] == 'acceptReservedPrice'){
+            acceptReservedPrice($_POST, $_SESSION['user']['id_user']);
+
+        } elseif ($_GET['action'] == 'refuseReservedPrice'){
+            refuseReservedPrice($_POST, $_SESSION['user']['id_user']);
 
             ////////////////////////////// Page sell product ////////////////////////
 
@@ -360,7 +400,7 @@ try {
 
         }elseif ($_GET['action'] === 'deleteProductAdmin') { 
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
-                deleteProductAdmin($_POST['id_product']);
+                deleteProductAdmin($_POST['id_product'], $_SESSION['user']['email'], $_SESSION['user']['username']);
             }
 
         ////////////////////////////// Cas de base //////////////////////////////        

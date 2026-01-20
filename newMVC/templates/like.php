@@ -1,6 +1,6 @@
 <?php
 $title = "Historique des annonces publiées";
-$style = "templates/style/historique.css";
+$style = "templates/style/like.css";
 
 $user = $_SESSION['user'];
 ?>
@@ -27,12 +27,12 @@ $id_client = $user['id_user'];
 <main>
 <div class="Historique_annonces">
     <input type="hidden" id="id_user" value="<?= htmlspecialchars(strip_tags($id_client)) ?>">
-        <div class="Annonces-list-cards" id="historique_product"></div>
+        <div class="Annonces-list-cards" id="like_product"></div>
 
 </div>
 </main>
 
-<script src="templates/JS/Historique_product.js"></script>
+<script src="templates/JS/Like_product.js"></script>
 
 <?php include('preset/footer.php'); ?>
 
