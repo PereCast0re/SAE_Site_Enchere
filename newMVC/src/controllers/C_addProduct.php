@@ -24,12 +24,12 @@ function addNewProduct($user, $input)
         // $description = trim(htmlentities($input['description_produit']));
         // $celebrite = trim(htmlentities($input['inputcelebrity']));
 
-        $title = $input['nom_annonce_vente'];
-        $category = $input['lst_categorie_vente'];
-        $start_date = $input['date_debut'];
-        $end_date = $input['date_fin'];
-        $description = $input['description_produit'];
-        $celebrite = $input['inputcelebrity'];
+        $title = htmlspecialchars($input['nom_annonce_vente']);
+        $category = htmlspecialchars($input['lst_categorie_vente']);
+        $start_date = htmlspecialchars($input['date_debut']);
+        $end_date = htmlspecialchars($input['date_fin']);
+        $description = htmlspecialchars($input['description_produit']);
+        $celebrite = htmlspecialchars($input['inputcelebrity']);
         if (isset($input['valeur_reserve'])) {
             $reserve_price = trim(htmlentities($input['valeur_reserve']));
         } else {
