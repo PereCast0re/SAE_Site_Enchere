@@ -240,7 +240,7 @@ Pour l'utiliser, cliquez sur le lien situé en haut de notre application nommé 
 
 ## Ajouter les annonces dans le moteur de recherche
 
-Pour ajouter les nouvelles annonces dans le moteur de recherche, il faut exécuter le fichier `http://localhost/SAE_SITE_ENCHERE/newMvc/src/controllers/import-encheres.php` ou [cliquez ici](http://localhost/SAE_SITE_ENCHERE/newMvc/src/controllers/import-encheres.php)
+Pour ajouter les nouvelles annonces dans le moteur de recherche, il faut exécuter le fichier `import-encheres.php`, simplement en accédant au lien suivant `http://localhost/SAE_SITE_ENCHERE/newMvc/src/controllers/import-encheres.php` ou [cliquez ici](http://localhost/SAE_SITE_ENCHERE/newMvc/src/controllers/import-encheres.php)
 
 **IMPORTANT** : il vous faut avoir lancer le moteur de recherche en arrière plan avant d'ajouter vos annonces en suivant les étapes décrites ci-dessus, [cliquez ici](#activer-le-moteur-de-recherche) pour y accéder.
 
