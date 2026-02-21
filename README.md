@@ -1,14 +1,22 @@
 # BidStars
 
-
+- 
+- [Projet](#projet)
+    - [Documents](#documents)
+- [Projet](#projet)
+- [Projet](#projet)
 
 ## Présentation
+
+
+## Sommaire
+
 
 
 
 ### Projet
 
-
+![Image](./newMVC/templates/Images/Logo.png)
 
 Ce travail est le résultat d'un projet étudiant au sein du BUT Informatique de Nevers.
 
