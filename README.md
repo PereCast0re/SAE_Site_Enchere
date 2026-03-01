@@ -88,10 +88,14 @@ Dans ce site vous pouvez :
 
 ## **Lancement de l'application**
 
-Pour utiliser notre application, vous devez avoir installé au préalable [WamppServer 3.3.7 - 64 bits](https://www.wampserver.com/).
+Pour utiliser notre application, vous devez avoir installé au préalable [WamppServer 3.3.7 - 64 bits ou version ultérieure](https://www.wampserver.com/) et tous les VC Redistribuables nécessaires (toutes les versions sont indiqués lors de l'installation de l'exécutable et vous demanderas d'installer ceux manquants via le lien suivant : [cliquez ici](https://wampserver.aviatechno.net/)).
+
+Pour information, nous utilisons `Apache 2.4.62.1`, `PHP 8.3.14` et `MySQL 11.5.2`.
+
+Pour plus d'informations ou d'aides, consultez notre procédure d'installation ci-dessous.
 
 <div style="text-align: center; margin: 20px">
-<a href=""><strong>Comment installer WampServer ? Cliquez ici</strong></a>
+<a href="./Documents/Procedure/Procedure_Installation_WampServer.docx"><strong>Comment installer WampServer ? Cliquez ici</strong></a>
 </div>
 
 Si l'application est déjà installée,
@@ -108,7 +112,7 @@ Télécharger le dossier du projet (Bouton vert en haut de cette page `<> Code` 
 
 Depuis l'explorateur de fichiers, dézipper le projet dans le dossier `www` du logiciel WampServer situé à l'adresse suivante : `C:\wamp64\www`.
 
-Ensuite vous avez 2 méthodes différentes ci-dessus quis'offre à vous pour initialiser la base de données dans WampServer :
+Ensuite vous avez 2 méthodes différentes ci-dessus qui s'offre à vous pour initialiser la base de données dans WampServer :
 - [Méthode 1 (PhpMyAdmin)](#méthode-2-phpmyadmin) `SIMPLE`
 - [Méthode 2 (Invite de commande)](#méthode-1-invite-de-commande) `EXPERTE`
 

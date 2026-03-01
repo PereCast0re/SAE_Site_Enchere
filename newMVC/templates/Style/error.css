@@ -73,3 +73,7 @@ div a {
     color: var(--Sapphire);
     text-decoration: none;
 }
+
+header, footer {
+    display: none;
+}
