@@ -1,8 +1,8 @@
-# **BidStars**
+# ⭐**BidStars**
 
-## **Présentation**
+## 💬**Présentation**
 
-## **Projet**
+## ✅**Projet**
 
 <div style="display: flex; justify-content: center;">
 <img src="./newMVC/templates/Images/Logo.png" width="250">
@@ -12,7 +12,7 @@ Ce travail est le résultat d'un projet étudiant au sein du BUT Informatique de
 
 Durant cette SAE et pendant deux semestres, nous devions développer une application en s'appuyant sur une base de données tout en expérimentant une démarche incrémentale.
 
-## **Sommaire**
+## 📋**Sommaire**
 
 - [Présentation](#présentation)
     - [Projet](#projet)
@@ -20,7 +20,7 @@ Durant cette SAE et pendant deux semestres, nous devions développer une applica
     - [Notion](#notion)
     - [Procédures](#procédures)
 - [But de l'application](#but-de-lapplication)
-- [Membres](#membres)
+- [Membres (3)](#membres-3)
 - [Lancement de l'application](#lancement-de-lapplication)
     - [Initialisation](#initialisation)
         - [Méthode 1 (PhpMyAdmin)](#méthode-1-phpmyadmin)
@@ -38,19 +38,20 @@ Durant cette SAE et pendant deux semestres, nous devions développer une applica
             - [Ajouter les annonces dans le moteur de recherche](#ajouter-les-annonces-dans-le-moteur-de-recherche)
         - [Recherche de célébrités](#recherche-de-célébrités)
     - [Identifiant de connexion](#identifiants-de-connexion)
+    - [Remerciements](#️remerciements)
 
-## **Documents**
+## 📂**Documents**
 
 Dans ce projet vous y trouverez le code source de notre application disponible à l'adresse suivante : SAE_SITE_ENCHERE/newMVC.
 Mais aussi tous les rendus que nous avons réalisé durant ce projet dans le dossier SAE_SITE_ENCHERE/Documents.
 
 *Pour visualiser les documents et découvrir notre projet, il vous faudra suivre la partie [Lancement de l'application](#lancement-de-lapplication).*
 
-## **Notion**
+## 📍**Notion**
 
 Pour plus d'informations, veuillez trouver ci-joint le [notion du projet](https://arthur-eudeline.notion.site/SA-03-01-D-veloppement-d-une-application-10ca285a488480d1a474e226b40728ea).
 
-## **Procédures**
+## 📝**Procédures**
 
 Veuillez trouver toutes les procédures concernant le projet situé à l'adresse `SAE_SITE_ENCHERE/Documents/Procedure`.
 
@@ -63,7 +64,7 @@ Vous y trouverez notamment des explications pour :
 
 *PS : Un rappel sera fait à chaque partie correspondante pour vous indiquer quelle procédure doit être utilisée.*
 
-## **But de l'application**
+## ❓**But de l'application**
 
 BidStars est un site d'enchères centré uniquement sur les objets appartenant ou ayant appartenu aux célébrités.
 Similaire à Leboncoin, Ebay, Benzin, Catawiki, etc.
@@ -80,13 +81,13 @@ Dans ce site vous pouvez :
 * consulter l'évolution du prix et du nombre de vue d'une annonce publiée
 * panneau administrateur
 
-## **Membres (3)**
+## 🎓**Membres (3)**
 
 * Thomas BARTHOUX-SAUZE → [PereCast0re](https://github.com/PereCast0re)
 * Kyllian RIVIERE → [Kyno3146](https://github.com/Kyno3146)
 * Jimmy GARNIER → [JimmyGAR](https://github.com/JimmyGAR)
 
-## **Lancement de l'application**
+## 📢**Lancement de l'application**
 
 Pour utiliser notre application, vous devez avoir installé au préalable [WamppServer 3.3.7 - 64 bits ou version ultérieure](https://www.wampserver.com/) et tous les VC Redistribuables nécessaires (toutes les versions sont indiqués lors de l'installation de l'exécutable et vous demanderas d'installer ceux manquants via le lien suivant : [cliquez ici](https://wampserver.aviatechno.net/)).
 
@@ -102,7 +103,7 @@ Si l'application est déjà installée,
 <br>
 **Lancer WampServer.**
 
-## **Initialisation**
+## ✍️**Initialisation**
 
 <div style="text-align: center; margin: 20px">
 <a href=""><strong>Comment télécharger le projet ? Cliquez ici</strong></a>
@@ -116,17 +117,17 @@ Ensuite vous avez 2 méthodes différentes ci-dessus qui s'offre à vous pour in
 - [Méthode 1 (PhpMyAdmin)](#méthode-2-phpmyadmin) `SIMPLE`
 - [Méthode 2 (Invite de commande)](#méthode-1-invite-de-commande) `EXPERTE`
 
-## **Méthode 1 (PhpMyAdmin)**
+## 🟢**Méthode 1 (PhpMyAdmin)**
 
 <div style="text-align: center; margin: 20px">
 <a href=""><strong>Comment initialiser la base de données en méthode simple (PhpMyAdmin) ? Cliquez ici</strong></a>
 </div>
 
-## Étape 1
+## 1️⃣Étape 1
 
 Ouvrez votre navigateur et rendez vous à l'adresse web suivante : ```localhost/phpmyadmin/``` ou [cliquez ici](http://localhost/phpmyadmin/)
 
-## Étape 2
+## 2️⃣Étape 2
 
 Entrez l'identifiant et le mot de passe de connexion :
 
@@ -136,7 +137,7 @@ mot de passe : `    ` → le mot de passe est vide
 
 Cliquez sur le bouton `Connexion`
 
-## Étape 3
+## 3️⃣Étape 3
 
 Dans la barre situé en haut de l'écran de cette page, vous devriez apercevoir un espace nommé `Importer`
 
@@ -150,19 +151,19 @@ Puis défiler en bas de la page et cliquez sur le bouton `Importer`.
 
 *La base de données est maintenant initialisé sur WampServer.*
 
-## **Méthode 2 (Invite de commande)**
+## ⚫**Méthode 2 (Invite de commande)**
 
 <div style="text-align: center; margin: 20px">
 <a href=""><strong>Comment initialiser la base de données en méthode experte (Invite de commande) ? Cliquez ici</strong></a>
 </div>
 
-## Étape 1
+## 1️⃣Étape 1
 
 Rendez-vous de nouveau dans le dossier du logiciel WampServer situé à l'adresse suivante : `C:\wamp64`.
 
 Ensuite, rendez-vous dans **bin** en suivant l'arborescence de fichier suivant : `C:\wamp64\bin\mysql\mysql9.1.0\bin`
 
-## Étape 2
+## 2️⃣Étape 2
 
 Exécutez le fichier mysqld.exe en tant qu'administrateur. (Clic droit sur l'exécutable mysqld.exe → Exécuter en tant qu'administrateur)
 
@@ -182,7 +183,7 @@ Puis une seconde fois sur cette même touche pour valider le mot de passe qui va
 
 Vous avez désormais accès à la base de donnée de WampServer.
 
-## Étape 3
+## 3️⃣Étape 3
 
 Copiez le fichier `BDD_constructor.sql` de ce projet situé à la racine du projet nommé SAE_SITE_ENCHERE (C:\wamp64\www\SAE_Site_Enchere)
 
@@ -198,17 +199,17 @@ Puis exécuter la commande en appuyant sur la touche de votre clavier `Entrée`.
 
 *La base de données est maintenant initialisé sur WampServer.*
 
-## **Configuration**
+## ⚙️**Configuration**
 
 Après avoir suivi les étapes ci-dessus, il vous reste une dernière étape à réaliser pour utiliser notre application.
 
 Ouvrez votre navigateur et dirigez vous à l'adresse web suivante : `http://localhost/SAE_SITE_ENCHERE/newMVC` ou [cliquez ici](http://localhost/SAE_SITE_ENCHERE/newMVC)
 
-## **Scripts (moteur de recherche + recherche de célébrités)**
+## 🧩**Scripts (moteur de recherche + recherche de célébrités)**
 
 Dans ce projet vous pouvez aussi retrouver différents scripts.
 
-## **Moteur de recherche**
+## 🔎**Moteur de recherche**
 
 ## Activer le moteur de recherche
 
@@ -248,7 +249,7 @@ Pour ajouter les nouvelles annonces dans le moteur de recherche, il faut exécut
 
 **IMPORTANT** : il vous faut avoir lancer le moteur de recherche en arrière plan avant d'ajouter vos annonces en suivant les étapes décrites ci-dessus, [cliquez ici](#activer-le-moteur-de-recherche) pour y accéder.
 
-## **Recherche de célébrités**
+## ✨**Recherche de célébrités**
 
 Vous pouvez aussi rechercher des célébrités via le script python `ScriptCelebrity.py`.
 
@@ -267,7 +268,7 @@ python .\ScriptCelebrity.py
 
 PS : vous pouvez aussi lancer ce script avec un autre logiciel comme **Visual Studio** ou **Thonny** mais ne vous sera pas présenter dans ce projet.
 
-## **Identifiants de connexion**
+## 🪧**Identifiants de connexion**
 
 Pour vous connecter, il suffit d'appuyez sur le bouton `Connexion` situé en haut de notre application et d'entrez les identifications de connexion suivantes.
 
@@ -283,7 +284,9 @@ email : `test@gmail.com`
 <br>
 mot de passe : `Test1234!`
 
-<div style="text-align: center; padding: 20px">
+## ❤️Remerciements
+
+<div style="text-align: center; padding-bottom: 40px">
 <h3>Vous avez désormais accès à notre site d'enchère !</h3>
 
 <h3>Libre à vous d'essayer toutes les fonctionnalités !</h3>
