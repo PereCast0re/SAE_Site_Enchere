@@ -42,8 +42,8 @@ Durant cette SAE et pendant deux semestres, nous devions développer une applica
 
 ## 📂**Documents**
 
-Dans ce projet vous y trouverez le code source de notre application disponible à l'adresse suivante : SAE_SITE_ENCHERE/newMVC.
-Mais aussi tous les rendus que nous avons réalisé durant ce projet dans le dossier SAE_SITE_ENCHERE/Documents.
+Dans ce projet vous y trouverez le code source de notre application disponible à l'adresse suivante : `SAE_SITE_ENCHERE/newMVC`.
+Mais aussi tous les rendus que nous avons réalisé durant ce projet dans le dossier `SAE_SITE_ENCHERE/Documents`.
 
 *Pour visualiser les documents et découvrir notre projet, il vous faudra suivre la partie [Lancement de l'application](#lancement-de-lapplication).*
 
@@ -61,6 +61,11 @@ Tandis que les démarches à suivre dans ce README sont accessibles **seulement 
 Vous y trouverez notamment des explications pour :
 - Résoudre le problème d'images trop volumineuses
 - Résoudre le problème concernant la réception des mails de notre application
+- Activer le moteur de recherche et le configurer
+- Intialiser la base de données avec les différentes méthodes
+- Installer Python et lancer le script
+- Comment installer WampServer
+- Comment installer le projet
 
 *PS : Un rappel sera fait à chaque partie correspondante pour vous indiquer quelle procédure doit être utilisée.*
 
@@ -253,7 +258,7 @@ Pour ajouter les nouvelles annonces dans le moteur de recherche, il faut exécut
 
 Vous pouvez aussi rechercher des célébrités via le script python `ScriptCelebrity.py`.
 
-Vous devez donc avoir [python](https://www.python.org/downloads/) d'installé sur votre machine.
+Vous devez donc avoir [python 3.13.12 ou version ultérieure](https://www.python.org/downloads/) d'installé sur votre machine.
 
 <div style="text-align: center; margin: 20px">
 <a href=""><strong>Comment exécuter le script pour rechercher les célébrités ? (installation de python et aides supplémentaires) Cliquez ici</strong></a>
@@ -298,4 +303,4 @@ mot de passe : `Test1234!`
 <br>
 *Vérification par :*
 <br>
-*Date de mise à jour : 21/02/2026* 
+*Date de mise à jour : 03/03/2026* 
