@@ -24,12 +24,14 @@ function addNewProduct($user, $input)
         // $description = trim(htmlentities($input['description_produit']));
         // $celebrite = trim(htmlentities($input['inputcelebrity']));
 
-        $title = htmlspecialchars($input['nom_annonce_vente']);
-        $category = htmlspecialchars($input['lst_categorie_vente']);
-        $start_date = htmlspecialchars($input['date_debut']);
-        $end_date = htmlspecialchars($input['date_fin']);
-        $description = htmlspecialchars($input['description_produit']);
-        $celebrite = htmlspecialchars($input['inputcelebrity']);
+        // Ne pas remettre de html_entities ou htmlchars, on ne sauvegarde pas des données filtrées dans la base,
+        // seulement au retour que les données doivent être filtrées à l'affichage
+        $title = trim($input['nom_annonce_vente']);
+        $category = trim($input['lst_categorie_vente']);
+        $start_date = $input['date_debut'];
+        $end_date = $input['date_fin'];
+        $description = trim($input['description_produit']);
+        $celebrite = $input['inputcelebrity'];
         if (isset($input['valeur_reserve'])) {
             $reserve_price = trim(htmlentities($input['valeur_reserve']));
         } else {

@@ -2,6 +2,14 @@
 
 require_once('src/lib/database.php');
 
+class Comment
+{
+    public string $full_name;
+    public string $comment;
+    public string $comment_date;
+    public string $id_user;
+}
+
 class CommentRepository
 {
     private PDO $connection;
@@ -20,7 +28,17 @@ class CommentRepository
             "id_product" => $id_product
         ]);
 
-        return $temp->fetchAll(PDO::FETCH_ASSOC);
+        $comments = [];
+        while (($row = $temp->fetch())) {
+            $comment = new Comment();
+            $comment->full_name = $row['full_name'];
+            $comment->comment = $row['comment'];
+            $comment->comment_date = $row['comment_date'];
+            $comment->id_user = $row['id_user'];
+            $comments[] = $comment;
+        }
+
+        return $comments;
     }
 
     function addCommentToProduct($id_product, $id_user, $comment)

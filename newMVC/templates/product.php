@@ -70,7 +70,7 @@ $script = "templates/JS/favorite.js";
             <section id="product-description">
                 <h2 class="title-section">Description</h2>
                 <p>
-                    <?= htmlspecialchars(strip_tags($p['description'])) ?>
+                    <?= nl2br(htmlspecialchars(strip_tags(string: $p['description']), ENT_NOQUOTES, 'UTF-8')) ?>
                 </p>
             </section>
         </div>
@@ -87,7 +87,7 @@ $script = "templates/JS/favorite.js";
                 <p>Catégorie</p>
                 <ul>
                     <li><?= $category["name"] ?></li>
-                    <li><i class="fa-solid fa-location-dot"></i> <?= $p["userCity"] ?></li>
+                    <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($p["userCity"])) ?></li>
                 </ul>
                 <p>Celebrité</p>
                 <div class="celebrity-section">
@@ -105,7 +105,7 @@ $script = "templates/JS/favorite.js";
                     <a href="index.php?action=user&id=<?= $p['userID'] ?>">
                         <i class="fa-solid fa-user"></i>
                         <h3>
-                            <?= $p["fullname"] ?>
+                            <?= htmlspecialchars(strip_tags($p["fullname"])) ?>
                         </h3>
                     </a>
                 </div>

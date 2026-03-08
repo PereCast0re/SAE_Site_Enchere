@@ -10,8 +10,10 @@ function getComments(id_product) {
 async function addComment(comment, prepend = false) {
     const commentEl = document.importNode(template.content, true);
 
-    commentEl.querySelector(".comment-content").innerText = comment["comment"];
-    commentEl.querySelector(".comment-author-name").innerText = comment["full_name"];
+    commentEl.querySelector(".comment-content").innerHTML = comment["comment"]; // Si n'est pas innerHTML = affiche <br>
+    commentEl.querySelector(".comment-author-name").textContent = comment["full_name"]; 
+    // commentEl.querySelector(".comment-author-name").innerHTML = `<?= htmlspecialchars(strip_tags(${comment["full_name"]})) ?>`;
+
 
     const userID = document.querySelector('#userID').value;
 
