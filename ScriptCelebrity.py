@@ -3,7 +3,7 @@ import mysql.connector
 import time
 
 headers = {
-    "User-Agent": "JimmyBot/1.0 (localhost; jimmy.garnier1110@gmail.com)"
+    "User-Agent": "Jimmy (localhost; jimmy.garnier1110@gmail.com)"
 }
 
 def save_celebrities(celebrities):
@@ -136,9 +136,9 @@ try:
         
         print("Thème : ", theme," | Temps d'exécution :", end - start, " secondes\n")
                 
-    url = "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=acteur&format=json&sroffset=50"
-    response = requests.get(url, headers=headers, timeout=15)
-    data = response.json()
+    # url = "https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=acteur&format=json&sroffset=50"
+    # response = requests.get(url, headers=headers, timeout=15)
+    # data = response.json()
             
     print(celebrities)
     

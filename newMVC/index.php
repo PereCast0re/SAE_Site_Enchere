@@ -417,7 +417,7 @@ try {
 
     $errorMessage = $e->getMessage();
 
-    $errorMessage = '<i class="fa-solid fa-bug"></i> <span>Erreur 404 :</span> Page non trouvé !';
+    //$errorMessage = '<i class="fa-solid fa-bug"></i> <span>Erreur 404 :</span> Page non trouvé !';
 
     require('templates/preset/error.php');
 }
