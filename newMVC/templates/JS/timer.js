@@ -9,6 +9,11 @@ function startCountdown(endDate, element) {
       clearInterval(timer);
       element.textContent = "Annonce terminée !";
       element.style.color = "red";
+
+      const price_container = document.querySelector('#all-price-container');
+      if (price_container != null) {
+        price_container.classList.add('hidden');
+      }
       return;
     }
 

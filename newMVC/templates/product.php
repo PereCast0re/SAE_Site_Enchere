@@ -87,7 +87,8 @@ $script = "templates/JS/favorite.js";
                 <p>Catégorie</p>
                 <ul>
                     <li><?= $category["name"] ?></li>
-                    <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($p["userCity"])) ?></li>
+                    <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($p["userCity"])) ?>
+                    </li>
                 </ul>
                 <p>Celebrité</p>
                 <div class="celebrity-section">
@@ -110,31 +111,36 @@ $script = "templates/JS/favorite.js";
                     </a>
                 </div>
             </div>
-            <div class="price-container">
-                <h1>
-                    <?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €
-                </h1>
-                <div>
-                    <?php if ($reservePrice === 0) { ?>
-                        <p>Aucun prix de réserve</p>
-                    <?php } else if ($reservePrice < $current_price) { ?>
-                            <p>Prix de réserve atteint</p>
-                    <?php } else { ?>
-                            <p>Prix de réserve non atteint</p>
-                    <?php } ?>
+            <?php if ($_SESSION['user']["id_user"] != $p['userID'] && strtotime($p['end_date']) > time()) { ?>
+                <div id="all-price-container">
+                    <div class="price-container">
+                        <h1>
+                            <?= htmlspecialchars(number_format($current_price, 0, ',', ' ')) ?> €
+                        </h1>
+                        <div>
+                            <?php if ($reservePrice === 0) { ?>
+                                <p>Aucun prix de réserve</p>
+                            <?php } else if ($reservePrice < $current_price) { ?>
+                                    <p>Prix de réserve atteint</p>
+                            <?php } else { ?>
+                                    <p>Prix de réserve non atteint</p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="myBox2">
+                        <div class="price-ex-section">
+                            <?php foreach ($price_ex as $price) { ?>
+                                <button id="bid-ex-btn" data-price="<?= $price ?>" data-id="<?= $id_product ?>"
+                                    data-current="<?= $current_price ?>" onclick="ouvrirPopup('BidValidation', this)">
+                                    <?= htmlspecialchars(number_format($price, 0, ',', ' ')) ?>
+                                </button>
+                            <?php } ?>
+                        </div>
+                        <button class="btn" id="bid_button" type="button" onclick="ouvrirPopup('BidForm')">Enchérir</button>
+                    </div>
                 </div>
-            </div>
-            <div class="myBox2">
-                <div class="price-ex-section">
-                    <?php foreach ($price_ex as $price) { ?>
-                        <button id="bid-ex-btn" data-price="<?= $price ?>" data-id="<?= $id_product ?>"
-                            data-current="<?= $current_price ?>" onclick="ouvrirPopup('BidValidation', this)">
-                            <?= htmlspecialchars(number_format($price, 0, ',', ' ')) ?>
-                        </button>
-                    <?php } ?>
-                </div>
-                <button class="btn" id="bid_button" type="button" onclick="ouvrirPopup('BidForm')">Enchérir</button>
-            </div>
+            <?php } ?>
+
             <?php if (!empty($certificate)) { ?>
                 <div class="certificate-section">
                     <h3>Certificat d'authencité</h3>
