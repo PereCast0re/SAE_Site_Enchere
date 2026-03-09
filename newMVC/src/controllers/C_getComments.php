@@ -15,7 +15,7 @@ function getComments()
 
         foreach ($comments as $comment) {
             $comment->full_name = strip_tags($comment->full_name);
-            $comment->comment = nl2br(htmlspecialchars(strip_tags($comment->comment), ENT_NOQUOTES, 'UTF-8'));
+            $comment->comment = nl2br(htmlspecialchars(strip_tags($comment->comment)));
             $comment->comment_date = strip_tags($comment->comment_date);
         }
 

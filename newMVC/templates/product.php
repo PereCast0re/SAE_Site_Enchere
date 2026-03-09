@@ -70,7 +70,7 @@ $script = "templates/JS/favorite.js";
             <section id="product-description">
                 <h2 class="title-section">Description</h2>
                 <p>
-                    <?= nl2br(htmlspecialchars(strip_tags(string: $p['description']), ENT_NOQUOTES, 'UTF-8')) ?>
+                    <?= nl2br(htmlspecialchars(strip_tags(string: $p['description']))) ?>
                 </p>
             </section>
         </div>

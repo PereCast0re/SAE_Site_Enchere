@@ -28,10 +28,10 @@ function addNewProduct($user, $input)
         // seulement au retour que les données doivent être filtrées à l'affichage
         $title = trim($input['nom_annonce_vente']);
         $category = trim($input['lst_categorie_vente']);
-        $start_date = $input['date_debut'];
-        $end_date = $input['date_fin'];
+        $start_date = trim($input['date_debut']);
+        $end_date = trim($input['date_fin']);
         $description = trim($input['description_produit']);
-        $celebrite = $input['inputcelebrity'];
+        $celebrite = trim($input['inputcelebrity']);
         if (isset($input['valeur_reserve'])) {
             $reserve_price = trim(htmlentities($input['valeur_reserve']));
         } else {
