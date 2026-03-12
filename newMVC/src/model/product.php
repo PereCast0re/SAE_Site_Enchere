@@ -2,6 +2,29 @@
 
 
 require_once __DIR__ . '/../lib/database.php';
+require_once __DIR__ . '/celebrity.php';
+require_once __DIR__ . '/user.php';
+
+class ProductDetails
+{
+    public Product $product;
+    public Celebrity $celebrity;
+    public User $user;
+}
+
+class Product
+{
+    public int $id_product;
+    public string $title;
+    public string $description;
+    public string $start_date;
+    public string $end_date;
+    public ?int $reserve_price = 0;
+    public ?int $start_price = 0;
+    public int $status;
+    public ?int $mailIsSent = 0;
+}
+
 class ProductRepository
 {
 
@@ -47,20 +70,57 @@ class ProductRepository
                     u.city as userCity,
                     u.id_user as userID,
                     c.name as celebrityName,
-                    c.url as celebrityUrl
+                    c.url as celebrityUrl,
+                    c.license as celebrityLicense,
+                    c.artist as celebrityArtist
                     FROM Published pu
                     JOIN Users u ON pu.id_user = u.id_user
                     JOIN Product pr ON pu.id_product = pr.id_product
-                    JOIN Concerned co ON co.id_product = pu.id_product
-                    JOIN Celebrity c ON c.id_celebrity = co.id_celebrity
+                    LEFT JOIN Concerned co ON co.id_product = pu.id_product
+                    LEFT JOIN Celebrity c ON c.id_celebrity = co.id_celebrity
                     WHERE pu.id_product = ? AND status = 1";
         try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([$id_product]);
+
+            $row = $tmp->fetch();
+
+            if (!$row) {
+                // throw new Exception("Error retrieving product : product is null");
+            }
+
+            $celebrity = new Celebrity();
+            $product = new Product();
+            $user = new User();
+
+            $product->id_product = $row["id_product"];
+            $product->title = $row["title"];
+            $product->description = $row["description"];
+            $product->start_date = $row["start_date"];
+            $product->end_date = $row["end_date"];
+            $product->reserve_price = $row["reserve_price"];
+            $product->start_price = $row["start_price"];
+            $product->status = $row["status"];
+            $product->mailIsSent = $row["mailIsSent"];
+
+            $user->fullname = $row["fullname"];
+            $user->city = $row["userCity"];
+            $user->id_user = $row["userID"];
+
+            $celebrity->name = $row["celebrityName"];
+            $celebrity->url = $row["celebrityUrl"];
+            $celebrity->license = $row["celebrityLicense"];
+            $celebrity->artist = $row["celebrityArtist"];
+
+            $productDetails = new ProductDetails();
+            $productDetails->celebrity = $celebrity;
+            $productDetails->product = $product;
+            $productDetails->user = $user;
+
+            return $productDetails;
         } catch (PDOException $e) {
-            die("Error retrieving product, try again !\nError : " . $e->getMessage());
+            throw new Exception("Error retrieving product, try again !\nError : " . $e->getMessage());
         }
-        return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
     function get_termined_annonces_by_client($id_client)
@@ -505,21 +565,23 @@ class ProductRepository
         }
     }
 
-    function updateReservePrice($id){
+    function updateReservePrice($id)
+    {
         $pdo = $this->connection;
         $requete = "UPDATE product set reserve_price = null where id_product = :id";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id' => $id
             ]);
             return $tmp;
-        } catch (PDOException $e){
-            die("Error on update your reserve price" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on update your reserve price" . $e->getMessage());
         }
     }
 
-    function getBuyer($id_product){
+    function getBuyer($id_product)
+    {
         $pdo = $this->connection;
         $requete = "SELECT u.name, u.firstname, u.email
                     from users as u
@@ -527,33 +589,35 @@ class ProductRepository
                     where b.id_product = :id_product
                     order by b.new_price desc
                     limit 1;";
-        try{
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id_product' => $id_product
             ]);
             return $tmp->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e){
-            die("Error on get buyer info :" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on get buyer info :" . $e->getMessage());
         }
     }
 
-    function getAllProductLike($id){
+    function getAllProductLike($id)
+    {
         $pdo = $this->connection;
         $r = "SELECT * from interest where id_user = :id";
-        try{
+        try {
             $tmp = $pdo->prepare($r);
             $tmp->execute([
                 ":id" => $id
             ]);
             return $tmp->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e){
-            die('Error on extraction of liked prduct : ' .$e->getMessage());
+        } catch (PDOException $e) {
+            die('Error on extraction of liked prduct : ' . $e->getMessage());
         }
     }
 
     // retourne les info du proprio de l'annonce
-    function get_Specific_Annonce_User($id_annoncement){
+    function get_Specific_Annonce_User($id_annoncement)
+    {
         $pdo = $this->connection;
 
         $requete = "

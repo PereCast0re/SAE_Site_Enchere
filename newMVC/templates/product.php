@@ -14,9 +14,18 @@ $script = "templates/JS/favorite.js";
 
 <?php include('preset/second-header.php'); ?>
 
+<?php
+
+var_dump($p);
+var_dump($c);
+var_dump($u);
+
+
+?>
+
 <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
-<input id="idProduct" type="hidden" name="idProduct" value=<?= $p['id_product'] ?>>
-<input id="userID" type="hidden" name="userID" value=<?= $p['userID'] ?>>
+<input id="idProduct" type="hidden" name="idProduct" value=<?= $p->id_product ?>>
+<input id="userID" type="hidden" name="userID" value=<?= $p->id_product ?>>
 <input id="userID" type="hidden" name="userID" value=<?= isset($_SESSION['user']["id_user"]) ? $_SESSION['user']["id_user"] : "" ?>>
 
 <div id="popup">
@@ -70,7 +79,7 @@ $script = "templates/JS/favorite.js";
             <section id="product-description">
                 <h2 class="title-section">Description</h2>
                 <p>
-                    <?= nl2br(htmlspecialchars(strip_tags(string: $p['description']))) ?>
+                    <?= nl2br(htmlspecialchars(strip_tags(string: $p->description))) ?>
                 </p>
             </section>
         </div>
@@ -78,40 +87,45 @@ $script = "templates/JS/favorite.js";
 
         <div class="myDiv2">
             <div class="timer-container">
-                <h2 class="timer" data-end="<?= htmlspecialchars($p['end_date']) ?>"></h2>
+                <h2 class="timer" data-end="<?= htmlspecialchars($p->end_date) ?>"></h2>
             </div>
             <div class="myBox1">
                 <h1>
-                    <?= $p['title']; ?>
+                    <?= $p->title ?>
                 </h1>
                 <p>Catégorie</p>
                 <ul>
                     <li><?= $category["name"] ?></li>
-                    <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($p["userCity"])) ?>
+                    <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($u->city)) ?>
                     </li>
                 </ul>
                 <p>Celebrité</p>
                 <div class="celebrity-section">
-                    <?php if (!empty($p["celebrityUrl"])) { ?>
+                    <?php if (!empty($c->url)) { ?>
                         <div>
-                            <img src=<?= $p["celebrityUrl"] ?> alt=<?= $p["celebrityUrl"] ?>>
+                            <img src=<?= $c->url ?> alt=<?= $p->url ?>>
                         </div>
                     <?php } else { ?>
                         <i class="fa-solid fa-star"></i>
                     <?php } ?>
-                    <h3><?= $p["celebrityName"] ?></h3>
+                    <h3><?= $c->name ?></h3>
                 </div>
                 <p>Vendu par</p>
                 <div class="celebrity-section">
-                    <a href="index.php?action=user&id=<?= $p['userID'] ?>">
+                    <a href="index.php?action=user&id=<?= $p->id_product ?>">
                         <i class="fa-solid fa-user"></i>
                         <h3>
-                            <?= htmlspecialchars(strip_tags($p["fullname"])) ?>
+                            <?= htmlspecialchars(strip_tags($u->fullname)) ?>
                         </h3>
                     </a>
                 </div>
             </div>
-            <?php if ($_SESSION['user']["id_user"] != $p['userID'] && strtotime($p['end_date']) > time()) { ?>
+            <?php if (
+                isset($_SESSION['user'])
+                && isset($_SESSION['user']["id_user"])
+                && $_SESSION['user']["id_user"] != $u->id_user
+                && strtotime($p->end_date) > time()
+            ) { ?>
                 <div id="all-price-container">
                     <div class="price-container">
                         <h1>
@@ -160,7 +174,7 @@ $script = "templates/JS/favorite.js";
                 <ul id="comments" class=""></ul>
 
                 <form id="comment-form" method="POST" action="index.php?action=addComment">
-                    <input type="hidden" name="id" value=<?= $p['id_product'] ?>>
+                    <input type="hidden" name="id" value=<?= $p->id_product ?>>
                     <br>
                     <textarea id="comment-comment" name="comment" placeholder="Laissez un commentaire ici !" type="text"
                         required></textarea>

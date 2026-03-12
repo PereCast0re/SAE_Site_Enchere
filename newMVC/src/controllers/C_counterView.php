@@ -12,26 +12,26 @@ function AddNewView($annoncement) {
     }
     
     // verification délais de 1 min par cookie
-    $cookie_name = "viewed_" . $annoncement['id_product'];
+    $cookie_name = "viewed_" . $annoncement->id_product;
     // si deja vue recemment 
     if (isset($_COOKIE[$cookie_name])) {
         return false; 
     }
     
     // verification délais de 1min par ip
-    $last_view = getLastViewVerifBot($annoncement['id_product']);
+    $last_view = getLastViewVerifBot($annoncement->id_product);
     if ($last_view && (time() - strtotime($last_view['view_date']) < 60)) {
         return false;
     }
     
     // ajout de la vue
     $now = date('Y-m-d H:i:s');
-    $tabview = getViewProduct($annoncement['id_product'], $now);
+    $tabview = getViewProduct($annoncement->id_product, $now);
     
     if (empty($tabview)) {
-        InsertNewView($annoncement['id_product'], $now);
+        InsertNewView($annoncement->id_product, $now);
     } else {
-        UpdateNumberView($annoncement['id_product']);
+        UpdateNumberView($annoncement->id_product);
     }
     
     // met dans les cookies pour 10 minutes

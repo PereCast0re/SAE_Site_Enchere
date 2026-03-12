@@ -10,9 +10,11 @@ function Product($id_product)
     if (isset($id_product) && $id_product >= 0) {
         $pdo = DatabaseConnection::getConnection();
         $productRepository = new ProductRepository($pdo);
-        $p = $productRepository->getProduct($id_product);
-        if ($p === false)
-            throw new Exception("This product doesn't exist !");
+        $data = $productRepository->getProduct($id_product);
+
+        $p = $data->product;
+        $c = $data->celebrity;
+        $u = $data->user;
 
         AddNewView($p);
 
@@ -21,12 +23,12 @@ function Product($id_product)
 
         $category = $productRepository->getCategoryFromAnnoncement($id_product);
         // var_dump($category);
-        $current_price = $productRepository->getLastPrice($p['id_product'])['last_price'];
+        $current_price = $productRepository->getLastPrice($p->id_product)['last_price'];
         if ($current_price === null) {
-            $current_price = $p['start_price'];
+            $current_price = $p->start_price;
         }
 
-        $reservePrice = (int)$p["reserve_price"];
+        $reservePrice = (int)$p->reserve_price;
         // var_dump($reservePrice);
 
         $images = getImage($id_product);

@@ -3,6 +3,15 @@
 require_once('src/lib/database.php');
 require_once('src/model/product.php');
 
+class Celebrity {
+    public ?int $id_celebrity = null;
+    public ?string $name = null;
+    public ?string $url = null;
+    public ?string $license = null;
+    public ?string $artist = null;
+    public ?int $statut = 0;
+}
+
 class CelebrityRepository
 {
     private PDO $connection;
@@ -11,11 +20,10 @@ class CelebrityRepository
     {
         $this->connection = $pdo;
     }
-
     
     function getCelebrityFromAnnoncement($id_product){
         $pdo = $this->connection;
-        $requete = "SELECT name 
+        $requete = "SELECT name, url, license, artist
                     from celebrity as c
                     where c.id_celebrity = (
                         select id_celebrity 
@@ -27,10 +35,19 @@ class CelebrityRepository
             $tmp->execute([
                 ":id" => $id_product
             ]);
+
+            $row = $tmp->fetch();
+
+            $celebrity = new Celebrity();
+            $celebrity->id_celebrity = $row["name"];
+            $celebrity->url = $row["url"];
+            $celebrity->license = $row["license"];
+            $celebrity->artist = $row["artist"];
+
+            return $celebrity;
         }catch(PDOException $e){
-            die("Error on get categorie from a annoncement : " .$e->getMessage());
+            throw new Exception("Error on get categorie from a annoncement : " .$e->getMessage());
         }
-        return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
     function insertCelebrity($name, $statut){
@@ -72,7 +89,6 @@ class CelebrityRepository
 
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
-
     
     function deleteCelebrity($id_product, $nameCelebrity){
         $pdo = $this->connection;
