@@ -4,10 +4,11 @@ require_once('src/lib/database.php');
 
 class Comment
 {
-    public string $full_name;
+    public int $id_product;
+    public int $id_user;
     public string $comment;
     public string $comment_date;
-    public string $id_user;
+    public string $full_name;
 }
 
 class CommentRepository
