@@ -586,4 +586,4 @@ async function getCategory(id_product) {
 }
 
 
-addEventListener('DOMContentLoaded', afficher);
+// addEventListener('DOMContentLoaded', afficher);

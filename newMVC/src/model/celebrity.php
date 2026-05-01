@@ -39,7 +39,7 @@ class CelebrityRepository
             $row = $tmp->fetch();
 
             $celebrity = new Celebrity();
-            $celebrity->id_celebrity = $row["name"];
+            $celebrity->name = $row["name"];
             $celebrity->url = $row["url"];
             $celebrity->license = $row["license"];
             $celebrity->artist = $row["artist"];
