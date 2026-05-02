@@ -1,8 +1,9 @@
 <?php
 
-require_once(__DIR__ . '/../lib/database.php');
-require_once(__DIR__ . '/../model/product.php');
-require_once(__DIR__ . '/../model/celebrity.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
+use App\App\Model\Repositories\CelebrityRepository;
+
 function UpdateProduct($id_product){
     $pdo = DatabaseConnection::getConnection();
     $productRepository = new ProductRepository($pdo);

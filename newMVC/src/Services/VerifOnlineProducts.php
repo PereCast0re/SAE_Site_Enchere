@@ -9,10 +9,9 @@ if (!isset($_SESSION['user'])) {
 
 $user = $_SESSION['user'];
 
-require_once __DIR__ . '/../model/pdo.php';
-require_once __DIR__ . '/../controllers/C_emailing.php';
-require_once __DIR__ . '/../lib/database.php';
-require_once __DIR__ . '/../model/product.php';
+use App\Model\Repositories\ProductRepository;
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\MailjetRepository;
 
 //Définition du délais entre chaque vérification de fin d'annonce pour l'envoi de mail de 5 minutes
 // La 300 c'est 5min en secondes
@@ -30,7 +29,7 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
         {
             $pdo = DatabaseConnection::getConnection();
             $productRepository = new ProductRepository($pdo);
-            $annoncementClient = get_all_annoncement_notMailed();
+            $annoncementClient = MailjetRepository::get_all_annoncement_notMailed();
             foreach ($annoncementClient as $annonce) {
                 if ($annonce['reserve_price'] != null){continue;}
                 $date_fin = $annonce['end_date'];
@@ -55,7 +54,7 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
                         $params = [$user_email, $user_name, $annonce['title']];
                         routeurMailing('EndAnnoncement2', $params);
                     }
-                    closeAnnoncement($annonce['id_product']);
+                    MailjetRepository::closeAnnoncement($annonce['id_product']);
                 }
             }
         }

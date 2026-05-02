@@ -1,0 +1,303 @@
+<?php
+
+namespace App\Model\Repositories;
+
+use PDO;
+use PDOException;
+use Exception;
+
+class UserRepository
+{
+
+    private PDO $connection;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->connection = $pdo;
+    }
+
+    function createUser($name, $firstname, $birth_date, $address, $city, $postal_code, $email, $password)
+    {
+        $pdo = $this->connection;
+        $requete = "INSERT INTO Users (name, firstname, birth_date, address, city, postal_code, email, password) VALUES (:name, :firstname, :birth_date, :address, :city, :postal_code, :email, :password)";
+        try {
+            $tmp = $pdo->prepare($requete);
+            return $tmp->execute([
+                ':name' => $name,
+                ':firstname' => $firstname,
+                ':birth_date' => $birth_date,
+                ':address' => $address,
+                ':city' => $city,
+                ':postal_code' => $postal_code,
+                ':email' => $email,
+                ':password' => $password,
+            ]);
+        } catch (PDOException $e) {
+            die("Inscription error, try again later !\nError : " . $e->getMessage());
+        }
+    }
+
+    // On part du principe que l'email et le password sont déja décriptés
+    function authentication($email, $password)
+    {
+        $pdo = $this->connection;
+        $requete = "SELECT * from Users where email = :email and password = :password";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ':email' => $email,
+                ':password' => $password
+            ]);
+        } catch (PDOException $e) {
+            die("Authentication error, try again ! /nError : " . $e->getMessage());
+        }
+        return $tmp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function updateEmailUser($email, $id_user)
+    {
+        $pdo = $this->connection;
+        $requete = "UPDATE Users
+                SET email = :email
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":email" => $email,
+                ":id_user" => $id_user
+            ]);
+        } catch (PDOException $e) {
+            die("Modification error, try again !\nError : " . $e->getMessage());
+        }
+    }
+
+    function updatePasswordUser($id_user, $password)
+    {
+        $pdo = $this->connection;
+        $requete = "UPDATE Users
+                SET password = :password
+                Where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":password" => $password,
+                "id_user" => $id_user
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the password, try again !\nError : " . $e->getMessage());
+        }
+    }
+
+    function updateFullAddress($address, $city, $postal_code, $id_user)
+    {
+        $pdo = $this->connection;
+        $requete = "UPDATE Users
+                set address = :address,
+                    city = :city,
+                    postal_code = :postal_code
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":address" => $address,
+                ":city" => $city,
+                ":postal_code" => $postal_code,
+                ":id_user" => $id_user
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the adress, try again !\nError : " . $e->getMessage());
+        }
+    }
+
+    function getAddress($id_user)
+    {
+        $pdo = $this->connection;
+        $requete = "SELECT address, postal_code, city
+                from Users
+                where id_user = :id_user
+    ";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":id_user" => $id_user
+            ]);
+        } catch (PDOException $e) {
+            die("Error when selecting the address, try again !\nError : " . $e->getMessage());
+        }
+
+        // auto_completion 
+        return $tmp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getUser($id_user)
+    {
+        $pdo = $this->connection;
+        $request = "SELECT * FROM Users WHERE id_user = :id_user";
+        $temp = $pdo->prepare($request);
+        $temp->execute([
+            "id_user" => $id_user
+        ]);
+
+        return $temp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getRatingUser($id_user)
+    {
+        $pdo = $this->connection;
+        $request = "SELECT AVG(rating) as score FROM Rating WHERE id_seller = :id_user";
+        $temp = $pdo->prepare($request);
+        $temp->execute([
+            "id_user" => $id_user
+        ]);
+
+        return $temp->fetchColumn();
+    }
+
+    function getUserNewsletter(){
+        $pdo = $this->connection;
+        $requete = "SELECT name,email from users where newsletter = 1";
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getAdmin(){
+        $pdo = $this->connection;
+        $requete = "SELECT * from users where admin = 1";
+        $tmp = $pdo->prepare($requete);
+        $tmp->execute();
+
+        return $tmp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function updateFirstnameUser($f, $id){
+        $pdo = $this->connection;
+        $requete = "UPDATE Users
+                SET firstname = :firstname
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":firstname" => $f['firstname'],
+                ":id_user" => $id
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the firstname, try again !\nError : " . $e->getMessage());
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function updateNameUser($n, $id){
+        $pdo = $this->connection;
+        $requete = "UPDATE users
+                SET name = :name
+                where id_user = :id_user";
+        try {
+            $tmp = $pdo->prepare($requete);
+            $tmp->execute([
+                ":name" => $n['name'],
+                ":id_user" => $id
+            ]);
+        } catch (PDOException $e) {
+            die("Error during the modification of the name, try again !\nError : " . $e->getMessage());
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function getGlobalViews($id_product)
+    {
+        $pdo = connection();
+        $requete = " SELECT SUM(view_number) as nbGlobalView from productview where id_product = :id ";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id" => $id_product
+        ]);
+        return $temp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getLikes($id_product)
+    {
+        $pdo = connection();
+        $requete = " SELECT COUNT(*) as nbLike from interest where id_product = :id ";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id" => $id_product
+        ]);
+        return $temp->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getImage($id_product)
+    {
+        $pdo = connection();
+        $requete = " SELECT path_image as url_image, alt from image where id_product = :id";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id" => $id_product
+        ]);
+        return $temp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getAnnoncementEndWithReservedPrice($id_user)
+    {
+        $pdo = connection();
+        $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
+                        FROM product AS p
+                        JOIN published AS publi ON publi.id_product = p.id_product
+                        LEFT JOIN bid AS b ON b.id_product = p.id_product
+                        WHERE 
+                            publi.id_user = :id_user 
+                            AND p.end_date < NOW()
+                            AND p.reserve_price > 0
+                        GROUP BY p.id_product  
+                        HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL";
+
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id_user" => $id_user
+        ]);
+
+
+        return $temp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getListFinishedAnnoncements($id_user)
+    {
+        $pdo = connection();
+        $requete = "SELECT
+                    p.*,
+                    publi.*,
+                    MAX(b.new_price) AS last_price
+                    FROM product p
+                    JOIN published publi
+                    ON publi.id_product = p.id_product
+                    LEFT JOIN bid b
+                    ON b.id_product = p.id_product
+                    WHERE publi.id_user = :id_user
+                    AND p.end_date < NOW()
+                    GROUP BY p.id_product
+                    HAVING last_price IS NULL OR last_price = 0 
+                    ";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":id_user" => $id_user
+        ]);
+
+        return $temp->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function gethashPassword($email)
+    {
+        $pdo = connection();
+        $requete = "SELECT password from users where email = :email ";
+        $temp = $pdo->prepare($requete);
+        $temp->execute([
+            ":email" => $email
+        ]);
+
+        $result = $temp->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['password'] : null;
+    }
+}

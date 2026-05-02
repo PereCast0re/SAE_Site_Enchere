@@ -1,7 +1,9 @@
 <?php
 
-require_once('src/lib/database.php');
-require_once('src/model/product.php');
+namespace App\Model\Repositories;
+
+use App\Lib\DatabaseConnection;
+use PDO;
 
 class BidRepository
 {

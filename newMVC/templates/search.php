@@ -21,6 +21,9 @@ $style = "templates/style/Accueil.css";
         <h1>Nos annonces</h1>
         <div class="annonces">
             <?php
+            use App\Lib\DatabaseConnection;
+            use App\Model\ProductRepository;
+
             $pdo = DatabaseConnection::getConnection();
             $productRepository = new ProductRepository($pdo);
             $products = $productRepository->getAllProduct();
@@ -73,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const q = document.getElementById('searchInput').value.trim();
         if (q.length < 2) return alert("Tapez au moins 2 lettres");
 
-        const response = await fetch("src/controllers/search.php?q=" + encodeURIComponent(q));
+        const response = await fetch("src/Services/MeilisearchSearch.php?q=" + encodeURIComponent(q));
         const results = await response.json();
 
         const container = document.querySelector(".annonces");
@@ -115,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const response = await fetch("src/controllers/suggestion.php?q=" + encodeURIComponent(q));
+        const response = await fetch("src/Services/MeilisearchSuggestion.php?q=" + encodeURIComponent(q));
         const results = await response.json();
 
         const box = document.getElementById('suggestions');

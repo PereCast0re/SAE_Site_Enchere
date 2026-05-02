@@ -1,6 +1,6 @@
 <?php
-require_once('src/lib/database.php');
-require_once('src/model/product.php');
+
+use App\Model\Repositories\UserRepository;
 
 $title = "Page d'accueil";
 $style = "templates/style/index.css";
@@ -18,6 +18,10 @@ $style = "templates/style/index.css";
 
 <main>
   <?php
+
+  use App\Lib\DatabaseConnection;
+  use App\Model\Repositories\ProductRepository;
+
   $pdo = DatabaseConnection::getConnection();
   $productRepository = new ProductRepository($pdo);
   $products = $productRepository->getAllProduct();
@@ -44,7 +48,8 @@ $style = "templates/style/index.css";
             <a href="index.php?action=product&id=<?= htmlspecialchars($p['id_product']) ?>" class="swiper-slide slide-link">
               <div class="image-container">
                 <?php
-                $images = getImage($p['id_product']);
+                $userRepository = new UserRepository($pdo);
+                $images = $userRepository->getImage($p['id_product']);
                 if (!empty($images)) {
                   echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                 }
@@ -97,7 +102,7 @@ $style = "templates/style/index.css";
             <div class="announce-card">
               <div class="card-img-container">
                 <?php
-                $images = getImage($p['id_product']);
+                $images = $userRepository->getImage($p['id_product']);
                 if (!empty($images)) {
                   echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                 }

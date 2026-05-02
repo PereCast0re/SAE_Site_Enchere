@@ -25,99 +25,7 @@ function connection()
 //User Section//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getGlobalViews($id_product)
-{
-    $pdo = connection();
-    $requete = " SELECT SUM(view_number) as nbGlobalView from productview where id_product = :id ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id" => $id_product
-    ]);
-    return $temp->fetch(PDO::FETCH_ASSOC);
-}
 
-function getLikes($id_product)
-{
-    $pdo = connection();
-    $requete = " SELECT COUNT(*) as nbLike from interest where id_product = :id ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id" => $id_product
-    ]);
-    return $temp->fetch(PDO::FETCH_ASSOC);
-}
-
-function getImage($id_product)
-{
-    $pdo = connection();
-    $requete = " SELECT path_image as url_image, alt from image where id_product = :id";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id" => $id_product
-    ]);
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function getAnnoncementEndWithReservedPrice($id_user)
-{
-    $pdo = connection();
-    $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
-                    FROM product AS p
-                    JOIN published AS publi ON publi.id_product = p.id_product
-                    LEFT JOIN bid AS b ON b.id_product = p.id_product
-                    WHERE 
-                        publi.id_user = :id_user 
-                        AND p.end_date < NOW()
-                        AND p.reserve_price > 0
-                    GROUP BY p.id_product  
-                    HAVING MAX(b.new_price) < p.reserve_price OR MAX(b.new_price) IS NULL";
-
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id_user" => $id_user
-    ]);
-
-
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function getListFinishedAnnoncements($id_user)
-{
-    $pdo = connection();
-    $requete = "SELECT
-                p.*,
-                publi.*,
-                MAX(b.new_price) AS last_price
-                FROM product p
-                JOIN published publi
-                ON publi.id_product = p.id_product
-                LEFT JOIN bid b
-                ON b.id_product = p.id_product
-                WHERE publi.id_user = :id_user
-                AND p.end_date < NOW()
-                GROUP BY p.id_product
-                HAVING last_price IS NULL OR last_price = 0 
-                ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":id_user" => $id_user
-    ]);
-
-    return $temp->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function gethashPassword($email)
-{
-    $pdo = connection();
-    $requete = "SELECT password from users where email = :email ";
-    $temp = $pdo->prepare($requete);
-    $temp->execute([
-        ":email" => $email
-    ]);
-
-    $result = $temp->fetch(PDO::FETCH_ASSOC);
-    return $result ? $result['password'] : null;
-}
 
 ////////////////////////////////////////////////////////////////////////////
 // Ajout d'une vue a une annonce //
@@ -207,26 +115,7 @@ function subscribeNewsletter($email)
 }
 
 
-///////////////////////////////////////////// Cloture d'une annonce ////////////////////////////////////////////////////////
-/// Si mailIsSent = 1 alors l'email et deja evoyé et permet de bloqué les envois multiples
-function closeAnnoncement($id_product)
-{
-    $pdo = connection();
-    $requete = "UPDATE product SET end_date = now(), mailIsSent = 1 WHERE id_product = :id_product";
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute([
-        ":id_product" => $id_product
-    ]);
-}
 
-function get_all_annoncement_notMailed()
-{
-    $pdo = connection();
-    $requete = 'SELECT * from product where mailIsSent != 1';
-    $tmp = $pdo->prepare($requete);
-    $tmp->execute();
-    return $tmp->fetchAll(PDO::FETCH_ASSOC);
-}
 
 
 /////////////////////////////////// Admin ////////////////////////////////////////////

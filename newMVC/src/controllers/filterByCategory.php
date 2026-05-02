@@ -1,7 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-require_once __DIR__ . '\..\model\pdo.php'; 
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\UserRepository;
 
 if (!isset($_GET['id'])) {
     echo json_encode([]);
@@ -12,7 +13,9 @@ $categoryId = (int) $_GET['id'];
 
 $products = getProductsByCategory($categoryId);
 foreach ($products as &$p) {
-    $p['images'] = getImage($p['id_product']);
+    $pdo = DatabaseConnection::getConnection();
+    $userRepository = new UserRepository($pdo);
+    $p['images'] = $userRepository->getImage($p['id_product']);
 }
 echo json_encode($products);
 

@@ -1,7 +1,7 @@
 <?php
 
-require_once('src/model/comment.php');
-require_once('src/lib/database.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\CommentRepository;
 
 function addComment()
 {

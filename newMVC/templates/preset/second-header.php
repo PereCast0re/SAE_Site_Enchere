@@ -1,5 +1,5 @@
 <?php
-require(dirname(__DIR__, 2) . '/src/script/verif_online_annoncement.php');
+require(dirname(__DIR__, 2) . '/src/Services/VerifOnlineProducts.php');
 ?>
 
 <link rel="stylesheet" href="templates/Style/second-header.css">

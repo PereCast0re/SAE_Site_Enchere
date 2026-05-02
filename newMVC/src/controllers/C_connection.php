@@ -1,17 +1,17 @@
 <?php
 
-require_once('src/lib/database.php');
-require_once('src/model/user.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\UserRepository;
 
 function userConnection(array $input)
 {
     if (!empty($input['email']) && !empty($input['password'])) {
         $email = $input['email'];
-        $hasedpassword = gethashPassword($email);
+        $pdo = DatabaseConnection::getConnection();
+            $userRepository = new UserRepository($pdo);
+        $hasedpassword = $userRepository->gethashPassword($email);
 
         if ($hasedpassword && password_verify($input['password'], $hasedpassword)) {
-            $pdo = DatabaseConnection::getConnection();
-            $userRepository = new UserRepository($pdo);
             $info_user = $userRepository->authentication($email, $hasedpassword);
             var_dump($info_user);
             $info_user['DateConnexion'] = date("Y-m-d H:i:s");

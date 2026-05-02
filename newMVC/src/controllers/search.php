@@ -5,8 +5,9 @@ header('Content-Type: application/json');
 require __DIR__ . '/../../vendor/autoload.php';
 require 'config.php'; 
 require_once __DIR__ . '/../model/pdo.php';
-require_once __DIR__ . '/../model/product.php';
-require_once __DIR__ . '/../lib/database.php';
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\UserRepository;
 
 use Meilisearch\Client;
 
@@ -35,6 +36,7 @@ try {
             $productRepository = new ProductRepository($pdo);
             $productData = $productRepository->getProduct($pId);
             $celebrity = $productRepository->getCelebrityNameByAnnoncement($pId);
+            $userRepository = new UserRepository($pdo);
             
             $output[] = [
                 'id_product' => $pId,
@@ -42,7 +44,7 @@ try {
                 'title'      => $h['title'],
                 'end_date'   => $productData['end_date'] ?? null,
                 'celebrity_name'  => $celebrity['name'] ?? 'N/A',
-                'images'     => getImage($pId) 
+                'images'     => $userRepository->getImage($pId) 
             ];
         }
     }

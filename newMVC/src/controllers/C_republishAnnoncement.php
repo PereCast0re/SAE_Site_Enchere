@@ -1,7 +1,7 @@
 <?php
 
-require_once("src/model/product.php");
-require_once('src/lib/database.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
 
 function republishAnnoncement($id_product){
     $pdo = DatabaseConnection::getConnection();

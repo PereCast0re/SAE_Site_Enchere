@@ -1,6 +1,8 @@
 <?php
 
-require_once('src/lib/database.php');
+namespace App\Model\Repositories;
+
+use PDO;
 
 class FavoriteRepository
 {

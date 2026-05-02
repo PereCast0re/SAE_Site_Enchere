@@ -1,8 +1,8 @@
 <?php
 
-require_once("src/model/bid.php");
-require_once("src/lib/database.php");
-require_once("src/model/product.php");
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\BidRepository;
+use App\Model\Repositories\ProductRepository;
 
 function bid()
 {

@@ -1,7 +1,7 @@
 <?php
 
-require_once("src/model/favorite.php");
-require_once("src/lib/database.php");
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\FavoriteRepository;
 
 function unfavorite()
 {

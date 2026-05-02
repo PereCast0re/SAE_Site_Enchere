@@ -2,6 +2,7 @@
 
 date_default_timezone_set('Europe/Paris');
 
+require_once __DIR__ . '/vendor/autoload.php';
 
 session_start();
 
@@ -26,9 +27,15 @@ require_once('src/controllers/C_reservedPrice.php');
 require_once('src/controllers/C_getComments.php');
 
 require_once("src/model/pdo.php");
-require_once('src/lib/database.php');
 require_once('src/model/user.php');
 require_once('src/model/celebrity.php');
+
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\UserRepository;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\CelebrityRepository;
+use App\Model\ProductDetails;
+
 
 try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
@@ -237,7 +244,9 @@ try {
                     exit();
                 } else {
                     $id_product = $_GET['id_product'];
-                    $global_views = getGlobalViews($id_product);
+                    $pdo = DatabaseConnection::getConnection();
+                    $userRepository = new UserRepository($pdo);
+                    $global_views = $userRepository->getGlobalViews($id_product);
                     if ($global_views !== false) {
                         header('Content-Type: application/json');
                         echo json_encode($global_views);
@@ -254,7 +263,9 @@ try {
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
-                $likes = getLikes($id_product);
+                $pdo = DatabaseConnection::getConnection();
+                $userRepository = new UserRepository($pdo);
+                $likes =$userRepository->getLikes($id_product);
                 if ($likes !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($likes);
@@ -273,7 +284,9 @@ try {
         } elseif ($_GET['action'] === 'getImage') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
-                $image = getImage($id_product);
+                $pdo = DatabaseConnection::getConnection();
+                $userRepository = new UserRepository($pdo);
+                $image = $userRepository->getImage($id_product);
                 if ($image !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($image);
@@ -289,7 +302,9 @@ try {
         } elseif ($_GET['action'] == 'reservedAnnoncement') {
             if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
-                $annoncements = getAnnoncementEndWithReservedPrice($id_user);
+                $pdo = DatabaseConnection::getConnection();
+                $userRepository = new UserRepository($pdo);
+                $annoncements = $userRepository->getAnnoncementEndWithReservedPrice($id_user);
                 if ($annoncements !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($annoncements);
@@ -305,7 +320,9 @@ try {
         } elseif ($_GET['action'] == 'LisAnnoncementEnd') {
             if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
-                $annoncements = getListFinishedAnnoncements($id_user);
+                $pdo = DatabaseConnection::getConnection();
+                $userRepository = new UserRepository($pdo);
+                $annoncements = $userRepository->getListFinishedAnnoncements($id_user);
                 if ($annoncements !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($annoncements);

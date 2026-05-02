@@ -1,9 +1,8 @@
 <?php
 
-require_once(__DIR__ . '/../lib/database.php');
-require_once(__DIR__ . '/../model/product.php');
-require_once(__DIR__ . '/../model/celebrity.php');
-require_once('C_emailing.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\CelebrityRepository;
 
 function deleteProductAdmin($id_product, $email_user, $username_user) {
     $pdo = DatabaseConnection::getConnection();

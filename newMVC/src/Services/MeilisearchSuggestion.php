@@ -1,8 +1,9 @@
 <?php
+
 header('Content-Type: application/json');
 require __DIR__ . '/../../vendor/autoload.php';
 
-use Meilisearch\Client;
+use App\Lib\MeilisearchClient;
 
 $q = $_GET['q'] ?? '';
 if (strlen($q) < 1) {
@@ -10,7 +11,7 @@ if (strlen($q) < 1) {
     exit;
 }
 
-$client = new Client('http://127.0.0.1:7700', 'CLE_TEST_SAE_SITE');
+$client = MeilisearchClient::getClient();
 $index = $client->index('search');
 
 // Recherche

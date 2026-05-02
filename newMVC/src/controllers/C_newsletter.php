@@ -1,9 +1,7 @@
 <?php
 
-require_once('src/lib/database.php');
-require_once('src/model/user.php');
-
-require_once('src/controllers/C_emailing.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\UserRepository;
 
 function PostNewsletter(array $input){
     if(isset($input)){ 

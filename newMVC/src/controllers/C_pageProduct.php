@@ -1,9 +1,14 @@
 <?php
 
-require_once('src/lib/database.php');
-require_once('src/model/comment.php');
-require_once('src/model/favorite.php');
+
+
 require_once("src/controllers/C_counterView.php");
+
+use App\Model\Repositories\CommentRepository;
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\FavoriteRepository;
+use App\Model\Repositories\UserRepository;
 
 function Product($id_product)
 {
@@ -31,7 +36,8 @@ function Product($id_product)
         $reservePrice = (int)$p->reserve_price;
         // var_dump($reservePrice);
 
-        $images = getImage($id_product);
+        $userRepository = new UserRepository($pdo);
+        $images = $userRepository->getImage($id_product);
 
         $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 

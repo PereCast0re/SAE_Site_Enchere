@@ -1,8 +1,8 @@
 <?php
 
-require_once("src/model/product.php");
-require_once('src/lib/database.php');
-require_once('C_emailing.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\UserRepository;
 
 function acceptReservedPrice($data, $id_user){
     if (isset($data['id_product'])) {

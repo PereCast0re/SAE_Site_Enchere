@@ -1,7 +1,7 @@
 <?php
 
-require_once('src/model/user.php');
-require_once('src/lib/database.php');
+use App\Model\Repositories\UserRepository;
+use App\Lib\DatabaseConnection;
 
 function updateEmail(string $email)
 {

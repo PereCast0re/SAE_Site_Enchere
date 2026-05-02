@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Lib;
+
+use PDO;
+
 class DatabaseConnection
 {
     private static ?PDO $pdo = null;
