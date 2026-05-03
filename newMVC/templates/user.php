@@ -71,7 +71,11 @@ $user = $_SESSION['user'];
         <div class="wrapper-annonces">
             <div class="barre-noire"></div>
             <div class="section_annonce_publier annonce_list_container">
-                <?php $annoncements = get_all_annoncement($user["id_user"]) ?>
+                <?php 
+                use App\Controllers\UserController;
+
+                $userController = new UserController();
+                $annoncements = $userController->get_all_annoncement($user["id_user"]) ?>
                 <input type="hidden" id="number_annoncement" name="action">
                 <input type="hidden" id="values_annoncements" value='<?php echo htmlspecialchars(json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, "UTF-8"); ?>'>
                 <div class="stat_annonce"></div>

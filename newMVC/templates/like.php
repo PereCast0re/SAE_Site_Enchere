@@ -15,12 +15,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Chemin correct depuis templates/ vers src/model/pdo.php
-require_once __DIR__ . '/../src/model/pdo.php';
-require_once('src/model/product.php');
-require_once('src/lib/database.php');
-
-
 
 $id_client = $user['id_user'];
 ?>

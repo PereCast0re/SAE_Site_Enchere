@@ -1,7 +1,10 @@
 <?php
 
+use App\Controllers\ConnectionController;
+
 if (isset($_SESSION['user'])) {
-    UserCheckConnexion($_SESSION['user']['DateConnexion']);
+    $connectionController = new ConnectionController();
+    $connectionController->UserCheckConnexion($_SESSION['user']['DateConnexion']);
 }
 
 ?>

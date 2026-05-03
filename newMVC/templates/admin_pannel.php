@@ -1,4 +1,6 @@
 <?php
+
+use App\Model\Repositories\UserRepository;
 $title = "Pannau admin";
 $style = "templates/style/Accueil.css";
 $script = "";
@@ -8,13 +10,16 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-require_once('src/model/pdo.php');
-require_once('src/model/celebrity.php');
-require_once('src/model/product.php');
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\CelebrityRepository;
+use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\AdminRepository;
 
 $pdo = DatabaseConnection::getConnection();
 $celebrityRepository = new CelebrityRepository($pdo);
 $productRepository = new ProductRepository($pdo);
+$userRepository = new UserRepository($pdo);
+$adminRepository = new AdminRepository($pdo);
 
 $user = $_SESSION['user'];
 ?>
@@ -93,7 +98,7 @@ $user = $_SESSION['user'];
   <div class="content">
     <h1>Annonce a vérifié</h1>
     <div class="annonces">
-      <?php $products = getAllProduct_admin(); if (empty($products)): ?>
+      <?php $products = $adminRepository->getAllProduct_admin(); if (empty($products)): ?>
         <p>Aucune annonce disponible pour le moment.</p>
       <?php else: ?>
         <?php
@@ -110,7 +115,7 @@ $user = $_SESSION['user'];
             ?>
             <div class="announce-card">
             <?php
-                $images = getImage(id_product: $p['id_product']);
+                $images = $userRepository->getImage(id_product: $p['id_product']);
                 if (!empty($images)) {
                     echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                 } else {
@@ -119,7 +124,7 @@ $user = $_SESSION['user'];
             ?>
                 <h3><?= htmlspecialchars($p['title']) ?></h3>
                 <p class="Categorie">Catégorie : <?php $cate = $productRepository->getCategoryFromAnnoncement($p['id_product']); echo($cate && isset($cate['name']) ? htmlspecialchars($cate['name']) : 'Non spécifiée'); ?></p>
-                <p class="Celebrite">Celebrite : <?php $cele = $celebrityRepository->getCelebrityFromAnnoncement($p['id_product']); echo($cele && isset($cele['name']) ? htmlspecialchars($cele['name']) : 'Non spécifiée'); ?></p>
+                <p class="Celebrite">Celebrite : <?php $cele = $celebrityRepository->getCelebrityFromAnnoncement($p['id_product']); echo($cele && isset($cele->name) ? htmlspecialchars($cele->name) : 'Non spécifiée'); ?></p>
 
                 <button class="btn_valide" onclick="alertConfirmation('Validez cette annonce ?', 'validateAnnoncement', <?php echo $p['id_product']; ?>)">Valide</button>
                 <button class="btn_supp" onclick="alertConfirmation('Supprimer cette annonce ?', 'deleteProductAdmin', <?php echo $p['id_product']; ?>)">Supprimer</button>

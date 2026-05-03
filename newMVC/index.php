@@ -1,45 +1,38 @@
 <?php
 
-use App\Model\Repositories\MailjetRepository;
-
 date_default_timezone_set('Europe/Paris');
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 session_start();
 
-require_once('src/controllers/C_addProduct.php');
-require_once('src/controllers/C_connection.php');
-require_once('src/controllers/C_inscription.php');
-require_once('src/controllers/C_pageProduct.php');
-require_once('src/controllers/C_pageUser.php');
-require_once('src/controllers/C_updateUser.php');
-require_once('src/controllers/C_favorite.php');
-require_once('src/controllers/C_unfavorite.php');
-require_once('src/controllers/C_bid.php');
-require_once('src/controllers/C_addComment.php');
-require_once('src/controllers/C_republishAnnoncement.php');
-require_once('src/controllers/C_addComment.php');
-require_once('src/controllers/C_index.php');
-require_once("src/controllers/C_newsletter.php");
-require_once('src/controllers/C_deleteProduct.php');
-require_once('src/controllers/C_updateProduct.php');
-require_once('src/controllers/C_emailing.php');
-require_once('src/controllers/C_reservedPrice.php');
-require_once('src/controllers/C_getComments.php');
-
-require_once("src/model/pdo.php");
-require_once('src/model/user.php');
-require_once('src/model/celebrity.php');
+use App\Controllers\BidController;
+use App\Controllers\CommentController;
+use App\Controllers\ConnectionController;
+use App\Controllers\FavoriteController;
+use App\Controllers\MainController;
+use App\Controllers\NotificationsController;
+use App\Controllers\ProductController;
+use App\controllers\UserController;
 
 use App\Lib\DatabaseConnection;
 use App\Model\Repositories\UserRepository;
 use App\Model\Repositories\ProductRepository;
 use App\Model\Repositories\CelebrityRepository;
+use App\Model\Repositories\MailjetRepository;
 use App\Model\ProductDetails;
 
 
 try {
+    $bidController = new BidController();
+    $userController = new UserController();
+    $connectionController = new ConnectionController();
+    $notificationsController = new NotificationsController();
+    $productController = new ProductController();
+    $commentController = new CommentController();
+    $favoriteController = new FavoriteController();
+
+
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         ////////////////////////////// Pages //////////////////////////////
         if ($_GET['action'] === 'connection') {
@@ -47,7 +40,7 @@ try {
             header("Location: index.php");
             exit();
         } elseif ($_GET['action'] === 'deconnexion') {
-            require_once('src/controllers/C_deconnexion.php');
+            $connectionController->disconnection();
         } elseif ($_GET['action'] === 'inscription') {
             $_SESSION['show_register_modal'] = true;
             header('Location: index.php');
@@ -76,21 +69,21 @@ try {
 
             ////////////////////////////// Page Connection/Inscription (creation) //////////////////////////////
         } elseif ($_GET['action'] === 'userConnection') {
-            userConnection($_POST);
+            $connectionController->userConnection($_POST);
         } elseif ($_GET['action'] === 'userInscription') {
-            inscription($_POST);
+            $userController->inscription($_POST);
 
 
         } elseif ($_GET['action'] === 'update_email') {
-            updateEmail($_POST['email']);
+            $userController->updateEmail($_POST['email']);
         } elseif ($_GET['action'] === 'update_address') {
-            updateAddress($_POST);
+            $userController->updateAddress($_POST);
         } elseif ($_GET['action'] === 'update_password') {
-            updatePassword($_POST['new_password_2']);
+            $userController->updatePassword($_POST['new_password_2']);
         } elseif ($_GET['action'] === 'update_Firstname') {
-            updateFirstname($_POST);
+            $userController->updateFirstname($_POST);
         } elseif ($_GET["action"] === 'update_Name') {
-            updateName($_POST);
+            $userController->updateName($_POST);
 
         } elseif ($_GET['action'] === 'newsletter') {
             $_SESSION['show_newsletter_modal'] = true;
@@ -102,12 +95,12 @@ try {
             $mailjetRepository = new MailjetRepository($pdo);
             $mailjetRepository->subscribeNewsletter($user['email']);
             $_SESSION['success'] = "Abonnement confirmé 🎉";
-            routeurMailing('subscriptionNewsletter', [$user['email'], $user['name'] . ' ' . $user['firstname']]);
+            $notificationsController->routeurMailing('subscriptionNewsletter', [$user['email'], $user['name'] . ' ' . $user['firstname']]);
             header('Location: index.php');
             exit;
         } elseif ($_GET['action'] === 'addProduct') {
             $user = $_SESSION['user'];
-            addNewProduct($user, $_POST);
+            $productController->addNewProduct($user, $_POST);
 
         } elseif ($_GET['action'] === 'deleteProduct') {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
@@ -137,7 +130,7 @@ try {
                 $product = $productRepository->getProduct($id_product);
                 $title = $product['title'];
                 $param = [$_SESSION['user']['email'], $name, $title];
-                routeurMailing('acceptProductUser', $param);
+                $notificationsController->routeurMailing('acceptProductUser', $param);
                 //header("Location: admin_pannel.php");
                 //exit();
             } else {
@@ -146,7 +139,7 @@ try {
 
         } elseif ($_GET['action'] === 'updateProduct') {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
-                UpdateFromProduct($_POST['id_product']);
+                $productController->UpdateFromProduct($_POST['id_product']);
             } else {
                 throw new Exception("Impossible de modifier ce produit !");
             }
@@ -157,16 +150,16 @@ try {
 
         } elseif ($_GET['action'] === 'finalUpdateProduct') {
             $user = $_SESSION['user'];
-            finalUpdateProduct($user, $_POST);
+            $productController->finalUpdateProduct($user, $_POST);
 
         } elseif ($_GET['action'] === 'addComment') {
-            addComment();
+            $commentController->addComment();
 
             ////////////////////////////// Favoris //////////////////////////////
         } elseif ($_GET['action'] === 'favorite') { // favorite
-            favorite();
+            $favoriteController->favorite();
         } elseif ($_GET['action'] === 'unfavorite') { // unfavorite
-            unfavorite();
+            $favoriteController->unfavorite();
         } elseif ($_GET['action'] === 'LisAnnoncementLike') {
             if (isset($_GET['id_user'])) {
                 $id = $_GET['id_user'];
@@ -191,19 +184,19 @@ try {
 
             ////////////////////////////// Bid //////////////////////////////
         } elseif ($_GET['action'] === 'bid') {
-            bid();
+            $bidController->bid();
 
 
             ////////////////////////////// Page Produit //////////////////////////////
         } elseif ($_GET['action'] === 'product') {
-            Product(id_product: $_GET['id']);
+            $productController->Product(id_product: $_GET['id']);
 
             // A supprimer une fois le style de la effectué
             // $errorMessage = '<i class="fa-solid fa-hammer"></i>  <span>Désolé</span> En cours de développement ! Réessayez ultérieurement !';
             // require('templates/preset/error.php');
 
         } elseif ($_GET['action'] == 'getComments') {
-            getComments();
+            $commentController->getComments();
 
             ////////////////////////////// page user //////////////////////////////
             // get price
@@ -269,7 +262,7 @@ try {
                 $id_product = $_GET['id_product'];
                 $pdo = DatabaseConnection::getConnection();
                 $userRepository = new UserRepository($pdo);
-                $likes =$userRepository->getLikes($id_product);
+                $likes = $userRepository->getLikes($id_product);
                 if ($likes !== false) {
                     header('Content-Type: application/json');
                     echo json_encode($likes);
@@ -341,7 +334,7 @@ try {
         } elseif ($_GET['action'] == 'republish') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
                 $id_product = $_GET['id_product'];
-                republishAnnoncement($id_product);
+                $productController->republishAnnoncement($id_product);
             } else {
                 throw new Exception("Impossible de re-publée l'annonce");
             }
@@ -381,10 +374,10 @@ try {
             }
 
         } elseif ($_GET['action'] == 'acceptReservedPrice') {
-            acceptReservedPrice($_POST, $_SESSION['user']['id_user']);
+            $productController->acceptReservedPrice($_POST, $_SESSION['user']['id_user']);
 
         } elseif ($_GET['action'] == 'refuseReservedPrice') {
-            refuseReservedPrice($_POST);
+            $productController->refuseReservedPrice($_POST);
 
             ////////////////////////////// Page sell product ////////////////////////
 
@@ -419,11 +412,11 @@ try {
             require('templates/admin_pannel.php');
 
         } elseif ($_GET['action'] == 'sendNewsletter') {
-            PostNewsletter($_POST);
+            $notificationsController->PostNewsletter($_POST);
 
         } elseif ($_GET['action'] === 'deleteProductAdmin') {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
-                deleteProductAdmin($_POST['id_product'], $_SESSION['user']['email'], $_SESSION['user']['username']);
+                $productController->deleteProductAdmin($_POST['id_product'], $_SESSION['user']['email'], $_SESSION['user']['username']);
             }
 
             ////////////////////////////// Cas de base //////////////////////////////        

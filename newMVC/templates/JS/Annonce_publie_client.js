@@ -439,13 +439,16 @@ async function alertConfirmation(message, action, id_product) {
             frm.submit()
             return
         }
-        await fetch(`index.php?action=${action}`, {
+        const response = await fetch(`index.php?action=${action}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: `id_product=${id_product}`
         });
+        // Il faudra gérer les erreurs
+        // const trueResponse = await response.json()
+        // console.log(trueResponse);
         popup.remove();
         location.reload();
     })

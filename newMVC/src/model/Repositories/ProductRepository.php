@@ -71,7 +71,7 @@ class ProductRepository
             $row = $tmp->fetch();
 
             if (!$row) {
-                // throw new Exception("Error retrieving product : product is null");
+                return null; // throw new Exception("Error retrieving product : product is null");
             }
 
             $celebrity = new Celebrity();
@@ -137,6 +137,8 @@ class ProductRepository
         }
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 
     function get_actual_annonces_by_client($id_client)
     {
