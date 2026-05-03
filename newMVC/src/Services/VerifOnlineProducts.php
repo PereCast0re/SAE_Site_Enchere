@@ -29,7 +29,8 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
         {
             $pdo = DatabaseConnection::getConnection();
             $productRepository = new ProductRepository($pdo);
-            $annoncementClient = MailjetRepository::get_all_annoncement_notMailed();
+            $mailjetRepository = new MailjetRepository($pdo);
+            $annoncementClient = $mailjetRepository->get_all_annoncement_notMailed();
             foreach ($annoncementClient as $annonce) {
                 if ($annonce['reserve_price'] != null){continue;}
                 $date_fin = $annonce['end_date'];
@@ -54,7 +55,7 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
                         $params = [$user_email, $user_name, $annonce['title']];
                         routeurMailing('EndAnnoncement2', $params);
                     }
-                    MailjetRepository::closeAnnoncement($annonce['id_product']);
+                    $mailjetRepository->closeAnnoncement($annonce['id_product']);
                 }
             }
         }

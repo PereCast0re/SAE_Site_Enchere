@@ -8,7 +8,6 @@ use Exception;
 
 class UserRepository
 {
-
     private PDO $connection;
 
     public function __construct(PDO $pdo)
@@ -209,7 +208,7 @@ class UserRepository
 
     function getGlobalViews($id_product)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = " SELECT SUM(view_number) as nbGlobalView from productview where id_product = :id ";
         $temp = $pdo->prepare($requete);
         $temp->execute([
@@ -220,7 +219,7 @@ class UserRepository
 
     function getLikes($id_product)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = " SELECT COUNT(*) as nbLike from interest where id_product = :id ";
         $temp = $pdo->prepare($requete);
         $temp->execute([
@@ -231,7 +230,7 @@ class UserRepository
 
     function getImage($id_product)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = " SELECT path_image as url_image, alt from image where id_product = :id";
         $temp = $pdo->prepare($requete);
         $temp->execute([
@@ -242,7 +241,7 @@ class UserRepository
 
     function getAnnoncementEndWithReservedPrice($id_user)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = "SELECT p.*, publi.*, MAX(b.new_price) AS new_price,p.reserve_price
                         FROM product AS p
                         JOIN published AS publi ON publi.id_product = p.id_product
@@ -265,7 +264,7 @@ class UserRepository
 
     function getListFinishedAnnoncements($id_user)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = "SELECT
                     p.*,
                     publi.*,
@@ -290,7 +289,7 @@ class UserRepository
 
     function gethashPassword($email)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = "SELECT password from users where email = :email ";
         $temp = $pdo->prepare($requete);
         $temp->execute([

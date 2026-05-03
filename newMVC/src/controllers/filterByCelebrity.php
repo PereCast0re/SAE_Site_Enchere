@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 
 use App\Lib\DatabaseConnection;
 use App\Model\Repositories\UserRepository;
+use App\Model\Repositories\AdminRepository;
 
 if (!isset($_GET['id'])) {
     echo json_encode([]);
@@ -10,7 +11,9 @@ if (!isset($_GET['id'])) {
 }
 
 $id = (int)$_GET['id'];
-$products = getProductsByCelebrity($id);
+$pdo = DatabaseConnection::getConnection();
+$adminRepository = new AdminRepository($pdo);
+$products = $adminRepository->getProductsByCelebrity($id);
 foreach ($products as &$p) {
     $pdo = DatabaseConnection::getConnection();
     $userRepository = new UserRepository($pdo);

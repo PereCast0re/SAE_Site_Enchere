@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Repositories\MailjetRepository;
+
 date_default_timezone_set('Europe/Paris');
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -96,7 +98,9 @@ try {
             exit;
         } elseif ($_GET['action'] === 'subscribeNewsletter') {
             $user = $_SESSION['user'];
-            subscribeNewsletter($user['email']);
+            $pdo = DatabaseConnection::getConnection();
+            $mailjetRepository = new MailjetRepository($pdo);
+            $mailjetRepository->subscribeNewsletter($user['email']);
             $_SESSION['success'] = "Abonnement confirmé 🎉";
             routeurMailing('subscriptionNewsletter', [$user['email'], $user['name'] . ' ' . $user['firstname']]);
             header('Location: index.php');
@@ -144,7 +148,7 @@ try {
             if (isset($_POST['id_product']) && $_POST['id_product'] >= 0) {
                 UpdateFromProduct($_POST['id_product']);
             } else {
-                throw new Exception("Impossible de modifier ce produit !" . $e->getMessage());
+                throw new Exception("Impossible de modifier ce produit !");
             }
 
 

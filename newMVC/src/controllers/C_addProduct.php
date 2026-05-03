@@ -5,6 +5,7 @@ require_once("src/model/pdo.php");
 use App\Lib\DatabaseConnection;
 use App\Model\Repositories\ProductRepository;
 Use App\Model\Repositories\CelebrityRepository;
+use App\Model\Repositories\UserRepository;
 
 function addNewProduct($user, $input)
 {
@@ -127,7 +128,7 @@ function checkImage($id_product, ProductRepository $productRepository)
             }
         }
         if (isset($_FILES['certificat_autenticite'])) {
-            certificat($id_product, $DirAnnonce);
+            certificat($id_product, $DirAnnonce, $productRepository);
         }
     } catch (Exception $e) {
         echo ("Erreur lors de l'ajout des images : " . $e->getMessage());
@@ -135,7 +136,7 @@ function checkImage($id_product, ProductRepository $productRepository)
     }
 }
 
-function certificat($id_annonce, $DirAnnonce)
+function certificat($id_annonce, $DirAnnonce, ProductRepository $productRepository)
 {
     $tmpFilePath = $_FILES['certificat_autenticite']['tmp_name'];
     if ($tmpFilePath != "") {
@@ -148,7 +149,7 @@ function certificat($id_annonce, $DirAnnonce)
             throw new Exception("Error while moving your certificate file !" . $e->getMessage());
         }
         try {
-            saveCertificatePath($id_annonce, $databasePath);
+            $productRepository->saveCertificatePath($id_annonce, $databasePath);
         } catch (Exception $e) {
             throw new Exception("Error while saving your certificate path in database !" . $e->getMessage());
         }

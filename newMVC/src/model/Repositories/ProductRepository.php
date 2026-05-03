@@ -202,6 +202,26 @@ class ProductRepository
         }
     }
 
+    function saveCertificatePath($id_product, $path_image)
+    {
+        $pdo = $this->connection;
+        try {
+            $requete2 = "INSERT INTO image (id_product, path_image, alt) VALUES (:id_product, :path_image, :name_image)";
+
+            $temp = $pdo->prepare($requete2);
+            $temp->execute([
+                ":id_product" => $id_product,
+                ":path_image" => $path_image,
+                ":name_image" => $id_product . "Certificate.pdf"
+            ]);
+
+            return true;
+
+        } catch (PDOException $e) {
+            die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
+        }
+    }
+
     function deleteProduct($id_product)
     {
         $pdo = $this->connection;
@@ -379,7 +399,7 @@ class ProductRepository
     // Recherche autonome categorie 
     function getCategoryMod($writting)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = "SELECT * from category where name like :writting and statut = 1";
         $tmp = $pdo->prepare($requete);
         $tmp->execute([

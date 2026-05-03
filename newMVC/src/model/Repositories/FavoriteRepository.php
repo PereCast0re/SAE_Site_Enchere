@@ -55,7 +55,7 @@ class FavoriteRepository
 
     function getLikes($id_product)
     {
-        $pdo = connection();
+        $pdo = $this->connection;
         $requete = " SELECT COUNT(*) as nbLike from interest where id_product = :id ";
         $temp = $pdo->prepare($requete);
         $temp->execute([

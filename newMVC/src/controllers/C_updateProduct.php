@@ -2,24 +2,27 @@
 
 use App\Lib\DatabaseConnection;
 use App\Model\Repositories\ProductRepository;
-use App\App\Model\Repositories\CelebrityRepository;
+use App\Model\Repositories\CelebrityRepository;
 
-function UpdateProduct($id_product){
+function UpdateProduct($id_product)
+{
     $pdo = DatabaseConnection::getConnection();
     $productRepository = new ProductRepository($pdo);
     $celebrityRepositiory = new CelebrityRepository($pdo);
 
 }
 
-function UpdateFromProduct($id_product){
+function UpdateFromProduct($id_product)
+{
     $infoProduct = getInfo($id_product);
     $_SESSION['updateProduct'] = $infoProduct;
-    echo '<script>console.log("Update de annonce : -> '.json_encode($infoProduct).'")</script>';
+    echo '<script>console.log("Update de annonce : -> ' . json_encode($infoProduct) . '")</script>';
     header('Location: index.php?action=updateProductPage');
     exit();
 }
 
-function getInfo($id_product){
+function getInfo($id_product)
+{
     $pdo = DatabaseConnection::getConnection();
     $productRepository = new ProductRepository($pdo);
     $celebrityRepository = new CelebrityRepository($pdo);
@@ -30,19 +33,20 @@ function getInfo($id_product){
     $fichiers = $productRepository->getFilesFromAnnoncement($id_product);
     $image = [];
     $certificat = [];
-    foreach($fichiers as $file){
-        if(strpos($file['path_image'], '.pdf') !== false){
+    foreach ($fichiers as $file) {
+        if (strpos($file['path_image'], '.pdf') !== false) {
             $certificat[] = $file;
         } else {
             $image[] = $file;
         }
     }
 
-    return ['product' => $product, 'categorie' => $categorie, 'celebrity' => $celebrity, 'file' => $image, 'certificat' => $certificat ];
+    return ['product' => $product, 'categorie' => $categorie, 'celebrity' => $celebrity, 'file' => $image, 'certificat' => $certificat];
 }
 
-function finalUpdateProduct($user, $input){
-    if(isset($input['id_product']) && $input['id_product'] > 0){
+function finalUpdateProduct($user, $input)
+{
+    if (isset($input['id_product']) && $input['id_product'] > 0) {
         $id_product = $input['id_product'];
     } else {
         throw new Exception("L'identifiant du produit est invalide !");
@@ -71,22 +75,26 @@ function finalUpdateProduct($user, $input){
     }
 
     // Au cas ou nouvelle categorie ou celebrite
-    $statut_admin_Categorie = updateCheckCategorie($category, $productRepository)? 1 : 0;
-    $statut_admin_Celebrite = updateCheckCelebrite($celebrite, $CelebrityRepository)? 1: 0;
+    $statut_admin_Categorie = updateCheckCategorie($category, $productRepository) ? 1 : 0;
+    $statut_admin_Celebrite = updateCheckCelebrite($celebrite, $CelebrityRepository) ? 1 : 0;
 
-    if ($statut_admin_Celebrite == 0 || $statut_admin_Categorie == 0){$statut = 0;} else{ $statut = 1;}
+    if ($statut_admin_Celebrite == 0 || $statut_admin_Categorie == 0) {
+        $statut = 0;
+    } else {
+        $statut = 1;
+    }
 
     $id_product = $productRepository->updateProduct($id, $title, $description, $start_date, $end_date, $reserve_price, $statut);
-    
+
     //Insert categorie
-    if ($statut_admin_Categorie == 0){
+    if ($statut_admin_Categorie == 0) {
         updateInsertCategorie($category, $id, $productRepository, $statut_admin_Categorie);
-    } else{
+    } else {
         $productRepository->updateLinkCategoryProduct($id, $category);
     }
 
     //Insert Celebrity
-    if ($statut_admin_Celebrite == 0){
+    if ($statut_admin_Celebrite == 0) {
         updateInsertCelebrity($celebrite, $id, $CelebrityRepository, $statut_admin_Celebrite);
     } else {
         $CelebrityRepository->updateLinkCelebrityProduct($id, $celebrite);
@@ -97,47 +105,49 @@ function finalUpdateProduct($user, $input){
     } else {
         $user_email = $user['email'];
         $user_name = $user['name'];
-        $param =[$user_email, $user_name] ;
+        $param = [$user_email, $user_name];
         routeurMailing('sendEmailConfirmationUpdate', $param);
         header("Location: index.php?action=user");
     }
 }
 
-function updateCheckCategorie($saisie, $productRepository){
+function updateCheckCategorie($saisie, $productRepository)
+{
     $categories = $productRepository->getCategoryMod($saisie);
-    if($categories){
+    if ($categories) {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-function updateInsertCategorie($categories, $id_product, $productRepository, $statut_admin_Categorie){
-    try{
+function updateInsertCategorie($categories, $id_product, $productRepository, $statut_admin_Categorie)
+{
+    try {
         $productRepository->insertCategorie($categories, $statut_admin_Categorie);
         $productRepository->linkCategoryProduct($id_product, $categories);
     } catch (Exception $e) {
-        die("Error en insertion of your categorie" .$e->getMessage());
+        die("Error en insertion of your categorie" . $e->getMessage());
     }
 }
 
-function updateCheckCelebrite($saisie, $CelebrityRepository){
+function updateCheckCelebrite($saisie, $CelebrityRepository)
+{
     $celebrite = $CelebrityRepository->getCelebrityMod($saisie);
-    if($celebrite){
+    if ($celebrite) {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-function updateInsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite){
-    try{
+function updateInsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite)
+{
+    try {
         $CelebrityRepository->insertCelebrity($celebrite, $statut_admin_Celebrite);
         $CelebrityRepository->linkCelebrityProduct($id_product, $celebrite);
-    } catch (Exception $e){
-        die('Error on insertion of your celebrity' .$e->getMessage());
+    } catch (Exception $e) {
+        die('Error on insertion of your celebrity' . $e->getMessage());
     }
 }
 

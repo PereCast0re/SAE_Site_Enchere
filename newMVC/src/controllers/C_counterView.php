@@ -1,10 +1,15 @@
 <?php
 require_once("src/model/pdo.php");
 
+use App\Lib\DatabaseConnection;
+use App\Model\Repositories\ViewRepository;
+
 function AddNewView($annoncement) {
     // bloque les bots (aidé car aucune connaissance sur ce sujet)
     $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
     $user_ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    $pdo = DatabaseConnection::getConnection();
+    $viewRepository = new ViewRepository($pdo);
     
     if (empty($user_agent) || strlen($user_agent) < 10 || 
         preg_match('/bot|crawl|spider|wget|curl/i', $user_agent)) {
@@ -19,19 +24,19 @@ function AddNewView($annoncement) {
     }
     
     // verification délais de 1min par ip
-    $last_view = getLastViewVerifBot($annoncement->id_product);
+    $last_view = $viewRepository->getLastViewVerifBot($annoncement->id_product);
     if ($last_view && (time() - strtotime($last_view['view_date']) < 60)) {
         return false;
     }
     
     // ajout de la vue
     $now = date('Y-m-d H:i:s');
-    $tabview = getViewProduct($annoncement->id_product, $now);
+    $tabview = $viewRepository->getViewProduct($annoncement->id_product, $now);
     
     if (empty($tabview)) {
-        InsertNewView($annoncement->id_product, $now);
+        $viewRepository->InsertNewView($annoncement->id_product, $now);
     } else {
-        UpdateNumberView($annoncement->id_product);
+        $viewRepository->UpdateNumberView($annoncement->id_product);
     }
     
     // met dans les cookies pour 10 minutes
@@ -39,4 +44,3 @@ function AddNewView($annoncement) {
     
     return true;
 }
-?>
