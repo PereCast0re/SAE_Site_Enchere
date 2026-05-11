@@ -179,10 +179,10 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("feur success");
+            // echo ("feur success");
             echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("feur fail");
+            // echo ("feur fail");
             echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
         }
     }

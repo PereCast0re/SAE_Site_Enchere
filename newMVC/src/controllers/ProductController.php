@@ -122,8 +122,10 @@ class ProductController
             // Crée le dossier avec le nom de l'annonce
             $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_product;
 
+            // if (!is_dir($DirAnnonce)) {
+
             // Vérifie si le dossier existe déjà
-            if (!is_dir($DirAnnonce)) {
+            if (!file_exists($DirAnnonce)) {
                 //creation du dossier
                 mkdir($DirAnnonce, 0777, true);
             }
@@ -448,7 +450,7 @@ class ProductController
     {
         $infoProduct = $this->getInfo($id_product);
         $_SESSION['updateProduct'] = $infoProduct;
-        echo '<script>console.log("Update de annonce : -> ' . json_encode($infoProduct) . '")</script>';
+        // echo '<script>console.log("Update de annonce : -> ' . json_encode($infoProduct) . '")</script>';
         header('Location: index.php?action=updateProductPage');
         exit();
     }

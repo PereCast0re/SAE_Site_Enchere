@@ -18,7 +18,7 @@ class ConnectionController
 
             if ($hasedpassword && password_verify($input['password'], $hasedpassword)) {
                 $info_user = $userRepository->authentication($email, $hasedpassword);
-                var_dump($info_user);
+                // var_dump($info_user);
                 $info_user['DateConnexion'] = date("Y-m-d H:i:s");
 
                 if ($info_user) {
@@ -66,9 +66,15 @@ class ConnectionController
 
     function disconnection()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = array();
         session_destroy();
-        header('location: index?action=connection');
+
+        header('Location: index.php?action=connection');
+        exit();
     }
 
 }
