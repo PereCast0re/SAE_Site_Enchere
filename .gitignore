@@ -3,3 +3,5 @@ newMVC/Annonce/*
 newMVC/vendor
 
 newMVC/.phpdoc
+
+.env
