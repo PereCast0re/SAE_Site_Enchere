@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../controllers/config.php';
 
 use Meilisearch\Client;
 
@@ -10,7 +11,7 @@ if (strlen($q) < 1) {
     exit;
 }
 
-$client = new Client('http://127.0.0.1:7700', 'CLE_TEST_SAE_SITE');
+$client = new Client(MEILI_HOST, MEILI_KEY);
 $index = $client->index('search');
 
 // Recherche

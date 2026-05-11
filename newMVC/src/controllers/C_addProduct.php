@@ -107,7 +107,7 @@ function checkImage($id_product, ProductRepository $productRepository)
         $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_product;
 
         // Vérifie si le dossier existe déjà
-        if (!is_dir($DirAnnonce)) {
+        if (!file_exists($DirAnnonce)) {
             //creation du dossier
             mkdir($DirAnnonce, 0777, true);
         }

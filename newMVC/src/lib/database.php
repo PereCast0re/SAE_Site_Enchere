@@ -5,8 +5,8 @@ class DatabaseConnection
     public static function getConnection(): PDO
     {
         if (self::$pdo === null) {
-            self::$pdo = new PDO('mysql:host=localhost;dbname=auction_site;
-                charset=utf8', 'root', '');
+            self::$pdo = new PDO('mysql:host=db;dbname=auction_site;
+                charset=utf8', 'root', 'root_password');
             /// Permet de lancer une exception si le pdo a une problème (requête SQL, connection, ...)
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             ///

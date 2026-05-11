@@ -1,3 +1,3 @@
 <?php
-define('MEILI_HOST', 'http://127.0.0.1:7700');
-define('MEILI_KEY', 'CLE_TEST_SAE_SITE'); 
+define('MEILI_HOST', getenv('MEILI_HOST') ?: 'http://meilisearch:7700');
+define('MEILI_KEY', getenv('MEILI_MASTER_KEY') ?: 'CLE_TEST_SAE_SITE'); 

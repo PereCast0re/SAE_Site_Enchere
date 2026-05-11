@@ -4,11 +4,10 @@ date_default_timezone_set('Europe/Paris');
 
 function connection()
 {
-    $host = "localhost";
+    $host = 'db';
     $dbname = "auction_site";
     $root = "root";
-    $password = "";
-
+    $password = "root_password";
     try {
         $pdo = new PDO("mysql:host=" . $host . ";dbname=" . $dbname . ";charset=utf8mb4", $root, $password);
         /// gpt
