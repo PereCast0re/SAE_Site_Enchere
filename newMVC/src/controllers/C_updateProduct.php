@@ -13,7 +13,7 @@ function UpdateProduct($id_product){
 function UpdateFromProduct($id_product){
     $infoProduct = getInfo($id_product);
     $_SESSION['updateProduct'] = $infoProduct;
-    echo '<script>console.log("Update de annonce : -> '.json_encode($infoProduct).'")</script>';
+    //echo '<script>console.log("Update de annonce : -> '.json_encode($infoProduct).'")</script>';
     header('Location: index.php?action=updateProductPage');
     exit();
 }

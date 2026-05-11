@@ -1,0 +1,51 @@
+services:
+  app:
+    build: .
+    container_name: mvc_app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - MEILI_HOST=http://meilisearch:7700
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+    depends_on:
+      - db
+      - meilisearch
+
+  db:
+    image: mysql:8.0
+    container_name: mvc_db
+    restart: always
+    command: --lower-case-table-names=1
+    environment:
+      - MYSQL_DATABASE=auction_site
+      - MYSQL_ROOT_PASSWORD=root_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./BDD_constructor.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: mvc_pma
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=root_password
+    depends_on:
+      - db
+
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: meili_service
+    ports:
+      - "7700:7700"
+    env_file: .env
+    volumes:
+      - ./meili_data:/meili_data
+    restart: always
+
+volumes:
+  db_data:

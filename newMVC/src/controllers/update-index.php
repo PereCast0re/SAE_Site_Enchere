@@ -1,9 +1,10 @@
 <?php
 require __DIR__ . '/../../vendor/autoload.php';
+require 'config.php';
 
 use Meilisearch\Client;
 
-$client = new Client('http://127.0.0.1:7700', 'CLE_TEST_SAE_SITE');
+$client = new Client(MEILI_HOST, MEILI_KEY);
 
 try {
     $client->createIndex('search', ['primaryKey' => 'id']);
@@ -11,7 +12,7 @@ try {
 }
 $index = $client->index('search');
 
-$pdo = new PDO("mysql:host=localhost;dbname=auction_site;charset=utf8", "root", "");
+$pdo = DatabaseConnection::getConnection();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $documents = [];
@@ -70,5 +71,3 @@ $index->updateSettings([
     'filterableAttributes' => ['type','category_id','celebrity_id'],
     'displayedAttributes' => ['id','type','title','product_id','category_id','celebrity_id']
 ]);
-
-echo "Index 'search' mis à jour avec succès. Total documents : " . count($documents);

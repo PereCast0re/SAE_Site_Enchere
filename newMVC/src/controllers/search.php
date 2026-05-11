@@ -1,38 +1,36 @@
 <?php
+// On empêche tout affichage parasite
+ob_start(); 
 ini_set('display_errors', 0);
+
 header('Content-Type: application/json');
 
 require __DIR__ . '/../../vendor/autoload.php';
 require 'config.php'; 
-require_once __DIR__ . '/../model/pdo.php';
-require_once __DIR__ . '/../model/product.php';
-require_once __DIR__ . '/../lib/database.php';
+require_once __DIR__ . '/../lib/database.php'; // Contient DatabaseConnection
+require_once __DIR__ . '/../model/product.php';  // Contient ProductRepository et getImage
 
 use Meilisearch\Client;
 
 $q = $_GET['q'] ?? '';
-
-if (strlen($q) < 0) {
-    echo json_encode([]);
-    exit;
-}
+$output = [];
 
 try {
+    // 1. Connexion unique à la BDD
+    $pdo = DatabaseConnection::getConnection();
+    $productRepository = new ProductRepository($pdo);
+
+    // 2. Recherche Meilisearch
     $client = new Client(MEILI_HOST, MEILI_KEY);
     $index = $client->index('search'); 
-
     $results = $index->search($q, ['limit' => 10]);
     $hits = $results->getHits();
-
-    $output = [];
-    $pdo = DatabaseConnection::getConnection();
 
     foreach ($hits as $h) {
         if ($h['type'] === 'product') {
             $pId = (int)$h['product_id'];
 
-            $pdo = DatabaseConnection::getConnection();
-            $productRepository = new ProductRepository($pdo);
+            // Récupération des datas via le repo déjà instancié
             $productData = $productRepository->getProduct($pId);
             $celebrity = $productRepository->getCelebrityNameByAnnoncement($pId);
             
@@ -42,14 +40,17 @@ try {
                 'title'      => $h['title'],
                 'end_date'   => $productData['end_date'] ?? null,
                 'celebrity_name'  => $celebrity['name'] ?? 'N/A',
-                'images'     => getImage($pId) 
+                'images'     => function_exists('getImage') ? getImage($pId) : []
             ];
         }
     }
 
+    // On vide tout texte parasite qui aurait été généré avant
+    ob_end_clean(); 
     echo json_encode($output);
 
 } catch (Exception $e) {
-    error_log($e->getMessage());
-    echo json_encode([]);
+    ob_end_clean();
+    error_log("SEARCH ERROR: " . $e->getMessage());
+    echo json_encode(['error' => $e->getMessage()]);
 }

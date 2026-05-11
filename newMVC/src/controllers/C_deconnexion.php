@@ -1,5 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-session_start();
+$_SESSION = array();
 session_destroy();
-header('location: index?action=connection');
+
+header('Location: index.php?action=connection');
+exit();
