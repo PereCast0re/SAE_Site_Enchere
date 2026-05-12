@@ -123,7 +123,7 @@ $user = $_SESSION['user'];
                 }
             ?>
                 <h3><?= htmlspecialchars($p['title']) ?></h3>
-                <p class="Categorie">Catégorie : <?php $cate = $productRepository->getCategoryFromAnnoncement($p['id_product']); echo($cate && isset($cate['name']) ? htmlspecialchars($cate['name']) : 'Non spécifiée'); ?></p>
+                <p class="Categorie">Catégorie : <?php $cate = $productRepository->getCategoryFromAnnoncement($p['id_product']); echo($cate && isset($cate->name) ? htmlspecialchars($cate->name) : 'Non spécifiée'); ?></p>
                 <p class="Celebrite">Celebrite : <?php $cele = $celebrityRepository->getCelebrityFromAnnoncement($p['id_product']); echo($cele && isset($cele->name) ? htmlspecialchars($cele->name) : 'Non spécifiée'); ?></p>
 
                 <button class="btn_valide" onclick="alertConfirmation('Validez cette annonce ?', 'validateAnnoncement', <?php echo $p['id_product']; ?>)">Valide</button>

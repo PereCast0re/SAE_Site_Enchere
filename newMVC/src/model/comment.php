@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Lib\DatabaseConnection;
-
 class Comment
 {
     public int $id_product;

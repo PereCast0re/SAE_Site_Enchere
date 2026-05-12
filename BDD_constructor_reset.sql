@@ -103,8 +103,6 @@ CREATE TABLE IF NOT EXISTS `celebrity` (
   `id_celebrity` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `url` varchar(200) DEFAULT NULL,
-  `license` varchar(200) DEFAULT NULL,
-  `artist` varchar(200) DEFAULT NULL,
   `statut` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_celebrity`),
   UNIQUE KEY `name` (`name`)
@@ -114,13 +112,13 @@ CREATE TABLE IF NOT EXISTS `celebrity` (
 -- Déchargement des données de la table `celebrity`
 --
 
-INSERT INTO `celebrity` (`id_celebrity`, `name`, `url`, `license`, `artist`, `statut`) VALUES
-(1, 'Michael Schumacher', NULL, NULL, NULL, 1),
-(2, 'Cristiano Ronaldo', NULL, NULL, NULL, 1),
-(3, 'Angelina Jolie', NULL, NULL, NULL, 1),
-(4, 'Banksy', NULL, NULL, NULL, 1),
-(5, 'Daft Punk', NULL, NULL, NULL, 1),
-(6, 'Furious Jumper', NULL, NULL, NULL, 0);
+INSERT INTO `celebrity` (`id_celebrity`, `name`, `url`, `statut`) VALUES
+(1, 'Michael Schumacher', NULL, 1),
+(2, 'Cristiano Ronaldo', NULL, 1),
+(3, 'Angelina Jolie', NULL, 1),
+(4, 'Banksy', NULL, 1),
+(5, 'Daft Punk', NULL, 1),
+(6, 'Furious Jumper', NULL, 0);
 
 -- --------------------------------------------------------
 

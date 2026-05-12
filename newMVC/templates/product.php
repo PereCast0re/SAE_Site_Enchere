@@ -275,6 +275,8 @@ var_dump($u);
 
 <script src="templates/JS/comment.js"></script>
 
+<script>console.log("Test")</script>
+
 <?php $content = ob_get_clean() ?>
 
 <?php require('preset/layout.php'); ?>
