@@ -3,6 +3,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require 'config.php';
 
 use Meilisearch\Client;
+use App\Lib\DatabaseConnection;
 
 $client = new Client(MEILI_HOST, MEILI_KEY);
 

@@ -1,4 +1,5 @@
 <?php
+
 $title = "Page d'achats";
 $style = "templates/style/buy.css";
 
@@ -15,6 +16,12 @@ $style = "templates/style/buy.css";
 
 <main>
     <?php
+    use App\Lib\DatabaseConnection;
+    use App\Model\Repositories\ProductRepository;
+    use App\Model\Repositories\UserRepository;
+
+    $userRepository = new UserRepository($pdo);
+
     $pdo = DatabaseConnection::getConnection();
     $productRepository = new ProductRepository($pdo);
     $products = $productRepository->getAllProduct();
@@ -52,7 +59,7 @@ $style = "templates/style/buy.css";
                         <div class="announce-card">
                             <div class="card-img-container">
                                 <?php
-                                $images = getImage($p['id_product']);
+                                $images = $userRepository->getImage($p['id_product']);
                                 if (!empty($images)) {
                                     echo '<img src="' . htmlspecialchars($images[0]['url_image']) . '" alt="Image annonce">';
                                 }
