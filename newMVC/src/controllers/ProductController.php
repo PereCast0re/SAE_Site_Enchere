@@ -147,7 +147,8 @@ class ProductController
                 $this->certificat($id_product, $DirAnnonce, $productRepository);
             }
         } catch (Exception $e) {
-            echo ("Erreur lors de l'ajout des images : " . $e->getMessage());
+            // Remplacer par une vraie erreur 
+            //echo ("Erreur lors de l'ajout des images : " . $e->getMessage());
             exit();
         }
     }

@@ -2,7 +2,7 @@
 // Ce code et la pour vérifier l'état d'une annonce au niveau de sont temps 
 // Executer dans le header pour garder une constance dans le temps
 // Permet d'envoyer le mail de fin d'annonce 
-
+use App\Controllers\NotificationsController;
 if (!isset($_SESSION['user'])) {
     return;
 }
@@ -48,12 +48,14 @@ if (($date_now - $_SESSION['last_check']) >= $delai) {
                         $buyer_name = $buyer['name'] . ' ' . $buyer['firstname'];
                         $paramsBuyer = [$buyer_email, $buyer_name, $annonce['title'], $last_price['last_price']];
                         $params = [$user_email, $user_name, $annonce['title'], $last_price['last_price'], $buyer_name, $buyer_email];
-                        routeurMailing('EndAnnoncement', $params);
-                        routeurMailing('winner', $paramsBuyer);
+                        $NotificationsController = new NotificationsController();
+                        $NotificationsController->routeurMailing('EndAnnoncement', $params);
+                        $NotificationsController->routeurMailing('winner', $paramsBuyer);
                     }
                     else {
-                        $params = [$user_email, $user_name, $annonce['title']];
-                        routeurMailing('EndAnnoncement2', $params);
+                        $params = [$user_email, $user_name, $annonce['title']]; 
+                        $NotificationsController = new NotificationsController();
+                        $NotificationsController->routeurMailing('EndAnnoncement2', $params);
                     }
                     $mailjetRepository->closeAnnoncement($annonce['id_product']);
                 }
