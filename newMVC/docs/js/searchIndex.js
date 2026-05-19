@@ -1921,6 +1921,96 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Model-Comment.html#property_full_name"
         },                {
+            "fqsen": "\\connection\u0028\u0029",
+            "name": "connection",
+            "summary": "",
+            "url": "namespaces/default.html#function_connection"
+        },                {
+            "fqsen": "\\getGlobalViews\u0028\u0029",
+            "name": "getGlobalViews",
+            "summary": "",
+            "url": "namespaces/default.html#function_getGlobalViews"
+        },                {
+            "fqsen": "\\getLikes\u0028\u0029",
+            "name": "getLikes",
+            "summary": "",
+            "url": "namespaces/default.html#function_getLikes"
+        },                {
+            "fqsen": "\\getImage\u0028\u0029",
+            "name": "getImage",
+            "summary": "",
+            "url": "namespaces/default.html#function_getImage"
+        },                {
+            "fqsen": "\\getAnnoncementEndWithReservedPrice\u0028\u0029",
+            "name": "getAnnoncementEndWithReservedPrice",
+            "summary": "",
+            "url": "namespaces/default.html#function_getAnnoncementEndWithReservedPrice"
+        },                {
+            "fqsen": "\\getListFinishedAnnoncements\u0028\u0029",
+            "name": "getListFinishedAnnoncements",
+            "summary": "",
+            "url": "namespaces/default.html#function_getListFinishedAnnoncements"
+        },                {
+            "fqsen": "\\gethashPassword\u0028\u0029",
+            "name": "gethashPassword",
+            "summary": "",
+            "url": "namespaces/default.html#function_gethashPassword"
+        },                {
+            "fqsen": "\\getViewProduct\u0028\u0029",
+            "name": "getViewProduct",
+            "summary": "",
+            "url": "namespaces/default.html#function_getViewProduct"
+        },                {
+            "fqsen": "\\InsertNewView\u0028\u0029",
+            "name": "InsertNewView",
+            "summary": "",
+            "url": "namespaces/default.html#function_InsertNewView"
+        },                {
+            "fqsen": "\\UpdateNumberView\u0028\u0029",
+            "name": "UpdateNumberView",
+            "summary": "",
+            "url": "namespaces/default.html#function_UpdateNumberView"
+        },                {
+            "fqsen": "\\getLastViewVerifBot\u0028\u0029",
+            "name": "getLastViewVerifBot",
+            "summary": "",
+            "url": "namespaces/default.html#function_getLastViewVerifBot"
+        },                {
+            "fqsen": "\\saveCertificatePath\u0028\u0029",
+            "name": "saveCertificatePath",
+            "summary": "",
+            "url": "namespaces/default.html#function_saveCertificatePath"
+        },                {
+            "fqsen": "\\subscribeNewsletter\u0028\u0029",
+            "name": "subscribeNewsletter",
+            "summary": "",
+            "url": "namespaces/default.html#function_subscribeNewsletter"
+        },                {
+            "fqsen": "\\closeAnnoncement\u0028\u0029",
+            "name": "closeAnnoncement",
+            "summary": "",
+            "url": "namespaces/default.html#function_closeAnnoncement"
+        },                {
+            "fqsen": "\\get_all_annoncement_notMailed\u0028\u0029",
+            "name": "get_all_annoncement_notMailed",
+            "summary": "",
+            "url": "namespaces/default.html#function_get_all_annoncement_notMailed"
+        },                {
+            "fqsen": "\\getAllProduct_admin\u0028\u0029",
+            "name": "getAllProduct_admin",
+            "summary": "",
+            "url": "namespaces/default.html#function_getAllProduct_admin"
+        },                {
+            "fqsen": "\\getProductsByCategory\u0028\u0029",
+            "name": "getProductsByCategory",
+            "summary": "",
+            "url": "namespaces/default.html#function_getProductsByCategory"
+        },                {
+            "fqsen": "\\getProductsByCelebrity\u0028\u0029",
+            "name": "getProductsByCelebrity",
+            "summary": "",
+            "url": "namespaces/default.html#function_getProductsByCelebrity"
+        },                {
             "fqsen": "\\App\\Model\\Product",
             "name": "Product",
             "summary": "",
@@ -2571,60 +2661,60 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#function_verif"
         },                {
-            "fqsen": "\\ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149",
-            "name": "ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149",
+            "fqsen": "\\ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da",
+            "name": "ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da",
             "summary": "",
-            "url": "classes/ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149.html"
+            "url": "classes/ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da.html"
         },                {
-            "fqsen": "\\ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149\u003A\u003AloadClassLoader\u0028\u0029",
+            "fqsen": "\\ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003AloadClassLoader\u0028\u0029",
             "name": "loadClassLoader",
             "summary": "",
-            "url": "classes/ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149.html#method_loadClassLoader"
+            "url": "classes/ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da.html#method_loadClassLoader"
         },                {
-            "fqsen": "\\ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149\u003A\u003AgetLoader\u0028\u0029",
+            "fqsen": "\\ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003AgetLoader\u0028\u0029",
             "name": "getLoader",
             "summary": "",
-            "url": "classes/ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149.html#method_getLoader"
+            "url": "classes/ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da.html#method_getLoader"
         },                {
-            "fqsen": "\\ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024loader",
+            "fqsen": "\\ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024loader",
             "name": "loader",
             "summary": "",
-            "url": "classes/ComposerAutoloaderInitfb421b196cdb485d472a236c5c6e2149.html#property_loader"
+            "url": "classes/ComposerAutoloaderInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_loader"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149",
-            "name": "ComposerStaticInitfb421b196cdb485d472a236c5c6e2149",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da",
+            "name": "ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003AgetInitializer\u0028\u0029",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003AgetInitializer\u0028\u0029",
             "name": "getInitializer",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#method_getInitializer"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#method_getInitializer"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024files",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024files",
             "name": "files",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#property_files"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_files"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024prefixLengthsPsr4",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024prefixLengthsPsr4",
             "name": "prefixLengthsPsr4",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#property_prefixLengthsPsr4"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_prefixLengthsPsr4"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024prefixDirsPsr4",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024prefixDirsPsr4",
             "name": "prefixDirsPsr4",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#property_prefixDirsPsr4"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_prefixDirsPsr4"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024prefixesPsr0",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024prefixesPsr0",
             "name": "prefixesPsr0",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#property_prefixesPsr0"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_prefixesPsr0"
         },                {
-            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitfb421b196cdb485d472a236c5c6e2149\u003A\u003A\u0024classMap",
+            "fqsen": "\\Composer\\Autoload\\ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da\u003A\u003A\u0024classMap",
             "name": "classMap",
             "summary": "",
-            "url": "classes/Composer-Autoload-ComposerStaticInitfb421b196cdb485d472a236c5c6e2149.html#property_classMap"
+            "url": "classes/Composer-Autoload-ComposerStaticInitd9abbeaf78d4025c03f30c89ac1b79da.html#property_classMap"
         },                {
             "fqsen": "\\Composer\\Autoload\\ClassLoader",
             "name": "ClassLoader",

@@ -292,13 +292,13 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="namespaces/default.html#constant_MEILI_HOST">MEILI_HOST</a>
     <span>
-        &nbsp;= &#039;http://127.0.0.1:7700&#039;                            </span>
+        &nbsp;= \getenv(&#039;MEILI_HOST&#039;) ?: &#039;http://meilisearch:7700&#039;                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="namespaces/default.html#constant_MEILI_KEY">MEILI_KEY</a>
     <span>
-        &nbsp;= &#039;CLE_TEST_SAE_SITE&#039;                            </span>
+        &nbsp;= \getenv(&#039;MEILI_MASTER_KEY&#039;) ?: &#039;CLE_TEST_SAE_SITE&#039;                            </span>
 </dt>
 
     </dl>
@@ -335,7 +335,7 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">MEILI_HOST</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;http://127.0.0.1:7700&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">\getenv(&#039;MEILI_HOST&#039;) ?: &#039;http://meilisearch:7700&#039;</span>
 </code>
 
 
@@ -365,7 +365,7 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">MEILI_KEY</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;CLE_TEST_SAE_SITE&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">\getenv(&#039;MEILI_MASTER_KEY&#039;) ?: &#039;CLE_TEST_SAE_SITE&#039;</span>
 </code>
 
 

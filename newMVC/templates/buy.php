@@ -20,6 +20,7 @@ $style = "templates/style/buy.css";
     use App\Model\Repositories\ProductRepository;
     use App\Model\Repositories\UserRepository;
 
+    $pdo = DatabaseConnection::getConnection();
     $userRepository = new UserRepository($pdo);
 
     $pdo = DatabaseConnection::getConnection();
