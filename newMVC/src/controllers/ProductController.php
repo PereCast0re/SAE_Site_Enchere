@@ -124,7 +124,7 @@ class ProductController
             // if (!is_dir($DirAnnonce)) {
 
             // Vérifie si le dossier existe déjà
-            if (!file_exists($DirAnnonce)) {
+            if (!is_dir($DirAnnonce)) {
                 //creation du dossier
                 mkdir($DirAnnonce, 0777, true);
             }
