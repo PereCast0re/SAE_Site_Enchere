@@ -116,8 +116,7 @@ class ProductController
         try {
             //Verification de la présence d'images
             if (!isset($_FILES['image_produit'])) {
-                echo ("Erreur : Aucune image sélectionnée.");
-                exit();
+                throw new Exception("Erreur : Aucune image sélectionnée.");
             }
             // Crée le dossier avec le nom de l'annonce
             $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_product;
@@ -147,9 +146,7 @@ class ProductController
                 $this->certificat($id_product, $DirAnnonce, $productRepository);
             }
         } catch (Exception $e) {
-            // Remplacer par une vraie erreur 
-            //echo ("Erreur lors de l'ajout des images : " . $e->getMessage());
-            exit();
+            throw new Exception("Erreur lors de l'ajout des images : " . $e->getMessage());
         }
     }
 
