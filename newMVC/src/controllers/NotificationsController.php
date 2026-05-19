@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Exception;
 use \Mailjet\Resources;
 use App\Lib\DatabaseConnection;
 use App\Model\Repositories\UserRepository;
@@ -10,7 +11,7 @@ class NotificationsController
 {
 
     private string $apiKey = 'dd1eee2440b4bd6cf36a174f2dacf8c6';
-    private string $apisecret = '5ddabb00a7f6a8e75f50491865966284';
+    private string $apisecret = '62930b94901045c7223e552c1bbf8134';
 
     /// Router for emailing actions 
     /// @param tableau de paramétres : param[0] = email destinataire, param[1] = nom utilisateur destinataire, le reste au besoin s
@@ -111,9 +112,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //erreur_log("Email de confirmation de publication envoyé avec succès à " . $param[0]);
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de confirmation de publication");
         }
     }
 
@@ -145,9 +146,10 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            //echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de confirmation de modification");
         }
     }
 
@@ -179,11 +181,10 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            // echo ("feur success");
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            // echo ("feur fail");
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            //echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email d'inscription à la newsletter");
         }
     }
 
@@ -217,6 +218,7 @@ class NotificationsController
             //  echo ("<script>console.log('Email envoyé avec succès');</script>"); Remplacer par une vraie erreur 
         } else {
             // echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>"); Remplacer par une vraie erreur
+            throw new \Exception("Échec de l'envoi de l'email de confirmation d'inscription");
         }
     }
 
@@ -257,9 +259,9 @@ class NotificationsController
         ];
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -292,9 +294,9 @@ class NotificationsController
         ];
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -323,9 +325,9 @@ class NotificationsController
 
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de newsletter");
         }
     }
 
@@ -364,9 +366,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -404,9 +406,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -440,9 +442,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -480,9 +482,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //  echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -518,9 +520,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -553,9 +555,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -589,9 +591,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -626,9 +628,9 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
@@ -664,9 +666,10 @@ class NotificationsController
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
         if ($response->success()) {
-            echo ("<script>console.log('Email envoyé avec succès');</script>");
+            //echo ("<script>console.log('Email envoyé avec succès');</script>");
+
         } else {
-            echo ("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+            throw new \Exception("Échec de l'envoi de l'email de notification");
         }
     }
 
