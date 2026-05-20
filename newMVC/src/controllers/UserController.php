@@ -11,7 +11,8 @@ class UserController
 {
     private NotificationsController $notificationsController;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->notificationsController = new NotificationsController();
     }
 
@@ -165,4 +166,20 @@ class UserController
         }
     }
 
+    function userProfil()
+    {
+        if (isset($_GET['id']) && $_GET['id'] >= 0) {
+            $pdo = DatabaseConnection::getConnection();
+            $userRepository = new UserRepository($pdo);
+            $score = $userRepository->getRatingUser($_GET['id']);
+            $score == null ? $score = 0 : $score;
+
+            $productRepository = new ProductRepository($pdo);
+            $products = $productRepository->get_Annonce_User($_GET['id']);
+            $u = $userRepository->getUser($_GET['id']);
+            require("templates/userProfil.php");
+        } else {
+            require("templates/user.php");
+        }
+    }
 }

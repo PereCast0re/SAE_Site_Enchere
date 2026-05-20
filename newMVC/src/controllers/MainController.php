@@ -2,6 +2,10 @@
 
 namespace App\Controllers;
 
-class MainController {
-    
+class MainController
+{
+    public function test()
+    {
+        var_dump("Success !");
+    }
 }
