@@ -4,4 +4,6 @@ newMVC/vendor
 
 newMVC/.phpdoc
 
+newMVC/meili_data
+
 .env

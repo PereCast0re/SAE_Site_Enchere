@@ -652,4 +652,26 @@ class ProductRepository
         }
     }
 
+    public function getActiveFeaturedProducts(int $limit = 12): array
+    {
+        // CORRECTION : Utilisation de $this->connection au lieu de $this->pdo
+        $sql = "SELECT p.id_product, p.title, p.end_date, p.start_price, p.status,
+                       MAX(b.new_price) AS last_price,
+                       cel.name AS celebrity_name,
+                       (SELECT img.path_image FROM image img WHERE img.id_product = p.id_product LIMIT 1) AS main_image_url
+                FROM product p
+                LEFT JOIN bid b ON b.id_product = p.id_product
+                LEFT JOIN concerned con ON con.id_product = p.id_product
+                LEFT JOIN celebrity cel ON cel.id_celebrity = con.id_celebrity
+                WHERE p.end_date > NOW() AND p.status = 1
+                GROUP BY p.id_product, cel.name
+                ORDER BY p.end_date ASC
+                LIMIT :limit";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
 }
