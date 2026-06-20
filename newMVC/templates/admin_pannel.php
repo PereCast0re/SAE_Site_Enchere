@@ -126,8 +126,8 @@ $user = $_SESSION['user'];
                 <p class="Categorie">Catégorie : <?php $cate = $productRepository->getCategoryFromAnnoncement($p['id_product']); echo($cate && isset($cate->name) ? htmlspecialchars($cate->name) : 'Non spécifiée'); ?></p>
                 <p class="Celebrite">Celebrite : <?php $cele = $celebrityRepository->getCelebrityFromAnnoncement($p['id_product']); echo($cele && isset($cele->name) ? htmlspecialchars($cele->name) : 'Non spécifiée'); ?></p>
 
-                <button class="btn_valide" onclick="alertConfirmation('Validez cette annonce ?', 'validateAnnoncement', <?php echo $p['id_product']; ?>)">Valide</button>
-                <button class="btn_supp" onclick="alertConfirmation('Supprimer cette annonce ?', 'deleteProductAdmin', <?php echo $p['id_product']; ?>)">Supprimer</button>
+                <button id="btn_valide_admin" class="btn_valide" onclick="alertConfirmation('Validez cette annonce ?', 'validateAnnoncement', <?php echo $p['id_product']; ?>)">Valide</button>
+                <button id="btn_supprime_admin" class="btn_supp" onclick="alertConfirmation('Supprimer cette annonce ?', 'deleteProductAdmin', <?php echo $p['id_product']; ?>)">Supprimer</button>
             </div>
             <?php $count_displayed++; ?>
 
@@ -143,8 +143,8 @@ $user = $_SESSION['user'];
     </div>
   </div>
 </main>
-<script src="templates/JS/Annonce_publie_client.js" defer></script>
-<script src="templates/JS/Newsletter.js" defer></script>
+<script src="templates/JS/Admin/alert-confirmation-admin.js" defer></script>
+<script src="templates/JS/newsletter.js" defer></script>
 <?php include('preset/footer.php'); ?>
 
 <?php $content = ob_get_clean(); ?>
