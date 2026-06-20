@@ -13,8 +13,17 @@ $style = "templates/Style/SellProduct.css";
 $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
 ?>
 
+<?php
+if (empty($infoProduct)) {
+    $_SESSION['error'] = "Aucune annonce sélectionnée pour modification.";
+    header('Location: index.php');
+    exit();
+}
+
+?>
+
 <?php ob_start(); ?>
-<!-- <?php include('preset/header.php'); ?> -->
+<?php include('preset/second-header.php'); ?>
 
     <h1 class="titleVendre">Modification de votre produit</h1>
     <form class="form_vente_produit" action="index.php?action=finalUpdateProduct" method="POST" enctype="multipart/form-data">
@@ -46,7 +55,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
                 </div>
                 <div id="celebrite_produit" class="celebrite_produit">
                     <h4>Célébrité :</h4>
-                    <input type="text" name="inputcelebrity" id="inputcelebrity" placeholder="rechercher votre Célébrite" value="<?php echo($infoProduct['celebrity']['name']); ?>">
+                    <input type="text" name="inputcelebrity" id="inputcelebrity" placeholder="rechercher votre Célébrite" value="<?php echo($infoProduct['celebrity']->name); ?>">
                     <div id="celebrity_results">
                         
                     </div>
@@ -110,6 +119,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
         <input type="hidden" name="id_product" value="<?php echo($infoProduct['product'][0]['id_product']); ?>">
     <button type="submit" class="submit_new_produitenvente" name="action" value="submit_new_produitenvente">Modifier</button>
 </form>
+
 
 
 <?php include('preset/footer.php'); ?>
