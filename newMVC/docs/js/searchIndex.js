@@ -1546,6 +1546,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controllers-MainController.html"
         },                {
+            "fqsen": "\\App\\Controllers\\MainController\u003A\u003Atest\u0028\u0029",
+            "name": "test",
+            "summary": "",
+            "url": "classes/App-Controllers-MainController.html#method_test"
+        },                {
             "fqsen": "\\App\\Controllers\\NotificationsController",
             "name": "NotificationsController",
             "summary": "",
@@ -1820,6 +1825,11 @@ Search.appendIndex(
             "name": "updateName",
             "summary": "",
             "url": "classes/App-Controllers-UserController.html#method_updateName"
+        },                {
+            "fqsen": "\\App\\Controllers\\UserController\u003A\u003AuserProfil\u0028\u0029",
+            "name": "userProfil",
+            "summary": "",
+            "url": "classes/App-Controllers-UserController.html#method_userProfil"
         },                {
             "fqsen": "\\App\\Controllers\\UserController\u003A\u003A\u0024notificationsController",
             "name": "notificationsController",
@@ -2446,6 +2456,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Model-Repositories-ProductRepository.html#method_get_Specific_Annonce_User"
         },                {
+            "fqsen": "\\App\\Model\\Repositories\\ProductRepository\u003A\u003AgetActiveFeaturedProducts\u0028\u0029",
+            "name": "getActiveFeaturedProducts",
+            "summary": "",
+            "url": "classes/App-Model-Repositories-ProductRepository.html#method_getActiveFeaturedProducts"
+        },                {
             "fqsen": "\\App\\Model\\Repositories\\ProductRepository\u003A\u003A\u0024connection",
             "name": "connection",
             "summary": "",
@@ -2655,6 +2670,111 @@ Search.appendIndex(
             "name": "fullname",
             "summary": "",
             "url": "classes/App-Model-User.html#property_fullname"
+        },                {
+            "fqsen": "\\App\\Router\\Route",
+            "name": "Route",
+            "summary": "",
+            "url": "classes/App-Router-Route.html"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003Awidth\u0028\u0029",
+            "name": "width",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method_width"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003Amatch\u0028\u0029",
+            "name": "match",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method_match"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003AparamMatch\u0028\u0029",
+            "name": "paramMatch",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method_paramMatch"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003Acall\u0028\u0029",
+            "name": "call",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method_call"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#method_getUrl"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003A\u0024path",
+            "name": "path",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#property_path"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003A\u0024callable",
+            "name": "callable",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#property_callable"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003A\u0024matches",
+            "name": "matches",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#property_matches"
+        },                {
+            "fqsen": "\\App\\Router\\Route\u003A\u003A\u0024params",
+            "name": "params",
+            "summary": "",
+            "url": "classes/App-Router-Route.html#property_params"
+        },                {
+            "fqsen": "\\App\\Router\\Router",
+            "name": "Router",
+            "summary": "",
+            "url": "classes/App-Router-Router.html"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#method_get"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003Apost\u0028\u0029",
+            "name": "post",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#method_post"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#method_add"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003Arun\u0028\u0029",
+            "name": "run",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#method_run"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003A\u0024url",
+            "name": "url",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#property_url"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003A\u0024routes",
+            "name": "routes",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#property_routes"
+        },                {
+            "fqsen": "\\App\\Router\\Router\u003A\u003A\u0024namedRoutes",
+            "name": "namedRoutes",
+            "summary": "",
+            "url": "classes/App-Router-Router.html#property_namedRoutes"
+        },                {
+            "fqsen": "\\App\\Router\\RouterException",
+            "name": "RouterException",
+            "summary": "",
+            "url": "classes/App-Router-RouterException.html"
         },                {
             "fqsen": "\\verif\u0028\u0029",
             "name": "verif",
@@ -22950,6 +23070,11 @@ Search.appendIndex(
             "name": "Repositories",
             "summary": "",
             "url": "namespaces/app-model-repositories.html"
+        },                {
+            "fqsen": "\\App\\Router",
+            "name": "Router",
+            "summary": "",
+            "url": "namespaces/app-router.html"
         },                {
             "fqsen": "\\Composer\\Autoload",
             "name": "Autoload",
