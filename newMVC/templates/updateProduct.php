@@ -114,7 +114,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 
 <?php include('preset/footer.php'); ?>
 
-<script src="templates/JS/vente_produit.js" defer></script>
+<script type="module" src="templates/JS/VenteProduit/event-listener.js"></script>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('preset/layout.php'); ?>

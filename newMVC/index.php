@@ -256,6 +256,24 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer les vues globales.");
             }
 
+        // Get all annoncement of user
+        } elseif ($_GET['action'] === 'getAllAnnoncementUser') {
+            if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
+                $id_user = $_GET['id_user'];
+                $pdo = DatabaseConnection::getConnection();
+                $productRepository = new ProductRepository($pdo);
+                $annoncements = $productRepository->get_Annonce_User($id_user);
+                if ($annoncements !== false) {
+                    header('Content-Type: application/json');
+                    echo json_encode($annoncements);
+                    exit();
+                } else {
+                    throw new Exception("Impossible de récupérer les annonces de cet utilisateur.");
+                }
+            } else {
+                throw new Exception("ID d'utilisateur invalide pour récupérer les annonces.");
+            }
+        
             // Likes
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
@@ -314,7 +332,7 @@ try {
             }
 
             // List of finish annoncement
-        } elseif ($_GET['action'] == 'LisAnnoncementEnd') {
+        } elseif ($_GET['action'] == 'ListAnnoncementEnd') {
             if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
                 $pdo = DatabaseConnection::getConnection();
