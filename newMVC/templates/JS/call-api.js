@@ -140,7 +140,7 @@ export async function getSaisiCategories(input) {
 
 /// Appel API pour récupéré la liste des commentaire d'une annonce 
 /// param -> id du produit
-function getComments(id_product) {
+export function getComments(id_product) {
     return fetch(`index.php?action=getComments&id_product=${id_product}`)
         .then((response) => response.json());
 }

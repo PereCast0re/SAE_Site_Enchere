@@ -1,4 +1,4 @@
-import { getComments } from "../call-api.js";
+import { getComments } from "./call-api.js";
 
 const template = document.querySelector("#comment-template");
 const commentsListEl = document.querySelector("#comments");

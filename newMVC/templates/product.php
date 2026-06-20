@@ -20,12 +20,11 @@ $script = "templates/JS/favorite.js";
 // var_dump($c);
 // var_dump($u);
 
-
 ?>
 
 <input id="currentPrice" type="hidden" name="currentPrice" value=<?= $current_price ?>>
 <input id="idProduct" type="hidden" name="idProduct" value=<?= $p->id_product ?>>
-<input id="userID" type="hidden" name="userID" value=<?= $p->id_product ?>>
+<input id="userID" type="hidden" name="userID" value=<?= $u->id_user ?>>
 <input id="userID" type="hidden" name="userID" value=<?= isset($_SESSION['user']["id_user"]) ? $_SESSION['user']["id_user"] : "" ?>>
 
 <div id="popup">
@@ -231,7 +230,7 @@ $script = "templates/JS/favorite.js";
     });
 </script>
 
-<script src="templates/JS/OuverturePopUp.js"></script>
+<script src="templates/JS/ouverture-PopUp.js"></script>
 
 <script src="templates/JS/timer.js"></script>
 <script>
@@ -273,7 +272,7 @@ $script = "templates/JS/favorite.js";
 
 <script src="https://kit.fontawesome.com/645d3e5fd2.js" crossorigin="anonymous"></script>
 
-<script src="templates/JS/comment.js"></script>
+<script type="module" src="templates/JS/comment.js"></script>
 
 <script>console.log("Test")</script>
 
