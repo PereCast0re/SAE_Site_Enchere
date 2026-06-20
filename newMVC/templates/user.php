@@ -95,7 +95,7 @@ $user = $_SESSION['user'];
 
 </div>
 
-<script src="templates/JS/OuverturePopUp.js"></script>
+<script src="templates/JS/ouverture-PopUp.js"></script>
 <script src="templates/JS/timer.js"></script>
 <script type="module" src="templates/JS/PageUser/controller-call.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

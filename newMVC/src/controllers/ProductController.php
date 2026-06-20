@@ -121,7 +121,6 @@ class ProductController
             // Crée le dossier avec le nom de l'annonce
             $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_product;
 
-            // if (!is_dir($DirAnnonce)) {
 
             // Vérifie si le dossier existe déjà
             if (!is_dir($DirAnnonce)) {
@@ -133,10 +132,10 @@ class ProductController
             for ($i = 0; $i < count($_FILES["image_produit"]['name']); $i++) {
                 $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
                 if ($tmpFilePath != "") {
-                    $newFilePath = $DirAnnonce . "/" . $id_product . "_" . $i . ".jpg";
+                    $newFilePath = $DirAnnonce . "/" . $id_product . "_" . $i . ".avif";
                     if (move_uploaded_file($tmpFilePath, $newFilePath)) {
                         //Ajouter dans un tableau qui sera inséré en base de données
-                        $name_image = $id_product . "_" . $i . ".jpg";
+                        $name_image = $id_product . "_" . $i . ".avif";
                         $newFilePath = "Annonce/" . $id_product . "/" . $name_image;
                         $productRepository->addImage($id_product, $newFilePath, $name_image);
                     }
