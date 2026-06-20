@@ -1,11 +1,9 @@
+import { getComments } from "../call-api.js";
+
 const template = document.querySelector("#comment-template");
 const commentsListEl = document.querySelector("#comments");
 const commentCounter = document.querySelector("#comments-counter");
 
-function getComments(id_product) {
-    return fetch(`index.php?action=getComments&id_product=${id_product}`)
-        .then((response) => response.json());
-}
 
 async function addComment(comment, prepend = false) {
     const commentEl = document.importNode(template.content, true);

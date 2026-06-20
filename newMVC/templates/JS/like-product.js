@@ -1,3 +1,8 @@
+import { getAnnonceLike } from "../call-api.js";
+import { getPrice } from "../call-api.js";
+import { getImage } from "../call-api.js";
+import { getListAnnoncementLike } from "../call-api.js";
+
 
 async function print_like_annoncement() {
     const div = document.getElementById('like_product')
@@ -67,37 +72,6 @@ function checkEndPrice(lastPrice) {
     else {
         return "Non vendu";
     }
-}
-
-async function getImage(id_product) {
-    const response = await fetch(`index.php?action=getImage&id_product=${id_product}`)
-    const imagejson = await response.json();
-    console.log(imagejson)
-    return imagejson
-}
-
-async function getListAnnoncementLike(id_user) {
-    const reponse = await fetch(`index.php?action=LisAnnoncementLike&id_user=${id_user}`)
-    const annonce_json = await reponse.json();
-    console.log('getListAnnoncementLike')
-    console.log(annonce_json)
-    return annonce_json
-}
-
-async function getAnnonceLike(id_product) {
-    const reponse = await fetch(`index.php?action=AnnoncementLike&id_product=${id_product}`)
-    const annonce_json = await reponse.json();
-    console.log('getListAnnoncementLike')
-    console.log(annonce_json)
-    return annonce_json
-}
-
-async function getPrice(id_product){
-    // Appel pour fetch et récupéré le prix actuel
-    const price = await fetch(`index.php?action=getLastPrice&id_product=${id_product}`);
-    const price_json = await price.json();
-    console.log(price_json);
-    return price_json;
 }
 
 addEventListener('DOMContentLoaded', print_like_annoncement);

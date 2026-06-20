@@ -1,9 +1,8 @@
+import { getListAnnoncementEnd, getImage } from "./call-api.js";
 
 //Button republish
 //style="display: ${annonce.last_price > 0 ? "none" : "block"};"
-async function print_historique_annoncement() {
-    const div = document.getElementById('historique_product')
-    const id_user = document.getElementById('id_user').value
+export async function print_historique_annoncement(id_user, divToPrint) {
     let html = ""
     
     let annoncements = await getListAnnoncementEnd(id_user);
@@ -16,7 +15,7 @@ async function print_historique_annoncement() {
                         </div>`
         
         for (const annonce of annoncements) {
-
+            console.log("id_product : ", annonce.id_product) // ajoute ça
             let image_url = await getImage(annonce.id_product);
             let firstImg = (
                 Array.isArray(image_url) &&
@@ -46,10 +45,10 @@ async function print_historique_annoncement() {
                 </div>
             `
         }
-        div.innerHTML = html
+        divToPrint.innerHTML = html
     }
     else {
-        div.style.display = "none"
+        divToPrint.style.display = "none"
         console.log('Aucune annonce dans votre historique !')
     }
 }
@@ -63,20 +62,3 @@ function checkEndPrice(lastPrice) {
         return "Non vendu";
     }
 }
-
-async function getImage(id_product) {
-    const response = await fetch(`index.php?action=getImage&id_product=${id_product}`)
-    const imagejson = await response.json();
-    console.log(imagejson)
-    return imagejson
-}
-
-async function getListAnnoncementEnd(id_user) {
-    const reponse = await fetch(`index.php?action=LisAnnoncementEnd&id_user=${id_user}`)
-    const annonce_json = await reponse.json();
-    console.log('getListAnnoncementEnd')
-    console.log(annonce_json)
-    return annonce_json
-}
-
-addEventListener('DOMContentLoaded', print_historique_annoncement);

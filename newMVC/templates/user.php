@@ -71,11 +71,6 @@ $user = $_SESSION['user'];
         <div class="wrapper-annonces">
             <div class="barre-noire"></div>
             <div class="section_annonce_publier annonce_list_container">
-                <?php 
-                use App\Controllers\UserController;
-
-                $userController = new UserController();
-                $annoncements = $userController->get_all_annoncement($user["id_user"]) ?>
                 <input type="hidden" id="number_annoncement" name="action">
                 <input type="hidden" id="values_annoncements" value='<?php echo htmlspecialchars(json_encode($annoncements, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, "UTF-8"); ?>'>
                 <div class="stat_annonce"></div>
@@ -102,7 +97,7 @@ $user = $_SESSION['user'];
 
 <script src="templates/JS/OuverturePopUp.js"></script>
 <script src="templates/JS/timer.js"></script>
-<script src="templates/JS/Annonce_publie_client.js"></script>
+<script type="module" src="templates/JS/PageUser/controller-call.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <?php include('preset/footer.php'); ?>

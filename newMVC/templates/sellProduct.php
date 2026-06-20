@@ -21,31 +21,31 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
         <div class="containeur_top">
             <div class="information_produit">
                 <div class="nom_annonce_vente">
-                    <h4>Nom de votre annonce</h4>
-                    <input type="text" name="nom_annonce_vente" placeholder="Nom de votre annonce" required>
+                    <label for="nom_annonce_vente">Nom de votre annonce</label>
+                    <input type="text" name="nom_annonce_vente" id="nom_annonce_vente" placeholder="Nom de votre annonce" required>
                 </div>
                 <div class="produit_categorie">
-                    <h4>Catégorie :</h4>
+                    <label for="lst_categorie_vente">Catégorie :</label>
                     <input type="text" name="lst_categorie_vente" id="lst_categorie_vente" placeholder="Ecrivez vôtre catégorie" required/>
                     <div id="categorie_results">
                         <!-- Ici affichage d'un select -->
                     </div>
                 </div>
                 <div class="prix_reserve">
-                    <h4>Réserve</h4>
-                    <input type="checkbox" id="prix_reserve_checkbox" onclick="afficherInputPrixReserve()">
+                    <label for="prix_reserve_checkbox">Réserve</label>
+                    <input type="checkbox" id="prix_reserve_checkbox">
                     <div id="input_prix_reserve"></div>
                 </div>
                 <div class="date_debut">
-                    <h4>Date de début :</h4>
-                    <input type="date" name="date_debut" required>
+                    <label for="date_debut">Date de début :</label>
+                    <input type="date" id="date_debut" name="date_debut" required>
                 </div>
                 <div class="date_fin">
-                    <h4>Date de fin :</h4>
-                    <input type="date" name="date_fin" required>
+                    <label for="date_fin">Date de fin :</label>
+                    <input type="date" id="date_fin" name="date_fin" required>
                 </div>
                 <div id="celebrite_produit" class="celebrite_produit">
-                    <h4>Célébrité :</h4>
+                    <label for="inputcelebrity">Célébrité :</label>
                     <input type="text" name="inputcelebrity" id="inputcelebrity" placeholder="rechercher votre Célébrite">
                     <div id="celebrity_results">
                         
@@ -88,12 +88,12 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
     </div>
 
         <div class="certificat_authenticite_vente">
-            <h4>Certificat d'authenticité format PDF</h4>
+            <label for="certificat_authenticite">Certificat d'authenticité format PDF</label>
             <input type="file" name="certificat_autenticite" id="certificat_authenticite" accept="application/pdf,image/*"  />
             <embed src="" width="800" height="500" type="application/pdf" style="margin-left: 20%; margin-right: 20%; display: none;" id="pdf_preview">
         </div>
         <div class="description_produit_vente">
-            <h4>Faites-nous une description de votre produit</h4>
+            <label for="description_produit">Faites-nous une description de votre produit</label>
             <textarea placeholder="Votre description ici" name="description_produit" id="description_produit" required></textarea>
         </div>
 
@@ -103,7 +103,7 @@ $optional_style1 = "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
 
 <?php include('preset/footer.php'); ?>
 
-<script src="templates/JS/vente_produit.js"></script>
+<script type="module" src="templates/JS/VenteProduit/event-listener.js"></script>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('preset/layout.php'); ?>
