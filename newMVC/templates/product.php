@@ -16,9 +16,9 @@ $script = "templates/JS/favorite.js";
 
 <?php
 
-var_dump($p);
-var_dump($c);
-var_dump($u);
+// var_dump($p);
+// var_dump($c);
+// var_dump($u);
 
 
 ?>
