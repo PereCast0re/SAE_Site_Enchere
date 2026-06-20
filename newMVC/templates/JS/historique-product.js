@@ -1,7 +1,6 @@
-import { getListAnnoncementEnd, getImage } from "./call-api.js";
+import { getListAnnoncementEnd } from "./call-api.js";
+import {getImage} from "./call-api.js";
 
-//Button republish
-//style="display: ${annonce.last_price > 0 ? "none" : "block"};"
 export async function print_historique_annoncement(id_user, divToPrint) {
     let html = ""
     
@@ -10,11 +9,12 @@ export async function print_historique_annoncement(id_user, divToPrint) {
     if (annoncements) 
     {
         html += `<div class="pending_section_header">
-                        <p>Vos annonces terminées</p>
+                    <H1>Vos annonces terminées</H1>
                         <div class="separator-line"></div>
                         </div>`
         
         for (const annonce of annoncements) {
+
             console.log("id_product : ", annonce.id_product) // ajoute ça
             let image_url = await getImage(annonce.id_product);
             let firstImg = (
@@ -26,7 +26,7 @@ export async function print_historique_annoncement(id_user, divToPrint) {
             html += `
                 <div class="annonce_wrapper">
                     <div class="annonce_card history_card">
-                        <img src="${firstImg}" class="annonce_img" />
+                        <img src="${firstImg}" class="annonce_img" loading="lazy" />
                         
                         <div class="annonce_details">
                             <h3 class="annonce_title">${annonce.title}</h3>
@@ -62,3 +62,9 @@ function checkEndPrice(lastPrice) {
         return "Non vendu";
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const id = document.getElementById("id_user");
+    const div = document.getElementById("historique_product");
+    print_historique_annoncement(id.value, div)
+})

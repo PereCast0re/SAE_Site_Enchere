@@ -8,36 +8,41 @@ import { startCountdown } from "./timer-annonce.js";
 import { PrintStatAnnonce } from "./statistique.js";
 
 export async function print_tab_annoncements(annoncements, div) {
+    const start = performance.now();
     console.log("print_tab_annoncements start")
     let html = ""
     for (const annonce of annoncements) {
         // on change d'incrément si une annonce est expirée et si elle doit être verifier
         if (new Date(annonce.end_date) < new Date()) { continue }
         if (annonce.status == 0) { continue }
-        let price = await getPrice(annonce.id_product);
+
+        const [price, like, image_url, celebrity, category] = await Promise.all([
+            getPrice(annonce.id_product),
+            getLikes(annonce.id_product),
+            getImage(annonce.id_product),
+            getCelebrity(annonce.id_product),
+            getCategory(annonce.id_product)
+        ]);
+
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
 
-        let like = await getLikes(annonce.id_product);
         if (like.nbLike === null) {
             like.nbLike = 0;
         }
-        let image_url = await getImage(annonce.id_product);
         let firstImg = (
             Array.isArray(image_url) &&
             image_url.length > 0 &&
             image_url[0].url_image
         ) ? image_url[0].url_image : "assets/default.png";
 
-        let celebrity = await getCelebrity(annonce.id_product);
         if (celebrity != null) {
             if (celebrity.url == null) {
                 celebrity.url = 'templates/Images/profil-icon.png'
             }
         }
 
-        let category = await getCategory(annonce.id_product);
         if (!category) { 
             category = { name: 'Non défini' }; 
         }
@@ -50,7 +55,7 @@ export async function print_tab_annoncements(annoncements, div) {
             `
             <div class="annonce_wrapper">
                 <div class="annonce_card">
-                    <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" />
+                    <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" loading="lazy" />
                     <div class="annonce_info_top">
                         <span class="categorie_annonce">${category.name}</span>
                         <span class="ville_annonce">${city}</span>
@@ -66,7 +71,7 @@ export async function print_tab_annoncements(annoncements, div) {
                         </div>
                         <button type='button' class='btn_moreoption'data-id="${annonce.id_product}">...</button>
                         <div class="user_info">
-                            <img class="celebrity_img" src="${celebrity.url}" alt="${celebrity.name}" />
+                            <img class="celebrity_img" src="${celebrity.url}" alt="${celebrity.name}" loading="lazy" />
                             <span>Celebrite : ${celebrity.name}</span>
                             <span>Like(s): ${like.nbLike}</span>
                             <button type='button' class='stat_button'>Voir les statistiques</button>
@@ -94,10 +99,16 @@ export async function print_tab_annoncements(annoncements, div) {
         });
     });
 
+    
     document.querySelectorAll('.btn_moreoption').forEach((button) => {
         button.addEventListener('click', () => {
             const id = button.getAttribute('data-id');
             ShowPopUpOption(id);
         });
     });
+    
+    console.log(
+  `Temps : ${performance.now() - start} ms`
+);
 }
+

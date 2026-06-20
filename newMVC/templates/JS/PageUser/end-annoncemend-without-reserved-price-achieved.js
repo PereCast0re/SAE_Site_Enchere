@@ -26,7 +26,7 @@ export async function print_end_annoncement_reserved($id_user, div) {
             html += `
                 <div class="annonce_wrapper">
                     <div class="annonce_card">
-                        <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" />
+                        <img class="annonce_img" src="${firstImg}" alt="${annonce.title}" loading="lazy" />
                         <div class="annonce_details">
                             <h3 class="annonce_title">${annonce.title}</h3>
                             <div class="annonce_meta">
