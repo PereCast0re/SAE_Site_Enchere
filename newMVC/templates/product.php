@@ -95,7 +95,7 @@ $script = "templates/JS/favorite.js";
                 </h1>
                 <p>Catégorie</p>
                 <ul>
-                    <li><?= $category["name"] ?></li>
+                    <li><?= $category->name ?></li>
                     <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($u->city)) ?>
                     </li>
                 </ul>

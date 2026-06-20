@@ -22,6 +22,7 @@ use App\Model\Repositories\CelebrityRepository;
 use App\Model\Repositories\MailjetRepository;
 use App\Model\ProductDetails;
 
+use App\Router\Router;
 
 try {
     $bidController = new BidController();
@@ -32,6 +33,25 @@ try {
     $commentController = new CommentController();
     $favoriteController = new FavoriteController();
 
+    // Router retrovué nativement sur Laravel et Symfony
+    // $router = new Router($_GET['url']);
+
+    // $router->get('/', function () {
+    //     echo ("Home");
+    // });
+
+    // $router->get('/posts', function () {
+    //     echo ("Test 1");
+    // });
+
+    // Mettre code spécifique avant les autres génériques car sinon peut être non détecté
+    // $router->get('/posts/:id-:slug', function ($id, $slug) use ($router) {
+    //     echo $router->url('posts.show', ['id' => 1, 'slug' => 'salut-les-gens']);
+    // }, 'posts.show')->width('id', '[0-9]+')->width('slug', '[a-z\-0-9]+');
+
+    // $router->get('/posts/:id', "Main#test");
+
+    // $router->run();
 
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         ////////////////////////////// Pages //////////////////////////////
@@ -45,20 +65,10 @@ try {
             $_SESSION['show_register_modal'] = true;
             header('Location: index.php');
             exit;
-        } elseif ($_GET['action'] === 'user') {
-            if (isset($_GET['id']) && $_GET['id'] >= 0) {
-                $pdo = DatabaseConnection::getConnection();
-                $userRepository = new UserRepository($pdo);
-                $score = $userRepository->getRatingUser($_GET['id']);
-                $score == null ? $score = 0 : $score;
 
-                $productRepository = new ProductRepository($pdo);
-                $products = $productRepository->get_Annonce_User($_GET['id']);
-                $u = $userRepository->getUser($_GET['id']);
-                require("templates/userProfil.php");
-            } else {
-                require("templates/user.php");
-            }
+
+        } elseif ($_GET['action'] === 'user') {
+            $userController->userProfil();
         } elseif ($_GET['action'] === 'sell') {
             require("templates/sellProduct.php");
         } elseif ($_GET['action'] === 'buy') {
@@ -128,7 +138,7 @@ try {
 
                 $name = $_SESSION['user']['name'] . $_SESSION['user']['firstname'];
                 $product = $productRepository->getProduct($id_product);
-                $title = $product['title'];
+                $title = $product->product->title;
                 $param = [$_SESSION['user']['email'], $name, $title];
                 $notificationsController->routeurMailing('acceptProductUser', $param);
                 //header("Location: admin_pannel.php");
@@ -433,5 +443,5 @@ try {
 
     //$errorMessage = '<i class="fa-solid fa-bug"></i> <span>Erreur 404 :</span> Page non trouvé !';
 
-    require('templates/preset/error.php');
+    // require('templates/preset/error.php');
 }
