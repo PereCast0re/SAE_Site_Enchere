@@ -38,7 +38,7 @@ services:
       - db
 
   meilisearch:
-    image: getmeili/meilisearch:latest
+    image: getmeili/meilisearch:v1.42.1
     container_name: meili_service
     ports:
       - "7700:7700"
