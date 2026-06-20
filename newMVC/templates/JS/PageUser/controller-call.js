@@ -1,6 +1,6 @@
 import { print_tab_annoncements } from "./print-annoncements.js";
 import { print_end_annoncement_reserved } from "./end-annoncemend-without-reserved-price-achieved.js";
-import { print_historique_annoncement } from "../Historique_product.js";
+import { print_historique_annoncement } from "../historique-product.js";
 import { print_unverifed_product } from "./unverified-product.js";
 import { checkBtnHistorique } from "./check-historique.js";
 import { getListAnnoncementEnd } from "../call-api.js";
