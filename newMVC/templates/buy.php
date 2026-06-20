@@ -20,6 +20,12 @@ $style = "templates/style/buy.css";
         <button id="searchButton">Rechercher</button>
         <div id="suggestions" style="position: absolute; top: 100%; left: 0; width: 100%; max-height: 300px; overflow-y: auto; display: none; z-index: 10;"></div>
     </div>
+    <?php
+  $pdo = DatabaseConnection::getConnection();
+  $productRepository = new ProductRepository($pdo);
+  
+  $products = $productRepository->getActiveFeaturedProducts(50);
+  ?>
 
     <div class="content">
         <div class="annonces">

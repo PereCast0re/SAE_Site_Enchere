@@ -71,7 +71,7 @@ function routeurMailing($action, $param){
             EmailPendingAdmin($param);
             break;
         default:
-            echo("Action emailing non reconnue");
+            //echo("Action emailing non reconnue");
             break;
     }
 }
@@ -513,9 +513,9 @@ function EmailProductValidationAdmin($param){
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
     if ($response->success()) {
-        echo("<script>console.log('Email envoyé avec succès');</script>");
+        //echo("<script>console.log('Email envoyé avec succès');</script>");
     } else {
-        echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+        //echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
     }
 }
 
@@ -659,8 +659,8 @@ function EmailPendingAdmin($param){
         $response = $mj->post(Resources::$Email, ['body' => $body]);
 
     if ($response->success()) {
-        echo("<script>console.log('Email envoyé avec succès');</script>");
+        //echo("<script>console.log('Email envoyé avec succès');</script>");
     } else {
-        echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
+        //echo("<script>console.log('Échec de l\'envoi de l\'email');</script>");
     }
 }

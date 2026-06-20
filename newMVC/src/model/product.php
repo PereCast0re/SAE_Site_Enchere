@@ -1,10 +1,9 @@
 <?php
 
-
 require_once __DIR__ . '/../lib/database.php';
+
 class ProductRepository
 {
-
     private PDO $connection;
 
     public function __construct(PDO $pdo)
@@ -12,7 +11,7 @@ class ProductRepository
         $this->connection = $pdo;
     }
 
-    function getCategory()
+    public function getCategory()
     {
         $pdo = $this->connection;
         $requete = "SELECT * FROM category";
@@ -25,8 +24,7 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    function getAllProduct()
+    public function getAllProduct()
     {
         $pdo = $this->connection;
         $requete = "SELECT * FROM Product";
@@ -39,7 +37,7 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getProduct($id_product)
+    public function getProduct($id_product)
     {
         $pdo = $this->connection;
         $requete = "SELECT pr.*, 
@@ -63,7 +61,7 @@ class ProductRepository
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
-    function get_termined_annonces_by_client($id_client)
+    public function get_termined_annonces_by_client($id_client)
     {
         $pdo = $this->connection;
         $requete = "
@@ -93,7 +91,7 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function get_actual_annonces_by_client($id_client)
+    public function get_actual_annonces_by_client($id_client)
     {
         $pdo = $this->connection;
         $requete = "
@@ -123,14 +121,13 @@ class ProductRepository
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $status)
+    public function createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $status)
     {
         $pdo = $this->connection;
         $requete1 = "INSERT INTO Product (title, description, start_date, end_date, reserve_price, status)
-                values (:title, :description, :start_date, :end_date, :reserve_price, :status);
-    ";
+                    VALUES (:title, :description, :start_date, :end_date, :reserve_price, :status);";
 
-        $requete2 = "INSERT INTO Published (id_product, id_user) values (:id_product, :id_user);";
+        $requete2 = "INSERT INTO Published (id_product, id_user) VALUES (:id_product, :id_user);";
 
         try {
             $temp = $pdo->prepare($requete1);
@@ -157,7 +154,7 @@ class ProductRepository
         }
     }
 
-    function deleteProduct($id_product)
+    public function deleteProduct($id_product)
     {
         $pdo = $this->connection;
         $request = "DELETE FROM Product WHERE id_product = ?";
@@ -167,7 +164,7 @@ class ProductRepository
         return $success;
     }
 
-    function addImage($id_product, $path_image, $name_image)
+    public function addImage($id_product, $path_image, $name_image)
     {
         $pdo = $this->connection;
         try {
@@ -181,20 +178,17 @@ class ProductRepository
             ]);
 
             return true;
-
         } catch (PDOException $e) {
             die("Error inserting your image into the database, try again !\nError : " . $e->getMessage());
         }
     }
 
-    function get_Annonce_User($id_client)
+    public function get_Annonce_User($id_client)
     {
         $pdo = $this->connection;
-        $request = "SELECT * 
-                from product as p 
-                join published as pb on pb.id_product = p.id_product
-                where pb.id_user = :id_client and p.end_date > date(now())
-                ";
+        $request = "SELECT * FROM product as p 
+                    JOIN published as pb on pb.id_product = p.id_product
+                    WHERE pb.id_user = :id_client and p.end_date > date(now())";
         try {
             $temp = $pdo->prepare($request);
             $temp->execute([
@@ -207,12 +201,12 @@ class ProductRepository
         return $temp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getLastPrice($id_product)
+    public function getLastPrice($id_product)
     {
         $pdo = $this->connection;
         $requete1 = "SELECT MAX(new_price) as last_price
-                from bid
-                where id_product = :id_product";
+                    FROM bid
+                    WHERE id_product = :id_product";
         try {
             $tmp = $pdo->prepare($requete1);
             $tmp->execute([
@@ -224,7 +218,7 @@ class ProductRepository
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
-    function getViewsWithOption($id_product, $option)
+    public function getViewsWithOption($id_product, $option)
     {
         $pdo = $this->connection;
         switch ($option) {
@@ -232,39 +226,30 @@ class ProductRepository
                 $requete = "SELECT COUNT(view_number) as value, DATE_FORMAT(view_date, '%Y-%m') AS date FROM productview
                             WHERE id_product = :id
                             GROUP BY MONTH(view_date), YEAR(view_date)
-                            ORDER BY view_date ASC;
-                    ";
+                            ORDER BY view_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
             case 'Y':
                 $requete = "SELECT COUNT(view_number) as value, YEAR(view_date) as date FROM productview
                             WHERE id_product = :id
                             GROUP BY YEAR(view_date)
-                            ORDER BY view_date ASC;
-                    ";
+                            ORDER BY view_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
             default:
                 $requete = "SELECT COUNT(view_number) as value, DATE(view_date) as date FROM productview
                             WHERE id_product = :id
                             GROUP BY DATE(view_date), YEAR(view_date)
-                            ORDER BY view_date ASC;
-                    ";
+                            ORDER BY view_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 
-    function getPriceWithOption($id_product, $option)
+    public function getPriceWithOption($id_product, $option)
     {
         $pdo = $this->connection;
         switch ($option) {
@@ -274,80 +259,67 @@ class ProductRepository
                             AND MONTH(bid_date) = MONTH(NOW()) 
                             AND YEAR(bid_date) = YEAR(NOW())
                             GROUP BY DATE(bid_date)
-                            ORDER BY bid_date ASC;
-                    ";
+                            ORDER BY bid_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
             case 'Y':
                 $requete = "SELECT MAX(new_price) as value, DATE_FORMAT(bid_date, '%Y-%m') as date FROM bid
                             WHERE id_product = :id
                             GROUP BY MONTH(bid_date), YEAR(bid_date)
-                            ORDER BY bid_date ASC;
-                    ";
+                            ORDER BY bid_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
             default:
                 $requete = "SELECT new_price as value, DATE_FORMAT(bid_date, '%H:%i') as date FROM bid
                             WHERE id_product = :id
                             AND DAY(bid_date) = DAY(NOW()) 
                             AND MONTH(bid_date) = MONTH(NOW()) 
                             AND YEAR(bid_date) = YEAR(NOW())
-                            ORDER BY bid_date ASC;
-                    ";
+                            ORDER BY bid_date ASC;";
                 $temp = $pdo->prepare($requete);
-                $temp->execute([
-                    ":id" => $id_product
-                ]);
-                return $temp->fetchall(PDO::FETCH_ASSOC);
+                $temp->execute([":id" => $id_product]);
+                return $temp->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 
-    /// used for admin
-    function getCategoryFromAnnoncement($id_product)
+    public function getCategoryFromAnnoncement($id_product)
     {
         $pdo = $this->connection;
         $requete = "SELECT name 
-                    from category as c
-                    where c.id_category = (
-                        select id_category 
-                        from belongsto as b 
-                        where b.id_product = :id 
+                    FROM category as c
+                    WHERE c.id_category = (
+                        SELECT id_category 
+                        FROM belongsto as b 
+                        WHERE b.id_product = :id 
                         LIMIT 1);";
         try {
             $tmp = $pdo->prepare($requete);
-            $tmp->execute([
-                ":id" => $id_product,
-            ]);
+            $tmp->execute([":id" => $id_product]);
         } catch (PDOException $e) {
             die("Error on get categorie from a annoncement : " . $e->getMessage());
         }
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
-
-    // Recherche autonome categorie 
-    function getCategoryMod($writting)
+    public function getCategoryMod($writting)
     {
-        $pdo = connection();
-        $requete = "SELECT * from category where name like :writting and statut = 1";
+        // CORRECTION : Remplacement de connection() par la propriété de la classe
+        $pdo = $this->connection;
+        $requete = "SELECT * FROM category WHERE name LIKE :writting AND statut = 1";
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
-            ":writting" => $search = '%' . $writting . '%'
+            ":writting" => '%' . $writting . '%'
         ]);
 
         return $tmp->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function insertCategorie($name, $statut)
+    public function insertCategorie($name, $statut)
     {
         $pdo = $this->connection;
-        $requete = "insert into category (name, statut) VALUES (:name, :statut);";
+        $requete = "INSERT INTO category (name, statut) VALUES (:name, :statut);";
         try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
@@ -359,10 +331,10 @@ class ProductRepository
         }
     }
 
-    function linkCategoryProduct($id_annoncement, $name)
+    public function linkCategoryProduct($id_annoncement, $name)
     {
         $pdo = $this->connection;
-        $requete = "INSERT INTO belongsto (id_product, id_category) Values (:id_annoncement, (SELECT id_category from category where name like :name Limit 1));";
+        $requete = "INSERT INTO belongsto (id_product, id_category) VALUES (:id_annoncement, (SELECT id_category FROM category WHERE name LIKE :name LIMIT 1));";
         try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
@@ -374,10 +346,10 @@ class ProductRepository
         }
     }
 
-    function UpdateStatut($id_product)
+    public function UpdateStatut($id_product)
     {
         $pdo = $this->connection;
-        $requete = "UPDATE product SET status = 1 where id_product = :id";
+        $requete = "UPDATE product SET status = 1 WHERE id_product = :id";
         try {
             $tmp = $pdo->prepare($requete);
             $succes = $tmp->execute([':id' => $id_product]);
@@ -387,10 +359,10 @@ class ProductRepository
         }
     }
 
-    function UpdateStatutCategorie($id_product)
+    public function UpdateStatutCategorie($id_product)
     {
         $pdo = $this->connection;
-        $requete = "UPDATE category SET statut = 1 where id_category = (SELECT id_category from belongsto where id_product = :id)";
+        $requete = "UPDATE category SET statut = 1 WHERE id_category = (SELECT id_category FROM belongsto WHERE id_product = :id)";
         try {
             $tmp = $pdo->prepare($requete);
             $succes = $tmp->execute([':id' => $id_product]);
@@ -400,40 +372,38 @@ class ProductRepository
         }
     }
 
-    function deleteCategory($id_product, $nameCategory)
+    public function deleteCategory($id_product, $nameCategory)
     {
         $pdo = $this->connection;
-        $requete2 = "DELETE from category where name = :nameC";
+        $requete2 = "DELETE FROM category WHERE name = :nameC";
 
         try {
             $tmp2 = $pdo->prepare($requete2);
             $tmp2->execute([
                 ':nameC' => $nameCategory
             ]);
-
         } catch (PDOException $e) {
             die("Error on deleting Category and his link to annoncement : " . $e->getMessage());
         }
     }
 
-    function getCelebrityNameByAnnoncement($id_product)
+    public function getCelebrityNameByAnnoncement($id_product)
     {
         $pdo = $this->connection;
         $requete = "SELECT c.name FROM celebrity c
-                JOIN concerned con ON c.id_celebrity = con.id_celebrity
-                WHERE con.id_product = :id_product";
+                    JOIN concerned con ON c.id_celebrity = con.id_celebrity
+                    WHERE con.id_product = :id_product";
         $tmp = $pdo->prepare($requete);
         $tmp->execute([
             ":id_product" => $id_product
         ]);
-        // ne retourner que le nom en string
         return $tmp->fetch(PDO::FETCH_ASSOC);
     }
 
-    function getThisProduct($id_product)
+    public function getThisProduct($id_product)
     {
         $pdo = $this->connection;
-        $requete = "SELECT * FROM product where id_product = :id";
+        $requete = "SELECT * FROM product WHERE id_product = :id";
 
         try {
             $tmp = $pdo->prepare($requete);
@@ -446,10 +416,10 @@ class ProductRepository
         }
     }
 
-    function getFilesFromAnnoncement($id_product)
+    public function getFilesFromAnnoncement($id_product)
     {
         $pdo = $this->connection;
-        $requete = "SELECT * from image where id_product = :id";
+        $requete = "SELECT * FROM image WHERE id_product = :id";
 
         try {
             $tmp = $pdo->prepare($requete);
@@ -462,7 +432,7 @@ class ProductRepository
         }
     }
 
-    function updateProduct($id, $title, $description, $start_date, $end_date, $reserve_price, $statut)
+    public function updateProduct($id, $title, $description, $start_date, $end_date, $reserve_price, $statut)
     {
         $pdo = $this->connection;
         $requete = "UPDATE Product 
@@ -482,17 +452,16 @@ class ProductRepository
             ]);
 
             return $pdo->lastInsertId();
-
         } catch (PDOException $e) {
             die("Error on updating your product into the database, try again !\n Error : " . $e->getMessage());
         }
     }
 
-    function updateLinkCategoryProduct($id_annoncement, $name)
+    public function updateLinkCategoryProduct($id_annoncement, $name)
     {
         $pdo = $this->connection;
         $requete = "UPDATE belongsto 
-                    SET id_category = (SELECT id_category from category where name like :name Limit 1)
+                    SET id_category = (SELECT id_category FROM category WHERE name LIKE :name LIMIT 1)
                     WHERE id_product = :id_annoncement;";
         try {
             $tmp = $pdo->prepare($requete);
@@ -505,57 +474,59 @@ class ProductRepository
         }
     }
 
-    function updateReservePrice($id){
+    public function updateReservePrice($id)
+    {
         $pdo = $this->connection;
-        $requete = "UPDATE product set reserve_price = null where id_product = :id";
-        try{
+        $requete = "UPDATE product SET reserve_price = null WHERE id_product = :id";
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id' => $id
             ]);
             return $tmp;
-        } catch (PDOException $e){
-            die("Error on update your reserve price" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on update your reserve price" . $e->getMessage());
         }
     }
 
-    function getBuyer($id_product){
+    public function getBuyer($id_product)
+    {
         $pdo = $this->connection;
         $requete = "SELECT u.name, u.firstname, u.email
-                    from users as u
-                    join bid as b on b.id_user = u.id_user
-                    where b.id_product = :id_product
-                    order by b.new_price desc
-                    limit 1;";
-        try{
+                    FROM users as u
+                    JOIN bid as b on b.id_user = u.id_user
+                    WHERE b.id_product = :id_product
+                    ORDER BY b.new_price desc
+                    LIMIT 1;";
+        try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id_product' => $id_product
             ]);
             return $tmp->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e){
-            die("Error on get buyer info :" .$e->getMessage());
+        } catch (PDOException $e) {
+            die("Error on get buyer info :" . $e->getMessage());
         }
     }
 
-    function getAllProductLike($id){
+    public function getAllProductLike($id)
+    {
         $pdo = $this->connection;
-        $r = "SELECT * from interest where id_user = :id";
-        try{
+        $r = "SELECT * FROM interest WHERE id_user = :id";
+        try {
             $tmp = $pdo->prepare($r);
             $tmp->execute([
                 ":id" => $id
             ]);
             return $tmp->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e){
-            die('Error on extraction of liked prduct : ' .$e->getMessage());
+        } catch (PDOException $e) {
+            die('Error on extraction of liked prduct : ' . $e->getMessage());
         }
     }
 
-    // retourne les info du proprio de l'annonce
-    function get_Specific_Annonce_User($id_annoncement){
+    public function get_Specific_Annonce_User($id_annoncement)
+    {
         $pdo = $this->connection;
-
         $requete = "
             SELECT 
                 u.id_user,
@@ -567,39 +538,37 @@ class ProductRepository
             WHERE pb.id_product = :id_annoncement
             LIMIT 1
         ";
-
         try {
             $tmp = $pdo->prepare($requete);
             $tmp->execute([
                 ':id_annoncement' => $id_annoncement
             ]);
-
             return $tmp->fetch(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
             die('Error on getting annonce owner info : ' . $e->getMessage());
         }
     }
+
     public function getActiveFeaturedProducts(int $limit = 12): array
-{
-    $sql = "SELECT p.id_product, p.title, p.end_date, p.start_price, p.status,
-                   MAX(b.new_price) AS last_price,
-                   cel.name AS celebrity_name,
-                   (SELECT img.path_image FROM image img WHERE img.id_product = p.id_product LIMIT 1) AS main_image_url
-            FROM product p
-            LEFT JOIN bid b ON b.id_product = p.id_product
-            LEFT JOIN concerned con ON con.id_product = p.id_product
-            LEFT JOIN celebrity cel ON cel.id_celebrity = con.id_celebrity
-            WHERE p.end_date > NOW() AND p.status = 1
-            GROUP BY p.id_product, cel.name
-            ORDER BY p.end_date ASC
-            LIMIT :limit";
+    {
+        // CORRECTION : Utilisation de $this->connection au lieu de $this->pdo
+        $sql = "SELECT p.id_product, p.title, p.end_date, p.start_price, p.status,
+                       MAX(b.new_price) AS last_price,
+                       cel.name AS celebrity_name,
+                       (SELECT img.path_image FROM image img WHERE img.id_product = p.id_product LIMIT 1) AS main_image_url
+                FROM product p
+                LEFT JOIN bid b ON b.id_product = p.id_product
+                LEFT JOIN concerned con ON con.id_product = p.id_product
+                LEFT JOIN celebrity cel ON cel.id_celebrity = con.id_celebrity
+                WHERE p.end_date > NOW() AND p.status = 1
+                GROUP BY p.id_product, cel.name
+                ORDER BY p.end_date ASC
+                LIMIT :limit";
 
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->execute();
-    
-    return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
-}
-
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
 }

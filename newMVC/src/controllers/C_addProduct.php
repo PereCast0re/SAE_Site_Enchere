@@ -13,52 +13,36 @@ function addNewProduct($user, $input)
     $productRepository = new ProductRepository($pdo);
     $CelebrityRepository = new CelebrityRepository($pdo);
 
-    // var_dump($user);
     $id_user = $user['id_user'];
-    // var_dump($input);
+    
     if (!empty($input["nom_annonce_vente"]) && !empty($input["lst_categorie_vente"]) && !empty($_POST['date_debut']) && !empty($_POST['date_fin']) && !empty($_POST['description_produit'])) {
-        // $title = trim(htmlentities($input['nom_annonce_vente']));
-        // $category = trim(htmlentities($input['lst_categorie_vente']));
-        // $start_date = trim(htmlentities($input['date_debut']));
-        // $end_date = trim(htmlentities($input['date_fin']));
-        // $description = trim(htmlentities($input['description_produit']));
-        // $celebrite = trim(htmlentities($input['inputcelebrity']));
-
         $title = htmlspecialchars($input['nom_annonce_vente']);
         $category = htmlspecialchars($input['lst_categorie_vente']);
         $start_date = htmlspecialchars($input['date_debut']);
         $end_date = htmlspecialchars($input['date_fin']);
         $description = htmlspecialchars($input['description_produit']);
         $celebrite = htmlspecialchars($input['inputcelebrity']);
-        if (isset($input['valeur_reserve'])) {
-            $reserve_price = trim(htmlentities($input['valeur_reserve']));
-        } else {
-            $reserve_price = null;
-        }
+        
+        $reserve_price = isset($input['valeur_reserve']) ? trim(htmlentities($input['valeur_reserve'])) : null;
     } else {
         throw new Exception("Les données du formulaire sont invalides !");
     }
 
-    // Au cas ou nouvelle categorie ou celebrite
     $statut_admin_Categorie = checkCategorie($category, $productRepository) ? 1 : 0;
     $statut_admin_Celebrite = checkCelebrite($celebrite, $CelebrityRepository) ? 1 : 0;
 
-    if ($statut_admin_Celebrite == 0 || $statut_admin_Categorie == 0) {
-        $statut = 0;
-    } else {
-        $statut = 1;
-    }
+    $statut = ($statut_admin_Celebrite == 0 || $statut_admin_Categorie == 0) ? 0 : 1;
 
     $id_product = $productRepository->createProduct($title, $description, $start_date, $end_date, $reserve_price, $id_user, $statut);
 
-    //Insert categorie
+    // Insert categorie
     if ($statut_admin_Categorie == 0) {
         insertCategorie($category, $id_product, $productRepository, $statut_admin_Categorie);
     } else {
         $productRepository->linkCategoryProduct($id_product, $category);
     }
 
-    //Insert Celebrity
+    // Insert Celebrity
     if ($statut_admin_Celebrite == 0) {
         InsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite);
     } else {
@@ -66,66 +50,74 @@ function addNewProduct($user, $input)
     }
 
     if (!$id_product) {
-        throw new Exception('Impossible d\'ajouter le commentaire !');
+        throw new Exception('Impossible d\'ajouter le produit !');
     } else {
         checkImage($id_product, $productRepository);
         $user_email = $user['email'];
         $user_name = $user['name'];
+        
         if ($statut == 0) {
             $param = [$user_email, $user_name, $title];
             routeurMailing('sendEmailPendingPlublish', $param);
-            //Mail aux admin pour validation
+            
+            // Mail aux admin pour validation
             $pdo = DatabaseConnection::getConnection();
             $userRepository = new UserRepository($pdo);
             $Admins = $userRepository->getAdmin();
-            if (count($Admins) > 1) {
-                $admin_choosen = $Admins[array_rand($Admins)];
+            
+            // CORRECTION : Sécurisation de la sélection de l'admin si le tableau est vide ou associatif
+            if (!empty($Admins)) {
+                $keys = array_keys($Admins);
+                $random_key = $keys[array_rand($keys)];
+                $admin_choosen = $Admins[$random_key];
             } else {
-                $admin_choosen = $Admins[0];
+                // Valeurs de secours si aucun admin n'est trouvé en BDD
+                $admin_choosen = ['email' => 'admin@auto-ecole.fr', 'name' => 'Admin', 'firstname' => 'Système'];
             }
+            
             $param = [$admin_choosen['email'], $admin_choosen['name'] . ' ' . $admin_choosen['firstname']];
-
             routeurMailing('productValidationAdmin', $param);
         } else {
             $param = [$user_email, $user_name];
             routeurMailing('sendEmailConfirmationPlublish', $param);
         }
+        
         header("Location: index.php?action=user");
+        exit(); // Toujours mettre un exit après une redirection header
     }
-
 }
 
 function checkImage($id_product, ProductRepository $productRepository)
 {
     try {
-        //Verification de la présence d'images
         if (!isset($_FILES['image_produit'])) {
             echo ("Erreur : Aucune image sélectionnée.");
             exit();
         }
-        // Crée le dossier avec le nom de l'annonce
-        $DirAnnonce = __DIR__ . "../../../Annonce/" . $id_product;
+        
+        // CORRECTION : Utilisation de dirname(__DIR__, 2) pour remonter proprement à la racine du projet (/var/www/html)
+        $DirAnnonce = dirname(__DIR__, 2) . "/Annonce/" . $id_product;
 
-        // Vérifie si le dossier existe déjà
         if (!file_exists($DirAnnonce)) {
-            //creation du dossier
             mkdir($DirAnnonce, 0777, true);
         }
 
-        // Ajoute les images dans le dossier
-        for ($i = 0; $i < count($_FILES["image_produit"]['name']); $i++) {
-            $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
-            if ($tmpFilePath != "") {
-                $newFilePath = $DirAnnonce . "/" . $id_product . "_" . $i . ".jpg";
-                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-                    //Ajouter dans un tableau qui sera inséré en base de données
+        if (isset($_FILES['image_produit']['name']) && is_array($_FILES['image_produit']['name'])) {
+            for ($i = 0; $i < count($_FILES["image_produit"]['name']); $i++) {
+                $tmpFilePath = $_FILES['image_produit']['tmp_name'][$i];
+                if ($tmpFilePath != "") {
                     $name_image = $id_product . "_" . $i . ".jpg";
-                    $newFilePath = "Annonce/" . $id_product . "/" . $name_image;
-                    $productRepository->addImage($id_product, $newFilePath, $name_image);
+                    $newFilePath = $DirAnnonce . "/" . $name_image;
+                    
+                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                        $databasePath = "Annonce/" . $id_product . "/" . $name_image;
+                        $productRepository->addImage($id_product, $databasePath, $name_image);
+                    }
                 }
             }
         }
-        if (isset($_FILES['certificat_autenticite'])) {
+        
+        if (isset($_FILES['certificat_autenticite']) && $_FILES['certificat_autenticite']['error'] == 0) {
             certificat($id_product, $DirAnnonce);
         }
     } catch (Exception $e) {
@@ -140,14 +132,18 @@ function certificat($id_annonce, $DirAnnonce)
     if ($tmpFilePath != "") {
         $newFilePath = $DirAnnonce . "/" . $id_annonce . "_Certificate" . ".pdf";
         $databasePath = "Annonce/" . $id_annonce . "/" . $id_annonce . "_Certificate" . ".pdf";
-        // Fonction native de php pour déplacer les fichier
+        
         try {
             move_uploaded_file($tmpFilePath, $newFilePath);
         } catch (Exception $e) {
             throw new Exception("Error while moving your certificate file !" . $e->getMessage());
         }
+        
         try {
-            saveCertificatePath($id_annonce, $databasePath);
+            // S'assurer que cette fonction globale ou méthode existe dans l'arborescence
+            if (function_exists('saveCertificatePath')) {
+                saveCertificatePath($id_annonce, $databasePath);
+            }
         } catch (Exception $e) {
             throw new Exception("Error while saving your certificate path in database !" . $e->getMessage());
         }
@@ -157,11 +153,7 @@ function certificat($id_annonce, $DirAnnonce)
 function checkCategorie($saisie, $productRepository)
 {
     $categories = $productRepository->getCategoryMod($saisie);
-    if ($categories) {
-        return true;
-    } else {
-        return false;
-    }
+    return !empty($categories);
 }
 
 function insertCategorie($categories, $id_product, $productRepository, $statut_admin_Categorie)
@@ -177,11 +169,7 @@ function insertCategorie($categories, $id_product, $productRepository, $statut_a
 function checkCelebrite($saisie, $CelebrityRepository)
 {
     $celebrite = $CelebrityRepository->getCelebrityMod($saisie);
-    if ($celebrite) {
-        return true;
-    } else {
-        return false;
-    }
+    return !empty($celebrite);
 }
 
 function InsertCelebrity($celebrite, $id_product, $CelebrityRepository, $statut_admin_Celebrite)
