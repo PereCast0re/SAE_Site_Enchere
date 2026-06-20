@@ -266,7 +266,7 @@ try {
                 throw new Exception("ID de produit invalide pour récupérer les vues globales.");
             }
 
-        // Get all annoncement of user
+            // Get all annoncement of user
         } elseif ($_GET['action'] === 'getAllAnnoncementUser') {
             if (isset($_GET['id_user']) && $_GET['id_user'] >= 0) {
                 $id_user = $_GET['id_user'];
@@ -283,7 +283,7 @@ try {
             } else {
                 throw new Exception("ID d'utilisateur invalide pour récupérer les annonces.");
             }
-        
+
             // Likes
         } elseif ($_GET['action'] === 'getLikes') {
             if (isset($_GET['id_product']) && $_GET['id_product'] >= 0) {
@@ -461,5 +461,5 @@ try {
 
     //$errorMessage = '<i class="fa-solid fa-bug"></i> <span>Erreur 404 :</span> Page non trouvé !';
 
-    // require('templates/preset/error.php');
+    require('templates/preset/error.php');
 }

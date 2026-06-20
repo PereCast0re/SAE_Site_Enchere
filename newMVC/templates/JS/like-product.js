@@ -1,7 +1,7 @@
-import { getAnnonceLike } from "../call-api.js";
-import { getPrice } from "../call-api.js";
-import { getImage } from "../call-api.js";
-import { getListAnnoncementLike } from "../call-api.js";
+import { getAnnonceLike } from "./call-api.js";
+import { getPrice } from "./call-api.js";
+import { getImage } from "./call-api.js";
+import { getListAnnoncementLike } from "./call-api.js";
 
 
 async function print_like_annoncement() {
@@ -21,9 +21,9 @@ async function print_like_annoncement() {
             let annonce = await getAnnonceLike(like.id_product)
             console.log(annonce)
             
-            let price = await getPrice(annonce.id_product)
+            let price = await getPrice(annonce.product.id_product);
 
-            let image_url = await getImage(annonce.id_product);
+            let image_url = await getImage(annonce.product.id_product);
             let firstImg = (
                 Array.isArray(image_url) &&
                 image_url.length > 0 &&
@@ -36,16 +36,16 @@ async function print_like_annoncement() {
                         <img src="${firstImg}" class="annonce_img" />
                         
                         <div class="annonce_details">
-                            <h3 class="annonce_title">${annonce.title}</h3>
+                            <h3 class="annonce_title">${annonce.product.title}</h3>
                             
                             <div class="annonce_meta">
-                                <span id="td_info_lastPrice${annonce.id_product}" class="price_display">
-                                    ${price.lastPrice ? price.lastPrice : 'Prix non disponible faite une offre !'}
+                                <span id="td_info_lastPrice${annonce.product.id_product}" class="price_display">
+                                    ${price.last_price ?? 'Prix non disponible faite une offre !'}
                                 </span>
                             </div>
 
                             <div class="user_info">
-                                <a href="index.php?action=product&id=${annonce.id_product}">Voir</a>
+                                <a href="index.php?action=product&id=${annonce.product.id_product}">Voir</a>
                             </div>
                         </div>
 

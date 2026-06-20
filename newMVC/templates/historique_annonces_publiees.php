@@ -28,7 +28,7 @@ $id_client = $user['id_user'];
 </div>
 </main>
 
-<script src="templates/JS/historique-product.js"></script>
+<script type="module" src="templates/JS/historique-product.js"></script>
 
 <?php include('preset/footer.php'); ?>
 

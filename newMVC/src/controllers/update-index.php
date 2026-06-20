@@ -9,8 +9,6 @@ use Meilisearch\Client;
 use App\Lib\DatabaseConnection;
 use Meilisearch\Exceptions\ApiException;
 
-$client = new Client(MEILI_HOST, MEILI_KEY);
-
 try {
     // 1. Initialisation des clients et configurations
     $client = new Client(MEILI_HOST, MEILI_KEY);

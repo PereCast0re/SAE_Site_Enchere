@@ -285,7 +285,7 @@ class ProductController
 
     function Product($id_product)
     {
-        if (isset($id_product) && $id_product >= 0) {
+        if (!empty($id_product) && $id_product >= 0) {
             $pdo = DatabaseConnection::getConnection();
             $productRepository = new ProductRepository($pdo);
             $data = $productRepository->getProduct($id_product);
@@ -339,6 +339,8 @@ class ProductController
             }
 
             require("templates/product.php");
+        } else {
+            throw new Exception('Erreur : ID Produit invalide !');
         }
     }
 

@@ -4,6 +4,8 @@ import { getListAnnoncementEnd, getImage } from "./call-api.js";
 //style="display: ${annonce.last_price > 0 ? "none" : "block"};"
 export async function print_historique_annoncement(id_user, divToPrint) {
     let html = ""
+
+    console.log('Test');
     
     let annoncements = await getListAnnoncementEnd(id_user);
 
@@ -62,3 +64,11 @@ function checkEndPrice(lastPrice) {
         return "Non vendu";
     }
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log("Si je suis affiché autre que dans l'historique des annonces publiés, vérifier dans le JS");
+
+    const div = document.querySelector(".Historique_annonces")
+    const id_user = document.getElementById('id_user');
+    print_historique_annoncement(id_user, div)
+});
