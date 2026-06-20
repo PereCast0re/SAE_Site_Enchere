@@ -1,9 +1,10 @@
+/////// Import ///////
 import { getAnnonceLike } from "../call-api.js";
 import { getPrice } from "../call-api.js";
 import { getImage } from "../call-api.js";
 import { getListAnnoncementLike } from "../call-api.js";
 
-
+// Fonction d'affichage des card récapitulative des annonces mises en favorie
 async function print_like_annoncement() {
     const div = document.getElementById('like_product')
     const id_user = document.getElementById('id_user').value

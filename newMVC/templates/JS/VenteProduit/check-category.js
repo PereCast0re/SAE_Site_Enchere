@@ -1,8 +1,9 @@
-/////// Import 
+/////// Import ///////
 import { getSaisiCategories } from "../call-api.js";
 
-///////////////////// Categorie /////////////////////////////
-
+// Fonction pour vérifié sur une catégorie existe en base de donnée
+// Si la saisie utilisater correspond a une catégorie alors on lui renvoie dans une liste déroulante en dessous de sa saisie
+// Sinon on l'avertie que c'est une nouvelle et que les administrateur vont devoir valider l'annonce
 export async function checkExistingCategory() {
     let div = document.getElementById('categorie_results')
     let inputCategorie = document.getElementById('lst_categorie_vente');

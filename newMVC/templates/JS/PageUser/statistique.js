@@ -1,12 +1,13 @@
-/////////////////////////////////
-// Statistiques //
-/////////////////////////////////
-
+/////// Import ///////
 import {getPriceWithOption, getViewsWithOption} from '../call-api.js'
 
 let chartV = null;
 let chartP = null;
 
+// fonction pour crée le graphique
+// param -> char (type) -> explication
+// param -> type (type) -> explication
+// param -> annoncement (object annoncement) -> une annonce
 export function createChart(chart, type, annoncement) {
     const canvas = document.getElementById('myChart' + type);
     console.log('myChart' + type);
@@ -39,6 +40,11 @@ export function createChart(chart, type, annoncement) {
     return chart;
 }
 
+/// Modification des donnée du graphique
+// param -> char (chart) -> le graphique créer
+// param -> char (type) -> explication
+// param -> char (type) -> explication
+// param -> annoncement (object annoncement) -> une annonce
 export async function updateChart(chart, option, type, annoncement) {
     let labels = [];
     let dataValues = [];
@@ -73,6 +79,9 @@ export async function updateChart(chart, option, type, annoncement) {
     }
 }
 
+// Affichage du composant des statistique
+// param -> annoncement (object annoncement) -> une annonce
+// param -> div (élément html) -> emplacemnet ou le htlm vas apparaitre 
 export async function PrintStatAnnonce(annoncement, divStat) {
     // console.log(annoncement);
 

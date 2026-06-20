@@ -1,8 +1,14 @@
+/////// Import ///////
 import { alertConfirmation } from "./alert-confirmation.js";
 
-export async function ShowPopUpOption(id_product) { // On reçoit l'ID ici
+// Fonction pour faire apparaitre une popup avec trois option suppirmer l'annonce / Modifié l'annonce / fermer la popup
+// param -> id_product (int) -> identifiant du produit  
+export async function ShowPopUpOption(id_product) { 
+
     const popup = document.createElement('div');
+
     popup.classList.add('popup-overlay');
+
     popup.innerHTML = `
     <div class="popup-box">
         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -14,7 +20,7 @@ export async function ShowPopUpOption(id_product) { // On reçoit l'ID ici
 
     document.body.appendChild(popup);
 
-    // BOUTON SUPPRIMER
+    // appel de la popup de validation alertConfirmation
     popup.querySelector('.btnsupprimer').addEventListener('click', () => {
         alertConfirmation('Voulez-vous vraiment supprimer ce produit ?', 'deleteProduct', id_product);
         popup.remove();

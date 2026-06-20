@@ -1,6 +1,10 @@
+/////// Import ///////
 import { getListAnnoncementEnd } from "./call-api.js";
 import {getImage} from "./call-api.js";
 
+// Fonction d'affichage des card récapitulative des annonces terminée
+// param -> id_user (int) -> identifiant de l'utilisateur
+// param -> divToPrint (élément html) -> localisation du rendu de la fonction
 export async function print_historique_annoncement(id_user, divToPrint) {
     let html = ""
     

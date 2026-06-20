@@ -1,3 +1,6 @@
+// Timer pour visualiser le temps qu'il reste avant la fin de l'annonce
+// param -> endDate (date) -> date de fibn de l'annonce
+// param -> element (élément visuel) -> zone dans laquelle ils seras injectée 
 export function startCountdown(endDate, element) {
   const end = new Date(endDate).getTime();
 

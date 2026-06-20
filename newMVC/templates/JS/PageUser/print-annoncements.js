@@ -1,3 +1,4 @@
+/////// Import ///////
 import { getPrice } from "../call-api.js";
 import { getImage } from "../call-api.js";
 import { getLikes } from "../call-api.js";
@@ -7,10 +8,18 @@ import { ShowPopUpOption } from "./show-popup.js";
 import { startCountdown } from "./timer-annonce.js";
 import { PrintStatAnnonce } from "./statistique.js";
 
+// Fonction d'affichage des card récapitulative des annonces postée
+// param -> annoncement (List Annoncement) -> liste des annonces extraites de la base de données
+// param -> div (élément html) -> localisation du rendu de la fonction
 export async function print_tab_annoncements(annoncements, div) {
+
+    // Démarage du timer de performance
     const start = performance.now();
-    console.log("print_tab_annoncements start")
+
+
     let html = ""
+
+    // Boucle sur toute les annonces
     for (const annonce of annoncements) {
         // on change d'incrément si une annonce est expirée et si elle doit être verifier
         if (new Date(annonce.end_date) < new Date()) { continue }
@@ -24,18 +33,15 @@ export async function print_tab_annoncements(annoncements, div) {
             getCategory(annonce.id_product)
         ]);
 
+        // Section de vérification des données 
         if (price.last_price === null) {
             price.last_price = annonce.start_price;
         }
-
         if (like.nbLike === null) {
             like.nbLike = 0;
         }
-        let firstImg = (
-            Array.isArray(image_url) &&
-            image_url.length > 0 &&
-            image_url[0].url_image
-        ) ? image_url[0].url_image : "assets/default.png";
+
+        let firstImg = ( Array.isArray(image_url) && image_url.length > 0 && image_url[0].url_image) ? image_url[0].url_image : "assets/default.png";
 
         if (celebrity != null) {
             if (celebrity.url == null) {
@@ -46,11 +52,10 @@ export async function print_tab_annoncements(annoncements, div) {
         if (!category) { 
             category = { name: 'Non défini' }; 
         }
-        console.log("category")
-        console.log(category)
 
         let city = document.getElementById('city_hidden').value;
 
+        // Création du composant HTML
         html +=
             `
             <div class="annonce_wrapper">
@@ -85,6 +90,7 @@ export async function print_tab_annoncements(annoncements, div) {
 
     div.innerHTML += html;
 
+    // initialiation du timer avant la fin de l'annonce
     document.querySelectorAll('.timer').forEach(timerElement => {
         const endDate = timerElement.getAttribute('data-end');
         if (endDate) {
@@ -92,6 +98,7 @@ export async function print_tab_annoncements(annoncements, div) {
         }
     });
 
+    // action btn stat_button pour faire affiché les statistiques
     document.querySelectorAll('.stat_button').forEach((button, index) => {
         button.addEventListener('click', () => {
             const divStat = button.closest('.annonce_wrapper').querySelector('[class^="stat_annonce"]');
@@ -99,7 +106,7 @@ export async function print_tab_annoncements(annoncements, div) {
         });
     });
 
-    
+    // action btn pour faire affichées les options possible sur cette annonce
     document.querySelectorAll('.btn_moreoption').forEach((button) => {
         button.addEventListener('click', () => {
             const id = button.getAttribute('data-id');
@@ -107,8 +114,11 @@ export async function print_tab_annoncements(annoncements, div) {
         });
     });
     
+    // Timer de performance
+    /*
     console.log(
-  `Temps : ${performance.now() - start} ms`
-);
+        `Temps : ${performance.now() - start} ms`
+    );
+    */
 }
 

@@ -1,7 +1,11 @@
+/////// Import ///////
 import { getImage } from "../call-api.js";
 import { getPrice } from "../call-api.js";
 import { ShowPopUpOption } from "./show-popup.js";
 
+// Fonction d'affichage des card récapitulative des annonces en attente de validation des administrateurs
+// param -> annoncement (List Annoncement) -> liste des annonces extraites de la base de données
+// param -> div (élément html) -> localisation du rendu de la fonction
 export async function print_unverifed_product(div, annoncements) {
     console.log("print unverifed");
 
@@ -25,8 +29,6 @@ export async function print_unverifed_product(div, annoncements) {
     `;
 
     for (const annonce of annoncements) {
-        // Correction : si annoncements est un objet avec 'statut', s'assurer de boucler sur la bonne propriété 
-        // ou adapter selon la structure de ton JSON
         if (annonce.status == 1) continue;
 
         // Récupération des données
