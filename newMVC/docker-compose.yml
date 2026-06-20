@@ -21,6 +21,8 @@ services:
     environment:
       - MYSQL_DATABASE=auction_site
       - MYSQL_ROOT_PASSWORD=root_password
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./BDD_constructor.sql:/docker-entrypoint-initdb.d/init.sql:ro

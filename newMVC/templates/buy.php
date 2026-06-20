@@ -41,7 +41,7 @@ $style = "templates/style/buy.css";
         <div
             class="annonces">
             <?php if (empty($products)): ?>
-                <p>Aucune annonce disponible pour le moment.</p>
+                <p style="grid-column: 1 / -1;">Aucune annonce disponible pour le moment.</p>
             <?php else: ?>
                 <?php
                 $count_displayed = 0;

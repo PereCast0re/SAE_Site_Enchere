@@ -66,7 +66,7 @@ $style = "templates/style/index.css";
     <h1>Nos dernières annonces</h1>
     <div class="annonces">
       <?php if (empty($products)): ?>
-        <p>Aucune annonce disponible pour le moment.</p>
+        <p style="grid-column: 1 / -1;">Aucune annonce disponible pour le moment.</p>
       <?php else: ?>
         <?php foreach ($products as $p): 
             $imgUrl = !empty($p['main_image_url']) ? htmlspecialchars($p['main_image_url']) : 'templates/Images/default.png';

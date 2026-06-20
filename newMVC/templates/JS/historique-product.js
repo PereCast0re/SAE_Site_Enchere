@@ -65,7 +65,9 @@ function checkEndPrice(lastPrice) {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+const div = document.querySelector(".Historique_annonces")
+
+div.addEventListener('DOMContentLoaded', () => {
     console.log("Si je suis affiché autre que dans l'historique des annonces publiés, vérifier dans le JS");
 
     const div = document.querySelector(".Historique_annonces")
