@@ -125,7 +125,7 @@ class ProductController
             // Vérifie si le dossier existe déjà
             if (!is_dir($DirAnnonce)) {
                 //creation du dossier
-                mkdir($DirAnnonce, 0777, true);
+                // mkdir($DirAnnonce, 0777, true);
             }
 
             // Ajoute les images dans le dossier
@@ -312,7 +312,7 @@ class ProductController
             $userRepository = new UserRepository($pdo);
             $images = $userRepository->getImage($id_product);
 
-            $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
 
             $images = array_filter($images, function ($img) use ($extensions_valides) {
                 $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
