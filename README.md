@@ -98,6 +98,12 @@ Dans ce site vous pouvez :
 
 ## ✅**Méthode fonctionnelle**
 
+Vous pouvez suivre les indications ci-dessous via la vidéo suivante :
+
+<div style="text-align: center; margin: 20px">
+<a href="Documents/Procedure/Guide_intallation_Sae_Site_Enchere.mp4"><strong>Cliquez ici</strong></a>
+</div>
+
 Avant de commencer, vous devrez vous rendre sur ce site - [cliquez ici](https://docs.docker.com/desktop/setup/install/windows-install/) et télécharger la version **Docker Desktop for Windows - x86_64** (si vous êtes sur Linux, vous devrez trouver l'exécutable correspondant à votre machine).
 
 Pour installer notre application et pour que vous puissiez l'utiliser, il faut tout d'abord suivre la procédure sur l'installation et le déploiement de Docker disponible au lien suivant :
@@ -107,6 +113,8 @@ Pour installer notre application et pour que vous puissiez l'utiliser, il faut t
 </div>
 
 Téléchargez le dossier du projet (bouton vert en haut de cette page `<> Code` → `Download ZIP`), dézippez-le en faisant un clic droit sur le fichier .zip, puis sélectionnez « Extraire tout » (ou « Décompresser ») dans le menu proposé.
+
+Copier le fichier .env.exemple ou .env copy.exemple dans SAE_Site_Enchere-main/NewMVC pour avoir un fichier nommé .env.
 
 Ouvrez une invite de commande en faisant un clic droit dans un espace vide du dossier SAE_Site_Enchere-main/NewMVC, puis exécutez les commandes suivantes :
 
