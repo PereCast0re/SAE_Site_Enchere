@@ -12,6 +12,12 @@ Ce travail est le résultat d'un projet étudiant au sein du BUT Informatique de
 
 Durant cette SAE et pendant deux semestres, nous devions développer une application en s'appuyant sur une base de données tout en expérimentant une démarche incrémentale.
 
+Présentation du projet en format vidéo pour découvrir les principales fonctionnalités sans devoir lancer le projet :
+
+<div style="text-align: center; margin: 20px">
+<a href="Documents/Procedure/Guide_Utilisation_Site_Enchere.mp4"><strong>Cliquez ici</strong></a>
+</div>
+
 ## 📋**Sommaire**
 
 - [Présentation](#présentation)
@@ -101,7 +107,7 @@ Dans ce site vous pouvez :
 Vous pouvez suivre les indications ci-dessous via la vidéo suivante :
 
 <div style="text-align: center; margin: 20px">
-<a href="Documents/Procedure/Guide_intallation_Sae_Site_Enchere.mp4"><strong>Cliquez ici</strong></a>
+<a href="Documents/Procedure/Guide_Installation_Sae_Site_Enchere.mp4"><strong>Cliquez ici</strong></a>
 </div>
 
 Avant de commencer, vous devrez vous rendre sur ce site - [cliquez ici](https://docs.docker.com/desktop/setup/install/windows-install/) et télécharger la version **Docker Desktop for Windows - x86_64** (si vous êtes sur Linux, vous devrez trouver l'exécutable correspondant à votre machine).
