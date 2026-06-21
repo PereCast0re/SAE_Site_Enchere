@@ -103,7 +103,7 @@ Avant de commencer, vous devrez vous rendre sur ce site - [cliquez ici](https://
 Pour installer notre application et pour que vous puissiez l'utiliser, il faut tout d'abord suivre la procédure sur l'installation et le déploiement de Docker disponible au lien suivant :
 
 <div style="text-align: center; margin: 20px">
-<a href="./Documents/Procedure/Procedure_Docker.pdf"><strong>Cliquez ici</strong></a>
+<a href="Documents/Procedure/Procédure d'installation et de déploiement (Docker) (1).pdf"><strong>Cliquez ici</strong></a>
 </div>
 
 Téléchargez le dossier du projet (bouton vert en haut de cette page `<> Code` → `Download ZIP`), dézippez-le en faisant un clic droit sur le fichier .zip, puis sélectionnez « Extraire tout » (ou « Décompresser ») dans le menu proposé.
