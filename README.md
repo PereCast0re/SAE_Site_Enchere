@@ -22,21 +22,23 @@ Durant cette SAE et pendant deux semestres, nous devions développer une applica
 - [But de l'application](#but-de-lapplication)
 - [Membres (3)](#membres-3)
 - [Lancement de l'application](#lancement-de-lapplication)
-    - [Initialisation](#initialisation)
-        - [Méthode 1 (PhpMyAdmin)](#méthode-1-phpmyadmin)
-            - [Etape 1](#étape-1)
-            - [Etape 2](#étape-2)
-            - [Etape 3](#étape-3)
-        - [Méthode 2 (Invite de commande)](#méthode-2-invite-de-commande)
-            - [Etape 1](#étape-1-1)
-            - [Etape 2](#étape-2-2)
-            - [Etape 3](#étape-3-3)
-    - [Configuration](#configuration)
-    - [Scripts (moteur de recherche + recherche de célébrités)](#scripts-moteur-de-recherche--recherche-de-célébrités)
-        - [Moteur de recherche](#moteur-de-recherche)
-            - [Activer le moteur de recherche](#activer-le-moteur-de-recherche)
-            - [Ajouter les annonces dans le moteur de recherche](#ajouter-les-annonces-dans-le-moteur-de-recherche)
-        - [Recherche de célébrités](#recherche-de-célébrités)
+    - [Méthode fonctionnelle](#méthode-fonctionnelle)
+    - [Ancienne méthode manuel (non fonctionnelle)](#ancienne-méthode-manuel-non-fonctionnelle)
+        - [Initialisation](#initialisation)
+            - [Méthode 1 (PhpMyAdmin)](#méthode-1-phpmyadmin)
+                - [Etape 1](#étape-1)
+                - [Etape 2](#étape-2)
+                - [Etape 3](#étape-3)
+            - [Méthode 2 (Invite de commande)](#méthode-2-invite-de-commande)
+                - [Etape 1](#étape-1-1)
+                - [Etape 2](#étape-2-2)
+                - [Etape 3](#étape-3-3)
+        - [Configuration](#configuration)
+        - [Scripts (moteur de recherche + recherche de célébrités)](#scripts-moteur-de-recherche--recherche-de-célébrités)
+            - [Moteur de recherche](#moteur-de-recherche)
+                - [Activer le moteur de recherche](#activer-le-moteur-de-recherche)
+                - [Ajouter les annonces dans le moteur de recherche](#ajouter-les-annonces-dans-le-moteur-de-recherche)
+            - [Recherche de célébrités](#recherche-de-célébrités)
     - [Identifiant de connexion](#identifiants-de-connexion)
     - [Remerciements](#️remerciements)
 
@@ -94,6 +96,40 @@ Dans ce site vous pouvez :
 
 ## 📢**Lancement de l'application**
 
+## ✅**Méthode fonctionnelle**
+
+Avant de commencer, vous devrez vous rendre sur ce site - [cliquez ici](https://docs.docker.com/desktop/setup/install/windows-install/) et télécharger la version **Docker Desktop for Windows - x86_64** (si vous êtes sur Linux, vous devrez trouver l'exécutable correspondant à votre machine).
+
+Pour installer notre application et pour que vous puissiez l'utiliser, il faut tout d'abord suivre la procédure sur l'installation et le déploiement de Docker disponible au lien suivant :
+
+<div style="text-align: center; margin: 20px">
+<a href="./Documents/Procedure/Procedure_Docker.pdf"><strong>Cliquez ici</strong></a>
+</div>
+
+Téléchargez le dossier du projet (bouton vert en haut de cette page `<> Code` → `Download ZIP`), dézippez-le en faisant un clic droit sur le fichier .zip, puis sélectionnez « Extraire tout » (ou « Décompresser ») dans le menu proposé.
+
+Ouvrez une invite de commande en faisant un clic droit dans un espace vide du dossier SAE_Site_Enchere-main/NewMVC, puis exécutez les commandes suivantes :
+
+Entrez :
+
+```
+
+docker compose up -d
+docker compose exec app composer install
+
+```
+
+Vérifiez que tout est bien démarré dans Docker Desktop, dans l'onglet vertical à gauche, dans l'espace Containers. Sinon, lancez tous les services à l'aide de l'icône de lecture (flèche).
+
+Vous devriez maintenant pouvoir accéder aux différents liens de notre application.
+
+Voici les différentes possibilités :
+* phpMyAdmin : [cliquez ici](http://localhost:8081) (le mot de passe se trouve dans la procédure sur Docker)
+* Application principale : [cliquez ici](http://localhost:8080)
+
+
+## ❌**Ancienne méthode manuel (non fonctionnelle)**
+
 Pour utiliser notre application, vous devez avoir installé au préalable [WamppServer 3.3.7 - 64 bits ou version ultérieure](https://www.wampserver.com/) et tous les VC Redistribuables nécessaires (toutes les versions sont indiqués lors de l'installation de l'exécutable et vous demanderas d'installer ceux manquants via le lien suivant : [cliquez ici](https://wampserver.aviatechno.net/)).
 
 Pour information, nous utilisons `Apache 2.4.62.1`, `PHP 8.3.14` et `MySQL 11.5.2`.
@@ -101,7 +137,7 @@ Pour information, nous utilisons `Apache 2.4.62.1`, `PHP 8.3.14` et `MySQL 11.5.
 Pour plus d'informations ou d'aides, consultez notre procédure d'installation ci-dessous.
 
 <div style="text-align: center; margin: 20px">
-<a href="./Documents/Procedure/Procedure_Installation_WampServer.docx"><strong>Comment installer WampServer ? Cliquez ici</strong></a>
+<a href="./Documents/Procedure/Procedure_Installation_WampServer.pdf"><strong>Comment installer WampServer ? Cliquez ici</strong></a>
 </div>
 
 Si l'application est déjà installée,
@@ -279,15 +315,21 @@ Pour vous connecter, il suffit d'appuyez sur le bouton `Connexion` situé en hau
 
 * Admin (permet d'accepter ou refuser des annonces publiées)
 
-email : `admin@gmail.com`
+email : `sae.administrateur@gmail.com`
 <br>
-mot de passe : `Admin1234!`
+mot de passe : `SAEadmin?2026`
 
-* Utilisateur de test (simple utilisateur ayant accès au site pour naviguer, enchérir et publier une annonce)
+* Vendeur (utilisateur qui propose différentes annonces)
 
-email : `test@gmail.com`
+email : `vendeur@gmail.com`
 <br>
-mot de passe : `Test1234!`
+mot de passe : `Vendeur1234!`
+
+* Enchérisseur (utilisateur qui souhaite enchérir sur les annonces du vendeur)
+
+email : `encherisseur@gmail.com`
+<br>
+mot de passe : `Encherisseur1234!`
 
 ## ❤️Remerciements
 

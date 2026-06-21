@@ -10,5 +10,8 @@ RUN a2enmod rewrite
 RUN echo "upload_max_filesize=32M" >> /usr/local/etc/php/conf.d/uploads.ini \
  && echo "post_max_size=32M" >> /usr/local/etc/php/conf.d/uploads.ini
 
+# Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # On redémarre Apache pour appliquer
 RUN service apache2 restart
