@@ -26,7 +26,7 @@ $id_client = $user['id_user'];
 </div>
 </main>
 
-<script src="templates/JS/like-product.js"></script>
+<script type="module" src="templates/JS/like-product.js" defer></script>
 
 <?php include('preset/footer.php'); ?>
 

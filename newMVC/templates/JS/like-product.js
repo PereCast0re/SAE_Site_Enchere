@@ -1,18 +1,16 @@
 /////// Import ///////
-import { getAnnonceLike } from "../call-api.js";
-import { getPrice } from "../call-api.js";
-import { getImage } from "../call-api.js";
-import { getListAnnoncementLike } from "../call-api.js";
+import { getAnnonceLike } from "./call-api.js";
+import { getPrice } from "./call-api.js";
+import { getImage } from "./call-api.js";
+import { getListAnnoncementLike } from "./call-api.js";
 
 // Fonction d'affichage des card récapitulative des annonces mises en favorie
-async function print_like_annoncement() {
+export async function print_like_annoncement() {
     const div = document.getElementById('like_product')
     const id_user = document.getElementById('id_user').value
     let html = ""
     
     let likes = await getListAnnoncementLike(id_user);
-    console.log('Like product');
-    console.log(likes)
 
     if (likes) 
     {
@@ -20,11 +18,10 @@ async function print_like_annoncement() {
         
         for (const like of likes) {
             let annonce = await getAnnonceLike(like.id_product)
-            console.log(annonce)
             
-            let price = await getPrice(annonce.id_product)
+            let price = await getPrice(annonce.product.id_product)
 
-            let image_url = await getImage(annonce.id_product);
+            let image_url = await getImage(annonce.product.id_product);
             let firstImg = (
                 Array.isArray(image_url) &&
                 image_url.length > 0 &&
@@ -34,19 +31,19 @@ async function print_like_annoncement() {
             html += `
                 <div class="annonce_wrapper">
                     <div class="annonce_card history_card">
-                        <img src="${firstImg}" class="annonce_img" />
+                        <img src="${firstImg}" class="annonce_img" loading="lazy" />
                         
                         <div class="annonce_details">
-                            <h3 class="annonce_title">${annonce.title}</h3>
+                            <h3 class="annonce_title">${annonce.product.title}</h3>
                             
                             <div class="annonce_meta">
-                                <span id="td_info_lastPrice${annonce.id_product}" class="price_display">
+                                <span id="td_info_lastPrice${annonce.product.id_product}" class="price_display">
                                     ${price.lastPrice ? price.lastPrice : 'Prix non disponible faite une offre !'}
                                 </span>
                             </div>
 
                             <div class="user_info">
-                                <a href="index.php?action=product&id=${annonce.id_product}">Voir</a>
+                                <a href="index.php?action=product&id=${annonce.product.id_product}">Voir</a>
                             </div>
                         </div>
 

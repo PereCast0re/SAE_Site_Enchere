@@ -147,7 +147,7 @@ export function getComments(id_product) {
 
 /// Appel API pour récupéré les annonce qui ont un ou des likes d'une annonce
 /// param -> id de l'utilisateur
-async function getListAnnoncementLike(id_user) {
+export async function getListAnnoncementLike(id_user) {
     const reponse = await fetch(`index.php?action=LisAnnoncementLike&id_user=${id_user}`)
     const annonce_json = await reponse.json();
     console.log('getListAnnoncementLike')
@@ -157,7 +157,7 @@ async function getListAnnoncementLike(id_user) {
 
 /// Appel API pour récupéré les likes d'une annonce
 /// param -> id d'un produit 
-async function getAnnonceLike(id_product) {
+export async function getAnnonceLike(id_product) {
     const reponse = await fetch(`index.php?action=AnnoncementLike&id_product=${id_product}`)
     const annonce_json = await reponse.json();
     console.log('getListAnnoncementLike')
