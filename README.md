@@ -113,9 +113,8 @@ Ouvrez une invite de commande en faisant un clic droit dans un espace vide du do
 Entrez :
 
 ```
-
+docker run --rm -v ${PWD}:/app composer install 
 docker compose up -d
-docker compose exec app composer install
 
 ```
 
