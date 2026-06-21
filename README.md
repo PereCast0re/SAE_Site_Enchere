@@ -127,6 +127,8 @@ Voici les différentes possibilités :
 * phpMyAdmin : [cliquez ici](http://localhost:8081) (le mot de passe se trouve dans la procédure sur Docker)
 * Application principale : [cliquez ici](http://localhost:8080)
 
+Pour initialiser la base de données sur PhpMyAdmin, vous devrez suivre les inditions disponible en cliquant [ici](#méthode-1-phpmyadmin) en commençant directement à l'étape 3.
+
 
 ## ❌**Ancienne méthode manuel (non fonctionnelle)**
 
