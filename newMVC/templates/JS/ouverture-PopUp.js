@@ -1,3 +1,5 @@
+// Fonction d'ouverture de popup
+// Utilisée pour faire apparaite les popups (Changement de nom, prenom, adresse, eail, password / enchaire / formulaire de saisi d'une enchaire / validation d'une saisie enchaire)
 function ouvrirPopup(page, element = null) {
     let newPrice = null;
     let currentPrice = null;
@@ -231,6 +233,7 @@ function ouvrirPopup(page, element = null) {
     }
 }
 
+// Fonction de fermetures des popups
 //#region close popup
 function fermerPopupMail() {
     document.getElementById('popup_email').style.display = 'none';
@@ -262,6 +265,7 @@ function fermerPopupFistname() {
 
 //#endregion
 
+// Fonctoon pour vérifié la cohérence entre le deux mot de passe saisie
 async function checkupNewPWD(event) {
     event.preventDefault()
 
@@ -278,6 +282,8 @@ async function checkupNewPWD(event) {
     }
 }
 
+// Foncrion pour ajouter une enchaire (somme)
+// param -> currentPrice (float) -> prix actuelle
 function addToPrice(currentPrice) {
     if (currentPrice < 100) return 5;
     else if (currentPrice < 500) return 10;
@@ -288,6 +294,9 @@ function addToPrice(currentPrice) {
     return 1000;
 }
 
+// Fonction pour vérifié si le nouveau prix et valide par rapport au prix acutelle
+// param -> newPrice (float) -> nouveau prix
+// param -> currentPrice (float) -> prix actuelle
 function newPriceIsValid(newPrice, currentPrice) {
     newPrice = parseInt(newPrice);
     currentPrice = parseInt(currentPrice);

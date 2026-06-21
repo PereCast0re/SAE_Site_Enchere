@@ -1,7 +1,12 @@
+// Systeme générique de popup de validation accepter ou quitter focaliser sur la partie administrateur
+// param -> message -> Contenue de la question de la popup
+// param -> action (string) -> action liée au la route si ont accepter (exemple: pageUSer)
+// param -> id_product (int) -> liée a un produit 
 async function alertConfirmation(message, action, id_product) {
     const popup = document.createElement('div')
-    console.log("affichage la popup")
     popup.classList.add('popup-overlay');
+
+    //Création "html" de la popup
     popup.innerHTML = `
     <div class="popup-box">
         <p>${message}</p>
@@ -15,7 +20,7 @@ async function alertConfirmation(message, action, id_product) {
     document.body.appendChild(popup);
 
     let button = popup.querySelector(".btnConfirm")
-    // Si on a besoin de refaire une redirection (avec navigation dans les pages) on simule l'envoie d'un form 
+    // Si on a besoin de refaire une redirection (avec navigation dans les pages) on simule l'envoie d'un form
     button.addEventListener('click', async () => {
         if (action === 'updateProduct') {
             const frm = document.createElement('form')
@@ -41,9 +46,6 @@ async function alertConfirmation(message, action, id_product) {
             },
             body: `id_product=${id_product}`
         });
-        // Il faudra gérer les erreurs
-        // const trueResponse = await response.json()
-        // console.log(trueResponse);
         popup.remove();
         location.reload();
     })

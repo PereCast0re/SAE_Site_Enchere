@@ -1,9 +1,9 @@
-////////////// Event Listener Pour la page de vente //////////////
-
-///import 
+/////// Import ///////
 import { afficherInputPrixReserve } from "./print-input-reserved-price.js";
 import { checkExistingCategory } from "./check-category.js";
 import { checkExistingCelebrity } from "./check-celebrity.js";
+
+////////////// Event Listener Pour la page de vente //////////////
 
 /// Event Listener pour affichée le champs de saisie du prix de réserve au clique
 document.addEventListener('DOMContentLoaded', function() {
@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
         div.innerHTML = '<input type="number" name="valeur_reserve" value="' + checkbox.value + '">'
     }
 });
+
+/// Event listener pour verifié si le checkbox et checked
+const inputPrixReserve = document.getElementById("prix_reserve_checkbox")
+inputPrixReserve.addEventListener("change", afficherInputPrixReserve)
 
 /// Event listener pour verifier si la catégorie existe
 const inputCategorie = document.getElementById('lst_categorie_vente');

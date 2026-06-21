@@ -1,17 +1,16 @@
+/////// Import ///////
 import { getAnnonceLike } from "./call-api.js";
 import { getPrice } from "./call-api.js";
 import { getImage } from "./call-api.js";
 import { getListAnnoncementLike } from "./call-api.js";
 
-
-async function print_like_annoncement() {
+// Fonction d'affichage des card récapitulative des annonces mises en favorie
+export async function print_like_annoncement() {
     const div = document.getElementById('like_product')
     const id_user = document.getElementById('id_user').value
     let html = ""
     
     let likes = await getListAnnoncementLike(id_user);
-    console.log('Like product');
-    console.log(likes)
 
     if (likes) 
     {
@@ -19,10 +18,9 @@ async function print_like_annoncement() {
         
         for (const like of likes) {
             let annonce = await getAnnonceLike(like.id_product)
-            console.log(annonce)
             
             let price = await getPrice(annonce.product.id_product);
-
+            
             let image_url = await getImage(annonce.product.id_product);
             let firstImg = (
                 Array.isArray(image_url) &&
@@ -33,7 +31,7 @@ async function print_like_annoncement() {
             html += `
                 <div class="annonce_wrapper">
                     <div class="annonce_card history_card">
-                        <img src="${firstImg}" class="annonce_img" />
+                        <img src="${firstImg}" class="annonce_img" loading="lazy" />
                         
                         <div class="annonce_details">
                             <h3 class="annonce_title">${annonce.product.title}</h3>

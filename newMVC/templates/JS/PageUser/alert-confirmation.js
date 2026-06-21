@@ -1,3 +1,7 @@
+// Systeme générique de popup de validation accepter ou quitter
+// param -> message (string) -> Contenue de la question de la popup
+// param -> action (string) -> action liée au la route si ont accepter (exemple: pageUSer)
+// param -> id_product (int) ->  identifient d'un produit 
 export async function alertConfirmation(message, action, id_product) {
     const popup = document.createElement('div')
     console.log("affichage la popup")
@@ -41,9 +45,6 @@ export async function alertConfirmation(message, action, id_product) {
             },
             body: `id_product=${id_product}`
         });
-        // Il faudra gérer les erreurs
-        // const trueResponse = await response.json()
-        // console.log(trueResponse);
         popup.remove();
         location.reload();
     })

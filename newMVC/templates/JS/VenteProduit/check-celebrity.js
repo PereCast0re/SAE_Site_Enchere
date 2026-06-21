@@ -1,8 +1,9 @@
-/////// Import 
+/////// Import ///////
 import { getSaisieCelebrity } from "../call-api.js";
 
-/////////////// Celebritée /////////////////////
-
+// Fonction pour vérifié sur une célébrité qui existe en base de donnée
+// Si la saisie utilisater correspond a une célébrité alors on lui renvoie dans une liste déroulante en dessous de sa saisie
+// Sinon on l'avertie que c'est une nouvelle et que les administrateur vont devoir valider l'annonce
 export async function checkExistingCelebrity() {
     let div = document.getElementById('celebrity_results')
     div.innerHTML = "";

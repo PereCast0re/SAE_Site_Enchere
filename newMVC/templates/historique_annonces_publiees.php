@@ -16,16 +16,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
-
 $id_client = $user['id_user'];
 ?>
-<main>
-<div class="Historique_annonces">
-    <input type="hidden" id="id_user" value="<?= htmlspecialchars(strip_tags($id_client)) ?>">
-        <div class="Annonces-list-cards" id="historique_product"></div>
 
-</div>
+<main>
+    <div class="Historique_annonces">
+        <input type="hidden" id="id_user" value="<?= htmlspecialchars(strip_tags($id_client)) ?>">
+            <div class="Annonces-list-cards" id="historique_product"></div>
+    </div>
 </main>
 
 <script type="module" src="templates/JS/historique-product.js"></script>
@@ -34,7 +32,7 @@ $id_client = $user['id_user'];
 
 <?php $content = ob_get_clean(); ?>
 
-<script src="templates/JS/timer.js"></script>
+<script src="templates/JS/timer.js" defer></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

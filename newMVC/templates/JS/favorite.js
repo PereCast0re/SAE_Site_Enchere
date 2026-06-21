@@ -4,6 +4,8 @@ let active = false;
 const fullHeart = '<i class="fa-solid fa-heart"></i>';
 const emptyHeart = '<i class="fa-regular fa-heart"></i>';
 
+// Event Listenenr pour la mise en favorie d'une annonce
+// au click on vas modifié le status de l'annonce pour l'utilisateur et l'insérer dans c'est annone en favorie
 btnFav.addEventListener("click", async () => {
     if (active) return;
     try {
@@ -25,7 +27,6 @@ btnFav.addEventListener("click", async () => {
 
             btnFav.innerHTML = fullHeart;
         } else {
-            console.log("j'enlève");
 
             const response = await fetch("index.php?action=unfavorite&id=" + idProduct);
             const data = await response.text();
