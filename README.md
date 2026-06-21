@@ -345,4 +345,4 @@ mot de passe : `Encherisseur1234!`
 <br>
 *Vérification par :*
 <br>
-*Date de mise à jour : 03/03/2026* 
+*Date de mise à jour : 21/06/2026* 
