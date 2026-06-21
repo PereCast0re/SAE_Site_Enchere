@@ -10,7 +10,7 @@ export async function print_unverifed_product(div, annoncements) {
     console.log("print unverifed");
 
     // Vérification de la présence d'annonces
-    nb = annoncements.some(a => a.status === 0);
+    let nb = annoncements.some(a => a.status === 0);
 
     if (!nb) {
         div.style.display = 'none';
@@ -45,7 +45,7 @@ export async function print_unverifed_product(div, annoncements) {
             <div class="annonce_wrapper">
                 <input type="hidden" id="id_product" value="${annonce.id_product}"/>
                 <div class="annonce_card pending_card">
-                    <img src="${firstImg}" class="annonce_img" alt="${annonce.title}"/>
+                    <img src="${firstImg}" class="annonce_img" alt="${annonce.title}" loading="lazy"/>
                     
                     <div class="annonce_details">
                         <h3 class="annonce_title">${annonce.title}</h3>
