@@ -65,12 +65,12 @@ function checkEndPrice(lastPrice) {
     }
 }
 
-const div = document.querySelector(".Historique_annonces")
+// const div = document.querySelector(".Historique_annonces")
 
-div.addEventListener('DOMContentLoaded', () => {
-    console.log("Si je suis affiché autre que dans l'historique des annonces publiés, vérifier dans le JS");
+// div.addEventListener('DOMContentLoaded', () => {
+//     console.log("Si je suis affiché autre que dans l'historique des annonces publiés, vérifier dans le JS");
 
-    const div = document.querySelector(".Historique_annonces")
-    const id_user = document.getElementById('id_user');
-    print_historique_annoncement(id_user, div)
-});
+//     const div = document.querySelector(".Historique_annonces")
+//     const id_user = document.getElementById('id_user');
+//     print_historique_annoncement(id_user, div)
+// });

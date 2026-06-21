@@ -125,7 +125,7 @@ class ProductController
             // Vérifie si le dossier existe déjà
             if (!is_dir($DirAnnonce)) {
                 //creation du dossier
-                // mkdir($DirAnnonce, 0777, true);
+                mkdir($DirAnnonce, 0777, true);
             }
 
             // Ajoute les images dans le dossier

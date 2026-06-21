@@ -99,7 +99,7 @@ $user = $_SESSION['user'];
     <h1>Annonce a vérifié</h1>
     <div class="annonces">
       <?php $products = $adminRepository->getAllProduct_admin(); if (empty($products)): ?>
-        <p>Aucune annonce disponible pour le moment.</p>
+        <p style="grid-column: 1 / -1;">Aucune annonce disponible pour le moment.</p>
       <?php else: ?>
         <?php
         $count_displayed = 0;
