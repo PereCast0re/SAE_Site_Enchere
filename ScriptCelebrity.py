@@ -4,7 +4,7 @@ import time
 import sys
 
 headers = {
-    "User-Agent": "Jimmy (localhost; jimmy.garnier1110@gmail.com)"
+    "User-Agent": "Jimmy (db; jimmy.garnier1110@gmail.com)"
 }
 
 def save_celebrities(celebrities):
@@ -13,8 +13,9 @@ def save_celebrities(celebrities):
     
     db = mysql.connector.connect(
         host="localhost",
+        port=3306,
         user="root",
-        password="",
+        password="root_password",
         database="auction_site",
         charset="utf8mb4"
     )
