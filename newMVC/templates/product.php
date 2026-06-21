@@ -90,11 +90,11 @@ $script = "templates/JS/favorite.js";
             </div>
             <div class="myBox1">
                 <h1>
-                    <?= $p->title ?>
+                    <?= nl2br(htmlspecialchars(strip_tags($p->title))) ?>
                 </h1>
                 <p>Catégorie</p>
                 <ul>
-                    <li><?= $category["name"] ?></li>
+                    <li><?= nl2br(htmlspecialchars(strip_tags($category["name"]))) ?></li>
                     <li><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars(strip_tags($u->city)) ?>
                     </li>
                 </ul>

@@ -285,63 +285,65 @@ class ProductController
 
     function Product($id_product)
     {
-        if (!empty($id_product) && $id_product >= 0) {
-            $pdo = DatabaseConnection::getConnection();
-            $productRepository = new ProductRepository($pdo);
-            $data = $productRepository->getProduct($id_product);
+        $id_product = filter_var($id_product, FILTER_VALIDATE_INT);
 
-            $p = $data->product;
-            $c = $data->celebrity;
-            $u = $data->user;
-
-            $this->AddNewView($p);
-
-            $commentRepository = new CommentRepository($pdo);
-            $comments = $commentRepository->getCommentsFromProduct($id_product);
-
-            $category = $productRepository->getCategoryFromAnnoncement($id_product);
-            // var_dump($category);
-            $current_price = $productRepository->getLastPrice($p->id_product)['last_price'];
-            if ($current_price === null) {
-                $current_price = $p->start_price;
-            }
-
-            $reservePrice = (int) $p->reserve_price;
-            // var_dump($reservePrice);
-
-            $userRepository = new UserRepository($pdo);
-            $images = $userRepository->getImage($id_product);
-
-            $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
-
-            $images = array_filter($images, function ($img) use ($extensions_valides) {
-                $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
-                return in_array($ext, $extensions_valides);
-            });
-
-            $certificate = array_filter($images, function ($img) {
-                $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
-                return $ext === "pdf";
-            });
-
-            $certificate = array_values($certificate);
-
-            $favoriteRepository = new FavoriteRepository($pdo);
-            $like = $favoriteRepository->getLikes($id_product)['nbLike'];
-            if ($like === null) {
-                $like = 0;
-            }
-            isset($_SESSION['user']) ? $isFav = $favoriteRepository->isProductFavorite($id_product, $_SESSION['user']['id_user']) : $isFav = false;
-
-            $price_ex = [];
-            for ($i = 0; $i < 3; $i++) {
-                array_push($price_ex, $i == 0 ? $current_price + $this->addToPrice($current_price) : $price_ex[$i - 1] + $this->addToPrice($price_ex[$i - 1]));
-            }
-
-            require("templates/product.php");
-        } else {
-            throw new Exception('Erreur : ID Produit invalide !');
+        if ($id_product === false || $id_product < 0) {
+            throw new Exception("ID invalide");
         }
+        
+        $pdo = DatabaseConnection::getConnection();
+        $productRepository = new ProductRepository($pdo);
+        $data = $productRepository->getProduct($id_product);
+
+        $p = $data->product;
+        $c = $data->celebrity;
+        $u = $data->user;
+
+        $this->AddNewView($p);
+
+        $commentRepository = new CommentRepository($pdo);
+        $comments = $commentRepository->getCommentsFromProduct($id_product);
+
+        $category = $productRepository->getCategoryFromAnnoncement($id_product);
+        // var_dump($category);
+        $current_price = $productRepository->getLastPrice($p->id_product)['last_price'];
+        if ($current_price === null) {
+            $current_price = $p->start_price;
+        }
+
+        $reservePrice = (int) $p->reserve_price;
+        // var_dump($reservePrice);
+
+        $userRepository = new UserRepository($pdo);
+        $images = $userRepository->getImage($id_product);
+
+        $extensions_valides = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
+
+        $images = array_filter($images, function ($img) use ($extensions_valides) {
+            $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
+            return in_array($ext, $extensions_valides);
+        });
+
+        $certificate = array_filter($images, function ($img) {
+            $ext = strtolower(pathinfo($img['url_image'], PATHINFO_EXTENSION));
+            return $ext === "pdf";
+        });
+
+        $certificate = array_values($certificate);
+
+        $favoriteRepository = new FavoriteRepository($pdo);
+        $like = $favoriteRepository->getLikes($id_product)['nbLike'];
+        if ($like === null) {
+            $like = 0;
+        }
+        isset($_SESSION['user']) ? $isFav = $favoriteRepository->isProductFavorite($id_product, $_SESSION['user']['id_user']) : $isFav = false;
+
+        $price_ex = [];
+        for ($i = 0; $i < 3; $i++) {
+            array_push($price_ex, $i == 0 ? $current_price + $this->addToPrice($current_price) : $price_ex[$i - 1] + $this->addToPrice($price_ex[$i - 1]));
+        }
+
+        require("templates/product.php");
     }
 
     function addToPrice($currentPrice)
